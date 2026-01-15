@@ -1,0 +1,20 @@
+.vitepress/cache/
+.vitepress/dist/
+
+/.idea/misc.xml
+/.idea/cn.doc.iml
+/.idea/modules.xml
+/.idea/inspectionProfiles/profiles_settings.xml
+/.idea/vcs.xml
+.claude/settings.local.json
+
+
+# 输出目录
+output/
+.claude/settings.local.json
+
+# 测试文件夹
+test/
+.claude/settings.local.json
+Thumbs.db
+img/Thumbs.db
