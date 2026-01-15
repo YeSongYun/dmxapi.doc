@@ -318,6 +318,7 @@ export default defineConfig({
             text: '🔊️音频模型 TTS & STT',
             collapsed: true,
             items: [
+              { text: 'TTS模型gemini-2.5-pro-preview-tts', link: '/gemini-2.5-pro-preview-tts' },
               { text: 'TTS模型 MinMax-speech', link: '/minimax-speech' },
               { text: 'STT模型 whisper', link: '/opneai-stt' },
               { text: 'STT模型 gpt-4o-transcribe', link: '/gpt-4o-transcribe' },
