@@ -1,0 +1,8 @@
+{
+    "codingcopilot.autoRun": true,
+    "codingcopilot.enableCompletionLanguage": {},
+    "claudeCodeChat.permissions.yoloMode": true,
+    "codingcopilot.taskList": true,
+    "codingcopilot.modelDocumentLanguage": "Chinese",
+    "codingcopilot.generationPreference": "oneLineMode"
+}
