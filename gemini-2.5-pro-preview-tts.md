@@ -416,11 +416,7 @@ TTS 模型会自动检测输入语言。它们支持以下 24 种语言：
 | 英语（印度） | en-IN 和 hi-IN 套装 | 马拉地语（印度） | mr-IN |
 | 泰米尔语（印度） | ta-IN | 泰卢固语（印度） | te-IN |
 
-## 📚 官方网站
 
-```
-https://ai.google.dev/gemini-api/docs/speech-generation?hl=zh-cn
-```
 
 ---
 
