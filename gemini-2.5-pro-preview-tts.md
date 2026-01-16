@@ -1,9 +1,10 @@
-# gemini-2.5-pro-preview-tts 语音生成 API 文档
+# Gemini系列 语音生成模型（TTS） API 文档 
 Gemini API 可以使用原生文字转语音 (TTS) 生成功能将文本输入转换为单人或多人音频。文字转语音 (TTS) 生成是可控的，这意味着您可以使用自然语言来构建互动，并指导音频的风格、口音、节奏和语气。
 
 TTS 功能不同于通过 Live API 提供的语音生成功能，后者专为交互式非结构化音频以及多模态输入和输出而设计。虽然 Live API 在动态对话上下文中表现出色，但通过 Gemini API 实现的 TTS 专门针对需要精确朗读文本并对风格和声音进行精细控制的场景，例如播客或有声读物生成。
-## 请求地址
 
+## 请求地址
+想要更换模型在url中替换名称就可以。
 ```
 https://www.dmxapi.cn/v1beta/models/gemini-2.5-pro-preview-tts:generateContent"
 ```
@@ -13,7 +14,7 @@ https://www.dmxapi.cn/v1beta/models/gemini-2.5-pro-preview-tts:generateContent"
 
 
 `gemini-2.5-pro-preview-tts` 
-
+`gemini-2.5-flash-preview-tts` 
 
 ## 🚀文字转单人语音 示例代码
 
