@@ -134,7 +134,7 @@ export default defineConfig({
               { text: '图片分析（本地）', link: '/base64-image'},
               { text: '函数调用FunctionCall', link: '/function-call' },
               { text: 'whisper-stt', link: '/opneai-stt' },
-              { text: 'gtp-tts', link: '/openai-tts' },
+              { text: 'gpt-tts', link: '/openai-tts' },
               { text: 'gpt-5.2-pro', link: '/gpt-5.2-pro' },
               { text: 'openai绘图模型', link: '/gpt-image' }
             ],

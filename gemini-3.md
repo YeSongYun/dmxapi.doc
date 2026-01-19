@@ -70,7 +70,6 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 ### 思考等级
 Gemini 3 系列模型默认使用动态思考来对提示进行推理。您可以使用 thinking_level 参数，该参数可控制模型在生成回答之前执行的内部推理过程的最大深度。Gemini 3 将这些级别视为相对的思考余量，而不是严格的令牌保证。  
 如果未指定 `thinking_level`，Gemini 3 将默认为 `high`。如果不需要复杂的推理，您可以将模型的思考水平限制为 `low`，以获得更快、延迟更低的回答。  
-Gemini 3 Pro 默认使用动态思考来推理提示。如果不需要复杂的推理，您可以将模型的思维水平限制为 `low`，以获得更快、更低延迟的响应。  
 #### Gemini 3 Pro 和 Flash 的思维水平：
 Gemini 3 Pro 和 Flash 均支持以下思考水平：  
 - **low**：最大限度地缩短延迟时间并降低费用。最适合简单指令遵循、聊天或高吞吐量应用  
