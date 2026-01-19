@@ -310,6 +310,16 @@ export default defineConfig({
                   { text: 'kling-v2-6-image2video', link: '/kling-v2-6-image2video'}
                 ],
               },
+              
+              {
+                text: '豆包视频模型 ',
+                collapsed: true,
+                items: [
+                  { text: '文生视频', link: '/doubao-seedance-1-5-pro-responses01' },
+                  { text: '图生视频', link: '/doubao-seedance-1-5-pro-responses02' },
+                  { text: '首尾帧生成视频', link: '/doubao-seedance-1-5-pro-responses03' }
+                ],
+              },
 
 
               { text: '更多视频模型正在赶来...', link: '/video-more' },
