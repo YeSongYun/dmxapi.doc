@@ -1,10 +1,10 @@
-#  可灵视频模型 kling-v2-6-text2video API使用文档（异步）
+#  可灵视频模型 kling-v2-6-image2video API使用文档（异步）
 
 基于前沿的深度学习架构，可灵 AI 具备卓越的文生视频与图生视频能力。它突破了传统 AI 视频生成的瓶颈，能精准模拟物理世界的运动规律，确保画面动态流畅、主体高度一致。作为全球视频生成领域的第一梯队产品，可灵 AI 性能对标国际顶尖模型，且已全面开放使用，致力于为创作者提供触手可及的专业级视频创作体验。
 
 
 ## 🌻模型名称
-`kling-v2-6-text2video`
+`kling-v2-6-image2video`
 
 
 ## 🚗接口地址
@@ -25,17 +25,17 @@
 ```python
 """
 ╔═══════════════════════════════════════════════════════════════╗
-║              DMXAPI Kling 视频生成模型调用示例                 ║
+║                  模型调用示例                                  ║
 ╚═══════════════════════════════════════════════════════════════╝
 
 📝 功能说明:
-   本脚本演示如何使用 requests 库调用 DMXAPI 的 Kling v2.6 文生视频模型
-   通过 responses 接口生成视频（流式输出）
-
+   通过 responses 接口进行对话交互（流式输出）
 ═══════════════════════════════════════════════════════════════
 """
+
 import requests
 import json
+
 
 # ═══════════════════════════════════════════════════════════════
 # 🔑 步骤1: 配置 API 连接信息
@@ -48,29 +48,99 @@ url = "https://www.dmxapi.cn/v1/responses"
 # 获取方式: 登录 DMXAPI 官网 -> 个人中心 -> API 密钥管理
 api_key = "sk-************************************"
 
+
 # ═══════════════════════════════════════════════════════════════
 # 📋 步骤2: 配置请求头
 # ═══════════════════════════════════════════════════════════════
 
 headers = {
     "Content-Type": "application/json",      # 指定请求体为 JSON 格式
-    "Authorization": f"{api_key}",    # token 认证方式
+    "Authorization": f"{api_key}",           # token 认证方式
 }
+
 
 # ═══════════════════════════════════════════════════════════════
 # 💬 步骤3: 配置请求参数
 # ═══════════════════════════════════════════════════════════════
 
 payload = {
-    "model": "kling-v2-6-text2video",
-    "input": "生成一个海边有一个人跳舞的视频",  # 必填，正向文本提示词，不超过2500字符
-    "negative_prompt": "",      # 可选，负向文本提示词，不超过2500字符
-    "mode": "pro",              # 可选，生成模式: std(标准模式), pro(高品质模式)
-    "sound": "off",             # 可选，是否生成声音: on, off (仅V2.6及后续版本支持)
-    "aspect_ratio": "16:9",     # 可选，画面纵横比: 16:9, 9:16, 1:1
-    "duration": 5,              # 可选，视频时长(秒): 5, 10
-    "callback_url": "https://www.dmxapi.cn"  # 可选，任务状态变更回调通知地址
+    # 🤖 模型名称
+    # - 固定值: "kling-v2-6-image2video"
+    # - 说明: Kling V2.6 图生视频模型
+    "model": "kling-v2-6-image2video",
+             
+
+    # 📝 提示词（必填）
+    # - 类型: 字符串
+    # - 说明: 描述视频中的动作、场景变化等
+    # - 建议: 清晰描述想要的动作效果，避免过于复杂的描述
+    # - 示例: "宇航员站起身走了"、"花瓣随风飘落"
+    "input": "宇航员站起身哼着歌走了",
+
+    # 🖼️ 首帧图片（必填）
+    # - 类型: 图片URL（支持 http/https）
+    # - 说明: 视频的起始画面，AI 将基于此图片生成动态视频
+    # - 格式: 支持 JPG、PNG 等常见图片格式
+    # - 建议: 使用高清图片以获得更好的生成效果
+    "image": "https://h2.inkwai.com/bs2/upload-ylab-stunt/se/ai_portal_queue_mmu_image_upscale_aiweb/3214b798-e1b4-4b00-b7af-72b5b0417420_raw_image_0.jpg",
+
+    # 🎬 尾帧图片（可选）
+    # - 类型: 图片URL 或 空字符串
+    # - 说明: 视频的结束画面，AI 将从首帧过渡到尾帧
+    # - 用途: 精确控制视频的起止状态
+    # - 留空: 由 AI 自动生成结束画面
+    "image_tail": "",
+
+    # 🚫 负向提示词（可选）
+    # - 类型: 字符串
+    # - 说明: 描述不希望出现的内容或效果
+    # - 示例: "模糊、失真、变形、多余的肢体"
+    # - 留空: 不使用负向提示
+    "negative_prompt": "",
+
+    # ⚙️ 生成模式（必填）
+    # - 可选值: "pro" (高品质模式)
+    # - 说明: pro 模式提供更高质量的视频生成效果
+    # - 默认: "pro"
+    "mode": "pro",
+
+    # 🔊 音效开关（可选）
+    # - 可选值: "on" (开启) / "off" (关闭)
+    # - 说明: 是否为生成的视频添加 AI 配音
+    # - 默认: "on"
+    "sound": "on",
+
+    # 🎤 语音列表（可选，需配合 sound="on" 使用）
+    # - 类型: 数组，包含语音ID对象
+    # - 说明: 指定特定的配音角色
+    # - 示例: [{"voiceId": "genshin_vindi2"}]
+    # - 留空: 使用默认配音
+    # "voice_list": [
+    #     {"voiceId": "genshin_vindi2"}
+    # ],
+
+    # 📐 宽高比（必填）
+    # - 可选值:
+    #   * "16:9" - 横屏视频（适合电脑、电视）
+    #   * "9:16" - 竖屏视频（适合手机、短视频平台）
+    #   * "1:1"  - 方形视频（适合社交媒体）
+    # - 说明: 决定视频的画面比例
+    "aspect_ratio": "16:9",
+
+    # ⏱️ 视频时长（必填）
+    # - 可选值: 5 或 10（单位：秒）
+    # - 说明: 生成视频的持续时间
+    # - 注意: 时长越长，生成时间越久，消耗资源越多
+    "duration": 10,
+
+    # 🔔 回调地址（可选）
+    # - 类型: HTTP/HTTPS URL 或 空字符串
+    # - 说明: 视频生成完成后，系统将向此地址发送 POST 请求通知
+    # - 格式: 完整的 URL 地址（如 "https://your-domain.com/callback"）
+    # - 留空: 不使用回调通知，需手动查询任务状态
+    "callback_url": ""
 }
+
 
 # ═══════════════════════════════════════════════════════════════
 # 📤 步骤4: 发送请求并输出结果
@@ -83,6 +153,7 @@ response = requests.post(url, headers=headers, json=payload)
 # - indent=2: 缩进 2 空格，便于阅读
 # - ensure_ascii=False: 正确显示中文字符
 print(json.dumps(response.json(), indent=2, ensure_ascii=False))
+
 ```
 ## 🐯返回示例
 
@@ -90,22 +161,22 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 {
   "code": 0,
   "message": "SUCCEED",
-  "request_id": "1a06838f-d2cc-4328-a73e-401cb23e8080", // 查询生成结果所需要的ID号 
+  "request_id": "8e8c4c70-d9bc-4a34-8cae-34edca295a1b",
   "data": {
-    "task_id": "841036370235252746",
+    "task_id": "842081252995395657",
     "task_status": "submitted",
     "task_status_msg": "",
     "task_info": {},
-    "created_at": 1768358011822,
-    "updated_at": 1768358011822
+    "created_at": 1768796217405,
+    "updated_at": 1768796217405
   },
   "usage": {
-    "total_tokens": 2125,
+    "total_tokens": 8500,
     "input_tokens": 0,
     "input_tokens_details": {
       "cached_tokens": 0
     },
-    "output_tokens": 2125,
+    "output_tokens": 8500,
     "output_tokens_details": {
       "reasoning_tokens": 0
     }
@@ -123,15 +194,16 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 ```python
 """
 ╔═══════════════════════════════════════════════════════════════╗
-║              DMXAPI Kling 文本转视频任务查询示例                ║
+║                  Kling 任务查询示例                            ║
 ╚═══════════════════════════════════════════════════════════════╝
 
 📝 功能说明:
-   本脚本演示如何使用 requests 库调用 DMXAPI 的 Kling 文本转视频查询接口
-   通过 responses 接口查询视频生成任务状态（流式输出）
+   本脚本演示如何使用 kling-get 模型查询 Kling 视频生成任务状态
+   通过 responses 接口进行流式查询
 
 ═══════════════════════════════════════════════════════════════
 """
+
 import requests
 import json
 import sys
@@ -147,7 +219,7 @@ url = "https://www.dmxapi.cn/v1/responses"
 
 # 🔐 DMXAPI 密钥 (请替换为您自己的密钥)
 # 获取方式: 登录 DMXAPI 官网 -> 个人中心 -> API 密钥管理
-api_key = "sk-***********************************"
+api_key = "sk-********************************************"
 
 # ═══════════════════════════════════════════════════════════════
 # 📋 步骤2: 配置请求头
@@ -159,12 +231,12 @@ headers = {
 }
 
 # ═══════════════════════════════════════════════════════════════
-# 💬 步骤3: 配置查询参数
+# 💬 步骤3: 配置请求参数
 # ═══════════════════════════════════════════════════════════════
 
 payload = {
-    "model": "kling-text2video-get",
-    "input": "841036370235252746",
+    "model": "kling-image2video-get",
+    "input": "842081252995395657",
     "stream": True
 }
 
@@ -296,19 +368,19 @@ if final_result:
 ```
 ## 🦁返回示例
 ```json
-⏳ 处理中: [████████████████████████████████████████] 100.0%
+ 处理中: [████████████████████████████████████████] 100.0%
 
 ════════════════════════════════════════════════════════════
 ✅ 查询完成！
 ════════════════════════════════════════════════════════════
 
-📋 任务ID: 841036370235252746
+📋 任务ID: 842081252995395657
 
 🎬 视频链接:
-https://v4-fdl.kechuangai.com/ksc2/kdDWtKH8kEZgms9USQDhhBiDebstrRGHrI8frWDTxRbLWo7ILpEU4FHbk5pEO9WL5PfbRFN_NkwOjSlv2GFVTlBd-za0zMDkfbmrvB6H6yQWJAvzeu6NLSpW-HV-HQPsgVwF6SbTogdvCd7dIhW-sugI2tO39E9UNtwNxUEm15t_DQ9q3bZzr_y9szaUZVPhdwLfJOKwK_zZXec8vPgrSg.mp4?cacheKey=ChtzZWN1cml0eS5rbGluZy5tZXRhX2VuY3J5cHQSsAGU0jXO8A6vYUR6LoJUQAljWmoB6U47dLzwSzUHB3rgCF0EltJS7Fo-29gnB8aJCgcp5lfdS4u4o5px6oPIk2VlIheCzB0z9KitwuNY1AWvX47ZpuG1k5OiaZS2g3ksc8vhml7PE5JpsHjnLkKIRNaRl0z86fwGPGGKHfj3Uh7mUr8FUoPewRXC8fu5s15tWI1pv1WC7YPW4GeESx3Dfqi-RqgooPHaTRP1ibrTjRezaRoSj4dfrTYhUzYe6jlYP2ZR__D3IiCfA83goDVjmNTmrTMpF1ggIebcrbBU9NU_IVuciVlapigFMAE&x-kcdn-pid=112757&pkey=AAUIz0KCHmuLmZHE9IGCWAw2uZUC4EAMjYU1Yf7WAAhv-j9RHBSDJ7iWlHBOlOCuUeA3EaH14n_tVZ2yt2C-4u2wMrN9rrQlJ9gxLw9ROQZHYYbmTuc4R03IfOQunGSxv2s
+https://v1-fdl.kechuangai.com/ksc2/d-CsDyB6823hG3qnUACoYjdhG9G12sC6UkF_nLqvs-5yEZlkWjHqnV86RSJVHyuQiN3IaJnoT069AP9FnpvElKLzLwjvRkWjHWiz1s4301sJ8VtV3GIuMOJxZJUhrMh3bWl7bRplBZLiBfSDcKwztMeLWpZAhIixyQaraDSjZIvGv_aBIglY6BTWU4ac7qZocgCDzqyqbNK0aU1IUP2WcA.mp4?cacheKey=ChtzZWN1cml0eS5rbGluZy5tZXRhX2VuY3J5cHQSsAFdyihqqUfiX6Zr-A0_TrB7_hui6pr05V5yq3ms5aMIRxUQg46RiCjRb_SRpdkJ1zG3m54LHoyR4bQFAGDp2mc8o7U1WlTR_StXbc645euu4uYOu63ckqOyE28Q-it4omJhbEHR4MsuPHVjbFLjwBwPCXj5MlttzBVb40p0GVeEiU126T0UHUSmFrmxnKDwg2XABuMZXqzDHQOci4qyw-09Eu6d5dMuh3Y5jeHov5pO7RoSiK-SiyTQu2yvu8rTuMxr8vOaIiDlXNMCsCErNpkj2P4QxbCO4eAy1IP_-hsfqkD1pFwotSgFMAE&x-kcdn-pid=112757&pkey=AAXUWmCwX5Kl7Tzi2ZfHBHY2oi0lDDS1AZXj27tdj_v1Xr26_SiwjLX8UTRqiPyabZfSZP4n0MGnmnqxP3TK7pdbQEX4_4YycByz9xTkj3c0qGG8A-0P_RvvBpx3RVYl5EY
 ```
 ---
 
 <p align="center">
-  <small>© 2025 DMXAPI kling-v2-6-text2video </small>
+  <small>© 2025 DMXAPI kling-v2-6-image2video </small>
 </p>

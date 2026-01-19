@@ -306,7 +306,8 @@ export default defineConfig({
                 collapsed: true,
                 items: [
               
-                  { text: 'kling-v2-6-text2video', link: '/kling-v2-6-text2video' }
+                  { text: 'kling-v2-6-text2video', link: '/kling-v2-6-text2video' },
+                  { text: 'kling-v2-6-image2video', link: '/kling-v2-6-image2video'}
                 ],
               },
 
