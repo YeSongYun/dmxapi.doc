@@ -285,7 +285,7 @@ export default defineConfig({
                 text: 'Sora2视频模型',
                 collapsed: true,
                 items: [
-                  { text: 'sora2-chat文生视频', link: '/sora2-chat' },
+            
                   { text: 'sora2官方文生视频', link: '/sora2-Official' }
                 ],
               },
