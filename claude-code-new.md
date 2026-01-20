@@ -1,7 +1,7 @@
 # Claude Code 配置教程
 DMXAPI研发的一键配置 Anthropic Claude Code CLI 环境变量的跨平台工具。
 
-# 功能特性
+## 功能特性
 
     - 交互式配置 API 地址和认证令牌
     - 自动验证 API 连接有效性
