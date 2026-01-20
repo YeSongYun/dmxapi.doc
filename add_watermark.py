@@ -186,12 +186,13 @@ def main() -> None:
     # 可以根据实际需要修改这个列表
     image_files = [
 
-                'img/1-13-1.png',
-                'img/1-13-2.png',
-                'img/1-13-3.png',
-                'img/1-13-4.png',
-                'img/1-13-5.png'
-
+                'img/1-20-1.png',
+                'img/1-20-2.png',
+                'img/1-20-3.png',
+                'img/1-20-4.png',
+                'img/1-20-5.png',
+                'img/1-20-6.png',
+                'img/1-20-7.png'
     ]               
     
     # 第三步：验证水印文件存在性

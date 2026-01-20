@@ -35,21 +35,13 @@ npm i -g opencode-ai@latest
 
 ```
 
-
-3、OpenCode官方提供提供终端界面、桌面应用程序和 IDE 扩展三种使用方式，安装 CLI 最简单的方法是通过脚本安装：
-
-```
-curl -fsSL https://opencode.ai/install | bash
-
-```
-
-4、macOS 用户可以通过 Homebrew 安装桌面客户端
+3、macOS 用户可以通过 Homebrew 安装桌面客户端
 
 ```
 brew install anomalyco/tap/opencode
 
 ```
-
+  
 
 
 ## 配置教程
@@ -71,6 +63,7 @@ MacOS用户下载地址2(arm64)：[opencode](https://cnb.cool/dmxapi/opencode_dm
 ### 1. 根据您的系统环境选择合适的插件，点击下载 
 
 ![opencode](img\1-12-1.png)
+
 
 ### 2. 正在下载ing
 

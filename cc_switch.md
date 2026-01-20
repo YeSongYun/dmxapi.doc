@@ -1,6 +1,6 @@
-# Claude Code & Codex 供应商切换器
+# cc-switch 配置CLI工具使用教程
 
-一个用于管理和切换 Claude Code 与 Codex 不同供应商配置的桌面应用
+CC-Switch 是一款面向企业与开发者的高性能交换与流量调度组件，旨在为数据中心、边缘节点及云环境提供稳定、可扩展的网络转发能力。它支持多端口交换、VLAN 隔离、链路聚合与 QoS 策略，可按业务优先级进行带宽分配与拥塞控制，保障关键应用低时延运行。CC-Switch 兼容主流管理与自动化体系，提供可视化监控、告警与日志追踪，便于快速定位故障并优化网络。通过灵活的策略配置与模块化架构，CC-Switch 能在复杂拓扑中实现高可靠转发与弹性扩容，降低运维成本，提升整体网络效率。
 
 ## 下载
 
@@ -8,53 +8,37 @@
 
 ## 使用方法
 
-🌶🍎✈️  请注意，在通过cc switch配置claude code的时候，模型必须选择模型广场中claude code选项卡中带有-cc的模型，否则用不了。
+这里我以配置codex为例，介绍下cc-switch的使用方法
 
 ### 1. 首先打开软件  
 
-然后点击添加供应商
-![cc_switch](img\cc-switch01.png)
+选中codex 选项卡，点击“+”添加供应商
+![cc_switch](img\1-20-1.png)
 
-### 2. 选择想用的模型，为接下来的配置做准备
+### 2. 选择模型厂商，配置url和key
 
-![cc_switch](img\1-5-1.jpg)
+![cc_switch](img\1-20-2.png)
 
-### 3. 选择DMXAPI和输入API 密钥
+### 3. 配置模型和模型参数
 
-将在上一步中复制的模型名称粘贴到图片中③位置。
+![cc_switch](img\1-20-3.png)
 
-![cc_switch](img\cc-switch-xiugai06.png)
+### 4. 启动供应商
 
-### 4. 切换供应商
+![cc_switch](img\1-20-4.png)
 
-![cc_switch](img\cc-switch03.png)
+### 5. 在终端打开codex
 
-### 5. 配置cc-switch
+![cc_switch](img\1-20-5.png)
 
-![cc_switch](img\cc-switch-xiugai02.png)
+### 6. 测试模型是否调用成功
 
-### 6. 启动cc-switch与vs code交互按钮
+![cc_switch](img\1-20-6.png)
 
-![cc_switch](img\cc-switch05.png)
+### 7. 模型调用成功，可以开始使用啦！！！！
 
-### 7. 在系统终端中使用
-在搜索栏中输入cmd，单击回车打开系统终端
-![cc_switch](img\cc-switch-xiugai03.png)
+![cc_switch](img\1-20-7.png)
 
-### 8. 启动claude code
-
-在终端中，输入claude，然后回车
-![cc_switch](img\cc-switch-xiugai04.png)
-
-### 9. 信任 claude code
-
-![cc_switch](img\cc-switch-xiugai05.png)
-
-
-### 10. 愉快的使用
-
-可以开始用起来啦！！！！
-![cc_switch](img\cc_05.png)
 
 ---
 <p align="center">
