@@ -1,5 +1,5 @@
 # Claude Code 配置教程
-一键配置 Anthropic Claude Code CLI 环境变量的跨平台工具。
+DMXAPI研发的一键配置 Anthropic Claude Code CLI 环境变量的跨平台工具。
 
 # 功能特性
 
@@ -9,17 +9,21 @@
     - 支持 Windows / Linux / macOS
     - 环境变量自动持久化
 
+## 仓库地址
+cnb开源仓库地址：
 
-## 开源仓库地址
+https://cnb.cool/dmxapi/dmxapi_claude_code
 
-```
-开源仓库地址：https://cnb.cool/dmxapi/dmxapi_claude_code
-```
+github仓库地址：
+
+https://github.com/YeSongYun/dmxapi-claude-code
 
 
-::: tip
+:::tip 提示
 编程插件tokens消耗量很大，请注意tokens消耗
 :::
+
+## 环境准备
 在开始之前，请先安装并验证以下基础环境：
 
 - Node.js（含 `npm`），推荐 `v18+`：<https://nodejs.org/>
@@ -33,20 +37,11 @@ npm -v
 git --version
 ```
 
-##  下载
-
-| **平台**             | **架构**              | **文件名**                             |
-| -------------------- | ---------------------- | --------                             |
-| Windows              |x64                     | dmxapi-claude-code.exe               |
-| Linux           | x64                         | dmxapi-claude-code-linux-amd64       |
-| Linux           | ARM64                       | dmxapi-claude-code-linux-arm64       |
-| macOS            |Intel                       | dmxapi-claude-code-macos-amd64       |
-|macOS            |Apple Silicon (M1/M2/M3)     | dmxapi-claude-code-macos-arm64       |
-
-
-
 ## 使用方法
-
+使用之前，请先根据自己的操作系统情况 ，添加执行权限（Windows用户可以直接双击打开）
+:::warning 注意
+claude code 只能配置模型广场中claude code 专区的后缀为-cc的模型，其他的不可用
+:::
 ### Windows
 ```
 .\dmxapi-claude-code.exe
@@ -62,7 +57,6 @@ chmod +x dmxapi-claude-code-linux-amd64
 
 ```
 
-
 ### macOS
 ```
 # 添加执行权限
@@ -76,10 +70,6 @@ chmod +x dmxapi-claude-code-macos-arm64
 ```
 
 
-### cc switch优点      
-可以切换其他模型！  
-图像化配置，无需手动设置环境变量！
-
 ## 第一步：安装 Claude Code
 
 ```bash
@@ -89,23 +79,67 @@ npm install -g @anthropic-ai/claude-code
 claude --version
 ```
 
-## 第二步：使用cc switch配置claude code
+## 第二步：使用 DMXAPI 开发的插件配置 claude code
 
-请前往 [cc_switch](/cc_switch) 查看详细配置说明。
+### 1、复制cnb仓库地址，在浏览器中打开。
+![claude-code](img\1-20-8.png)
 
-### cc switch优点
+### 2、点击最新版插件链接，跳转到下载界面
+![claude-code](img\1-20-9.png)
 
-可以切换其他模型！  
-图像化配置，无需手动设置环境变量！
+### 3、根据自己的操作系统，选择合适的插件，复制下载链接
+![claude-code](img\1-20-10.png)
 
-## 第三步：在vs code中配置 claude code
- 1、在vs code 中安装claude code插件。
-![claude-code](img\cc-switch06.png)
+### 4、在浏览器中打开下载链接，下载插件
+![claude-code](img\1-20-11.png)
 
- 2、在vs code 中对claude code插件进行设置。
-![claude-code](img\cc-switch07.png)
- 3、在vs code 中开启claude code插件的相关选项。
-![claude-code](img\cc-switch08.png)
+### 5、下载完成
+![claude-code](img\1-20-13.png)
+
+### 、安装之前，添加运行权限（Windows可以直接双击使用）
+![claude-code](img\1-20-14.png)
+
+### 7、进入配置界面
+![claude-code](img\1-20-15.png)
+
+### 8、填写url
+![claude-code](img\1-20-16.png)
+
+### 9、选择更新配置
+![claude-code](img\1-20-17.png)
+
+### 10、填写自己的key
+![claude-code](img\1-20-18.png)
+
+### 11、声明
+因为之前配置过一次，所以会留存一些模型名称,用户下载claude code 第一次配置不会出现这部分内容，直接从默认模型开始配置。
+![claude-code](img\1-20-19.png)
+
+### 12、配置模型
+:::tip 注意
+claude code 只能配置模型广场中claude code 专区的后缀为-cc的模型，其他的不可用
+:::
+![claude-code](img\1-20-20.png)
+
+### 13、配置成功，按回车退出配置界面
+![claude-code](img\1-20-21.png)
+
+### 14、重新打开一个终端，输出claude ，打开claude code
+![claude-code](img\1-20-22.png)
+
+### 15、选择Yes，proceed
+
+这一步之前有的用户会出现背景颜色的确认，根据自己喜欢的风格选择后就到这一步了。
+![claude-code](img\1-20-23.png)
+
+### 16、在对话框中输入“你好”，回车
+![claude-code](img\1-20-24.png)
+
+### 17、模型响应成功，可以开始使用了。
+![claude-code](img\1-20-25.png)
+
+
+
 
 
 
@@ -118,73 +152,7 @@ claude --version
 ```bash
 Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 ```
-### Claude Code 在跳过地区限制的解决方案
 
-claude code 跳过地区限制的解决方案。（mac和Windows用户通用，mac用户比较容易出现这个问题），解决方案为：在cc switch中添加参数【"hasCompletedOnboarding":true】，具体操作如下。
-
-### 1. 点击编辑按钮，开始配置cc switch
-
-![claude-code](img\1-4-1.jpg)
-
-### 2. 点击“编辑通用配置选项”
-
-![claude-code](img\1-7-9.png)
-
-### 3. 添加新的参数
-
-新参数："hasCompletedOnboarding":true
-
-![claude-code](img\1-4-3.jpg)
-
-### 4. 保存配置，然后重启claude code就好啦！！！
-
-### ✈️✨Claude Code 在cc switch中配置key但是没有生效的解决方案
-需要配置系统环境变量，具体步骤如下：
-
-### 配置系统环境变量(新方法)
-用户可以根据自己的使用情况，选择合适的指令。
-
-
-Windows PowerShell（推荐）:
-```
-$wc = New-Object System.Net.WebClient; $wc.Encoding = [System.Text.Encoding]::UTF8; iex $wc.DownloadString('https://doc.dmxapi.cn/0_fenxiang/dmxapi-claude-code.ps1')
-```
-
-Windows CMD:
-```
-powershell -ExecutionPolicy Bypass -c "$wc = New-Object System.Net.WebClient; $wc.Encoding = [System.Text.Encoding]::UTF8; iex $wc.DownloadString('https://doc.dmxapi.cn/0_fenxiang/dmxapi-claude-code.ps1')"
-```
-macOS / Linux:
-
-```
-curl -fsSL https://doc.dmxapi.cn/0_fenxiang/dmxapi-claude-code.sh | sh
-```
-
-### 配置系统环境变量(旧方法)
-
-### 1. 在搜索栏中搜索：配置系统环境变量  
-
-![claude-code](img\1.png)
-
-### 2. 进入系统环境变量配置界面
-
-![claude-code](img\2.png)
-
-### 3. 找到变量建立位置
-
-![claude-code](img\3.png)
-
-### 4. 新建系统环境变量
-
-![claude-code](img\4.png)
-
-### 5. 输入变量名和变量值，然后保存
-变量名称：ANTHROPIC_AUTH_TOKEN，变量值：sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx（您在DMXAPI申请的访问令牌）
-
-![claude-code](img\5.png)
-
-### 6. 重启Claude Code
-重启Claude code以后就可以愉快的使用啦！！！
 
 ---
 

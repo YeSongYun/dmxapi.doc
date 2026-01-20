@@ -285,7 +285,7 @@ export default defineConfig({
                 text: 'Sora2视频模型',
                 collapsed: true,
                 items: [
-            
+              
                   { text: 'sora2官方文生视频', link: '/sora2-Official' }
                 ],
               },
@@ -425,8 +425,8 @@ export default defineConfig({
             collapsed: true,
             items: [
            
-              { text: 'Claude code(推荐)', link: '/claude-code' },
-              // { text: 'Claude code配置教程', link: '/claude-code-new' },
+              // { text: 'Claude code(推荐)', link: '/claude-code' },
+              { text: 'Claude code配置教程', link: '/claude-code-new' },
            
               { text: 'cc switch', link: '/cc_switch' },
               { text: 'Qwen3 coder', link: '/qwen-coder' },
