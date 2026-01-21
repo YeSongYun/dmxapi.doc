@@ -40,7 +40,7 @@ BASE_URL = os.getenv("GEMINI_API_BASE_URL", "https://www.dmxapi.cn")
 # 创建 Gemini 客户端实例
 client = genai.Client(
     api_key=api_key,
-    http_options={'base_url': BASE_URL}
+    http_options={'base_url': BASE_URL} 
 )
 
 # ============================================================
