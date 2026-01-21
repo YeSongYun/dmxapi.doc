@@ -1,4 +1,4 @@
-# Claude Code 配置教程
+# Claude Code（推荐）
 DMXAPI研发的一键配置 Anthropic Claude Code CLI 环境变量的跨平台工具。
 
 ## 功能特性
