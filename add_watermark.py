@@ -185,7 +185,7 @@ def main() -> None:
     # 填写相对于脚本所在目录的路径，例如 'img\\ruanzhu.png'
     # 可以根据实际需要修改这个列表
     image_files = [
-                'img/roo_code01.png',
+                'img/roo_code001.png',
                 'img/roo_code02.png',
                 'img/roo_code03.png',
                 'img/roo_code04.png'
