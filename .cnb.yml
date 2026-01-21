@@ -4,8 +4,9 @@ main:
       stages:
         - name: sync to github
           image: tencentcom/git-sync
-          script:
-            - git config lfs.allowincompletepush true
-            - git remote add target https://${GIT_USERNAME}:${GIT_ACCESS_TOKEN}@github.com/YeSongYun/dmxapi.doc.git || true
-            - git push target --all --force
-            - git push target --tags --force         
+          settings:
+            target_url: https://github.com/YeSongYun/dmxapi.doc.git
+            auth_type: https
+            username: ${GIT_USERNAME}
+            password: ${GIT_ACCESS_TOKEN}
+            force: true
