@@ -176,7 +176,7 @@ export default defineConfig({
             collapsed: true,
             items: [
               { text: '文本对话', link: '/claude-chat' },
-              { text: '图片分析', link: '/claude-image' },
+              { text: '图片分析', link: '/claude-image' }, 
               { text: '函数调用', link: '/claude-fc' },
               { text: 'sdk使用', link: '/claude-sdk' },
               { text: '缓存创建', link: '/claude-hc' },
