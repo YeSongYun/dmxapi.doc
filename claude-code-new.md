@@ -96,7 +96,7 @@ claude --version
 ### 5、下载完成
 ![claude-code](img\1-20-13.png)
 
-### 、安装之前，添加运行权限（Windows可以直接双击使用）
+### 6、安装之前，添加运行权限（Windows可以直接双击使用）
 ![claude-code](img\1-20-14.png)
 
 ### 7、进入配置界面

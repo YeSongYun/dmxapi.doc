@@ -42,7 +42,7 @@ export default defineConfig({
       { text: '|', link: '' },
       { text: '📗更新', link: 'https://www.dmxapi.cn/weblog' },
       { text: '💰模型价格', link: 'https://www.dmxapi.cn/rmb' },
-      { text: '🐍Claude Code', link: '/claude-code' },
+      { text: '🐍Claude Code', link: '/claude-code-new' },
       // { text: '🔧模型参数', link: 'http://models.dmxapi.cn/' },
       { text: '🎫开发票', link: 'https://www.dmxapi.cn/fapiao' },
       { text: '🗏 返回DMXAPI', link: 'https://dmxapi.cn' },
