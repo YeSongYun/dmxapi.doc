@@ -8,4 +8,5 @@ main:
             target_url: https://github.com/YeSongYun/dmxapi.doc.git
             auth_type: https
             username: ${GIT_USERNAME}
-            password: ${GIT_ACCESS_TOKEN}         
+            password: ${GIT_ACCESS_TOKEN}
+            force: true         
