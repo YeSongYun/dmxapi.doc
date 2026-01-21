@@ -2,11 +2,10 @@ main:
   push:
     - imports: https://cnb.cool/dmxapi/claude-code-my/-/blob/main/env.yml
       stages:
-        - name: sync to github with rebase
+        - name: sync to github
           image: tencentcom/git-sync
-          settings:
-            target_url: https://github.com/YeSongYun/dmxapi.doc.git
-            auth_type: https
-            username: ${GIT_USERNAME}
-            password: ${GIT_ACCESS_TOKEN}
-            force: true         
+          script:
+            - git config lfs.allowincompletepush true
+            - git remote add target https://${GIT_USERNAME}:${GIT_ACCESS_TOKEN}@github.com/YeSongYun/dmxapi.doc.git || true
+            - git push target --all --force
+            - git push target --tags --force         
