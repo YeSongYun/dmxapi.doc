@@ -442,6 +442,7 @@ export default defineConfig({
               { text: 'n8n', link: '/n8n' },
               { text: 'Cursor', link: '/cursor' },
               { text: 'ONLYOFFICE', link: '/onlyoffice' },
+              { text: 'Roo_Code适配教程', link: '/roo_code' },
               { text: 'AnythingLLM', link: '/AnythingLLM' }
             ],
           },
