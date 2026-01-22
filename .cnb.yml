@@ -11,11 +11,15 @@ main:
             password: ${GIT_ACCESS_TOKEN}
             force: true
   pull_request:
-    - stages:
+    - imports: https://cnb.cool/dmxapi/claude-code-my/-/blob/main/env.yml
+      stages:
         - name: 标题和描述的可读性检测
           image: cnbcool/ai-review:latest
           settings:
             type: pr-info-readability-check
+            ai_chat_url: ${AI_CHAT_URL}
+            ai_token: ${AI_TOKEN}
+            ai_model: ${AI_MODEL}
           exports:
             status: STATUS
         - name: 标题和描述的可读性检测结果
@@ -29,10 +33,15 @@ main:
                     exit 1
                     ;;
             esac
+    - imports: https://cnb.cool/dmxapi/claude-code-my/-/blob/main/env.yml
+      stages:
         - name: 提交注释的可读性检测
           image: cnbcool/ai-review:latest
           settings:
             type: commit-message-readability-check
+            ai_chat_url: ${AI_CHAT_URL}
+            ai_token: ${AI_TOKEN}
+            ai_model: ${AI_MODEL}
           exports:
             status: STATUS
         - name: 提交注释的可读性检测结果
@@ -46,14 +55,26 @@ main:
                     exit 1
                     ;;
             esac
+    - imports: https://cnb.cool/dmxapi/claude-code-my/-/blob/main/env.yml
+      stages:
         - name: 代码评审
           image: cnbcool/ai-review:latest
           settings:
             type: code-review
+            ai_chat_url: ${AI_CHAT_URL}
+            ai_token: ${AI_TOKEN}
+            ai_model: ${AI_MODEL}
+            pr_comment: true
+            max_comments: 5
+    - imports: https://cnb.cool/dmxapi/claude-code-my/-/blob/main/env.yml
+      stages:
         - name: 变更总结
           image: cnbcool/ai-review:latest
           settings:
             type: diff-summary
+            ai_chat_url: ${AI_CHAT_URL}
+            ai_token: ${AI_TOKEN}
+            ai_model: ${AI_MODEL}
           exports:
             summary: SUMMARY
         - name: 输出变更总结
