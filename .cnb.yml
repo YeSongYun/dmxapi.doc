@@ -10,18 +10,3 @@ main:
             username: ${GIT_USERNAME}
             password: ${GIT_ACCESS_TOKEN}
             force: true
-  pull_request:
-    - stages:
-        - name: code-review
-          image: cnbcool/code-review:latest
-          settings:
-            context: 10
-            comment: true
-            max_comments: 10
-            fail_on_critical: false
-        - name: ai-review
-          image: cnbcool/ai-review:latest
-          settings:
-            type: code-review
-            pr_comment: true
-            max_comments: 10
