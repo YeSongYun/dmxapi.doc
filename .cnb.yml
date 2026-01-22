@@ -12,49 +12,52 @@ main:
             force: true
   pull_request:
     - stages:
-        - name: 标题和描述的可读性检测
-          image: cnbcool/ai-review:latest
-          settings:
-            type: pr-info-readability-check
-          exports:
-            status: STATUS
-        - name: 标题和描述的可读性检测结果
-          script: |
-            case "${STATUS}" in
-                yes)
-                    echo "✅ 标题和描述的可读性检测通过"
-                    ;;
-                no)
-                    echo "⚠️ 标题和描述的可读性检测不通过"
-                    exit 1
-                    ;;
-            esac
-        - name: 提交注释的可读性检测
-          image: cnbcool/ai-review:latest
-          settings:
-            type: commit-message-readability-check
-          exports:
-            status: STATUS
-        - name: 提交注释的可读性检测结果
-          script: |
-            case "${STATUS}" in
-                yes)
-                    echo "✅ 提交注释的可读性检测通过"
-                    ;;
-                no)
-                    echo "⚠️ 提交注释的可读性检测不通过"
-                    exit 1
-                    ;;
-            esac
-        - name: 代码评审
-          image: cnbcool/ai-review:latest
-          settings:
-            type: code-review
-        - name: 变更总结
-          image: cnbcool/ai-review:latest
-          settings:
-            type: diff-summary
-          exports:
-            summary: SUMMARY
-        - name: 输出变更总结
-          script: echo $SUMMARY
+      - name: 标题和描述的可读性检测
+        image: cnbcool/ai-review:latest
+        settings:
+          type: pr-info-readability-check
+        exports:
+          status: STATUS
+      - name: 标题和描述的可读性检测结果
+        script: |
+          case "${STATUS}" in
+              yes)
+                  echo "✅ 标题和描述的可读性检测通过"
+                  ;;
+              no)
+                  echo "⚠️ 标题和描述的可读性检测不通过"
+                  exit 1
+                  ;;
+          esac
+    - stages:
+      - name: 提交注释的可读性检测
+        image: cnbcool/ai-review:latest
+        settings:
+          type: commit-message-readability-check
+        exports:
+          status: STATUS
+      - name: 提交注释的可读性检测结果
+        script: |
+          case "${STATUS}" in
+              yes)
+                  echo "✅ 提交注释的可读性检测通过"
+                  ;;
+              no)
+                  echo "⚠️ 提交注释的可读性检测不通过"
+                  exit 1
+                  ;;
+          esac
+    - stages:
+      - name: 代码评审
+        image: cnbcool/ai-review:latest
+        settings:
+          type: code-review
+    - stages:
+      - name: 变更总结
+        image: cnbcool/ai-review:latest
+        settings:
+          type: diff-summary
+        exports:
+          summary: SUMMARY
+      - name: 输出变更总结
+        script: echo $SUMMARY
