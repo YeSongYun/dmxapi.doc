@@ -304,8 +304,7 @@ export default defineConfig({
                {
                 text: 'Kling 视频模型 ',
                 collapsed: true,
-                items: [
-              
+                items: [              
                   { text: 'kling-v2-6-text2video', link: '/kling-v2-6-text2video' },
                   { text: 'kling-v2-6-image2video', link: '/kling-v2-6-image2video'}
                 ],
@@ -404,6 +403,7 @@ export default defineConfig({
             items: [
               { text: 'deepseek-ocr', link: '/deepseek-ocr' },
               { text: 'qwen-vl-ocr-latest', link: '/qwen-vl-ocr-latest' },
+              { text: 'somark', link: '/somark' },
               { text: '合合文档解析模型', link: '/hehe' }
               
             ],
