@@ -1,6 +1,9 @@
 main:
   push:
     - imports: https://cnb.cool/dmxapi/claude-code-my/-/blob/main/env.yml
+      runner:
+        tags: cnb:arch:amd64
+        cpus: 1
       stages:
         - name: sync to github
           image: tencentcom/git-sync
@@ -12,6 +15,9 @@ main:
             force: true
   pull_request:
     - imports: https://cnb.cool/dmxapi/claude-code-my/-/blob/main/env.yml
+      runner:
+        tags: cnb:arch:amd64
+        cpus: 1
       stages:
         - name: 标题和描述的可读性检测
           image: cnbcool/ai-review:latest
@@ -34,6 +40,9 @@ main:
                     ;;
             esac
     - imports: https://cnb.cool/dmxapi/claude-code-my/-/blob/main/env.yml
+      runner:
+        tags: cnb:arch:amd64
+        cpus: 1
       stages:
         - name: 提交注释的可读性检测
           image: cnbcool/ai-review:latest
@@ -56,6 +65,9 @@ main:
                     ;;
             esac
     - imports: https://cnb.cool/dmxapi/claude-code-my/-/blob/main/env.yml
+      runner:
+        tags: cnb:arch:amd64
+        cpus: 1
       stages:
         - name: 代码评审
           image: cnbcool/ai-review:latest
@@ -67,6 +79,9 @@ main:
             pr_comment: true
             max_comments: 5
     - imports: https://cnb.cool/dmxapi/claude-code-my/-/blob/main/env.yml
+      runner:
+        tags: cnb:arch:amd64
+        cpus: 1
       stages:
         - name: 变更总结
           image: cnbcool/ai-review:latest
