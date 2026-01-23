@@ -1,15 +1,26 @@
 # DMXAPI 文档
 
+> 全球大模型 · 人民币计价 · 聚合平台
+
 DMXAPI 大模型API聚合平台的官方文档站点。
 
 **在线访问**：[doc.dmxapi.cn](https://doc.dmxapi.cn)
 
-## 技术栈
+## 关于 DMXAPI
 
-- [VitePress](https://vitepress.dev/) - 基于 Vue 的静态站点生成器
-- [@escook/vitepress-theme](https://www.npmjs.com/package/@escook/vitepress-theme) - 自定义主题
-- [medium-zoom](https://github.com/francoischalifour/medium-zoom) - 图片缩放
-- [viewerjs](https://github.com/fengyuanchen/viewerjs) - 图片查看器
+**DMX** 取自"大模型"拼音首字母，由 [LangChain 中文网](https://www.langchain.com.cn) 提供。
+
+DMXAPI 聚合中国和全球 **300+ 多模态大模型**，支持文生文、文生图、文生视频、文生音频等多种模态能力。
+
+## 平台特色
+
+- **人民币计价** - 直连全球模型，无需外币支付
+- **模型原厂集采直供** - 去除中间环节，价格更优
+- **SVIP 企业级服务** - 专业 API 解决方案
+  - 无 RPM/TPM 限制
+  - 无限并发
+  - 公对公付款
+  - 正规发票
 
 ## 快速开始
 
