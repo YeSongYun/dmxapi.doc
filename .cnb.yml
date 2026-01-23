@@ -1,6 +1,7 @@
 main:
   push:
-    - imports: https://cnb.cool/dmxapi/claude-code-my/-/blob/main/env.yml
+    - name: "同步到 GitHub"  # 添加这行来自定义名称
+      imports: https://cnb.cool/dmxapi/claude-code-my/-/blob/main/env.yml
       runner:
         tags: cnb:arch:amd64
         cpus: 1
@@ -13,18 +14,20 @@ main:
             username: ${GIT_USERNAME}
             password: ${GIT_ACCESS_TOKEN}
             force: true
+
   pull_request:
-      - imports: https://cnb.cool/dmxapi/claude-code-my/-/blob/main/env.yml
-        runner:
-          tags: cnb:arch:amd64
-          cpus: 1
-        stages:
-          - name: 代码评审
-            image: cnbcool/ai-review:latest
-            settings:
-              type: code-review
-              ai_chat_url: ${AI_CHAT_URL}
-              ai_token: ${AI_TOKEN}
-              ai_model: ${AI_MODEL}
-              pr_comment: true
-              max_comments: 50
+    - name: "AI 代码评审"  # 添加这行来自定义名称
+      imports: https://cnb.cool/dmxapi/claude-code-my/-/blob/main/env.yml
+      runner:
+        tags: cnb:arch:amd64
+        cpus: 1
+      stages:
+        - name: 代码评审
+          image: cnbcool/ai-review:latest
+          settings:
+            type: code-review
+            ai_chat_url: ${AI_CHAT_URL}
+            ai_token: ${AI_TOKEN}
+            ai_model: ${AI_MODEL}
+            pr_comment: true
+            max_comments: 50
