@@ -4,13 +4,6 @@ DMXAPI 大模型API聚合平台的官方文档站点。
 
 **在线访问**：[doc.dmxapi.cn](https://doc.dmxapi.cn)
 
-## 技术栈
-
-- [VitePress](https://vitepress.dev/) - 基于 Vue 的静态站点生成器
-- [@escook/vitepress-theme](https://www.npmjs.com/package/@escook/vitepress-theme) - 自定义主题
-- [medium-zoom](https://github.com/francoischalifour/medium-zoom) - 图片缩放
-- [viewerjs](https://github.com/fengyuanchen/viewerjs) - 图片查看器
-
 ## 快速开始
 
 ### 环境要求
