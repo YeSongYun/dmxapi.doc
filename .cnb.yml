@@ -26,11 +26,11 @@ main:
           image: cnbcool/code-review:latest
           settings:
             output: ./code_review.json
-            context: 300
+            context: 100
             comment: true
-            max_comments: 50
+            max_comments: 10
             max_files: 300
-            max_diff_size: 256000
+            max_diff_size: 128000
             fail_on_critical: true
 
     - name: "AI 代码复审"
