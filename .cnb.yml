@@ -14,22 +14,17 @@ main:
             password: ${GIT_ACCESS_TOKEN}
             force: true
   pull_request:
-    - imports: https://cnb.cool/dmxapi/claude-code-my/-/blob/main/env.yml
-      runner:
-        tags: cnb:arch:amd64
-        cpus: 1
-      stages:
-        - name: code-review
-          image: cnbcool/code-review:latest
-          settings:
-            # 输出文件路径
-            output: ./code_review.json
-            context: 50
-            comment: true
-            max_comments: 50
-            max_diff_size: 256000
-            # 是否在代码评审发现严重问题时返回非零退出码（流水线会失败）
-            fail_on_critical: true
-            ai_chat_url: ${AI_CHAT_URL}
-            ai_token: ${AI_TOKEN}
-            ai_model: ${AI_MODEL}
+      - imports: https://cnb.cool/dmxapi/claude-code-my/-/blob/main/env.yml
+        runner:
+          tags: cnb:arch:amd64
+          cpus: 1
+        stages:
+          - name: 代码评审
+            image: cnbcool/ai-review:latest
+            settings:
+              type: code-review
+              ai_chat_url: ${AI_CHAT_URL}
+              ai_token: ${AI_TOKEN}
+              ai_model: ${AI_MODEL}
+              pr_comment: true
+              max_comments: 50
