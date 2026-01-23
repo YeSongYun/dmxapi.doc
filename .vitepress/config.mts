@@ -426,25 +426,25 @@ export default defineConfig({
             items: [
            
               // { text: 'Claude code(推荐)', link: '/claude-code' },
-              { text: 'Claude code配置教程', link: '/claude-code-new' },
+              { text: 'Claude code(推荐)', link: '/claude-code-new' },
            
               { text: 'cc switch', link: '/cc_switch' },
               { text: 'Qwen3 coder', link: '/qwen-coder' },
               { text: 'Openai Codex', link: '/codex' },
-              { text: 'opencode适配教程', link: '/opencode' },
+              { text: 'opencode', link: '/opencode' },
               { text: 'Cherry Studio', link: '/cherry-studio' },
               { text: 'Cherry Studio调用gpt-5.2-pro', link: '/cherry-studio-gpt-5.2-pro' },
-              { text: 'Chatwise适配教程', link: '/chatwise' },
+              { text: 'Chatwise', link: '/chatwise' },
               { text: 'chatbox', link: '/chatbox' },
               { text: 'Dify', link: '/dify' },
-              { text: 'coze 扣子插件', link: '/coze-llm-plug' },
-              { text: 'VSCode CLine 插件', link: '/Cline' },
+              { text: 'coze ', link: '/coze-llm-plug' },
+              { text: 'VSCode CLine ', link: '/Cline' },
               { text: 'n8n', link: '/n8n' },
               { text: 'Cursor', link: '/cursor' },
               { text: 'ONLYOFFICE', link: '/onlyoffice' },
-              { text: 'Roo_Code适配教程', link: '/roo_code' },
+              { text: 'Roo_Code', link: '/roo_code' },
               { text: 'AnythingLLM', link: '/AnythingLLM' },
-              { text: '思源笔记适配教程', link: '/siyaunbiji' }
+              { text: '思源笔记', link: '/siyuanbiji' }
             ],
           },
         ]
