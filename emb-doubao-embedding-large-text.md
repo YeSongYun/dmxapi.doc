@@ -4,7 +4,7 @@
 该API用于将文本转换为高维向量表示（embedding），适用于语义搜索、文本相似度计算等场景。模型支持长达128K tokens的文本输入。
 
 ## 模型名称
-`doubao-embedding-large-text`
+`doubao-embedding-large-text-250515`
 
 ## 最大支持长度
 128K 输入
