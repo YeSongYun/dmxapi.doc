@@ -444,7 +444,7 @@ export default defineConfig({
               { text: 'ONLYOFFICE', link: '/onlyoffice' },
               { text: 'Roo_Code适配教程', link: '/roo_code' },
               { text: 'AnythingLLM', link: '/AnythingLLM' },
-              { text: '思源笔记适配教程', link: '/思源笔记' }
+              { text: '思源笔记适配教程', link: '/siyaunbiji' }
             ],
           },
         ]
