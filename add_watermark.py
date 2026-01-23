@@ -22,7 +22,7 @@ DMXAPI 图片水印批量处理工具
 
 from PIL import Image, ImageEnhance  # PIL库用于图像处理和增强
 import os  # 系统操作库，用于文件路径处理
-
+       
 
 def add_watermark(image_path: str, watermark_path: str, output_path: str, position: str = 'bottom-right', opacity: float = 0.7, scale: float = 0.15) -> bool:
     """
@@ -185,10 +185,12 @@ def main() -> None:
     # 填写相对于脚本所在目录的路径，例如 'img\\ruanzhu.png'
     # 可以根据实际需要修改这个列表
     image_files = [
-                'img/roo_code001.png',
-                'img/roo_code02.png',
-                'img/roo_code03.png',
-                'img/roo_code04.png'
+                'img/siyuan01.png',
+                'img/siyuan02.png',
+                'img/siyuan03.png',
+                'img/siyuan04.png',
+                'img/siyuan05.png',
+                'img/siyuan06.png'
     ]               
     
     # 第三步：验证水印文件存在性
