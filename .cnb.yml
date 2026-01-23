@@ -1,6 +1,6 @@
 main:
   push:
-    - name: "同步到 GitHub"  # 添加这行来自定义名称
+    - name: "同步到 GitHub"
       imports: https://cnb.cool/dmxapi/claude-code-my/-/blob/main/env.yml
       runner:
         tags: cnb:arch:amd64
@@ -16,7 +16,24 @@ main:
             force: true
 
   pull_request:
-    - name: "AI 代码评审"  # 添加这行来自定义名称
+    - name: "AI 代码初审"
+      imports: https://cnb.cool/dmxapi/claude-code-my/-/blob/main/env.yml
+      runner:
+        tags: cnb:arch:amd64
+        cpus: 1
+      stages:
+        - name: code-review
+          image: cnbcool/code-review:latest
+          settings:
+            output: ./code_review.json
+            context: 300
+            comment: true
+            max_comments: 50
+            max_files: 300
+            max_diff_size: 256000
+            fail_on_critical: true
+
+    - name: "AI 代码复审"
       imports: https://cnb.cool/dmxapi/claude-code-my/-/blob/main/env.yml
       runner:
         tags: cnb:arch:amd64
