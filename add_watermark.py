@@ -185,12 +185,16 @@ def main() -> None:
     # 填写相对于脚本所在目录的路径，例如 'img\\ruanzhu.png'
     # 可以根据实际需要修改这个列表
     image_files = [
-                'img/siyuan01.png',
-                'img/siyuan02.png',
-                'img/siyuan03.png',
-                'img/siyuan04.png',
-                'img/siyuan05.png',
-                'img/siyuan06.png'
+                'img/typingmind01.png',
+                'img/typingmind02.png',
+                'img/typingmind03.png',
+                'img/typingmind04.png',
+                'img/typingmind05.png',
+                'img/typingmind06.png',
+                'img/typingmind07.png',
+                'img/typingmind08.png',
+                'img/typingmind09.png',
+                'img/typingmind10.png'
     ]               
     
     # 第三步：验证水印文件存在性
