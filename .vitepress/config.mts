@@ -215,7 +215,7 @@ export default defineConfig({
                 items: [
                   { text: '文生图', link: '/img-nano-banana' },
                   { text: '图片编辑', link: '/img-nano-banana-edit' },
-                  { text: '多图融合', link: '/img-nano-banana-images' },
+                  { text: '多图融合', link: '/img-nano-banana-images' }             
                 ],
                 },
                  {
