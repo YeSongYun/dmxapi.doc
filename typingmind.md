@@ -30,7 +30,7 @@
 ## Claude相关配置
 
 #### 1.填写模型名称和url
-
+  
 ![typingmind](./img/typingmind08.png)
 
 #### 2.填写key并保存模型
