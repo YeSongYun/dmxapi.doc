@@ -10,10 +10,11 @@
 
 ## 第二步  选择安装所需的供应商
 > 请注意选择DMXAPI支持的供应商
-> 目前共支持三个供应商:
-> - OpenAI(兼容各种支持openai接口格式调用的模型)
+> 目前共支持四种供应商:
+> - OpenAI
 > - Anthropic
 > - Gemini
+> - Open-API-compatible
 ### 1. 请在此处安装模型供应商
 ![Dify](img/dify02.png)
 ### 2. 各模型供应商的介绍
@@ -37,7 +38,15 @@
 #### 2. 进行相关配置
 ![Dify](img/dify09.png)
 
-
+### Open-API-compatible相应配置
+#### 1. 点击添加模型
+![Dify](img/dify16.png)
+#### 2. 点击添加新模型
+![Dify](img/dify17.png)
+#### 3. 进行相关配置填写
+![Dify](img/dify18.png)
+#### 4. 填写模型上下文长度
+![Dify](img/dify19.png)
 
 
 ## 第四步  简单的测试
@@ -66,6 +75,13 @@
 ![Dify](img/dify14.png)
 #### 2. 成功运行
 ![Dify](img/dify15.png)
+
+### Open-API-compatible测试
+> 使用`glm-4.7`模型进行测试
+#### 1. 输入"你好"
+![Dify](img/dify20.png)
+#### 2. 成功运行
+![Dify](img/dify21.png)
 
 
 <p align="center">
