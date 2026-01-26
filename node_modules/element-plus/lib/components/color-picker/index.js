@@ -8,7 +8,6 @@ var install = require('../../utils/vue/install.js');
 
 const ElColorPicker = install.withInstall(colorPicker$1["default"]);
 
-exports.colorPickerContextKey = colorPicker.colorPickerContextKey;
 exports.colorPickerEmits = colorPicker.colorPickerEmits;
 exports.colorPickerProps = colorPicker.colorPickerProps;
 exports.ElColorPicker = ElColorPicker;

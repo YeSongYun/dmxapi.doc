@@ -29,6 +29,7 @@ exports.DEFAULT_FORMATS_DATEPICKER = constants.DEFAULT_FORMATS_DATEPICKER;
 exports.DEFAULT_FORMATS_TIME = constants.DEFAULT_FORMATS_TIME;
 exports.PICKER_BASE_INJECTION_KEY = constants.PICKER_BASE_INJECTION_KEY;
 exports.PICKER_POPPER_OPTIONS_INJECTION_KEY = constants.PICKER_POPPER_OPTIONS_INJECTION_KEY;
+exports.ROOT_COMMON_PICKER_INJECTION_KEY = constants.ROOT_COMMON_PICKER_INJECTION_KEY;
 exports.timeUnits = constants.timeUnits;
 exports.timePickerDefaultProps = props.timePickerDefaultProps;
 exports.timePickerRangeTriggerProps = props.timePickerRangeTriggerProps;

@@ -12,7 +12,10 @@ const tabPaneProps = runtime.buildProps({
   name: {
     type: [String, Number]
   },
-  closable: Boolean,
+  closable: {
+    type: Boolean,
+    default: void 0
+  },
   disabled: Boolean,
   lazy: Boolean
 });

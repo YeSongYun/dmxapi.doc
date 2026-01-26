@@ -31,7 +31,7 @@ export declare const useHandlers: (props: UploadProps, uploadRef: ShallowRef<Upl
     handleProgress: (evt: import("./upload").UploadProgressEvent, rawFile: UploadRawFile) => void;
     handleStart: (rawFile: UploadRawFile) => void;
     handleSuccess: (response: any, rawFile: UploadRawFile) => unknown;
-    handleRemove: (file: UploadFile | UploadRawFile, rawFile?: UploadRawFile) => void;
+    handleRemove: (file: UploadFile | UploadRawFile) => void;
     submit: () => void;
     revokeFileObjectURL: (file: UploadFile) => void;
 };

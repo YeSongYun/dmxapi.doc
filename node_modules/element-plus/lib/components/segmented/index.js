@@ -2,8 +2,8 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
-var segmented$1 = require('./src/segmented.js');
-var segmented = require('./src/segmented2.js');
+var segmented$1 = require('./src/segmented2.js');
+var segmented = require('./src/segmented.js');
 var install = require('../../utils/vue/install.js');
 
 const ElSegmented = install.withInstall(segmented$1["default"]);

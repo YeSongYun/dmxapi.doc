@@ -35,6 +35,7 @@ const dialogProps = runtime.buildProps({
     type: Boolean,
     default: true
   },
+  modalPenetrable: Boolean,
   openDelay: {
     type: Number,
     default: 0
@@ -61,6 +62,10 @@ const dialogProps = runtime.buildProps({
   headerAriaLevel: {
     type: String,
     default: "2"
+  },
+  transition: {
+    type: runtime.definePropType([String, Object]),
+    default: void 0
   }
 });
 const dialogEmits = {
@@ -72,7 +77,9 @@ const dialogEmits = {
   openAutoFocus: () => true,
   closeAutoFocus: () => true
 };
+const dialogContextKey = Symbol("dialogContextKey");
 
+exports.dialogContextKey = dialogContextKey;
 exports.dialogEmits = dialogEmits;
 exports.dialogProps = dialogProps;
 //# sourceMappingURL=dialog.js.map
