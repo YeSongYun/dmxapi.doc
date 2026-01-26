@@ -59,7 +59,7 @@ export default defineConfig({
           { text: '使命·价值观', link: '/values' },
           { text: '团队介绍', link: '/teams' },
           { text: 'AI探索路', link: '/qiyuan' },
-          { text: '商务资料下载', link: '/pptpdf' },
+          // { text: '商务资料下载', link: '/pptpdf' },
         ],
       },
       {
