@@ -304,7 +304,7 @@ url = "https://www.dmxapi.cn/v1beta/models/gemini-3-flash-preview:generateConten
 
 # 请求头
 headers = {
-    "x-goog-api-key": "sk-ThKDN72mfzpvKdhRT2yjzmxkRZF3aBNtZmQJq5hbbICu67DE",  # 从环境变量获取 API Key
+    "x-goog-api-key": "sk-*****************************************",  # 从环境变量获取 API Key
     "Content-Type": "application/json"
 }
 
