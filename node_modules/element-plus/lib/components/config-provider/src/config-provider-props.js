@@ -18,6 +18,12 @@ const configProviderProps = runtime.buildProps({
   button: {
     type: runtime.definePropType(Object)
   },
+  card: {
+    type: runtime.definePropType(Object)
+  },
+  dialog: {
+    type: runtime.definePropType(Object)
+  },
   link: {
     type: runtime.definePropType(Object)
   },

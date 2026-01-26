@@ -6,10 +6,11 @@ export declare const ElLoading: {
     install(app: App): void;
     directive: Directive<ElementLoading, LoadingBinding>;
     service: {
-        (options?: import("./src/types").LoadingOptions): import("./src/loading").LoadingInstance;
+        (options?: import("./src/types").LoadingOptions, context?: AppContext | null): import("./src/loading").LoadingInstance;
         _context: AppContext | null;
     };
 };
 export default ElLoading;
 export { vLoading, vLoading as ElLoadingDirective, Loading as ElLoadingService };
 export * from './src/types';
+export type { LoadingInstance } from './src/loading';

@@ -13,6 +13,7 @@ var dynamicSizeList = require('../../virtual-list/src/components/dynamic-size-li
 var index = require('../../../hooks/use-namespace/index.js');
 var types = require('../../../utils/types.js');
 var core = require('@vueuse/core');
+var event = require('../../../utils/dom/event.js');
 var aria = require('../../../constants/aria.js');
 var shared = require('@vue/shared');
 
@@ -23,7 +24,9 @@ const props = {
     required: true
   },
   hoveringIndex: Number,
-  width: Number
+  width: Number,
+  id: String,
+  ariaLabel: String
 };
 var ElSelectMenu = vue.defineComponent({
   name: "ElSelectDropdown",
@@ -173,9 +176,7 @@ var ElSelectMenu = vue.defineComponent({
       onKeyboardNavigate("backward");
     };
     const onKeydown = (e) => {
-      const {
-        code
-      } = e;
+      const code = event.getEventCode(e);
       const {
         tab,
         esc,
@@ -233,6 +234,13 @@ var ElSelectMenu = vue.defineComponent({
         "height": height,
         "width": width,
         "total": data.length,
+        "innerElement": "ul",
+        "innerProps": {
+          id: props2.id,
+          role: "listbox",
+          "aria-label": props2.ariaLabel,
+          "aria-orientation": "vertical"
+        },
         "onKeydown": onKeydown
       }), {
         default: (props3) => vue.createVNode(Item, props3, null)
