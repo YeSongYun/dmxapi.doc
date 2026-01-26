@@ -180,6 +180,7 @@ export default defineConfig({
               { text: '函数调用', link: '/claude-fc' },
               { text: 'sdk使用', link: '/claude-sdk' },
               { text: '缓存创建', link: '/claude-hc' },
+              { text: '联网搜索', link: '/claude-serch' },
             ],
           },
           {
