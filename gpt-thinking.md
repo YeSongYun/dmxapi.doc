@@ -13,8 +13,10 @@ https://www.dmxapi.cn/v1/responses
 :::
 
 ## 🚀支持的模型（部分）
-- `gpt-5`
+- `gpt-5.2`
 - `gpt-5.1`
+- `gpt-5`
+
 
 
 
