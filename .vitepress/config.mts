@@ -445,7 +445,8 @@ export default defineConfig({
               { text: 'Roo_Code', link: '/roo_code' },
               { text: 'AnythingLLM', link: '/AnythingLLM' },
               { text: '思源笔记', link: '/siyuanbiji' },
-              { text: 'Typing Mind', link: '/typingmind' }
+              { text: 'Typing Mind', link: '/typingmind' },
+              { text: '提示词优化器', link: '/prompt-optimizer' }
             ],
           },
         ]
