@@ -5,7 +5,7 @@
 
 ### 1. 访问下载页面
 
-下载链接：https://github.com/clawdbot/clawdbot
+下载链接：https://github.com/linshenkx/prompt-optimizer
 
 ### 2. 选择最新版本的发行版
 ![Prompt Optimizer](./img/prompt_opt01.png)
