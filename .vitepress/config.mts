@@ -108,6 +108,7 @@ export default defineConfig({
                 ],
               },
               { text: '常见报错码', link: '/error-nub' },
+              { text: 'gpt思考内容', link: '/gpt-thinking' },
               {
                 text: '-thinking思考功能的开关',
                 collapsed: true,
