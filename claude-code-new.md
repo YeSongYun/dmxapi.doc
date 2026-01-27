@@ -10,6 +10,9 @@ DMXAPI研发的一键配置 Anthropic Claude Code CLI 环境变量的跨平台�
     - 环境变量自动持久化
 
 ## 仓库地址
+::: tip 提示
+通过下面的仓库地址，下载claude code 的配置工具
+:::
 cnb开源仓库地址：
 
 https://cnb.cool/dmxapi/dmxapi_claude_code
@@ -19,7 +22,7 @@ github仓库地址：
 https://github.com/YeSongYun/dmxapi-claude-code
 
 
-:::tip 提示
+:::warning 注意
 编程插件tokens消耗量很大，请注意tokens消耗
 :::
 
