@@ -43,4 +43,8 @@
 
 ![siyuan](./img/siyuan06.png)
 
+<p align="center">
+  <small>© 2026 DMXAPI 思源笔记配置</small>
+</p>
+
 

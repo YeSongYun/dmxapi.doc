@@ -92,5 +92,5 @@ except Exception as e:
 
 
 <p align="center">
-  <small>© 2025 DMXAPI 重排序</small>
+  <small>© 2026 DMXAPI 重排序</small>
 </p>

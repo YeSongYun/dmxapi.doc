@@ -1,4 +1,4 @@
-# TypingMind配置方法
+# TypingMind配置DMXAPI的方法
 **TypingMind** 是一个专用的聊天界面，旨在让您更轻松、更灵活、更高效地使用 ChatGPT、Claude、Gemini 等大型语言模型 (LLM) 或开源模型。您无需在不同的应用程序或网站之间切换，只需连接您自己的 API 密钥，即可在一个统一的平台上访问所有内容。
 ## 打开模型配置页面
 
@@ -41,3 +41,6 @@
 
 ![typingmind](./img/typingmind10.png)
 
+<p align="center">
+  <small>© 2026 DMXAPI TypingMind配置DMXAPI的方法</small>
+</p>
