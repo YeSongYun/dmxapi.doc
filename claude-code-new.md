@@ -9,7 +9,8 @@ DMXAPI研发的一键配置 Anthropic Claude Code CLI 环境变量的跨平台�
     - 支持 Windows / Linux / macOS
     - 环境变量自动持久化
 
-## 仓库地址
+## 配置工具的下载仓库地址
+
 ::: tip 提示
 通过下面的仓库地址，下载claude code 的配置工具
 :::
