@@ -417,8 +417,17 @@ export default defineConfig({
               { text: 'qwen-deep-research', link: '/qwen-deep-research' },
               { text: '界面交互模型gui-plus', link: '/gui-plus' },
               { text: 'qwen-plus-character角色扮演模型', link: '/qwen-plus-character' },
+              { text: 'qwen3-max-2026-01-23', link: '/qwen3-max-2026-01-23' }
             ],
           },
+
+          // {
+          //   text: '工具调用',
+          //   collapsed: true,
+          //   items: [
+
+          //   ],
+          // },
 
           {
             text: '各类第三方应用配置',
