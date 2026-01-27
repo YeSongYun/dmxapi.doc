@@ -9,23 +9,6 @@ DMXAPI研发的一键配置 Anthropic Claude Code CLI 环境变量的跨平台�
     - 支持 Windows / Linux / macOS
     - 环境变量自动持久化
 
-## 配置工具的下载仓库地址
-
-::: tip 提示
-通过下面的仓库地址，下载claude code 的配置工具
-:::
-cnb开源仓库地址：
-
-https://cnb.cool/dmxapi/dmxapi_claude_code
-
-github仓库地址：
-
-https://github.com/YeSongYun/dmxapi-claude-code
-
-
-:::warning 注意
-编程插件tokens消耗量很大，请注意tokens消耗
-:::
 
 ## 环境准备
 在开始之前，请先安装并验证以下基础环境：
@@ -41,8 +24,21 @@ npm -v
 git --version
 ```
 
+## 安装 Claude Code
+
+```bash
+# windows 建议在 管理员权限PowerShell 里使用
+npm install -g @anthropic-ai/claude-code
+# 查看版本 验证安装成功
+claude --version
+```
+
+
+
+
+
 ## 使用方法
-使用之前，请先根据自己的操作系统情况 ，添加执行权限（Windows用户可以直接双击打开）
+在配置之前，请先根据自己的操作系统情况 ，添加执行权限（Windows用户可以直接双击打开）
 :::warning 注意
 claude code 只能配置模型广场中claude code 专区的后缀为-cc的模型，其他的不可用
 :::
@@ -73,17 +69,25 @@ chmod +x dmxapi-claude-code-macos-arm64
 ./dmxapi-claude-code-macos-arm64
 ```
 
+## 配置流程
 
-## 第一步：安装 Claude Code
+### 配置工具的下载仓库地址
 
-```bash
-# windows 建议在 管理员权限PowerShell 里使用
-npm install -g @anthropic-ai/claude-code
-# 查看版本 验证安装成功
-claude --version
-```
+::: tip 提示
+通过下面的仓库地址，下载claude code 的配置工具
+:::
+cnb开源仓库地址：
 
-## 第二步：使用 DMXAPI 开发的插件配置 claude code
+https://cnb.cool/dmxapi/dmxapi_claude_code
+
+github仓库地址：
+
+https://github.com/YeSongYun/dmxapi-claude-code
+
+
+:::warning 注意
+编程插件tokens消耗量很大，请注意tokens消耗
+:::
 
 ### 1、复制cnb仓库地址，在浏览器中打开。
 ![claude-code](img\1-20-8.png)
