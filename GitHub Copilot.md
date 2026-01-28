@@ -1,5 +1,5 @@
 # GitHub Copilot 配置 自定义 API 教程
-
+   GitHub Copilot 改变了开发者的体验。在人工智能领域的领导者支持下，GitHub Copilot 在整个软件开发生命周期中提供上下文辅助，从 IDE 中的代码补全和聊天辅助，到 GitHub 和其他文档中的代码解释和问题解答。借助 GitHub Copilot 提升工作流程，开发者可以专注于：价值、创新和快乐。
 
 ## 第一步：安装 UV 工具
 
