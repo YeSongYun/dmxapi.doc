@@ -455,7 +455,9 @@ export default defineConfig({
               { text: 'AnythingLLM', link: '/AnythingLLM' },
               { text: '思源笔记', link: '/siyuanbiji' },
               { text: 'Typing Mind', link: '/typingmind' },
-              { text: '提示词优化器', link: '/prompt-optimizer' }
+              { text: '提示词优化器', link: '/prompt-optimizer' },
+              { text: 'GitHub Copilot', link: '/GitHub Copilot' },
+              { text: 'Moltbot（原 clawdbot）', link: '/clawdbot' }
             ],
           },
         ]
