@@ -371,7 +371,7 @@ export default defineConfig({
             items: [
               { text: 'jina-reranker', link: '/rerank-jina-reranker' },
               { text: 'qwen3-reranker-8b', link: '/rerank-qwen3-reranker-8b' },
-              { text: 'BAAI/bge-reranker-v2-m3', link: '/rerank-bge-reranker-v2-m3' },
+              { text: 'bge-reranker-v2-m3-free', link: '/rerank-bge-reranker-v2-m3' },
               { text: 'doubao-embedding-large-text', link: '/emb-doubao-embedding-large-text' },
               { text: '阿里 text-embedding-v4', link: '/emb-text-embedding-v4' },
               { text: 'OpenAi 向量模型', link: '/embedding' },
