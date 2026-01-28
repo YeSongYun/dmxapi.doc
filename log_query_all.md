@@ -6,7 +6,7 @@
 
 ## 接口地址
 ```
-https://www.dmxapi.cn/api/log/    
+https://www.dmxapi.cn/api/log/self  
 ```
 ## 代码示例
 ```python
