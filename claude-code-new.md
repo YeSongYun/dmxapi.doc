@@ -72,6 +72,7 @@ https://github.com/YeSongYun/dmxapi-claude-code
 ![claude-code](img\1-20-11.png)
 
 #### 5、下载完成
+windows用户下载完成后可以直接点击运行，开始配置，可以跳到第7步，其他操作系统用户需要先给文件添加运行权限，然后再运行。
 ![claude-code](img\1-20-13.png)
 
 #### 6、安装之前，添加运行权限（Windows可以直接双击使用）
