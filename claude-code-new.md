@@ -57,40 +57,6 @@ https://github.com/YeSongYun/dmxapi-claude-code
 编程插件tokens消耗量很大，请注意tokens消耗
 :::
 
-
-
-
-### 在配置之前，请先根据自己的操作系统情况 ，添加执行权限
-:::warning 注意
-claude code 只能配置模型广场中claude code 专区的后缀为-cc的模型，其他的不可用
-:::
-#### Windows
-```
-.\dmxapi-claude-code.exe
-```
-
-#### Linux
-```
-# 添加执行权限
-chmod +x dmxapi-claude-code-linux-amd64
-
-# 运行
-./dmxapi-claude-code-linux-amd64
-
-```
-
-#### macOS
-```
-# 添加执行权限
-
-chmod +x dmxapi-claude-code-macos-arm64
-
-
-# 运行（首次可能需要在"系统设置 > 隐私与安全性"中允许）
-
-./dmxapi-claude-code-macos-arm64
-```
-
 ## 配置流程
 
 #### 1、复制cnb仓库地址，在浏览器中打开。
