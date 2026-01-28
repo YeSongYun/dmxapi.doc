@@ -108,7 +108,7 @@ export default defineConfig({
                 ],
               },
               { text: '常见报错码', link: '/error-nub' },
-              { text: 'gpt思考内容', link: '/gpt-thinking' },
+
               {
                 text: '-thinking思考功能的开关',
                 collapsed: true,
@@ -151,6 +151,7 @@ export default defineConfig({
               { text: '图片分析（本地）', link: '/res-base64-image' },
               { text: '文件分析', link: '/res-file' },
               { text: '函数调用FunctionCall', link: '/res-function-call' },
+              { text: 'gpt思考内容', link: '/gpt-thinking' },
               { text: 'GPT-5.1 指南', link: '/GPT-5.1' },
               { text: 'GPT-5.2 指南', link: '/gpt-5.2' }
             ],
