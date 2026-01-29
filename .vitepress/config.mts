@@ -168,7 +168,8 @@ export default defineConfig({
               { text: 'json输出', link: '/gemini-json' },
                 { text: '多轮对话', link: '/duolunduihua' },
               { text: '联网搜索', link: '/gemini-internet' },
-              { text: 'Gemini 3 开发者指南', link: '/gemini-3' }
+              { text: 'Gemini 3 开发者指南', link: '/gemini-3' },
+              { text: 'gemini-3-pro-image-preview 返回格式变化的说明', link: '/gemini-3-pro-image-preview ' }
             ],
           },
           {
