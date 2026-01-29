@@ -71,11 +71,8 @@
 
 ### 非常规测试代码(可复现)
 ```python
-
 import requests
-import base64
-import os
-
+import json
 
 # API 配置
 url = "https://www.dmxapi.cn/v1beta/models/gemini-3-pro-image-preview:generateContent"
@@ -102,8 +99,17 @@ data = {
         }
     ],
     }
-response = requests.post(url, headers=headers, json=data)
-print(response.json())
+
+try:
+    response = requests.post(url, headers=headers, json=data, timeout=30)
+    response.raise_for_status()
+    print(response.json())
+except requests.exceptions.RequestException as e:
+    print(f"请求失败：{e}")
+except (json.JSONDecodeError, ValueError) as e:
+    print(f"JSON 解析失败：{e}")
+    print("原始返回：", response.text)
+
 
 ```
 
