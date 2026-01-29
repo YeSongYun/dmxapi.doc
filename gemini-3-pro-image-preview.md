@@ -78,7 +78,7 @@ import json
 url = "https://www.dmxapi.cn/v1beta/models/gemini-3-pro-image-preview:generateContent"
 headers = {
     "Content-Type": "application/json",
-    "Authorization": "sk-mxxxxxxxxxxxxx" #请填写您的密钥
+    "Authorization": "sk-******************************" #请填写您的密钥
 }
 
 
