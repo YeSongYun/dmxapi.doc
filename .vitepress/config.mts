@@ -220,6 +220,7 @@ export default defineConfig({
                   { text: '文生图', link: '/img-nano-banana' },
                   { text: '图片编辑', link: '/img-nano-banana-edit' },
                   { text: '多图融合', link: '/img-nano-banana-images' },
+                  { text: 'gemini多轮图片修改', link: '/duolun' },
                   { text: '返回格式变化的说明', link: '/gemini-3-pro-image-preview' }             
                 ],
                 },
@@ -230,6 +231,7 @@ export default defineConfig({
                   { text: '文生图', link: '/img-nano-banana' },
                   { text: '图片编辑', link: '/img-nano-banana-edit' },
                   { text: '多图融合', link: '/img-nano-banana-images' },
+                  { text: 'gemini多轮图片修改', link: '/duolun' },
                 ],
                 },
                   
@@ -240,6 +242,7 @@ export default defineConfig({
                   { text: '文生图', link: '/nano-banana-2-01' },
                   { text: '图片编辑', link: '/nano-banana-2-02' },
                   { text: '多图融合', link: '/nano-banana-2-03' },
+                  { text: 'gemini多轮图片修改', link: '/duolun' },
                   { text: 'cherry studio', link: '/nano-banana-2-cherry'}
                 ],
                 },
