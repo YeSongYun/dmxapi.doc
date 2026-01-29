@@ -1,6 +1,6 @@
 # gemini-3-pro-image-preview 返回格式变化的说明
 
-`gemini-3-pro-image-preview` 是 Google 最新推出的图像生成与处理模型，支持图像输入和多模态推理。在实际使用中，部分用户反馈该模型的返回格式存在不确定性：同一提示词可能返回标准的 `inlineData` 结构，也可能返回文本形式的 base64 字符串。本文档记录了这一现象，并提供可复现的测试代码及解决方案。
+`gemini-3-pro-image-preview` 是 Google 最新推出的图像生成与处理模型，支持图像输入和多模态推理。在实际使用中，部分用户反馈该模型的返回格式存在不确定性：同一提示词可能返回标准的 `inlineData` 结构，也可能返回文本形式的 base64 字符串。本文档记录了这一现象，并提供可复现的测试代码。
 
 ## 常规的返回格式
 
@@ -68,23 +68,23 @@
 | 常规格式 | `{"inlineData": {"mimeType": "...", "data": "..."}}` | 标准结构化输出，便于程序解析 |
 | 非常规格式 | `{"text": "data:image/png;base64,..."}` | 需要手动解析文本提取 base64 数据 |
 
-### 解决方案
-
-1. **优化提示词**：在提示词中明确强调必须使用 `inline_data` 格式，并添加"不要返回 Markdown 代码块"等约束
-2. **增加 temperature**：适当提高 temperature 值（如 0.4-0.6），让模型有更多随机性，避免过于机械的输出
-3. **后端兼容处理**：在代码中同时兼容两种返回格式，先检查 `inlineData`，若不存在则从 `text` 字段中提取
 
 ### 非常规测试代码(可复现)
 ```python
+
 import requests
 import base64
+import os
+
 
 # API 配置
 url = "https://www.dmxapi.cn/v1beta/models/gemini-3-pro-image-preview:generateContent"
 headers = {
     "Content-Type": "application/json",
-    "Authorization": "sk-xxxxxxxxxxxxxxx" #请替换为您的实际密钥
+    "Authorization": "sk-mxxxxxxxxxxxxx" #请填写您的密钥
 }
+
+
 data = {
     "contents": [
         {
@@ -101,12 +101,6 @@ data = {
         ]
         }
     ],
-    "generationConfig": {
-        "temperature": 0.2,
-        "topK": 1,
-        "topP": 1,
-        "maxOutputTokens": 2048
-    }
     }
 response = requests.post(url, headers=headers, json=data)
 print(response.json())

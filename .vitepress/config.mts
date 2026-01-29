@@ -217,7 +217,7 @@ export default defineConfig({
                   { text: '文生图', link: '/img-nano-banana' },
                   { text: '图片编辑', link: '/img-nano-banana-edit' },
                   { text: '多图融合', link: '/img-nano-banana-images' },
-                  { text: 'gemini-3-pro-image-preview 返回格式变化的说明', link: '/gemini-3-pro-image-preview ' }             
+                  { text: 'gemini-3-pro-image-preview 返回格式变化的说明', link: '/gemini-3-pro-image-preview' }             
                 ],
                 },
                  {
