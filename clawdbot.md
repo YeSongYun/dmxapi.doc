@@ -1,6 +1,6 @@
 # OpenClaw（原 clawdbot）配置 DMXAPI 教程
 
-OpenClaw 是一款运行在您自己设备上的个人 AI 助手，支持通过 WhatsApp、Telegram、Slack、Discord、Google Chat、Signal、iMessage、Microsoft Teams、WebChat 等多种渠道进行交互。
+Moltbot 是一款运行在您自己的设备上的个人 AI 助手 。它可以通过您常用的渠道（WhatsApp、Telegram、Slack、Discord、Google Chat、Signal、iMessage、Microsoft Teams、WebChat）以及 BlueBubbles、Matrix、Zalo 和 Zalo Personal 等扩展渠道为您提供帮助。它支持 macOS/iOS/Android 系统，并可渲染由您控制的实时 Canvas 界面。网关只是控制平台，产品本身才是真正的助手。
 
 ::: tip 汉化版特性
 - 已内置 DMXAPI 配置

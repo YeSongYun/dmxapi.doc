@@ -82,37 +82,6 @@ export default defineConfig({
         ],
       },
       {
-        text: '各类第三方应用配置',
-        collapsed: true,
-        items: [
-
-          // { text: 'Claude code(推荐)', link: '/claude-code' },
-          { text: 'Claude code(推荐)', link: '/claude-code-new' },
-
-          { text: 'cc switch', link: '/cc_switch' },
-          { text: 'Qwen3 coder', link: '/qwen-coder' },
-          { text: 'Openai Codex', link: '/codex' },
-          { text: 'opencode', link: '/opencode' },
-          { text: 'Cherry Studio', link: '/cherry-studio' },
-          { text: 'Cherry Studio调用gpt-5.2-pro', link: '/cherry-studio-gpt-5.2-pro' },
-          { text: 'Chatwise', link: '/chatwise' },
-          { text: 'chatbox', link: '/chatbox' },
-          { text: 'Dify', link: '/dify' },
-          { text: 'coze', link: '/coze-llm-plug' },
-          { text: 'VSCode CLine', link: '/Cline' },
-          { text: 'n8n', link: '/n8n' },
-          { text: 'Cursor', link: '/cursor' },
-          { text: 'ONLYOFFICE', link: '/onlyoffice' },
-          { text: 'Roo_Code', link: '/roo_code' },
-          { text: 'AnythingLLM', link: '/AnythingLLM' },
-          { text: '思源笔记', link: '/siyuanbiji' },
-          { text: 'Typing Mind', link: '/typingmind' },
-          { text: '提示词优化器', link: '/prompt-optimizer' },
-          { text: 'GitHub Copilot', link: '/GitHub Copilot' },
-          { text: 'OpenClaw(原clawdbot)', link: '/clawdbot' }
-        ],
-      },
-      {
         text: 'API调用',
         collapsed: true,
         items: [
@@ -456,6 +425,37 @@ export default defineConfig({
 
   
         ]
+      },
+      {
+        text: '各类第三方应用配置',
+        collapsed: true,
+        items: [
+
+          // { text: 'Claude code(推荐)', link: '/claude-code' },
+          { text: 'Claude code(推荐)', link: '/claude-code-new' },
+
+          { text: 'cc switch', link: '/cc_switch' },
+          { text: 'Qwen3 coder', link: '/qwen-coder' },
+          { text: 'Openai Codex', link: '/codex' },
+          { text: 'opencode', link: '/opencode' },
+          { text: 'Cherry Studio', link: '/cherry-studio' },
+          { text: 'Cherry Studio调用gpt-5.2-pro', link: '/cherry-studio-gpt-5.2-pro' },
+          { text: 'Chatwise', link: '/chatwise' },
+          { text: 'chatbox', link: '/chatbox' },
+          { text: 'Dify', link: '/dify' },
+          { text: 'coze', link: '/coze-llm-plug' },
+          { text: 'VSCode CLine', link: '/Cline' },
+          { text: 'n8n', link: '/n8n' },
+          { text: 'Cursor', link: '/cursor' },
+          { text: 'ONLYOFFICE', link: '/onlyoffice' },
+          { text: 'Roo_Code', link: '/roo_code' },
+          { text: 'AnythingLLM', link: '/AnythingLLM' },
+          { text: '思源笔记', link: '/siyuanbiji' },
+          { text: 'Typing Mind', link: '/typingmind' },
+          { text: '提示词优化器', link: '/prompt-optimizer' },
+          { text: 'GitHub Copilot', link: '/GitHub Copilot' },
+          { text: 'OpenClaw(原clawdbot)', link: '/clawdbot' }
+        ],
       },
       {
         text: '服务条款',
