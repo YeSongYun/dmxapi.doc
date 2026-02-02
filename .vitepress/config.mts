@@ -460,7 +460,8 @@ export default defineConfig({
           { text: 'Typing Mind', link: '/typingmind' },
           { text: '提示词优化器', link: '/prompt-optimizer' },
           { text: 'GitHub Copilot', link: '/GitHub Copilot' },
-          { text: 'OpenClaw(原clawdbot)', link: '/clawdbot' }
+          { text: 'OpenClaw(原clawdbot)', link: '/clawdbot' },
+          { text: '沉浸式翻译', link: '/chenjinshifanyi.md' }
         ],
       },
       {
