@@ -16,7 +16,7 @@ main:
             force: true
 
   pull_request:
-    - name: "AI 代码初审"
+    - name: "AI 代码评审"
       imports: https://cnb.cool/dmxapi/claude-code-my/-/blob/main/env.yml
       runner:
         tags: cnb:arch:amd64
@@ -33,18 +33,4 @@ main:
             max_diff_size: 128000
             fail_on_critical: true
 
-    - name: "AI 代码复审"
-      imports: https://cnb.cool/dmxapi/claude-code-my/-/blob/main/env.yml
-      runner:
-        tags: cnb:arch:amd64
-        cpus: 1
-      stages:
-        - name: 代码评审
-          image: cnbcool/ai-review:latest
-          settings:
-            type: code-review
-            ai_chat_url: ${AI_CHAT_URL}
-            ai_token: ${AI_TOKEN}
-            ai_model: ${AI_MODEL}
-            pr_comment: true
-            max_comments: 50
+
