@@ -45,6 +45,7 @@ CC-Switch 是一款面向企业与开发者的高性能交换与流量调度组�
 ![cc_switch](img/1-20-7.png)
 
 
+
 ## 配置 claude code
 
 ### 步骤 1：选择 claude，点击 `+` 添加供应商
