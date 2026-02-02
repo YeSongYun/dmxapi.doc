@@ -42,7 +42,7 @@ export default defineConfig({
       { text: '|', link: '' },
       { text: '📗更新', link: 'https://www.dmxapi.cn/weblog' },
       { text: '💰模型价格', link: 'https://www.dmxapi.cn/rmb' },
-      { text: '🐍Claude Code', link: '/claude-code' },
+      { text: '🐍Claude Code', link: '/claude-code-new' },
       // { text: '🔧模型参数', link: 'http://models.dmxapi.cn/' },
       { text: '🎫开发票', link: 'https://www.dmxapi.cn/fapiao' },
       { text: '🗏 返回DMXAPI', link: 'https://dmxapi.cn' },
@@ -59,7 +59,7 @@ export default defineConfig({
           { text: '使命·价值观', link: '/values' },
           { text: '团队介绍', link: '/teams' },
           { text: 'AI探索路', link: '/qiyuan' },
-          { text: '商务资料下载', link: '/pptpdf' },
+          // { text: '商务资料下载', link: '/pptpdf' },
         ],
       },
       {
@@ -108,6 +108,7 @@ export default defineConfig({
                 ],
               },
               { text: '常见报错码', link: '/error-nub' },
+
               {
                 text: '-thinking思考功能的开关',
                 collapsed: true,
@@ -150,6 +151,7 @@ export default defineConfig({
               { text: '图片分析（本地）', link: '/res-base64-image' },
               { text: '文件分析', link: '/res-file' },
               { text: '函数调用FunctionCall', link: '/res-function-call' },
+              { text: 'gpt思考内容', link: '/gpt-thinking' },
               { text: 'GPT-5.1 指南', link: '/GPT-5.1' },
               { text: 'GPT-5.2 指南', link: '/gpt-5.2' }
             ],
@@ -181,6 +183,7 @@ export default defineConfig({
               { text: '函数调用', link: '/claude-fc' },
               { text: 'sdk使用', link: '/claude-sdk' },
               { text: '缓存创建', link: '/claude-hc' },
+              { text: '联网搜索', link: '/claude-serch' },
             ],
           },
           {
@@ -217,6 +220,7 @@ export default defineConfig({
                   { text: '文生图', link: '/img-nano-banana' },
                   { text: '图片编辑', link: '/img-nano-banana-edit' },
                   { text: '多图融合', link: '/img-nano-banana-images' },
+                  { text: 'Gemini image 香蕉多轮对话改图文档', link: '/duolun' },
                   { text: '返回格式变化的说明', link: '/gemini-3-pro-image-preview' }             
                 ],
                 },
@@ -227,6 +231,7 @@ export default defineConfig({
                   { text: '文生图', link: '/img-nano-banana' },
                   { text: '图片编辑', link: '/img-nano-banana-edit' },
                   { text: '多图融合', link: '/img-nano-banana-images' },
+                  { text: 'Gemini image 香蕉多轮对话改图文档', link: '/duolun' },
                 ],
                 },
                   
@@ -237,6 +242,7 @@ export default defineConfig({
                   { text: '文生图', link: '/nano-banana-2-01' },
                   { text: '图片编辑', link: '/nano-banana-2-02' },
                   { text: '多图融合', link: '/nano-banana-2-03' },
+                  { text: 'Gemini image 香蕉多轮对话改图文档', link: '/duolun' },
                   { text: 'cherry studio', link: '/nano-banana-2-cherry'}
                 ],
                 },
@@ -306,8 +312,7 @@ export default defineConfig({
                {
                 text: 'Kling 视频模型 ',
                 collapsed: true,
-                items: [
-              
+                items: [              
                   { text: 'kling-v2-6-text2video', link: '/kling-v2-6-text2video' },
                   { text: 'kling-v2-6-image2video', link: '/kling-v2-6-image2video'}
                 ],
@@ -406,6 +411,7 @@ export default defineConfig({
             items: [
               { text: 'deepseek-ocr', link: '/deepseek-ocr' },
               { text: 'qwen-vl-ocr-latest', link: '/qwen-vl-ocr-latest' },
+              { text: 'somark', link: '/somark' },
               { text: '合合文档解析模型', link: '/hehe' }
               
             ],

@@ -46,54 +46,58 @@ brew install anomalyco/tap/opencode
 
 ## 配置教程
 
-OpenCode 可通过我司自研的小插件实现快速配置与一键接入，显著降低环境初始化、密钥与参数管理、调用链路对接等集成成本，帮助团队在开发、测试与生产等不同环境中保持一致的接入体验，并便于在多个项目间复用与迁移。插件采用模块化设计，支持按需启用能力、灵活扩展与二次开发，同时提供清晰的配置示例与使用说明，便于快速上手与持续维护。该插件已正式开源，地址：[DMXAPI opencode插件](https://cnb.cool/dmxapi/opencode_dmxapi)，
+OpenCode 可通过我司自研的小插件实现快速配置与一键接入，显著降低环境初始化、密钥与参数管理、调用链路对接等集成成本，帮助团队在开发、测试与生产等不同环境中保持一致的接入体验，并便于在多个项目间复用与迁移。插件采用模块化设计，支持按需启用能力、灵活扩展与二次开发，同时提供清晰的配置示例与使用说明，便于快速上手与持续维护。该插件已正式开源，地址如下。
 
-## 下载地址
+CNB仓库： https://cnb.cool/dmxapi/opencode_dmxapi
 
-Windows用户下载地址：[opencode](https://cnb.cool/dmxapi/opencode_dmxapi/-/releases/download/v1.0.0/dmxapi-config-windows.exe),
-
-MacOS用户下载地址1(amd64)：[opencode](https://cnb.cool/dmxapi/opencode_dmxapi/-/releases/download/v1.0.0/dmxapi-config-macos-amd64)
-
-MacOS用户下载地址2(arm64)：[opencode](https://cnb.cool/dmxapi/opencode_dmxapi/-/releases/download/v1.0.0/dmxapi-config-macos-arm64)
+github仓库：https://github.com/YeSongYun/OpenCode-DMXAPI
 
 ## 配置细化
 
 这里我以Windows系统为例演示
 
-### 1. 根据您的系统环境选择合适的插件，点击下载 
+### 1. 输入仓库链接，准备下载插件
 
-![opencode](img\1-12-1.png)
+仓库下载链接：
+https://cnb.cool/dmxapi/opencode_dmxapi
 
+![opencode](img\1-27-1.png)
+### 2. 根据您的系统环境选择合适的插件，点击下载 
 
-### 2. 正在下载ing
+![opencode](img\1-27-2.png)
+### 3. 下载插件
 
-![opencode](img\1-12-2.png)
+![opencode](img\1-27-3.png)
 
-### 3. 选择DMXAPI和输入API 密钥
+### 4. 根据您的系统环境选择合适的插件，点击下载 
+
+![opencode](img\1-27-4.png)
+
+### 5. 选择DMXAPI和输入API 密钥
 下载成功后双击打开，进入配置界面，然后填写您的url，如下图：
 
 ![opencode](img\1-12-3.png)
 
-### 4. 配置key
+### 6. 配置key
 
 配置key时要注意跟第三步填写的url对应
 
 ![opencode](img\1-12-4.png)
 
-### 5. 根据需求添加模型
+### 7. 根据需求添加模型
 
 ![opencode](img\1-12-5.png)
 
-### 6. 配置成功，退出配置界面
+### 8. 配置成功，退出配置界面
 
 ![opencode](img\1-12-6.png)
 
-### 7. 在系统终端中使用
+### 9. 在系统终端中使用
 在搜索栏中输入cmd，单击回车打开系统终端，输入opencode，回车。
 
 ![opencode](img\1-12-7.png)
 
-### 8. 选择想用的模型
+### 10. 选择想用的模型
 
 在聊天框中输入"/model"，单击回车
 ![opencode](img\1-12-8.png)

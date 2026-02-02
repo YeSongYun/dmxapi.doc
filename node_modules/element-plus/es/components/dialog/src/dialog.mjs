@@ -31,6 +31,7 @@ const dialogProps = buildProps({
     type: Boolean,
     default: true
   },
+  modalPenetrable: Boolean,
   openDelay: {
     type: Number,
     default: 0
@@ -57,6 +58,10 @@ const dialogProps = buildProps({
   headerAriaLevel: {
     type: String,
     default: "2"
+  },
+  transition: {
+    type: definePropType([String, Object]),
+    default: void 0
   }
 });
 const dialogEmits = {
@@ -68,6 +73,7 @@ const dialogEmits = {
   openAutoFocus: () => true,
   closeAutoFocus: () => true
 };
+const dialogContextKey = Symbol("dialogContextKey");
 
-export { dialogEmits, dialogProps };
+export { dialogContextKey, dialogEmits, dialogProps };
 //# sourceMappingURL=dialog.mjs.map

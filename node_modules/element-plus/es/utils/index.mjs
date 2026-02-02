@@ -1,5 +1,5 @@
-export { castArray, unique } from './arrays.mjs';
-export { isFirefox } from './browser.mjs';
+export { castArray, extractFirst, unique } from './arrays.mjs';
+export { isAndroid, isFirefox } from './browser.mjs';
 export { debugWarn, throwError } from './error.mjs';
 export { isKorean } from './i18n.mjs';
 export { entriesOf, getProp, keysOf } from './objects.mjs';
@@ -10,8 +10,8 @@ export { isBoolean, isElement, isEmpty, isNumber, isPropAbsent, isStringNumber, 
 export { mutable } from './typescript.mjs';
 export { throttleByRaf } from './throttleByRaf.mjs';
 export { easeInOutCubic } from './easings.mjs';
-export { attemptFocus, focusNode, getSibling, isFocusable, isLeaf, isVisible, obtainAllFocusableElements, triggerEvent } from './dom/aria.mjs';
-export { composeEventHandlers, whenMouse } from './dom/event.mjs';
+export { focusElement, focusNode, getSibling, isFocusable, isLeaf, isVisible, obtainAllFocusableElements, triggerEvent } from './dom/aria.mjs';
+export { composeEventHandlers, getEventCode, getEventKey, whenMouse } from './dom/event.mjs';
 export { getClientXY, getOffsetTop, getOffsetTopDistance, isInContainer } from './dom/position.mjs';
 export { animateScrollTo, getScrollBarWidth, getScrollContainer, getScrollElement, getScrollTop, isScroll, scrollIntoView } from './dom/scroll.mjs';
 export { addClass, addUnit, classNameToArray, getStyle, hasClass, removeClass, removeStyle, setStyle } from './dom/style.mjs';
@@ -23,7 +23,7 @@ export { buildProp, buildProps, definePropType, epPropKey, isEpProp } from './vu
 export { composeRefs } from './vue/refs.mjs';
 export { getComponentSize } from './vue/size.mjs';
 export { isValidComponentSize, isValidDatePickType } from './vue/validator.mjs';
-export { PatchFlags, ensureOnlyChild, flattedChildren, getFirstValidNode, getNormalizedProps, isComment, isFragment, isTemplate, isText, isValidElementNode, renderBlock, renderIf } from './vue/vnode.mjs';
+export { PatchFlags, flattedChildren, getFirstValidNode, getNormalizedProps, isComment, isFragment, isTemplate, isText, isValidElementNode, renderBlock, renderIf } from './vue/vnode.mjs';
 export { castArray as ensureArray } from 'lodash-unified';
 export { isClient, isIOS } from '@vueuse/core';
 export { NOOP, camelize, hasOwn, hyphenate, isArray, isDate, isFunction, isObject, isPlainObject, isPromise, isString, isSymbol, toRawType } from '@vue/shared';

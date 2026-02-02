@@ -192,7 +192,6 @@ def main() -> None:
                 'img/ccswitch05.png',
                 'img/ccswitch06.png',
                 'img/ccswitch07.png'
-
     ]               
     
     # 第三步：验证水印文件存在性
@@ -262,7 +261,7 @@ def main() -> None:
     
     # 根据处理结果输出相应的提示信息
     if success_count > 0:
-        print("🎉 水印添加完成！")
+        print("🎉 水印添加完成啦！")
         print("💡 提示: 原始图片已被替换为带水印的版本")
         print("📝 建议: 如需保留原图，请提前备份文件")
     else:

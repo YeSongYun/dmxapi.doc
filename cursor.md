@@ -8,7 +8,7 @@
 
 
 ::: warning
-如果您想用cursor接入我们的模型，需要订阅pro会员，否则会报错，另外使用cursor接我们的api时不要开vpn软件。
+如果您想用cursor接入我们的模型，需要订阅pro会员，否则会报错，添加模型时，要打开vpn软件，否则没有添加模型的按键（添加完后关掉vpn），在使用cursor接DMXAPI的api时不要开vpn软件。
 :::
 
 

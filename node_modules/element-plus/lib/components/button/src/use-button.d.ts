@@ -18,6 +18,7 @@ export declare const useButton: (props: ButtonProps, emit: SetupContext<ButtonEm
     }>;
     _plain: import("vue").ComputedRef<import("element-plus/es/utils").EpPropMergeType<BooleanConstructor, unknown, unknown>>;
     _round: import("vue").ComputedRef<import("element-plus/es/utils").EpPropMergeType<BooleanConstructor, unknown, unknown>>;
+    _text: import("vue").ComputedRef<import("element-plus/es/utils").EpPropMergeType<BooleanConstructor, unknown, unknown>>;
     shouldAddSpace: import("vue").ComputedRef<boolean>;
     handleClick: (evt: MouseEvent) => void;
 };

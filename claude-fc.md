@@ -16,6 +16,7 @@
 """
 DMX API 测试脚本
 
+
 功能说明：
 - 测试 DMX API 的对话功能
 - 演示工具调用（天气查询）的使用
@@ -23,7 +24,6 @@ DMX API 测试脚本
 
 作者：DMX API 团队
 """
-
 import requests
 import os
 import json
