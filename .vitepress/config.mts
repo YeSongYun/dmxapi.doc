@@ -380,6 +380,7 @@ export default defineConfig({
               { text: 'doubao-embedding-large-text', link: '/emb-doubao-embedding-large-text' },
               { text: '阿里 text-embedding-v4', link: '/emb-text-embedding-v4' },
               { text: 'OpenAi 向量模型', link: '/embedding' },
+              { text: 'doubao-embedding-vision-251215', link: '/doubao-embedding-vision-251215' },
             ],
           },
           
