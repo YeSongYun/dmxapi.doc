@@ -439,8 +439,8 @@ export default defineConfig({
 
           // { text: 'Claude code(推荐)', link: '/claude-code' },
           { text: 'Claude code(推荐)', link: '/claude-code-new' },
-
-          { text: 'cc switch', link: '/cc_switch' },
+          { text: 'cc switch配置codex', link: '/cc_switch' },
+          { text: 'cc switch配置claude code', link: '/cc_switch_to_claude code' },
           { text: 'Qwen3 coder', link: '/qwen-coder' },
           { text: 'Openai Codex', link: '/codex' },
           { text: 'opencode', link: '/opencode' },
@@ -460,7 +460,8 @@ export default defineConfig({
           { text: 'Typing Mind', link: '/typingmind' },
           { text: '提示词优化器', link: '/prompt-optimizer' },
           { text: 'GitHub Copilot', link: '/GitHub Copilot' },
-          { text: 'OpenClaw(原clawdbot)', link: '/clawdbot' }
+          { text: 'OpenClaw(原clawdbot)', link: '/clawdbot' },
+          { text: '沉浸式翻译', link: '/chenjinshifanyi.md' }
         ],
       },
       {
