@@ -308,6 +308,15 @@ export default defineConfig({
                 ],
               },
                
+               {
+                text: '拍我 视频模型 ',
+                collapsed: true,
+                items: [              
+                  { text: 'paiwo-v5.6-ttv', link: '/paiwo-v5.6-ttv' },
+
+                ],
+              },
+
 
                {
                 text: 'Kling 视频模型 ',
