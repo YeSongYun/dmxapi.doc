@@ -3,7 +3,7 @@
 ## 接口地址
 
 ```
-https://www.dmxapi.cn/v1
+https://www.dmxapi.cn/v1/responses
 ```
 
 ## 调用示例
