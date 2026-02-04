@@ -311,9 +311,11 @@ export default defineConfig({
                {
                 text: '拍我 视频模型 ',
                 collapsed: true,
-                items: [              
-                  { text: 'paiwo-v5.6-ttv', link: '/paiwo-v5.6-ttv' },
-                  { text: 'paiwo-picture', link: '/paiwo_image_upload' },
+                items: [      
+                  { text: '图片上传', link: '/paiwo_image_upload' },        
+                  { text: '文生视频', link: '/paiwo-v5.6-ttv' },
+                  { text: '图生视频', link: '/paiwo-v5.6-itv' },
+                  { text: '首尾帧生成视频', link: '/paiwo-v5.6-itv2' },
 
                 ],
               },
