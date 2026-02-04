@@ -3,7 +3,7 @@ paiwo视频模型 可根据视频内容智能生成完整的声音体系，包�
 
 ::: warning
 使用图生视频API前，请先完成图片上传API的调用，获取图片的img_id,  
- [图片上传文档](https://www.dmxapi.cn)
+ [图片上传文档](https://doc.dmxapi.cn/paiwo_image_upload.html)
 :::
 
 
