@@ -1,4 +1,4 @@
-# paiwo-v5.6-ttv 文生图 API 文档
+# paiwo-v5.6-ttv 文生视频 API 文档
 paiwo视频模型 可根据视频内容智能生成完整的声音体系，包括环境音效、背景音乐与角色台词，并支持指定音色，实现真正的“音画同步生成”。同时，它还能自动设计推拉、摇移、切换及景别变化等镜头语言，让生成的 10 秒视频具备节奏与呼吸感，呈现更完整的叙事段落，而非单调的动图。
 
 ## 接口地址
@@ -55,7 +55,7 @@ payload = {
     "duration": 5, # 视频时长(必需)
     "quality": "540p",#视频分辨率(必需)
 
-    "motion_mode": "fast", # 运动模式,支持"normal","fast"，其中"fast" 不支持 8s,  "v5" 不支持此字段
+    "motion_mode": "normal", # 运动模式,支持"normal","fast"，其中"fast" 不支持 8s,  "v5" 不支持此字段
     "negative_prompt": "不需要出现人物",  # 负面提示词,限制在2048 Characters 以内 (可选)
     
     "generate_audio_switch": True, #生成音频开关：只能v5.5与v5.6使用
