@@ -313,6 +313,7 @@ export default defineConfig({
                 collapsed: true,
                 items: [              
                   { text: 'paiwo-v5.6-ttv', link: '/paiwo-v5.6-ttv' },
+                  { text: 'paiwo-picture', link: '/paiwo_image_upload' },
 
                 ],
               },
