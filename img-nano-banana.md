@@ -265,12 +265,12 @@ data = {
             # └─────────────────────────────────────────────────────────────────┘
             "aspectRatio": "1:1",
 
-            # imageSize: 设置输出图片的分辨率
+            # image_size: 设置输出图片的分辨率（仅 Gemini 3 Pro Image 预览版支持）
             # - "1K": 1K 分辨率（默认值，所有模型均支持）
-            # - "2K": 2K 分辨率（仅 Gemini 3 Pro Image 预览版支持）
-            # - "4K": 4K 分辨率（仅 Gemini 3 Pro Image 预览版支持）
-            # 注意: gemini-2.5-flash-image 仅支持 1K，如需 2K/4K 请使用 gemini-3-pro-image-preview
-            # "imageSize": "1K"
+            # - "2K": 2K 分辨率（仅 Gemini 3 Pro Image 预览版）
+            # - "4K": 4K 分辨率（仅 Gemini 3 Pro Image 预览版）
+            # gemini-2.5-flash-image 不能使用该参数
+            # image_size="1K",
         }
     },
 
