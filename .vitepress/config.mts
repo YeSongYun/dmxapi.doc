@@ -453,7 +453,7 @@ export default defineConfig({
           // { text: 'Claude code(推荐)', link: '/claude-code' },
           { text: 'Claude code(推荐)', link: '/claude-code-new' },
           { text: 'cc switch配置codex', link: '/cc_switch' },
-          { text: 'cc switch配置claude code', link: '/cc_switch_to_claude code' },
+          // { text: 'cc switch配置claude code', link: '/cc_switch_to_claude code' },
           { text: 'Qwen3 coder', link: '/qwen-coder' },
           { text: 'Openai Codex', link: '/codex' },
           { text: 'opencode', link: '/opencode' },
