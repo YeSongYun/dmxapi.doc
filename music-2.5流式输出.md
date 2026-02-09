@@ -103,7 +103,7 @@ payload = {
     "audio_setting": {"sample_rate": 44100, "bitrate": 256000, "format": "mp3"},
 
     "stream": True,   # 是否使用流式传输，默认为 false
-    "aigc_watermark": True,# 是否在音频末尾添加水印，默认为 false。仅在非流式 (stream: False) 请求时生效
+    
 }
 
 def _is_executable(path: str) -> bool:
