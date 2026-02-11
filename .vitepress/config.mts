@@ -153,7 +153,15 @@ export default defineConfig({
               { text: '函数调用FunctionCall', link: '/res-function-call' },
               { text: 'gpt思考内容', link: '/gpt-thinking' },
               { text: 'GPT-5.1 指南', link: '/GPT-5.1' },
-              { text: 'GPT-5.2 指南', link: '/gpt-5.2' }
+              { text: 'GPT-5.2 指南', link: '/gpt-5.2' },
+              {
+                text: 'M2-her',
+                collapsed: true,
+                items: [
+                  { text: '普通对话', link: '/m2-her-nc' },
+                  { text: '多轮对话', link: '/m2-her_multi-dia' },
+                ],
+              },
             ],
           },
           {
@@ -495,7 +503,7 @@ export default defineConfig({
           { text: '思源笔记', link: '/siyuanbiji' },
           { text: 'Typing Mind', link: '/typingmind' },
           { text: '提示词优化器', link: '/prompt-optimizer' },
-          { text: 'GitHub Copilot', link: '/GitHub Copilot' },
+          // { text: 'GitHub Copilot', link: '/GitHub Copilot' },
           { text: 'OpenClaw(原clawdbot)', link: '/clawdbot' },
           { text: '沉浸式翻译', link: '/chenjinshifanyi.md' }
         ],
