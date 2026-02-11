@@ -38,7 +38,7 @@ headers = {
 
 # 构造请求数据
 payload = {
-    "model": "gpt-5-mini",  # 选择使用的模型
+    "model": "DeepSeek-V3.2-Fast",  # 选择使用的模型
     "messages": [
         {
             "role": "system", 
@@ -46,7 +46,7 @@ payload = {
         },
         {
             "role": "user", 
-            "content": "周树人和鲁迅是兄弟吗？"  # 用户问题
+            "content": "介绍下鲁迅"  # 用户问题
         }
     ]
 }
