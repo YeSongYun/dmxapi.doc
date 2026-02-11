@@ -339,6 +339,21 @@ export default defineConfig({
                   { text: '首尾帧生成视频', link: '/doubao-seedance-1-5-pro-responses03' }
                 ],
               },
+              {
+                text: '万象视频模型',
+                collapsed: true,
+                items: [
+              {
+                text: 'wan2.6',
+                collapsed: true,
+                items: [
+                  { text: '文生视频', link: '/wan2.6-t2v' },
+                  { text: '首帧生视频', link: '/wan2.6-i2v' },
+                  { text: '参考生视频', link: '/wan2.6-r2v' }
+                ],
+              },
+            ],
+          },
 
 
               { text: '更多视频模型正在赶来...', link: '/video-more' },
