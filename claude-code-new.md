@@ -1,4 +1,4 @@
-# Claude Code（推荐）
+# Claude Code 配置教程文档
 DMXAPI研发的一键配置 Anthropic Claude Code CLI 环境变量的跨平台工具。
 
 ## 功能特性
@@ -9,6 +9,9 @@ DMXAPI研发的一键配置 Anthropic Claude Code CLI 环境变量的跨平台�
     - 支持 Windows / Linux / macOS
     - 环境变量自动持久化
 
+:::warning 注意
+请先把.claude 文件夹下的setting.json文件删除
+:::
 
 ## 环境准备
 在开始之前，请先安装并验证以下基础环境：
