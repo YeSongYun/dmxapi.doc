@@ -17,7 +17,7 @@ https://www.dmxapi.cn/v1/chat/completions
 ```python
 """
 DMXAPI 对话接口调用示例
-功能：使用 GPT-5-mini 模型进行智能对话
+功能：使用 DeepSeek-V3.2-Fast 模型进行智能对话
 """
 
 import json
@@ -91,7 +91,7 @@ API 响应结果：
   ],
   "created": 1762512287,
   "id": "chatcmpl-CZEFTZKtwzH7x5Dgiliucuc7qIzfg",
-  "model": "gpt-5-mini-2025-08-07",
+  "model": "DeepSeek-V3.2-Fast",
   "object": "chat.completion",
   "system_fingerprint": null,
   "usage": {
@@ -143,7 +143,7 @@ chat_completion = client.chat.completions.create(
             "content": "周树人和鲁迅是兄弟吗？"  # 用户提问
         }
     ],
-    model="gpt-5-mini"  # 指定使用的模型
+    model= "DeepSeek-V3.2-Fast"  # 指定使用的模型
 )
 
 # ==================== 格式化输出结果 ====================
@@ -189,7 +189,7 @@ print(f"  • Token 使用: {result['usage']['total_tokens']} (输入: {result['
     }
   ],
   "created": 1762512367,
-  "model": "gpt-5-mini-2025-08-07",
+  "model": "DeepSeek-V3.2-Fast",
   "object": "chat.completion",
   "service_tier": null,
   "system_fingerprint": null,
@@ -211,7 +211,7 @@ print(f"  • Token 使用: {result['usage']['total_tokens']} (输入: {result['
 }
 ==================================================
 📊 关键信息摘要：
-  • 模型: gpt-5-mini-2025-08-07
+  • 模型: DeepSeek-V3.2-Fast
   • 回复: 不是。周树人就是鲁迅的本名，鲁迅是他的笔名，所以两者是同一个人，不是兄弟。鲁迅（本名周树人，1881–1936）是中国现代著名作家。（他的弟弟是周作人。）
   • Token 使用: 409 (输入: 17, 输出: 392)
 ```
