@@ -192,6 +192,7 @@ export default defineConfig({
               { text: 'sdk使用', link: '/claude-sdk' },
               { text: '缓存创建', link: '/claude-hc' },
               { text: '联网搜索', link: '/claude-serch' },
+              { text: 'claude agent sdk', link: '/claude_agent_sdk' },
             ],
           },
           {
@@ -375,7 +376,16 @@ export default defineConfig({
               { text: 'TTS模型 MinMax-speech', link: '/minimax-speech' },
               { text: 'STT模型 whisper', link: '/opneai-stt' },
               { text: 'STT模型 gpt-4o-transcribe', link: '/gpt-4o-transcribe' },
-              { text: 'STT模型 Qwen3-Omni-Captioner', link: '/Qwen3-Omni-Captioner' }
+              { text: 'STT模型 Qwen3-Omni-Captioner', link: '/Qwen3-Omni-Captioner' },
+              {
+                text: '声音克隆模型 Minimax',
+                collapsed: true,
+                items: [
+                  { text: '音频文件上传', link: '/minimax-clone' },
+                  { text: '声音克隆', link: '/minimax-clone-lastversion' },
+                  { text: '同步语音合成', link: '/speech-2.8-hd' },
+                ],
+              },
             ],
           },
 
