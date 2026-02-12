@@ -383,6 +383,7 @@ export default defineConfig({
                 items: [
                   { text: '音频文件上传', link: '/minimax-clone' },
                   { text: '声音克隆', link: '/minimax-clone-lastversion' },
+                  { text: '同步语音合成', link: '/speech-2.8-hd' },
                 ],
               },
             ],
