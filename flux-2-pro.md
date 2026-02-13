@@ -148,7 +148,7 @@ if "id" not in result:
     exit(1)
 
 task_id = result["id"]
-polling_url = result.get("polling_url", f"{BASE_URL}/v1/get_result?id={task_id}")
+polling_url = result.get("polling_url", f"{BASE_URL}/flux/v1/get_result?id={task_id}")
 
 print(f"\n任务 ID: {task_id}")
 print(f"轮询 URL: {polling_url}")

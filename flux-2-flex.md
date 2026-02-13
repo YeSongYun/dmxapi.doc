@@ -125,7 +125,7 @@ from datetime import datetime
 # ============================================================
 
 # ==================== 配置参数 ====================
-API_URL = "https://api.us3.bfl.ai/v1/get_result?id=8d6b8e09-fd2b-4df3-9623-411d925de642" # 请替换为实际的 polling_url
+API_URL = "https://www.dmxapi.cn/flux/v1/get_result?id=8d6b8e09-fd2b-4df3-9623-411d925de642" # 请替换为实际的 polling_url
 
 # ==================== 发送请求 ====================
 response = requests.get(API_URL)
