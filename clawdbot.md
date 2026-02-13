@@ -22,6 +22,7 @@ Moltbot 是一款运行在您自己的设备上的个人 AI 助手 。它可以�
 # 配置 npm 源
 npm config set registry https://npm.cnb.cool/dmxapi/openclaw-cn/-/packages/
 
+
 # 安装最新版本
 npm install -g openclaw-cn@1.2.0
 ```
@@ -73,7 +74,7 @@ openclaw-cn onboard
 
 ![选择 DMXAPI](./img/openclaw06.png)
 
-**第 4 步：** 选择 **DMXAPIkey**
+**第 4 步：** 填写 **正确的url**
 
 ![输入密钥](./img/openclaw07.png)
 
@@ -81,72 +82,69 @@ openclaw-cn onboard
 
 ![配置 Base URL](./img/openclaw08.png)
 
-**第 6 步：** 选择 **No**
+**第 6 步：** 填写 **需要的模型**
 
 ![openclaw](./img/openclaw09.png)
 
-**第 7 步：** 选择 **dmxapi**
+**第 7 步：** 选择 **默认模型**
 
-![openclaw](./img/openclaw10.png)
+![openclaw](./img/openclaw010.png)
 
-**第 8 步：** 根据需求配置默认模型
+**第 8 步：** 根据需求配置相应的应用
 
-![openclaw](./img/openclaw11.png)
+![openclaw](./img/openclaw011.png)
 
-**第 9 步：** 根据需求关联个人账户
+**第 9 步：** 选择 Yes
 
-![openclaw](./img/openclaw12.png)
+![openclaw](./img/openclaw012.png)
 
-**第 10 步：** 选择 **Yes**
+**第 10 步：** 选择 **技能依赖**
 
-![openclaw](./img/openclaw13.png)
+![openclaw](./img/openclaw013.png)
 
 **第 11 步：** 选择 **npm**
 
-![openclaw](./img/openclaw14.png)
+![openclaw](./img/openclaw014.png)
 
-**第 12 步：** 根据需求配置技能选择
+**第 12 步：** 全部选择 **No**
 
-![openclaw](./img/openclaw15.png)
+![openclaw](./img/openclaw015.png)
 
-**第 13 步：** 全部选择 **No**
+**第 13 步：** hook 功能的配置选择
 
-![openclaw](./img/openclaw16.png)
+![openclaw](./img/openclaw016.png)
 
-**第 14 步：** hook 功能的配置选择
-
-![openclaw](./img/openclaw17.png)
 
 ::: info 注意
 配置完成后会自动弹出浏览器网页，请不要关闭，下一步会用到。
 :::
 
-![openclaw](./img/openclaw22.png)
+![openclaw](./img/openclaw017.png)
 
 
 ## 启动
-
+在新的终端界面运行下面的指令
 ```bash
 openclaw-cn gateway
 ```
 
 启动后刷新上一步弹出的浏览器网页：
 
-![openclaw](./img/openclaw23.png)
+![openclaw](./img/openclaw018.png)
 
 
 ## 测试
 
 在聊天页面输入 `你好`，如收到回复说明配置成功。
 
-![测试结果](./img/openclaw21.png)
+![测试结果](./img/openclaw019.png)
 
 
 
 ## 版本升级
 
 ```bash
-npm update -g openclaw-cn
+npm install -g openclaw-cn@1.2.0
 ```
 
 <p align="center">

@@ -272,6 +272,16 @@ export default defineConfig({
                   { text: 'flux-2-pro', link: '/flux-2-pro' },
                 ],
               },
+
+              {
+                text: 'wan2.6绘图模型',
+                collapsed: true,
+                items: [
+                  { text: 'wan2.6-t2i', link: '/wan2.6-t2i' },
+                  { text: 'wan2.6-image', link: '/wan2.6-image' },
+                ],
+              },
+
               {
                 text: '其他',
                 collapsed: true,
@@ -349,7 +359,7 @@ export default defineConfig({
                 ],
               },
               {
-                text: '万象视频模型',
+                text: '万相视频模型',
                 collapsed: true,
                 items: [
               {

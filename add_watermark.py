@@ -185,13 +185,25 @@ def main() -> None:
     # 填写相对于脚本所在目录的路径，例如 'img\\ruanzhu.png'
     # 可以根据实际需要修改这个列表
     image_files = [
-                'img/music_2.5_01.png',
-                'img/music_2.5_02.png',
-                'img/music_2.5_03.png',
-                'img/music_2.5_04.png',
-                'img/music_2.5_05.png',
-                'img/music_2.5_06.png',
-                'img/music_2.5_07.png'
+                'img/openclaw01.png',
+                'img/openclaw02.png',
+                'img/openclaw03.png',
+                'img/openclaw04.png',
+                'img/openclaw05.png',
+                'img/openclaw06.png',
+                'img/openclaw07.png',
+                'img/openclaw08.png',
+                'img/openclaw09.png',
+                'img/openclaw010.png',
+                'img/openclaw011.png',
+                'img/openclaw012.png',
+                'img/openclaw013.png',
+                'img/openclaw014.png',
+                'img/openclaw015.png',
+                'img/openclaw016.png',
+                'img/openclaw017.png',
+                'img/openclaw018.png',
+                'img/openclaw019.png',
     ]               
     
     # 第三步：验证水印文件存在性
