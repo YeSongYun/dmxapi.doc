@@ -14,7 +14,7 @@ https://www.dmxapi.cn/v1/responses
 ## 提交视频任务
 
 ```python
-"""
+
 import requests
 import json
 
@@ -116,7 +116,6 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 
 ## 查询任务结果
 ```python
-"""
 import requests
 import json
 # ═══════════════════════════════════════════════════════════════
