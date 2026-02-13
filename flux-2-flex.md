@@ -123,12 +123,19 @@ from datetime import datetime
 # ============================================================
 # BFL API 结果查询与图片下载示例
 # ============================================================
+API_KEY = "sk-***********************************"
 
+headers = {
+    "x-key": API_KEY,                   # API 认证密钥
+    "Content-Type": "application/json"  # 请求内容类型为 JSON
+}
 # ==================== 配置参数 ====================
-API_URL = "https://www.dmxapi.cn/flux/v1/get_result?id=8d6b8e09-fd2b-4df3-9623-411d925de642" # 请替换为实际的 polling_url
+ 
+# 请替换为实际的 polling_url
+API_URL = "https://www.dmxapi.cn/flux/v1/get_result?id=tpydgjqe0drmt0cwam987a3x3w-od9su3" 
 
 # ==================== 发送请求 ====================
-response = requests.get(API_URL)
+response = requests.get(API_URL, headers=headers)
 data = response.json()
 
 print("API 响应:")
@@ -163,21 +170,18 @@ else:
 ```json
 API 响应:
 {
-    "id": "8d6b8e09-fd2b-4df3-9623-411d925de642",
-    "status": "Ready",
+    "id": "tpydgjqe0drmt0cwam987a3x3w-od9su3",
     "result": {
-        "start_time": 1764246146.4188287,
-        "prompt": "hyper-realistic close-up photo of a small puppy sitting in the center of a cozy living room, soft warm natural light coming from a window on the left, the puppy has fluffy light brown and white fur, big round dark eyes looking curiously at the camera, small black nose, ears slightly folded forward, sitting on a light beige rug with subtle texture, shallow depth of field with a softly blurred background showing a simple sofa and a few green indoor plants, gentle and warm color palette, extremely detailed fur texture, 50mm lens, f/1.8, high resolution photography",
-        "seed": 2092946386,
-        "sample": "https://bfldeliveryscus.blob.core.windows.net/results/2025/11/27/636a70a331ac4d04a074ddd085238f38_sample.jpeg?se=2025-11-27T12%3A32%3A47Z&sp=r&sv=2024-11-04&sr=b&rsct=image/jpeg&sig=6gfcU1RZjOeXgxBIKxfUkgw0J6SdhpvHES6cdIrlqKU%3D"
+        "sample": "https://storage.fonedis.cc/xezq/sU8LhByyToodIJP5p2emkoTjNdbIxBdnZSzKeD0I9Yzw5EHWA/tmpzjmv06l4.jpg",
+        "duration": 0,
+        "end_time": 0,
+        "start_time": 0
     },
-    "progress": null,
-    "details": null,
-    "preview": null
+    "status": "Ready"
 }
 
-正在下载图片: https://bfldeliveryscus.blob.core.windows.net/results/2025/11/27/636a70a331ac4d0...
-图片已保存到: output\image_20251127_203715.jpeg
+正在下载图片: https://storage.fonedis.cc/xezq/sU8LhByyToodIJP5p2emkoTjNdbIxBdnZSzKeD0I9Yzw5EHW...
+图片已保存到: c:\Users\a1\Desktop\测试保存代码\output\image_20260213_114230.jpeg
 ```
 
 
