@@ -77,7 +77,7 @@ payload = {
         #         "disgusted"(厌恶) / "surprised"(惊讶) / "calm"(平静) /
         #         "fluent"(生动) / "whisper"(耳语)
         # 模型会根据输入文本自动匹配合适的情绪，一般无需手动指定
-        "emotion": "whisper",
+        "emotion": "fluent",
 
         "text_normalization":  False, # 是否启用中文、英语文本规范化，开启后可提升数字阅读场景的性能，但会略微增加延迟，默认值为 false
         # 【latex_read】 控制是否朗读 latex 公式，默认为 false

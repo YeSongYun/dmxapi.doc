@@ -23,7 +23,7 @@ Moltbot 是一款运行在您自己的设备上的个人 AI 助手 。它可以�
 npm config set registry https://npm.cnb.cool/dmxapi/openclaw-cn/-/packages/
 
 # 安装最新版本
-npm install -g openclaw-cn@latest
+npm install -g openclaw-cn@1.2.0
 ```
 
 ::: warning 提示
