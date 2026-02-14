@@ -388,7 +388,7 @@ export default defineConfig({
               { text: 'STT模型 gpt-4o-transcribe', link: '/gpt-4o-transcribe' },
               { text: 'STT模型 Qwen3-Omni-Captioner', link: '/Qwen3-Omni-Captioner' },
               {
-                text: '声音克隆模型 Minimax',
+                text: 'Minimax 声音克隆 ',
                 collapsed: true,
                 items: [
                   { text: '音频文件上传', link: '/minimax-clone' },
