@@ -119,6 +119,8 @@ export default defineConfig({
                   { text: 'Doubao 豆包推理开关', link: '/thinking-doubao' },
                 ],
               },
+
+               { text: 'DMXAPI 搜索模型选型指南', link: '/research' }
             ],
           },
           {
