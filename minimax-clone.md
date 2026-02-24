@@ -14,7 +14,7 @@ https://www.dmxapi.cn/v1/responses
 
 ## 模型名称
 
-- `minimax-clone`
+- `minimax-clone-upload`
 
 ## 示例代码
 
