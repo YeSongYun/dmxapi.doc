@@ -30,7 +30,6 @@ api_key = "sk-*******************************"
 # ═══════════════════════════════════════════════════════════════
 
 headers = {
-    "X-DashScope-Async": "enable",     # 异步处理配置参数。HTTP请求只支持异步，必须设置为enable。
     "Content-Type": "application/json",      # 指定请求体为 JSON 格式
     "Authorization": f"{api_key}",    # token 认证方式
 }

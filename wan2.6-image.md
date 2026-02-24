@@ -27,7 +27,7 @@ url = "https://www.dmxapi.cn/v1/responses"
 
 # 🔐 DMXAPI 密钥 (请替换为您自己的密钥)
 # 获取方式: 登录 DMXAPI 官网 -> 个人中心 -> API 密钥管理
-api_key = "sk-*************************************"
+api_key = "sk-************************************"
 
 # ═══════════════════════════════════════════════════════════════
 # 📋 步骤2: 配置请求头
@@ -54,7 +54,7 @@ payload = {
                         # 支持中英文，长度不超过2000个字符，每个汉字、字母、数字或符号计为一个字符，超过部分会自动截断。
                         # 示例值：参考这个风格的图片，生成番茄炒蛋。
                         # 注意：content数组中，必须且只能包含一个含 text 字段的对象。
-                        "text": "生成一只可爱的小猫"
+                        "text": "第一个图的生物，出现在第二个图中"
                     },
                     {
                         # [image]:输入图像的URL或Base64编码字符串。
@@ -187,7 +187,7 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
       "content": [
         {
           "type": "image",
-          "text": "https://dashscope-7c2c.oss-cn-shanghai.aliyuncs.com/1d/e5/20260213/64df989b/63b45931-77c7-4aa4-a3b6-7fb2223c643f.png?Expires=1771081806&OSSAccessKeyId=LTAI5tPxpiCM2hjmWrFXrym1&Signature=G0k5IDC0MfvwuQJlgP7%2FusAUR2w%3D"
+          "text": "https://dashscope-a717.oss-accelerate.aliyuncs.com/1d/d8/20260224/5aeb7205/58785642-c1vRdsH3_cf4da20e1fed.png?Expires=1772018707&OSSAccessKeyId=LTAI5tPxpiCM2hjmWrFXrym1&Signature=YC%2Ftf%2BaQZfKkwEfJnUcc9twOejc%3D"
         }
       ]
     }
@@ -203,7 +203,7 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
       "reasoning_tokens": 0
     }
   },
-  "request_id": "e0204193-27ac-465b-bc69-60817479f0c3"
+  "request_id": "819f24d3-f20a-4eb2-a853-eb5619c63319"
 }
 ```
 

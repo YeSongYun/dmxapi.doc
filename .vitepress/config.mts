@@ -274,7 +274,7 @@ export default defineConfig({
               },
 
               {
-                text: 'wan2.6绘图模型',
+                text: '阿里万相绘图模型',
                 collapsed: true,
                 items: [
                   { text: 'wan2.6-t2i', link: '/wan2.6-t2i' },
@@ -359,7 +359,7 @@ export default defineConfig({
                 ],
               },
               {
-                text: '万相视频模型',
+                text: '阿里万相视频模型',
                 collapsed: true,
                 items: [
               {
