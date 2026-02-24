@@ -423,8 +423,9 @@ export default defineConfig({
                     text: 'music-2.5',
                     collapsed: true,
                     items: [
-                      { text: 'music-2.5流式输出', link: '/music-2.5-liushi' },
-                      { text: 'music-2.5非流式输出', link: '/music-2.5-feiliushi' }
+                      { text: 'music-2.5非流式输出', link: '/music-2.5-feiliushi' },
+                      { text: 'music-2.5流式输出', link: '/music-2.5-liushi' }
+                      
                     ],
                   }
                 ],
