@@ -9,7 +9,7 @@ https://www.dmxapi.cn/v1/responses
 
 ## 模型名称
 
-- `minimax-clone`
+- `minimax-clone-lastversion`
 
 ## 示例代码
 
