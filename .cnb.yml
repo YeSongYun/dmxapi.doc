@@ -4,7 +4,7 @@ main:
       imports: https://cnb.cool/dmxapi/claude-code-my/-/blob/main/env.yml
       runner:
         tags: cnb:arch:amd64
-        cpus: 1
+        cpus: 4
       stages:
         - name: sync to github
           image: tencentcom/git-sync
@@ -20,17 +20,17 @@ main:
       imports: https://cnb.cool/dmxapi/claude-code-my/-/blob/main/env.yml
       runner:
         tags: cnb:arch:amd64
-        cpus: 1
+        cpus: 4
       stages:
         - name: code-review
           image: cnbcool/code-review:latest
           settings:
-            output: ./code_review.json
-            context: 100
+            context: 50
+            verbose: true
             comment: true
-            max_comments: 10
-            max_files: 300
-            max_diff_size: 128000
+            max_comments: 50
+            max_files: 150
+            max_diff_size: 200000
             fail_on_critical: true
 
 
