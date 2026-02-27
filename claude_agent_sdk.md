@@ -20,7 +20,7 @@ if sys.platform == "win32":
 # ============== 请修改以下配置 ==============
 BASE_URL = "https://www.dmxapi.cn"  # API 地址（不含 /v1）
 API_KEY = "sk-********************************" # API 密钥
-MODEL = "claude-opus-4-6-cc"        # 模型名称
+MODEL = "claude-sonnet-4-6"        # 模型名称
 PROXY = None                                 # 代理地址，如 "http://127.0.0.1:7897"
 # ==========================================
 

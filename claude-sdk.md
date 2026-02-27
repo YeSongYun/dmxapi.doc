@@ -45,13 +45,12 @@ from anthropic import Anthropic
 # 配置参数
 # =============================================================================
 # API 配置
-API_KEY = "sk-********************************************"  # 替换为你的 DMXAPI 密钥
+API_KEY = "sk-****************************************"  # 替换为你的 DMXAPI 密钥
 BASE_URL = "https://www.dmxapi.cn"  # DMXAPI 网关地址
 
 # 模型配置
-MODEL_NAME = "claude-sonnet-4-5-20250929"
+MODEL_NAME = "claude-sonnet-4-6"
 MAX_TOKENS = 16000
-THINKING_BUDGET = 10000
 
 # 提示信息
 USER_MESSAGE = "你好"
@@ -81,10 +80,17 @@ print(f"\n📤 正在发送消息到模型 {MODEL_NAME}...")
 response = client.messages.create(
     model=MODEL_NAME,
     max_tokens=MAX_TOKENS,
+    # Opus 4.6 和 Sonnet 4.6 的扩展思维推荐方式是使用自适应思维，可以根据每个请求的复杂性动态地决定何时以及思考多少。
+    # 可以用 【thinking: {"type": "adaptive"}】 结合 【effort】 参数来设置它
+    # 【effort】：可选择的努力程度：
+                # max - Claude 的思考深度不受任何限制（ Opus 4.6 独有）
+                # high （默认）- 总是思考，为复杂任务提供深刻的推理。
+                # medium - 思维能力适中，对于非常简单的问题可以跳过。
+                # low - 减少思考，优先考虑简单任务的速度
     thinking={
-        "type": "enabled",
-        "budget_tokens": THINKING_BUDGET
+        "type": "adaptive",
     },
+    output_config={"effort": "high"},
     messages=[
         {
             "role": "user",
@@ -129,19 +135,22 @@ print("\n✨ 脚本执行完毕")
 ## 📊 返回示例
 
 ```json
-📤 正在发送消息到模型 claude-sonnet-4-5-20250929...
+🚀 正在初始化 Anthropic 客户端...
+✅ 客户端初始化完成
+
+📤 正在发送消息到模型 claude-sonnet-4-6...
 ✅ 消息发送成功，正在处理响应...
 
 📥 响应内容处理中...
 
 🧠 思考摘要：
 --------------------------------------------------
-The user has greeted me in Chinese with "你好" (nǐ hǎo), which means "hello" or "hi". I should respond politely in Chinese.
+The user said "你好" which means "Hello" in Chinese. I'll respond in Chinese.
 --------------------------------------------------
 
 💬 模型回复：
 ==================================================
-你好！很高兴见到你。我是Claude，有什么我可以帮助你的吗？
+你好！很高兴见到你！😊 有什么我可以帮助你的吗？
 ==================================================
 
 🎉 响应处理完成！
@@ -155,7 +164,6 @@ The user has greeted me in Chinese with "你好" (nǐ hǎo), which means "hello"
 
 - **MODEL_NAME**: 指定使用的 Claude 模型版本
 - **MAX_TOKENS**: 最大输出 token 数量
-- **THINKING_BUDGET**: 思考模式预算 token 数量
 
 ### 安全建议
 

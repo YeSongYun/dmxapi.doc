@@ -14,11 +14,6 @@ https://www.dmxapi.cn/v1/messages
 ## 💻 示例代码
 
 ```python
-"""
-DMXAPI Claude API 测试脚本
-用于测试 DMXAPI 提供的 Claude 模型 API 接口
-"""
-
 import requests
 import json
 
@@ -26,7 +21,7 @@ import json
 # DMXAPI 配置
 # ============================================
 url = 'https://www.dmxapi.cn/v1/messages'  # DMXAPI 端点
-key = 'sk-********************************************'  # DMXAPI 密钥
+key = 'sk-****************************************'  # DMXAPI 密钥
 
 # 请求头配置
 headers = {
@@ -39,8 +34,7 @@ headers = {
 # 请求数据配置
 # ============================================
 data = {
-    "model": "claude-sonnet-4-5-20250929",  # 使用的模型版本
-    "max_tokens": 200000,  # 最大生成的 token 数量
+    "model": "claude-sonnet-4-6",  # 使用的模型版本
     "messages": [  # 消息列表（当前为简单单轮对话）
         {
             "role": "user",
@@ -187,7 +181,7 @@ data = {
 
     "stream": False,  # 是否启用流式响应
 
-    # Opus 4.6 的扩展思维推荐方式是使用自适应思维，可以根据每个请求的复杂性动态地决定何时以及思考多少。
+    # Opus 4.6 和 Sonnet 4.6 的扩展思维推荐方式是使用自适应思维，可以根据每个请求的复杂性动态地决定何时以及思考多少。
     # 可以用 【thinking: {"type": "adaptive"}】 结合 【effort】 参数来设置它
     # 【effort】：可选择的努力程度：
                 # max - Claude 的思考深度不受任何限制（ Opus 4.6 独有）
@@ -195,8 +189,8 @@ data = {
                 # medium - 思维能力适中，对于非常简单的问题可以跳过。
                 # low - 减少思考，优先考虑简单任务的速度
 
-    # "thinking": {"type": "adaptive"}, #可选 
-    # "effort":"max"#可选
+    "thinking": {"type": "adaptive"}, #可选 
+    "output_config": {"effort": "high"}#可选
 
     # "temperature": 0.7  # 控制生成随机性，范围 0.0 - 1.0
     #   - 分析性/选择题任务：建议接近 0.0（更确定性）
@@ -329,14 +323,14 @@ print(json.dumps(response.json(), indent=4, ensure_ascii=False))
 Status Code: 200
 Response:
 {
-    "id": "msg_01PKLmBfi7yjbx9eU54JRu22",
+    "id": "msg_01PddaRQ5YG47XR2UsF8eR62",
     "type": "message",
     "role": "assistant",
-    "model": "claude-sonnet-4-5-20250929",
+    "model": "claude-sonnet-4-6",
     "content": [
         {
             "type": "text",
-            "text": "你好！很高兴见到你。有什么我可以帮助你的吗？"
+            "text": "你好！😊 有什么我可以帮助你的吗？"
         }
     ],
     "stop_reason": "end_turn",
@@ -344,7 +338,8 @@ Response:
         "input_tokens": 10,
         "cache_creation_input_tokens": 0,
         "cache_read_input_tokens": 0,
-        "output_tokens": 29,
+        "output_tokens": 24,
+        "cache_creation": {},
         "claude_cache_creation_5_m_tokens": 0,
         "claude_cache_creation_1_h_tokens": 0
     }

@@ -34,7 +34,7 @@ import json
 
 # API 密钥配置
 # 优先从环境变量 DMXAPI_API_KEY 获取，如果不存在则使用默认密钥
-api_key = os.getenv('DMXAPI_API_KEY', 'sk-********************************************')
+api_key = os.getenv('DMXAPI_API_KEY', 'sk-**********************************')
 
 # API 端点 URL
 url = "https://www.dmxapi.cn/v1/messages"
@@ -54,7 +54,7 @@ headers = {
 
 data = {
     # 使用的模型名称
-    "model": "claude-sonnet-4-5-20250929",
+    "model": "claude-sonnet-4-6",
     
     # 对话消息列表
     "messages": [
@@ -152,13 +152,17 @@ if __name__ == "__main__":
 📊 状态码: 200
 📄 响应内容:
 {
-  "id": "msg_014wEHmwF1pLPwPp3RsJwg1p",
+  "id": "msg_01W6F1qRVQBh2fmwAscYixwQ",
   "type": "message",
   "role": "assistant",
-  "model": "claude-sonnet-4-5-20250929",
+  "model": "claude-sonnet-4-6",
   "content": [
     {
-      "id": "toolu_01CE8aJWhYoiVwMPw7KRujQz",
+      "type": "text",
+      "text": "好的，让我来帮您查询北京今天的天气情况！"
+    },
+    {
+      "id": "toolu_bdrk_01BCcQnHxZoWQ98vojpdwSEh",
       "type": "tool_use",
       "name": "get_weather",
       "input": {
@@ -168,10 +172,10 @@ if __name__ == "__main__":
   ],
   "stop_reason": "tool_use",
   "usage": {
-    "input_tokens": 668,
+    "input_tokens": 590,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
-    "output_tokens": 54,
+    "output_tokens": 77,
     "cache_creation": {},
     "claude_cache_creation_5_m_tokens": 0,
     "claude_cache_creation_1_h_tokens": 0

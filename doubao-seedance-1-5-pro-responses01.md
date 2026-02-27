@@ -176,7 +176,7 @@ headers = {
 payload = {
     "model": "seedance-get",
     "input": "cgt-20260119220813-h5v84",
-    "stream": True
+    "stream": True # 只支持流式输出，请勿修改
 }
 
 # ═══════════════════════════════════════════════════════════════

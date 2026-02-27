@@ -44,7 +44,7 @@ import json
 # DMXAPI 密钥配置
 # 优先从环境变量获取，如果不存在则使用默认值
 # 注意：请将默认密钥替换为您的实际 API 密钥
-ANTHROPIC_API_KEY = os.getenv('ANTHROPIC_API_KEY', 'sk-********************************************')
+ANTHROPIC_API_KEY = os.getenv('ANTHROPIC_API_KEY', 'sk-************************************')
 
 # API 端点
 API_URL = "https://www.dmxapi.cn/v1/messages"
@@ -66,8 +66,8 @@ headers = {
 
 # 构造完整的 API 请求载荷
 payload = {
-    "model": "claude-sonnet-4-5-20250929",           # 使用 Sonnet 模型（更好地支持缓存）
-    "max_tokens": 200000,                            # 最大输出 token 数量
+    "model": "claude-sonnet-4-6",           # 使用 Sonnet 模型（更好地支持缓存）
+    # "max_tokens": 200000,                            # 最大输出 token 数量
     
     # 系统提示词配置
     # 注意：缓存需要至少 1024 tokens，建议使用 2048+ tokens 以确保成功
@@ -293,7 +293,7 @@ if __name__ == "__main__":
 |------|------|
 | `anthropic-version` | 必须设置为 `2023-06-01` 或更高版本 |
 | `cache_control` | 设置为 `{"type": "ephemeral"}` 启用临时缓存 |
-| `model` | 推荐使用 `claude-sonnet-4-5-20250929` |
+| `model` | 推荐使用 `claude-sonnet-4-6` |
 
 ## 📊 API 响应示例
 
@@ -302,46 +302,51 @@ if __name__ == "__main__":
 ```json
 [START] 开始调用 Claude API（测试缓存创建）
 [INFO] API 端点: https://www.dmxapi.cn/v1/messages
-[INFO] 使用模型: claude-sonnet-4-5-20250929
+[INFO] 使用模型: claude-sonnet-4-6
 ------------------------------------------------------------
 [SUCCESS] 请求成功!
 
 [USAGE] Token 使用统计:
-  - 输入 tokens: 18
-  - 输出 tokens: 420
-  - 缓存创建 tokens: 2071
+  - 输入 tokens: 17
+  - 输出 tokens: 1043
+  - 缓存创建 tokens: 2073
   - 缓存读取 tokens: 0
 
-[CACHE] 缓存创建成功！已缓存 2071 tokens
+[CACHE] 缓存创建成功！已缓存 2073 tokens
 [TIP] 提示：缓存仅保存5分钟，且命中率低
 
 [RESPONSE] Claude 回复（前 300 字符）:
 # Major Themes in Pride and Prejudice
 
-Based on the opening chapters, several key themes emerge that shape Austen's novel:
+Based on the opening chapters provided, here is an analysis of the major themes Austen establishes — and how they develop throughout the novel as a whole.
 
-## 1. **Marriage and Social Economy**
+---
 
-The novel opens with its most famous line about single men of fortune needing wives, immediately establishing marriage as a social and ec...
+## 1. Marriage as Social and Economic Institution
+
+The **very first sentence** announces this theme ...
 
 [JSON] 完整 API 响应:
 {
-  "id": "msg_01LM77E7jGBw36Fy3iUXXvqt",
+  "id": "msg_01QmF3bbu8KTPV4FFv8RMWZw",
   "type": "message",
   "role": "assistant",
-  "model": "claude-sonnet-4-5-20250929",
+  "model": "claude-sonnet-4-6",
   "content": [
     {
       "type": "text",
-      "text": "# Major Themes in Pride and Prejudice\n\nBased on the opening chapters, several key themes emerge that shape Austen's novel:\n\n## 1. **Marriage and Social Economy**\n\nThe novel opens with its most famous line about single men of fortune needing wives, immediately establishing marriage as a social and economic transaction. Mrs. Bennet's obsessive focus on marrying off her daughters reveals the precarious position of women who depended on marriage for financial security. Her excitement over Bingley's \"four or five thousand a year\" shows how economic considerations dominated matrimonial concerns.\n\n## 2. **Pride and Prejudice** (The Title Themes)\n\nAlready visible in these early chapters:\n- **Pride**: Sir William Lucas's excessive pride in his knighthood causes him to abandon his business and adopt affected manners\n- **Prejudice**: Mrs. Bennet's immediate prejudice against Mrs. Long as \"selfish\" and \"hypocritical\" based on competition for Bingley's attention\n\n## 3. **Social Class and Mobility**\n\nThe Lucas family's trajectory illustrates social climbing—Sir William's trade origins, his knighthood, and subsequent pretensions to gentility. The distinction between \"trade\" (Lucas) and landed gentry (Bennet) creates subtle hierarchies even among neighbors.\n\n## 4. **Individual vs. Social Expectations**\n\nElizabeth and Jane's dialogue reveals contrasting personalities—Elizabeth's wit and skepticism versus Jane's genuine modesty. Elizabeth's observation that \"compliments always take you by surprise, and me never\" hints at her resistance to social conventions and her analytical nature.\n\n## 5. **Irony and Social Satire**\n\nAusten's satirical voice permeates the narrative, particularly in Mr. Bennet's dry responses to his wife's schemes and the narrator's ironic observations about \"universal truths\" regarding wealthy bachelors."
+      "text": "# Major Themes in Pride and Prejudice\n\nBased on the opening chapters provided, here is an analysis of the major themes Austen establishes — and how they develop throughout the novel as a whole.\n\n---\n\n## 1. Marriage as Social and Economic Institution\n\nThe **very first sentence** announces this theme with deliberate irony:\n\n> *\"It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife.\"*\n\nAusten immediately signals that marriage is not primarily about love — it is about **property, security, and social positioning**. Mrs. Bennet's frantic interest in Bingley is entirely transactional. Her daughters represent investment opportunities rather than individuals with autonomous desires. This tension between **marriage for practical necessity** versus **marriage for genuine affection** drives the entire narrative.\n\n---\n\n## 2. Pride and Its Consequences\n\nThe title itself foregrounds this theme. Pride manifests in multiple forms:\n\n- **Darcy's aristocratic pride** — his sense of social superiority initially makes him dismissive and insulting\n- **Elizabeth's wounded pride** — her sharp wit can harden into prejudgment\n- **Sir William Lucas's pride** — Chapter 5 offers a gentle satirical portrait of a man whose knighthood has rendered him somewhat self-important, though harmlessly so\n\nAusten suggests that pride, unchecked, **distorts one's perception of others** and obstructs genuine human connection.\n\n---\n\n## 3. Prejudice and First Impressions\n\nNotably, Austen's working title for the novel was **\"First Impressions\"** — which captures this theme with equal precision. The opening chapters already demonstrate how characters form rapid judgments:\n\n- Mrs. Bennet judges Mrs. Long as *\"selfish and hypocritical\"* based on self-interest\n- The Bennet women evaluate Bingley entirely from **a window and secondhand reports**\n- Elizabeth's razor-sharp assessments, while often accurate, can also **calcify into unfair prejudice**\n\nThe novel ultimately argues that **first impressions require revision** through deeper knowledge and honest self-reflection.\n\n---\n\n## 4. The Role of Women in Society\n\nThese opening chapters quietly expose the **severely constrained position of women** in Regency England:\n\n- The Bennet daughters **cannot inherit** Longbourn due to the entail\n- Their financial security is entirely dependent on making advantageous marriages\n- They observe Bingley **from an upstairs window** — literally positioned as spectators rather than participants in their own social futures\n\nAusten treats this reality with both **sympathy and irony**, never allowing readers to forget the genuine stakes beneath the comic surface.\n\n---\n\n## 5. Wit, Intelligence, and Social Performance\n\nElizabeth Bennet's voice emerges immediately as the novel's moral compass, characterized by:\n\n- Sharp, self-aware humor\n- The ability to **see through social pretension**\n- Genuine affection balanced with critical intelligence\n\nHer exchange with Jane in Chapter 4 is telling — Elizabeth *expected* Bingley's attentions toward Jane because she assessed the situation clearly, while Jane was merely *delighted*. Austen implicitly values **clear-eyed intelligence** over passive sentiment.\n\n---\n\n## 6. Irony as a Moral Instrument\n\nAusten's narrative voice deserves recognition as a thematic vehicle in itself. Her irony is never merely decorative — it serves a **moral and critical function**:\n\n- The opening sentence mocks the community's assumptions while also acknowledging their social reality\n- Mr. Bennet's dry wit exposes his wife's absurdities while also revealing **his own irresponsibility** as a father\n- Sir William Lucas is described charitably yet the description gently **undermines his self-importance**\n\nThis sustained ironic register invites readers to **question surface appearances** — which is, essentially, what the entire novel asks its characters to do as well.\n\n---\n\n## Summary Table\n\n| Theme | Primary Expression |\n|---|---|\n| Marriage & Economics | Mrs. Bennet's matchmaking; the entail |\n| Pride | Darcy's social hauteur; class distinctions |\n| Prejudice | Elizabeth's swift judgments; community gossip |\n| Women's Social Position | Dependence on marriage for security |\n| Intelligence & Wit | Elizabeth as moral and intellectual center |\n| Irony | Austen's narrative voice throughout |\n\n---\n\nThese themes are introduced with **remarkable economy** in just five chapters, demonstrating Austen's extraordinary craft in embedding complex social criticism within the conventions of drawing-room comedy."
     }
   ],
   "stop_reason": "end_turn",
   "usage": {
-    "input_tokens": 18,
-    "cache_creation_input_tokens": 2071,
+    "input_tokens": 17,
+    "cache_creation_input_tokens": 2073,
     "cache_read_input_tokens": 0,
-    "output_tokens": 420,
+    "output_tokens": 1043,
+    "cache_creation": {
+      "ephemeral_5m_input_tokens": 2073
+    },
     "claude_cache_creation_5_m_tokens": 0,
     "claude_cache_creation_1_h_tokens": 0
   }
@@ -356,9 +361,9 @@ The novel opens with its most famous line about single men of fortune needing wi
 
 | 字段 | 值 | 说明 |
 |------|-----|------|
-| `input_tokens` | 18 | 本次请求的新输入 tokens（用户消息部分） |
-| `output_tokens` | 420 | AI 生成的响应 tokens |
-| `cache_creation_input_tokens` | 2071 | **缓存创建的 tokens 数量** ✅ |
+| `input_tokens` | 17 | 本次请求的新输入 tokens（用户消息部分） |
+| `output_tokens` | 1043 | AI 生成的响应 tokens |
+| `cache_creation_input_tokens` | 2073 | **缓存创建的 tokens 数量** ✅ |
 
 ## ⚠️ 注意事项
 

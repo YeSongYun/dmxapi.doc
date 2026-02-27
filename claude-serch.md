@@ -4,6 +4,7 @@
 ## ✨支持的模型
 
 - `claude-opus-4-6`
+- `claude-sonnet-4-6`
 - `claude-sonnet-4-5-20250929`
 - `claude-sonnet-4-20250514`
 - `claude-3-7-sonnet-20250219`
@@ -57,7 +58,7 @@ data = {
     # ------------------------------------------------------------------------
     # 模型配置
     # ------------------------------------------------------------------------
-    "model": "claude-opus-4-5-20251101",  # 使用的模型名称
+    "model": "claude-sonnet-4-6",  # 使用的模型名称
     "max_tokens": 1024,                    # 最大输出 token 数量
 
     # ------------------------------------------------------------------------
@@ -99,22 +100,22 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 
 ```json
 {
-  "id": "msg_014KZDmYPhwwdN1oD2yXT8B6",
+  "id": "msg_01KB59kqXJrVYqmn8ZVzNG7D",
   "type": "message",
   "role": "assistant",
-  "model": "claude-opus-4-5-20251101",
+  "model": "claude-sonnet-4-6",
   "content": [
     {
       "type": "text",
-      "text": "\n\n今天是 **2026年1月26日，星期一**。"
+      "text": "今天是**2026年2月26日，星期四**。"
     }
   ],
   "stop_reason": "end_turn",
   "usage": {
-    "input_tokens": 2336,
+    "input_tokens": 2236,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
-    "output_tokens": 22,
+    "output_tokens": 21,
     "cache_creation": {},
     "claude_cache_creation_5_m_tokens": 0,
     "claude_cache_creation_1_h_tokens": 0
