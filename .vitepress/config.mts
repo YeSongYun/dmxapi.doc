@@ -223,40 +223,50 @@ export default defineConfig({
                 text: 'Gemini绘图模型',
                 collapsed: true,
                 items: [
-
                   {
-                text: 'gemini-3-pro-image-preview',
+                text: 'gemini-3.1-flash-image-preview',
                 collapsed: true,
                 items: [
                   { text: '文生图', link: '/img-nano-banana' },
                   { text: '图片编辑', link: '/img-nano-banana-edit' },
                   { text: '多图融合', link: '/img-nano-banana-images' },
-                  { text: 'Gemini image 香蕉多轮对话改图文档', link: '/duolun' },
-                  { text: '返回格式变化的说明', link: '/gemini-3-pro-image-preview' }             
+                  { text: '多轮对话改图', link: '/duolun' },
+                ],
+                },
+
+                  {
+                text: 'gemini-3-pro-image-preview',
+                collapsed: true,
+                items: [
+                  { text: '文生图', link: '/img-3pro-t2i' },
+                  { text: '图片编辑', link: '/img-3pro-edit' },
+                  { text: '多图融合', link: '/img-3pro-images' },
+                  { text: '多轮对话改图', link: '/img-3pro-duolun' },
+                  { text: '返回格式变化的说明', link: '/gemini-3-pro-image-preview' }
                 ],
                 },
                  {
                 text: 'gemini-2.5-flash-image',
                 collapsed: true,
                 items: [
-                  { text: '文生图', link: '/img-nano-banana' },
-                  { text: '图片编辑', link: '/img-nano-banana-edit' },
-                  { text: '多图融合', link: '/img-nano-banana-images' },
-                  { text: 'Gemini image 香蕉多轮对话改图文档', link: '/duolun' },
+                  { text: '文生图', link: '/img-25flash-t2i' },
+                  { text: '图片编辑', link: '/img-25flash-edit' },
+                  { text: '多图融合', link: '/img-25flash-images' },
+                  { text: '多轮对话改图', link: '/img-25flash-duolun' },
                 ],
                 },
                   
-                   {
-                text: 'nano-banana-2',
-                collapsed: true,
-                items: [
-                  { text: '文生图', link: '/nano-banana-2-01' },
-                  { text: '图片编辑', link: '/nano-banana-2-02' },
-                  { text: '多图融合', link: '/nano-banana-2-03' },
-                  { text: 'Gemini image 香蕉多轮对话改图文档', link: '/duolun' },
-                  { text: 'cherry studio', link: '/nano-banana-2-cherry'}
-                ],
-                },
+                //    {
+                // text: 'nano-banana-2',
+                // collapsed: true,
+                // items: [
+                //   { text: '文生图', link: '/nano-banana-2-01' },
+                //   { text: '图片编辑', link: '/nano-banana-2-02' },
+                //   { text: '多图融合', link: '/nano-banana-2-03' },
+                //   { text: 'Gemini image 香蕉多轮对话改图文档', link: '/duolun' },
+                //   { text: 'cherry studio', link: '/nano-banana-2-cherry'}
+                // ],
+                // },
                  
                  
                 ],
@@ -280,16 +290,39 @@ export default defineConfig({
                 collapsed: true,
                 items: [
                   { text: 'wan2.6-t2i', link: '/wan2.6-t2i' },
-                  { text: 'wan2.6-image', link: '/wan2.6-image' },
+                  {
+                    text: 'wan2.6-image',
+                    collapsed: true,
+                    items: [
+                      { text: '图文混排', link: '/wan2.6-image-interleave' },
+                      { text: '图片编辑', link: '/wan2.6-image-edit' },
+                    ],
+                  },
                 ],
               },
 
               {
-                text: '其他',
+                text: '千问绘图模型',
                 collapsed: true,
                 items: [
-                  { text: '文生图：qwen-image', link: '/img-qwen-image' },
-                  { text: '图片编辑：qwen-image-edit', link: '/img-qwen-image-edit' },
+                  {
+                    text: '文生图',
+                    collapsed: true,
+                    items: [
+                      { text: 'qwen-image', link: '/img-qwen-image' },
+                      { text: 'qwen-image-max', link: '/qwen-image-max' },
+                      { text: 'qwen-image-plus-2026-01-09', link: '/qwen-image-plus-2026-01-09' },
+                    ],
+                  },
+                  {
+                    text: '图片编辑',
+                    collapsed: true,
+                    items: [
+                      { text: 'qwen-image-edit', link: '/img-qwen-image-edit' },
+                      { text: 'qwen-image-edit-max-2026-01-16', link: '/qwen-image-edit-max-2026-01-16' },
+                      { text: 'qwen-image-edit-plus-20260226', link: '/qwen-image-edit-plus-20260226' },
+                    ],
+                  },
                 ],
               },
 

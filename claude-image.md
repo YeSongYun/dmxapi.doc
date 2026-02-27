@@ -36,10 +36,10 @@ from pathlib import Path
 NEWAPI_BASE_URL = "https://www.dmxapi.cn"
 
 # DMXAPI 密钥（优先使用环境变量，可提高安全性）
-API_KEY = os.getenv("NEWAPI_API_KEY") or "sk-********************************************"
+API_KEY = os.getenv("NEWAPI_API_KEY") or "sk-******************************"
 
 # 本地图片路径（请修改为你的实际图片路径）
-image_path = "test/example.jpg"
+image_path = "./b9.png"
 
 # ============== 请求头配置 ==============
 headers = {
@@ -112,8 +112,8 @@ media_type = get_image_media_type(image_path)
 # 步骤 3: 构建 API 请求体
 # 注意：Claude API 使用 Anthropic Messages API 格式
 payload = {
-    # 使用的模型（Claude Sonnet 4.5）
-    "model": "claude-sonnet-4-5-20250929",
+    # 使用的模型（claude-sonnet-4-6）
+    "model": "claude-sonnet-4-6",
 
     # 消息数组
     "messages": [
@@ -175,8 +175,8 @@ else:
 ### 📊 本地图片返回示例
 
 ```json
-正在读取图片: test/example.jpg
-正在分析图片: test/example.jpg
+正在读取图片: ./b9.png
+正在分析图片: ./b9.png
 
 ==================================================
 分析成功！
@@ -184,22 +184,23 @@ else:
 
 响应内容:
 {
-  "id": "msg_0143pgS3etx891xjeozb2ieK",
+  "id": "msg_01QRwmZJm4CUdiDgSca4m1ga",
   "type": "message",
   "role": "assistant",
-  "model": "claude-sonnet-4-5-20250929",
+  "model": "claude-sonnet-4-6",
   "content": [
     {
       "type": "text",
-      "text": "这张图片显示的是一台**佳能(Canon)计算器**，型号为WS-1212H。\n\n主要特征包括：\n\n1. **显示屏**：顶部有一个LCD显示屏，显示12位数字\n\n2. **按键布局**：\n   - 数字键：0-9，还有\"00\"键\n   - 基本运算键：加(+)、减(-)、乘(×)、除(÷)、等于(=)\n   - 功能键：包括MU、GT、CM、RM、M±、M=等记忆功能键\n   - 特殊键：平方根(√)、百分比(%±)、货币转换(£)\n   - 电源键：红色的ON/CA键和CI/C键\n\n3. **颜色**：银灰色和深灰色的配色方案，带有红色的功能键\n\n4. **背景**：计算器放置在 一块有蓝色和黄色花纹图案的布料上，旁边还能看到一条浅蓝色毛巾的边缘\n\n这是一款常见的办公或家用计算器，具备基本的算术运算和记忆功能。"
+      "text": "# 图片描述\n\n这是一幅**奇幻/科幻风格的概念艺术作品**，展现了一个宏大壮观的超现实场景：\n\n## 主要元素\n\n- **巨型古树**：画面中央有一棵极其庞大的古老树木，树干粗壮且布满苔藓和纹理，树上还生长着**黄色小花**\n- **一个人物**：在巨树的树干上，可以看到一个渺小的**探险者/冒险者**正在行走，凸显了树木的巨大尺度\n- **悬浮岩石**：天空中漂浮着数块**浮空巨石**，上面覆盖着绿色植被\n- **藤蔓与根系**：粗壮的藤蔓和根系从树木延伸开来，连接着不同的岩石和地面\n- **远景山脉**：背景中有雾气缭绕的**山峦**和广阔的平原\n- **金色光线**：整个场景沐浴在**日出或日落**的温暖金色光芒中，营造出梦幻般的氛围\n\n## 整体风格\n\n这幅作品很可能是某款**电子游戏的概念设计图**，具有典型的奇幻冒险游戏风格，让人联想到类似《阿凡达》或某些开放世界游戏中的异世界景观。画面构图宏大，强调了**人与自然的巨大比例差异**，营造出敬畏与探索的感觉。"
     }
   ],
   "stop_reason": "end_turn",
   "usage": {
-    "input_tokens": 1584,
+    "input_tokens": 1364,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
-    "output_tokens": 341,
+    "output_tokens": 473,
+    "cache_creation": {},
     "claude_cache_creation_5_m_tokens": 0,
     "claude_cache_creation_1_h_tokens": 0
   }
@@ -230,7 +231,7 @@ import json
 NEWAPI_BASE_URL = "https://www.dmxapi.cn"
 
 # DMXAPI 密钥（优先使用环境变量，可提高安全性）
-API_KEY = os.getenv("NEWAPI_API_KEY") or "sk-********************************************"
+API_KEY = os.getenv("NEWAPI_API_KEY") or "sk-**********************************************"
 
 # 图片 URL（请修改为你要分析的图片 URL）
 image_url = "https://doc.dmxapi.cn/example.jpg"
@@ -253,8 +254,8 @@ if not image_url.startswith(('http://', 'https://')):
 print(f"正在分析图片: {image_url}")
 
 payload = {
-    # 使用的模型（Claude Sonnet 4.5）
-    "model": "claude-sonnet-4-5-20250929",
+    # 使用的模型（claude-sonnet-4-6）
+    "model": "claude-sonnet-4-6",
 
     # 消息数组
     "messages": [
@@ -322,14 +323,14 @@ else:
 
 响应内容:
 {
-  "id": "msg_012L46ngXpVWzbicPbnr7ccB",
+  "id": "msg_01R2fsWjqcCjMBre3BzCjEUu",
   "type": "message",
   "role": "assistant",
-  "model": "claude-sonnet-4-5-20250929",
+  "model": "claude-sonnet-4-6",
   "content": [
     {
       "type": "text",
-      "text": "这张图片显示的是一台**佳能(Canon)计算器**，型号为WS-1212H。\n\n主要特点包括：\n\n1. **显示屏**：顶部有一个液晶显示屏\n2. **按键布局**：\n   - 数字键：0-9\n   - 基本运算键：加(+)、减(-)、乘(×)、除(÷)\n   - 功能键：MU、GT、CM 、RM、M±、M=（记忆功能）\n   - 特殊功能：百分比(%)、平方根(√)、货币转换(£)\n   - 电源键：红色的ON/CA键和CI/C键\n\n3. **颜色**：银灰色和白色相间的外观设计\n\n4. **背景**：计算器放在一张带有蓝色花纹图案的床单或布料上，旁边还能看到一条青绿色 的毛巾\n\n这是一款常见的桌面型商务计算器，适合日常计算和办公使用。"
+      "text": "## 图片内容\n\n这张图片展示了一台 **Canon（佳能）计算器**，型号为 **WS-1212H**。\n\n### 主要特征：\n- **品牌**：Canon（佳能）\n- **型号**：WS-1212H\n- **显示屏**：12位数字液晶显示屏\n- **颜色**：白色/灰色机身，深灰色按键\n- **特殊按键**：\n  - 红色的 **ON/CA**（开机/全清）和 **CI/C** 键\n  - **MU**（加成计算）、**GT**（总计）、**CM/RM**（存储）等功能键\n  - **√**（开方）、**%±** 等运算键\n- **电源**：支持**太阳能+电池**双电源（顶部有太阳能板）\n\n### 背景：\n计算器放在一张**蓝色大理石花纹的鼠标垫**上，旁边可以看到一条**充电线**和一块**浅绿色毛巾/布料**。"
     }
   ],
   "stop_reason": "end_turn",
@@ -337,7 +338,8 @@ else:
     "input_tokens": 1584,
     "cache_creation_input_tokens": 0,
     "cache_read_input_tokens": 0,
-    "output_tokens": 303,
+    "output_tokens": 317,
+    "cache_creation": {},
     "claude_cache_creation_5_m_tokens": 0,
     "claude_cache_creation_1_h_tokens": 0
   }
