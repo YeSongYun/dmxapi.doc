@@ -302,11 +302,27 @@ export default defineConfig({
               },
 
               {
-                text: '其他',
+                text: '千问绘图模型',
                 collapsed: true,
                 items: [
-                  { text: '文生图：qwen-image', link: '/img-qwen-image' },
-                  { text: '图片编辑：qwen-image-edit', link: '/img-qwen-image-edit' },
+                  {
+                    text: '文生图',
+                    collapsed: true,
+                    items: [
+                      { text: 'qwen-image', link: '/img-qwen-image' },
+                      { text: 'qwen-image-max', link: '/qwen-image-max' },
+                      { text: 'qwen-image-plus-2026-01-09', link: '/qwen-image-plus-2026-01-09' },
+                    ],
+                  },
+                  {
+                    text: '图片编辑',
+                    collapsed: true,
+                    items: [
+                      { text: 'qwen-image-edit', link: '/img-qwen-image-edit' },
+                      { text: 'qwen-image-edit-max-2026-01-16', link: '/qwen-image-edit-max-2026-01-16' },
+                      { text: 'qwen-image-edit-plus-20260226', link: '/qwen-image-edit-plus-20260226' },
+                    ],
+                  },
                 ],
               },
 
