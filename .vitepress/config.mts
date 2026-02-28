@@ -227,10 +227,10 @@ export default defineConfig({
                 text: 'gemini-3.1-flash-image-preview',
                 collapsed: true,
                 items: [
-                  { text: '文生图', link: '/img-nano-banana' },
-                  { text: '图片编辑', link: '/img-nano-banana-edit' },
-                  { text: '多图融合', link: '/img-nano-banana-images' },
-                  { text: '多轮对话改图', link: '/duolun' },
+                  { text: '文生图', link: '/gemini-3.1-flash-image-preview' },
+                  { text: '图片编辑', link: '/gemini-3.1-flash-image-preview-edit' },
+                  { text: '多图融合', link: '/gemini-3.1-flash-image-preview-images' },
+                  { text: '多轮对话改图', link: '/gemini-3.1-flash-image-preview-duolun' },
                 ],
                 },
 
@@ -305,22 +305,24 @@ export default defineConfig({
                 text: '千问绘图模型',
                 collapsed: true,
                 items: [
+                  { text: 'img-qwen-image', link: '/img-qwen-image' },
+                  { text: 'img-qwen-image-edit', link: '/img-qwen-image-edit' },
+                  { text: 'qwen-image-max', link: '/qwen-image-max' },
+                  { text: 'qwen-image-plus-2026-01-09', link: '/qwen-image-plus-2026-01-09' },
                   {
-                    text: '文生图',
+                    text: 'qwen-image-edit-max-2026-01-16',
                     collapsed: true,
                     items: [
-                      { text: 'qwen-image', link: '/img-qwen-image' },
-                      { text: 'qwen-image-max', link: '/qwen-image-max' },
-                      { text: 'qwen-image-plus-2026-01-09', link: '/qwen-image-plus-2026-01-09' },
+                      { text: '图片编辑', link: '/qwen-image-edit-max-2026-01-16图片编辑' },
+                      { text: '多图融合', link: '/qwen-image-edit-max-2026-01-16多图融合' },
                     ],
                   },
                   {
-                    text: '图片编辑',
+                    text: 'qwen-image-edit-plus-20260226',
                     collapsed: true,
                     items: [
-                      { text: 'qwen-image-edit', link: '/img-qwen-image-edit' },
-                      { text: 'qwen-image-edit-max-2026-01-16', link: '/qwen-image-edit-max-2026-01-16' },
-                      { text: 'qwen-image-edit-plus-20260226', link: '/qwen-image-edit-plus-20260226' },
+                      { text: '图片编辑', link: '/qwen-image-edit-plus-20260226图片编辑' },
+                      { text: '多图融合', link: '/qwen-image-edit-plus-20260226多图融合' },
                     ],
                   },
                 ],
