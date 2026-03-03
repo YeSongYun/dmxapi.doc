@@ -1,6 +1,6 @@
 # Gemini 3 Pro Image Preview 图片编辑
 
-> 使用 Gemini 3 Pro Image 模型进行智能图片编辑
+使用 Gemini 3 Pro Image 模型进行智能图片编辑
 
 ## 接口地址
 
@@ -13,18 +13,13 @@ https://www.dmxapi.cn/v1beta/models/gemini-3-pro-image-preview:generateContent
 
 ## 模型名称
 
-| 模型名称 | 说明 |
-|---------|------|
-| `gemini-3-pro-image-preview` | 支持 1K/2K/4K 分辨率的高级图像编辑模型 |
+- `gemini-3-pro-image-preview`：支持 1K/2K/4K 分辨率的高级图像编辑模型
 
+## 示例代码
 
-## Python SDK 代码示例
+::: code-group
 
-以下示例展示了如何使用 DMXAPI 调用 Gemini 3 Pro Image 模型进行图片编辑：
-
-```python
-
-
+```python [SDK]
 """
 DMXAPI Gemini 3 Pro Image 图像修改示例
 使用 Google Gemini API 修改图像，并保存到本地 output 文件夹
@@ -162,17 +157,7 @@ for part in response.parts:
         print(f"修改后的图片已保存到 {filename}")
 ```
 
-### 运行结果
-
-执行上述代码后，你将看到类似以下的输出：
-
-```json
-结束原因: FinishReason.STOP
-修改后的图片已保存到 output/edited_image_20260227_165150.png
-```
-## Python request 代码示例
-
-```python
+```python [request]
 """
 ================================================================
 Gemini 3 Pro Image 图文生图示例
@@ -338,22 +323,33 @@ except requests.exceptions.RequestException as e:
     print(f"请求失败: {e}")
 except ValueError as e:
     print(f"数据解析错误: {e}")
-
-
 ```
-### 运行结果
-```json
+
+:::
+
+## 返回示例
+
+::: code-group
+
+```json [SDK]
+结束原因: FinishReason.STOP
+修改后的图片已保存到 output/edited_image_20260227_165150.png
+```
+
+```json [request]
 请求成功!
 ============================================================
 图片已保存到: output/gemini-edited-image_20260227_170409.png
 ```
 
+:::
+
 ## 注意事项
 
-1. **API 密钥**：请将代码中的 `api_key` 替换为你自己的 DMXAPI 密钥
-2. **图片路径**：确保 `INPUT_IMAGE_PATH` 指向的图片文件存在
-3. **分辨率**：支持 1K/2K/4K 分辨率
-4. **搜索工具**：支持 Google 搜索工具辅助生成
+- 请将代码中的 `api_key` 替换为你自己的 DMXAPI 密钥
+- 确保 `INPUT_IMAGE_PATH` 指向的图片文件存在
+- 支持 1K/2K/4K 分辨率
+- 支持 Google 搜索工具辅助生成
 
 
 ---

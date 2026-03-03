@@ -1,24 +1,14 @@
 # 千问图片编辑 qwen-image-edit 接口API文档
 
-## 模型名称
-`qwen-image-edit`
 
 ## 接口地址
 `https://www.DMXAPI.cn/v1/images/edits`
 
 
-## 请求参数 (multipart/form-data)
-| 参数名 | 类型 | 必需 | 说明 | 示例值 |
-|--------|------|------|------|--------|
-| image | file | 是 | 要编辑的图像文件，<4MB | - |
-| prompt | string | 是 | 图像编辑的文本描述(最大1000字符) | A cute baby sea otter wearing a beret. |
-| n | integer | 否 | 生成图像数量(1-10) | 2 |
-| size | string | 否 | 输出图像尺寸| 1024x1024 |
-| response_format | string | 否 | 响应格式(url 或 b64_json) | url |
-| user | string | 否 | 用户标识符(用于滥用检测) | user-123 |
-| model | string | 是 | 使用的AI模型 | qwen-image |
+## 模型名称
+`qwen-image-edit`
 
-## Python调用示例
+## 示例代码
 ```python
 import requests  # 导入 requests 库
 

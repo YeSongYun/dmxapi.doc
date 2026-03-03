@@ -10,14 +10,15 @@ https://www.dmxapi.cn/v1beta/models/gemini-2.5-flash-image:generateContent
 需要升级谷歌sdk为最新版
 :::
 
-## 支持的模型
+## 模型名称
 
-| 模型名称 | 分辨率支持 | 特点 | 适用场景 |
-|---------|-----------|------|---------|
-| `gemini-2.5-flash-image` | 1K | 快速生成，处理速度快 | 快速原型设计、实时应用 |
+- `gemini-2.5-flash-image`：固定 1K 分辨率，快速生成，适合快速原型设计和实时应用
 
-## python SDK 使用示例
-```python
+## 示例代码
+
+::: code-group
+
+```python [SDK]
 """
 DMXAPI Gemini 2.5 Flash Image 多图融合示例
 使用 Google Gemini API 将多张图像融合生成新图像，并保存到本地 output 文件夹
@@ -122,16 +123,7 @@ for part in response.parts:
         print(f"融合后的图片已保存到 {filename}")
 ```
 
-### 运行结果
-
-以下是运行示例代码后的控制台输出：
-
-```json
-融合后的图片已保存到 output/fused_image_20251210_111850.png
-```
-##  python request 使用示例
-
-```python
+```python [request]
 """
 ================================================================
 DMXAPI Gemini 2.5 Flash Image 多图融合示例
@@ -284,12 +276,31 @@ except requests.exceptions.RequestException as e:
 except ValueError as e:
     print(f"数据解析错误: {e}")
 ```
-### 运行结果
-```json
- 请求成功!
+
+:::
+
+## 返回示例
+
+::: code-group
+
+```json [SDK]
+融合后的图片已保存到 output/fused_image_20251210_111850.png
+```
+
+```json [request]
+请求成功!
 ============================================================
 图片已保存到: output/fused_image_20251208_154602.png
 ```
+
+:::
+
+## 注意事项
+
+- 请将代码中的 API 密钥替换为你自己的 DMXAPI 密钥
+- 确保所有输入图片路径均存在
+- gemini-2.5-flash-image 仅支持 1K 分辨率，不支持 `image_size` 参数
+- `response_modalities`、`tools` 参数均不可用
 
 
 ---
