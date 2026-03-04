@@ -197,8 +197,8 @@ export default defineConfig({
               { text: 'json输出', link: '/gemini-json' },
                 { text: '多轮对话', link: '/duolunduihua' },
               { text: '联网搜索', link: '/gemini-internet' },
-              { text: 'Gemini 3 开发者指南', link: '/gemini-3' }
-              
+              { text: 'Gemini 3 开发者指南', link: '/gemini-3' },
+              { text: 'Gemini 3 思考总结', link: '/gemini3-thinking-summary' }
             ],
           },
           {
@@ -230,9 +230,33 @@ export default defineConfig({
                 text: '豆包即梦绘图模型',
                 collapsed: true,
                 items: [
-                  { text: '文生图', link: '/img-seedream' },
-                  { text: '图生图', link: '/img-seedream-maximages' },
-                  { text: '多图融合', link: '/img-seedream-edit-base64' },
+                  {
+                    text: 'doubao-seedream-5.0-lite',
+                    collapsed: true,
+                    items: [
+                      { text: '文生图', link: '/doubao-seedream-5.0-lite-t2i' },
+                      { text: '图片编辑', link: '/doubao-seedream-5.0-lite-img-edit' },
+                      { text: '多图融合', link: '/doubao-seedream-5.0-lite-Multi-image-fusion' },
+                    ],
+                  },
+                  {
+                    text: 'doubao-seedream-4-5-251128',
+                    collapsed: true,
+                    items: [
+                      { text: '文生图', link: '/img-seedream-45-t2i' },
+                      { text: '图生图', link: '/img-seedream-45-i2i' },
+                      { text: '多图融合', link: '/img-seedream-45-images' },
+                    ],
+                  },
+                  {
+                    text: 'doubao-seedream-4-0-250828',
+                    collapsed: true,
+                    items: [
+                      { text: '文生图', link: '/img-seedream-40-t2i' },
+                      { text: '图生图', link: '/img-seedream-40-i2i' },
+                      { text: '多图融合', link: '/img-seedream-40-images' },
+                    ],
+                  },
                 ],
               },
 
@@ -330,16 +354,16 @@ export default defineConfig({
                     text: 'qwen-image-edit-max-2026-01-16',
                     collapsed: true,
                     items: [
-                      { text: '图片编辑', link: '/qwen-image-edit-max-2026-01-16图片编辑' },
-                      { text: '多图融合', link: '/qwen-image-edit-max-2026-01-16多图融合' },
+                      { text: '图片编辑', link: '/qwen-image-edit-max-2026-01-16-img-edit' },
+                      { text: '多图融合', link: '/qwen-image-edit-max-2026-01-16-mul' },
                     ],
                   },
                   {
                     text: 'qwen-image-edit-plus-20260226',
                     collapsed: true,
                     items: [
-                      { text: '图片编辑', link: '/qwen-image-edit-plus-20260226图片编辑' },
-                      { text: '多图融合', link: '/qwen-image-edit-plus-20260226多图融合' },
+                      { text: '图片编辑', link: '/qwen-image-edit-plus-20260226-img-edit' },
+                      { text: '多图融合', link: '/qwen-image-edit-plus-20260226-mul' },
                     ],
                   },
                 ],

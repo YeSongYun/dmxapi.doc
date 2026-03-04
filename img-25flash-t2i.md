@@ -18,8 +18,11 @@ https://www.dmxapi.cn/v1beta/models/gemini-2.5-flash-image:generateContent
 - **模型名称**: `gemini-2.5-flash-image`
 - **特点**: 快速生成，固定 1K 分辨率
 
-## python SDK 代码示例
-```python
+## 示例代码
+
+::: code-group
+
+```python [SDK]
 """
 DMXAPI Gemini 2.5 Flash Image 图像生成示例
 使用 Google Gemini API 生成图像，并保存到本地 output 文件夹
@@ -116,16 +119,7 @@ for part in response.parts:
         print(f"图片已保存到 {filename}")
 ```
 
-### 运行结果
-
-执行成功后，会在 `output` 目录下生成图像文件：
-
-```
-图片已保存到 output/generated_image_20260227_183649.png
-```
-
-## python request 代码示例
-```python
+```python [request]
 """
 Gemini 2.5 Flash Image - 文生图 API 调用示例
 =================================================
@@ -239,13 +233,24 @@ else:
     # 请求失败
     print(f"[错误] API 请求失败, 状态码: {response.status_code}")
     print(f"[调试] 错误信息: {response.text}")
-
 ```
 
-### 运行结果
-```json
+:::
+
+## 返回示例
+
+::: code-group
+
+```json [SDK]
+图片已保存到 output/generated_image_20260227_183649.png
+```
+
+```json [request]
 [成功] 图片已保存: gemini-native-image.png
 ```
+
+:::
+
 ## 注意事项
 
 - 请将代码中的 API 密钥替换为你自己的 DMXAPI 密钥
