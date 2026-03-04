@@ -1,11 +1,11 @@
 # Gemini 3.1 Flash Image Preview 图片编辑
-
-> 使用 Gemini 3.1 Flash Image Preview 模型进行智能图片编辑
+使用 Gemini 3.1 Flash Image Preview 模型进行智能图片编辑
 
 ## 接口地址
 
 ```
 https://www.dmxapi.cn/v1beta/models/gemini-3.1-flash-image-preview:generateContent
+
 ```
 :::warning 注意：
 需要升级谷歌sdk为最新版
@@ -13,18 +13,15 @@ https://www.dmxapi.cn/v1beta/models/gemini-3.1-flash-image-preview:generateConte
 
 ## 模型名称
 
-| 模型名称 | 说明 |
-|---------|------|
-| `gemini-3.1-flash-image-preview` | 支持 0.5K/1K/2K/4K 分辨率，速度优先，支持 Image Search 和 Thinking |
+### Gemini 3.1 Flash Image Preview
+- **模型名称**: `gemini-3.1-flash-image-preview`
+- **特点**: 速度优先，支持 0.5K/1K/2K/4K 分辨率，支持 Image Search 和 Thinking
 
+## 示例代码
 
-## Python SDK 代码示例
+::: code-group
 
-以下示例展示了如何使用 DMXAPI 调用 Gemini 3.1 Flash Image Preview 模型进行图片编辑：
-
-```python
-
-
+```python [SDK]
 """
 DMXAPI Gemini 3.1 Flash Image 图像修改示例
 使用 Google Gemini API 修改图像，并保存到本地 output 文件夹
@@ -176,17 +173,7 @@ for part in response.parts:
         print(f"修改后的图片已保存到 {filename}")
 ```
 
-### 运行结果
-
-执行上述代码后，你将看到类似以下的输出：
-
-```json
-结束原因: FinishReason.STOP
-修改后的图片已保存到 output/edited_image_20260227_165150.png
-```
-## Python request 代码示例
-
-```python
+```python [request]
 """
 ================================================================
 Gemini 3.1 Flash Image Preview 图文生图示例
@@ -360,23 +347,33 @@ except requests.exceptions.RequestException as e:
     print(f"请求失败: {e}")
 except ValueError as e:
     print(f"数据解析错误: {e}")
-
-
 ```
-### 运行结果
-```json
+
+:::
+
+## 返回示例
+
+::: code-group
+
+```text [SDK]
+结束原因: FinishReason.STOP
+修改后的图片已保存到 output/edited_image_20260227_165150.png
+```
+
+```json [request]
 请求成功!
 ============================================================
 图片已保存到: output/gemini-edited-image_20260227_170409.png
 ```
 
+:::
+
 ## 注意事项
 
-1. **API 密钥**：请将代码中的 `api_key` 替换为你自己的 DMXAPI 密钥
-2. **图片路径**：确保 `INPUT_IMAGE_PATH` 指向的图片文件存在
-3. **分辨率**：支持 0.5K/1K/2K/4K 分辨率，且额外支持 1:4, 4:1, 1:8, 8:1 宽高比
-4. **Image Search**：支持 Image Search 图片搜索工具，可从网络图片中获取视觉参考
-
+- 请将代码中的 API 密钥替换为你自己的 DMXAPI 密钥
+- 确保 `INPUT_IMAGE_PATH` 指向的图片文件存在
+- 支持 0.5K/1K/2K/4K 分辨率，且额外支持 1:4, 4:1, 1:8, 8:1 宽高比
+- 支持 Image Search 图片搜索工具，可从网络图片中获取视觉参考
 
 ---
 

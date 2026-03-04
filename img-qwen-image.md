@@ -1,45 +1,16 @@
 # 阿里 qwen-image 文生图 API接口文档
 
+
+
+## 接口地址
+```
+https://www.dmxapi.cn/v1/images/generations
+```
+
 ## 模型名称
 `qwen-image`
 
-## POST请求调用方法
-
-### 接口地址
-```
-POST https://www.dmxapi.cn/v1/images/generations
-```
-
-### 请求头
-```
-Authorization: YOUR_API_KEY
-Content-Type: application/json
-```
-
-### 请求参数
-| 参数名 | 类型 | 必填 | 说明 |
-|--------|------|------|------|
-| model | string | 是 | 模型名称，固定值：`qwen-image` |
-| prompt | string | 是 | 图像生成的提示词描述 |
-| size | string | 否 | 图片尺寸，格式为"宽*高"，默认："1024*1024" |
-| n | integer | 否 | 生成图片数量，默认：1（建议保持为1） |
-| response_format | string | 否 | 返回格式，可选："url"或"base64"，默认："url" |
-
-### 请求示例
-```bash
-curl -X POST "https://www.dmxapi.cn/v1/images/generations" \
-  -H "Authorization: YOUR_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "model": "qwen-image",
-    "prompt": "真实科技感海报设计:DMXAPI",
-    "size": "1328*1328",
-    "n": 1,
-    "response_format": "url"
-  }'
-```
-
-### Python调用示例
+## 示例代码
 ```python
 # 导入所需的库
 import json  # 用于处理JSON数据
@@ -61,22 +32,41 @@ payload = json.dumps(
 
 # 设置请求头
 headers = {
-    "Authorization": "sk-ucCvUA7AlSmTDqDt0ne2l8lnyHDPTepWnHUvt5XTNpGWbSyt",  # DMXAPI的API密钥
+    "Authorization": "sk-rOQH5ITfGkp9pbvnIIbcQyPRCQclFUl8bSjD3dFRPeuDUQHl",  # DMXAPI的API密钥
     "Content-Type": "application/json",  # 指定请求内容类型为JSON
 }
 
 # 发送POST请求到DMXAPI
 response = requests.request("POST", url, headers=headers, data=payload)
 
-# 处理API响应，将URL中的转义字符\u0026替换为正常的&符号
-response_text = response.text.replace("\\u0026", "&")
+result = response.json()
+output = result.get("extra", {}).get("output", {})
+results = output.get("results", [{}])
 
-# 打印处理后的响应结果
-print(response_text)
-
-
-
+print(f"任务状态: {output.get('task_status')}")
+print(f"任务ID:   {output.get('task_id')}")
+print(f"提交时间: {output.get('submit_time')}")
+print(f"完成时间: {output.get('end_time')}")
+print(f"消耗图片: {result.get('extra', {}).get('usage', {}).get('image_count')} 张")
+print()
+for i, r in enumerate(results, 1):
+    print(f"[图片 {i}]")
+    print(f"  原始提示词: {r.get('orig_prompt')}")
+    print(f"  图片URL:    {r.get('url')}")
 ```
+## 返回示例
+```json
+任务状态: SUCCEEDED
+任务ID:   9bd6681c-7f3f-4c86-80ef-e7f9d8fe2663
+提交时间: 2026-03-03 20:36:37.606
+完成时间: 2026-03-03 20:36:46.006
+消耗图片: 1 张
+
+[图片 1]
+  原始提示词: 真实科技感海报设计:DMXAPI
+  图片URL:    https://dashscope-result-wlcb-acdr-1.oss-cn-wulanchabu-acdr-1.aliyuncs.com/7d/44/20260303/cfc32567/9bd6681c-7f3f-4c86-80ef-e7f9d8fe2663584158063.png?Expires=1773147205&OSSAccessKeyId=LTAI5tKPD3TMqf2Lna1fASuh&Signature=DYQrfXWIMieo3knj8ccGtzIelEU%3D
+```
+
 
 <p align="center">
   <small>© 2025 DMXAPI 阿里 qwen-...</small>

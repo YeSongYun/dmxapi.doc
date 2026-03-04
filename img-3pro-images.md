@@ -10,14 +10,15 @@ https://www.dmxapi.cn/v1beta/models/gemini-3-pro-image-preview:generateContent
 需要升级谷歌sdk为最新版
 :::
 
-## 支持的模型
+## 模型名称
 
-| 模型名称 | 分辨率支持 | 特点 | 适用场景 |
-|---------|-----------|------|---------|
-| `gemini-3-pro-image-preview` | 1K/2K/4K | 高质量图像融合，最多 6 张对象图片 + 5 张角色图片，10 种宽高比 | 专业级图像合成、高清创意设计 |
+- `gemini-3-pro-image-preview`：支持 1K/2K/4K 分辨率，最多 6 张对象图片 + 5 张角色图片，10 种宽高比
 
-## python SDK 使用示例
-```python
+## 示例代码
+
+::: code-group
+
+```python [SDK]
 """
 DMXAPI Gemini 3 Pro Image 多图融合示例
 使用 Google Gemini API 将多张图像融合生成新图像，并保存到本地 output 文件夹
@@ -150,16 +151,7 @@ for part in response.parts:
         print(f"融合后的图片已保存到 {filename}")
 ```
 
-### 运行结果
-
-以下是运行示例代码后的控制台输出，展示了 AI 的推理过程和最终生成的图像保存路径：
-
-```json
-融合后的图片已保存到 output/fused_image_20251210_111850.png
-```
-##  python request 使用示例
-
-```python
+```python [request]
 """
 ================================================================
 DMXAPI Gemini 3 Pro Image 多图融合示例
@@ -341,12 +333,31 @@ except requests.exceptions.RequestException as e:
 except ValueError as e:
     print(f"数据解析错误: {e}")
 ```
-### 运行结果
-```json
- 请求成功!
+
+:::
+
+## 返回示例
+
+::: code-group
+
+```json [SDK]
+融合后的图片已保存到 output/fused_image_20251210_111850.png
+```
+
+```json [request]
+请求成功!
 ============================================================
 图片已保存到: output/fused_image_20251208_154602.png
 ```
+
+:::
+
+## 注意事项
+
+- 请将代码中的 API 密钥替换为你自己的 DMXAPI 密钥
+- 最多支持 6 张对象图片和 5 张角色图片
+- 确保所有输入图片路径均存在
+- 支持 1K/2K/4K 分辨率，可按需调整 `image_size` 参数
 
 
 ---
