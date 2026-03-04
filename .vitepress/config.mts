@@ -62,6 +62,23 @@ export default defineConfig({
           // { text: '商务资料下载', link: '/pptpdf' },
         ],
       },
+      // {
+      //   text: '测试',
+      //   collapsed: true,
+      //   items: [
+       
+      //     {
+      //           text: 'doubao-seedream-5.0-lite',
+      //           collapsed: true,
+      //           items: [
+      //             { text: '文生图', link: '/tti' },
+      //             { text: '图片编辑', link: '/iti' },
+      //             { text: '多图融合', link: '/niti' }
+             
+      //           ],
+      //     },
+      //   ],
+      // },
       {
         text: '平台接口(余额/模型列表)',
         collapsed: true,
