@@ -156,6 +156,8 @@ export default defineConfig({
               { text: 'gpt思考内容', link: '/gpt-thinking' },
               { text: 'GPT-5.1 指南', link: '/GPT-5.1' },
               { text: 'GPT-5.2 指南', link: '/gpt-5.2' },
+              // { text: 'GPT-5.4 指南', link: '/GPT-5.4' },
+              { text: 'GPT-5.4 Computer Use', link: '/gpt-5.4_computer_use' },
               {
                 text: 'M2-her',
                 collapsed: true,

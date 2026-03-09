@@ -185,10 +185,8 @@ def main() -> None:
     # 填写相对于脚本所在目录的路径，例如 'img\\ruanzhu.png'
     # 可以根据实际需要修改这个列表
     image_files = [
-                'img/openclaw02.png',
-                'img/openclaw03.png',
-
-    ]               
+        f'img/openclaw_config{str(i).zfill(2)}.png' for i in range(1, 21)
+    ]
     
     # 第三步：验证水印文件存在性
     # 如果水印文件不存在，整个处理流程无法进行
