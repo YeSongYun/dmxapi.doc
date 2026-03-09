@@ -297,7 +297,7 @@ export default defineConfig({
                 
               },
               
-               { text: '百度绘图模型', link: '/baidu'},
+              //  { text: '百度绘图模型', link: '/baidu'},
 
                
               {
@@ -586,8 +586,9 @@ export default defineConfig({
           { text: 'Typing Mind', link: '/typingmind' },
           { text: '提示词优化器', link: '/prompt-optimizer' },
           // { text: 'GitHub Copilot', link: '/GitHub Copilot' },
-          { text: 'OpenClaw(原clawdbot)', link: '/clawdbot' },
-          { text: '沉浸式翻译', link: '/chenjinshifanyi.md' }
+          { text: 'OpenClaw(DMXAPI汉化版)', link: '/clawdbot' },
+          { text: '沉浸式翻译', link: '/chenjinshifanyi' },
+          { text: 'OpenClaw官方版配置', link: '/openclaw_config' }
         ],
       },
       {

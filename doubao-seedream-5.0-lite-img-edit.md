@@ -154,7 +154,7 @@ url = "https://www.dmxapi.cn/v1/responses"
 
 # 🔐 DMXAPI 密钥 (请替换为您自己的密钥)
 # 获取方式: 登录 DMXAPI 官网 -> 个人中心 -> API 密钥管理
-api_key = "YOUR_API_KEY"
+api_key = "sk-*********************************"
 
 # ═══════════════════════════════════════════════════════════════
 # 📋 步骤2: 配置请求头
@@ -273,8 +273,13 @@ for line in response.iter_lines():
 
         # 只输出图片生成事件和完成事件
         if current_event == 'response.output_text.delta':
-            print(f"event: {current_event}")
-            print(f"data: {data_str}")
+            try:
+                data = json.loads(data_str)
+                delta = data.get('delta', '')
+                if delta:
+                    print(delta)
+            except:
+                print(f"data: {data_str}")
         elif current_event == 'response.completed':
             try:
                 data = json.loads(data_str)
