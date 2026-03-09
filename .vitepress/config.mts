@@ -157,7 +157,7 @@ export default defineConfig({
               { text: 'GPT-5.1 指南', link: '/GPT-5.1' },
               { text: 'GPT-5.2 指南', link: '/gpt-5.2' },
               // { text: 'GPT-5.4 指南', link: '/GPT-5.4' },
-              { text: 'GPT-5.4 Computer Use', link: '/gpt-5.4_computer_use' },
+              // { text: 'GPT-5.4 Computer Use', link: '/gpt-5.4_computer_use' },
               {
                 text: 'M2-her',
                 collapsed: true,
@@ -588,9 +588,10 @@ export default defineConfig({
           { text: 'Typing Mind', link: '/typingmind' },
           { text: '提示词优化器', link: '/prompt-optimizer' },
           // { text: 'GitHub Copilot', link: '/GitHub Copilot' },
+          { text: 'OpenClaw官方版配置DMXAPI', link: '/openclaw_config' },
           { text: 'OpenClaw(DMXAPI汉化版)', link: '/clawdbot' },
           { text: '沉浸式翻译', link: '/chenjinshifanyi' },
-          { text: 'OpenClaw官方版配置', link: '/openclaw_config' }
+          
         ],
       },
       {

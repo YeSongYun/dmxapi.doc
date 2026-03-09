@@ -24,7 +24,7 @@ npm config set registry https://npm.cnb.cool/dmxapi/openclaw-cn/-/packages/
 
 
 # 安装最新版本
-npm install -g openclaw-cn@1.2.0
+npm install -g openclaw-cn@1.2.8
 ```
 
 ::: warning 提示
@@ -144,9 +144,9 @@ openclaw-cn gateway
 ## 版本升级
 
 ```bash
-npm install -g openclaw-cn@1.2.0
+npm install -g openclaw-cn@1.2.8
 ```
 
 <p align="center">
-  <small>© 2026 OpenClaw（原 clawdbot）配置 DMXAPI 教程</small>
+  <small>© 2026 OpenClaw（原 clawdbot）配置 DMXAPI </small>
 </p>
