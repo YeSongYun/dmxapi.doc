@@ -65,49 +65,46 @@ https://cnb.cool/dmxapi/opencode_dmxapi
 ### 2. 根据您的系统环境选择合适的插件，点击下载 
 
 ![opencode](img\1-27-2.png)
-### 3. 下载插件
 
-![opencode](img\1-27-3.png)
-
-### 4. 根据您的系统环境选择合适的插件，点击下载 
+### 3. 双击打开
 
 ![opencode](img\1-27-4.png)
 
-### 5. 选择DMXAPI和输入API 密钥
+### 4. 选择DMXAPI和输入API 密钥
 下载成功后双击打开，进入配置界面，然后填写您的url，如下图：
 
 ![opencode](img\1-12-3.png)
 
-### 6. 配置key
+### 5. 配置key
 
 配置key时要注意跟第三步填写的url对应
 
 ![opencode](img\1-12-4.png)
 
-### 7. 根据需求添加模型
+### 6. 根据需求添加模型
 
 ![opencode](img\1-12-5.png)
 
-### 8. 配置成功，退出配置界面
+### 7. 配置成功，退出配置界面
 
 ![opencode](img\1-12-6.png)
 
-### 9. 在系统终端中使用
+### 8. 在系统终端中使用
 在搜索栏中输入cmd，单击回车打开系统终端，输入opencode，回车。
 
 ![opencode](img\1-12-7.png)
 
-### 10. 选择想用的模型
+### 9. 选择想用的模型
 
 在聊天框中输入"/model"，单击回车
 ![opencode](img\1-12-8.png)
 
-### 9. 选择之前填入的DMXAPI后缀的模型
+### 10. 选择之前填入的DMXAPI后缀的模型
 
 ![opencode](img\1-12-9.png)
 
 
-### 10. 验证模型的配置情况，开始使用
+### 11. 验证模型的配置情况，开始使用
 
 可以开始用起来啦！！！！
 ![opencode](img\1-12-10.png)
