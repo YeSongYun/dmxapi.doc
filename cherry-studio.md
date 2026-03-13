@@ -17,9 +17,9 @@ Cherry Studio 是一款集多模型对话、知识库管理、AI 绘画、翻译
 ![](img\cherry_studio_04.png)
 ### 第六步 返回Cherry studio 填写api密钥
 ![](img\cherry_studio_05.png)
-### 第七步 点击管理
+### 第七步 当前页面下拉到最后，点击管理
 ![](img\cherry_studio_06.png)
-### 第八步 添加模型到列表
+### 第八步 添加模型到列表中
 ![](img\cherry_studio_07.png)
 
 ## 聊天
