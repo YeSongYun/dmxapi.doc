@@ -27,7 +27,7 @@ export default defineConfig({
       provider: 'local'
     },
     siteTitle: 'DMXAPI',
-    logo: '/logo.png',
+    logo: '/D.png',
     lastUpdatedText: '最后更新',
 
     footer: {
