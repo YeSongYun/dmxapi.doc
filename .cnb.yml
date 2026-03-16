@@ -33,20 +33,21 @@ main:
             max_diff_size: 200000
             fail_on_critical: true
 
-  tag:
+$:
+  tag_push:
     - name: "构建并部署文档"
       imports: https://cnb.cool/dmxapi/claude-code-my/-/blob/main/env.yml
       runner:
         tags: cnb:arch:amd64
         cpus: 4
-      docker:
-        image: node:20-alpine
       stages:
         - name: build
+          image: node:20-alpine
           script: |
             npm install
             npm run docs:build
         - name: deploy
+          image: node:20-alpine
           script: |
             apk add --no-cache openssh-client rsync
             mkdir -p ~/.ssh
