@@ -591,7 +591,7 @@ export default defineConfig({
           { text: 'OpenClaw官方版配置DMXAPI', link: '/openclaw_config' },
           { text: 'OpenClaw(DMXAPI汉化版)', link: '/clawdbot' },
           { text: '沉浸式翻译', link: '/chenjinshifanyi' },
-          
+          { text: 'fluentread', link: '/fluentread' },
         ],
       },
       {
