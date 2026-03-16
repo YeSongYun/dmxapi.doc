@@ -33,4 +33,24 @@ main:
             max_diff_size: 200000
             fail_on_critical: true
 
-
+  tag:
+    - name: "构建并部署文档"
+      imports: https://cnb.cool/dmxapi/claude-code-my/-/blob/main/env.yml
+      runner:
+        tags: cnb:arch:amd64
+        cpus: 4
+      docker:
+        image: node:20-alpine
+      stages:
+        - name: build
+          script: |
+            npm install
+            npm run docs:build
+        - name: deploy
+          script: |
+            apk add --no-cache openssh-client rsync
+            mkdir -p ~/.ssh
+            echo "${SSH_PRIVATE_KEY}" | base64 -d > ~/.ssh/id_ed25519
+            chmod 600 ~/.ssh/id_ed25519
+            rsync -avz -e "ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" \
+                .vitepress/dist/ root@114.66.11.141:/www/wwwroot/cn.doc/
