@@ -50,9 +50,10 @@ $:
         - name: deploy
           image: node:20-alpine
           script: |
-            apk add --no-cache openssh-client rsync
+            apk add --no-cache openssh-client
             mkdir -p ~/.ssh
             echo "${SSH_PRIVATE_KEY}" | base64 -d > ~/.ssh/id_ed25519
             chmod 600 ~/.ssh/id_ed25519
-            rsync -avz -e "ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" \
-                .vitepress/dist/ root@114.66.11.141:/www/wwwroot/cn.doc/
+            SSH_OPTS="-i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
+            ssh $SSH_OPTS root@114.66.11.141 "rm -rf /www/wwwroot/cn.doc/*"
+            scp -r $SSH_OPTS .vitepress/dist/* root@114.66.11.141:/www/wwwroot/cn.doc/
