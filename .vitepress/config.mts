@@ -376,7 +376,10 @@ export default defineConfig({
                 collapsed: true,
                 items: [
               
-                  { text: 'sora2官方文生视频', link: '/sora2-Official' }
+                  { text: 'sora2文生视频', link: '/sora2_t2v' },
+                  { text: 'sora2图生视频', link: '/sora2_i2v' },
+                  { text: 'sora2-pro文生视频', link: '/sora2-pro_t2v' },
+                  { text: 'sora2-pro图生视频', link: '/sora2-pro_i2v' }
                 ],
               },
 
@@ -502,7 +505,7 @@ export default defineConfig({
             collapsed: true,
             items: [
               { text: 'jina-reranker', link: '/rerank-jina-reranker' },
-              { text: 'qwen3-reranker-8b', link: '/rerank-qwen3-reranker-8b' },
+              // { text: 'qwen3-reranker-8b', link: '/rerank-qwen3-reranker-8b' },
               { text: 'bge-reranker-v2-m3-free', link: '/rerank-bge-reranker-v2-m3' },
               { text: 'doubao-embedding-large-text', link: '/emb-doubao-embedding-large-text' },
               { text: '阿里 text-embedding-v4', link: '/emb-text-embedding-v4' },
@@ -591,7 +594,7 @@ export default defineConfig({
           { text: 'OpenClaw官方版配置DMXAPI', link: '/openclaw_config' },
           { text: 'OpenClaw(DMXAPI汉化版)', link: '/clawdbot' },
           { text: '沉浸式翻译', link: '/chenjinshifanyi' },
-          
+          { text: 'fluentread', link: '/fluentread' },
         ],
       },
       {

@@ -36,31 +36,43 @@ npm install -g @anthropic-ai/claude-code
 claude --version
 ```
 
+## 第一步：下载安装配置工具
 
+配置工具开源仓库地址：
 
-
-
-## 使用方法
-
-### 配置工具的下载仓库地址
-
-::: tip 提示
-通过下面的仓库地址，下载claude code 的配置工具
-:::
-cnb开源仓库地址：
-
-https://cnb.cool/dmxapi/dmxapi_claude_code
-
-github仓库地址：
-
-https://github.com/YeSongYun/dmxapi-claude-code
-
+- cnb：https://cnb.cool/dmxapi/dmxapi_claude_code
+- GitHub：https://github.com/YeSongYun/dmxapi-claude-code
 
 :::warning 注意
 编程插件tokens消耗量很大，请注意tokens消耗
 :::
 
-## 配置流程
+### ⚡ 方式一：快速安装（推荐）
+
+直接在终端运行对应命令，自动完成下载与安装：
+
+**Linux / macOS**
+```bash
+curl -fsSL https://cnb.cool/dmxapi/dmxapi_claude_code/-/git/raw/main/install.sh | bash
+```
+
+**Windows PowerShell**
+```powershell
+iwr -useb https://cnb.cool/dmxapi/dmxapi_claude_code/-/git/raw/main/install.ps1 | iex
+```
+
+**Windows CMD**
+```cmd
+curl -fsSL https://cnb.cool/dmxapi/dmxapi_claude_code/-/git/raw/main/install.cmd -o %TEMP%\install.cmd && %TEMP%\install.cmd
+```
+
+:::danger 跳过步骤
+如果选择方式一，快速安装完成后，可以**直接跳到「第二步：运行配置」**
+:::
+
+---
+
+### 📦 方式二：手动下载
 
 #### 1、复制cnb仓库地址，在浏览器中打开。
 ![claude-code](img\1-20-8.png)
@@ -72,54 +84,46 @@ https://github.com/YeSongYun/dmxapi-claude-code
 ![claude-code](img\1-20-10.png)
 
 #### 4、下载完成
-windows用户下载完成后可以直接点击运行，开始配置，可以跳到第6步，其他操作系统用户需要先给文件添加运行权限，然后再运行。
+windows用户下载完成后可以直接点击运行，开始配置，可以直接跳到第二步，其他操作系统用户需要先给文件添加运行权限，然后再运行。
 ![claude-code](img\1-20-13.png)
 
 #### 5、安装之前，添加运行权限（Windows可以直接双击使用）
 ![claude-code](img\1-20-14.png)
 
-#### 6、进入配置界面
+
+## 第二步：运行配置
+
+#### 1、进入配置界面的模式选择
+![claude-code](img\1-20-19.png)
+> 这里我们第一次配置，选择第一项    
+
 ![claude-code](img\1-20-15.png)
 
-#### 7、填写url
+#### 2、填写Base URL
 ![claude-code](img\1-20-16.png)
 
-#### 8、选择更新配置
+#### 3、填写正确的key
 ![claude-code](img\1-20-17.png)
 
-#### 9、填写自己的key
+#### 4、配置模型并保存退出
 ![claude-code](img\1-20-18.png)
-
-#### 10、声明
-因为之前配置过一次，所以会留存一些模型名称,用户下载claude code 第一次配置不会出现这部分内容，直接从默认模型开始配置。
-![claude-code](img\1-20-19.png)
-
-#### 11、配置模型
 :::tip 注意
 claude code 只能配置模型广场中claude code 专区的后缀为-cc的模型，其他的不可用
 :::
-![claude-code](img\1-20-20.png)
 
-#### 12、配置成功，按回车退出配置界面
-![claude-code](img\1-20-21.png)
-
-#### 13、重新打开一个终端，输出claude ，打开claude code
+#### 5、重新打开一个终端，输出claude ，打开claude code
 ![claude-code](img\1-20-22.png)
 
-#### 14、选择Yes，proceed
+#### 6、选择Yes，proceed
 
 这一步之前有的用户会出现背景颜色的确认，根据自己喜欢的风格选择后就到这一步了。
 ![claude-code](img\1-20-23.png)
 
-#### 15、在对话框中输入“你好”，回车
+#### 7、在对话框中输入”你好”，回车
 ![claude-code](img\1-20-24.png)
 
-#### 16、模型响应成功，可以开始使用了。
+#### 8、模型响应成功，可以开始使用了。
 ![claude-code](img\1-20-25.png)
-
-
-
-
 
 
 ## Claude Code 疑难杂症汇总
