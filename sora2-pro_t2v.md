@@ -14,7 +14,7 @@
 | 查询结果 | POST | `https://www.dmxapi.cn/v1/responses` |
 
 
-## 文生视频 示例代码
+## 生成视频 示例代码
 
 ```python
 import requests
@@ -86,7 +86,7 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 }
 ```
 
-## 查询结果 示例代码
+## 获取生成视频 示例代码
 
 ```python
 import requests
