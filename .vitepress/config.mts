@@ -372,14 +372,22 @@ export default defineConfig({
               },
 
                {
-                text: 'Sora2视频模型',
+                text: 'Sora视频模型',
                 collapsed: true,
                 items: [
               
                   { text: 'sora2文生视频', link: '/sora2_t2v' },
-                  { text: 'sora2图生视频', link: '/sora2_i2v' },
                   { text: 'sora2-pro文生视频', link: '/sora2-pro_t2v' },
-                  { text: 'sora2-pro图生视频', link: '/sora2-pro_i2v' }
+                ],
+              },
+
+              {
+                text: 'Veo视频模型',
+                collapsed: true,
+                items: [
+              
+                  { text: 'veo-3.1-fast-generate-preview文生视频', link: '/veo-3.1-fast-generate-preview' },
+                  { text: 'veo-3.1-generate-preview文生视频', link: '/veo-3.1-generate-preview' },
                 ],
               },
 
