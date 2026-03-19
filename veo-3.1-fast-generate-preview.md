@@ -141,7 +141,7 @@ headers = {
 
 payload = {
     # 【model】(string, 必填) 固定为 "sora-get"，表示查询异步任务结果
-    "model": "sora-get",
+    "model": "veo-get",
     # 【input】(string, 必填) 提交任务后返回的 id 字段值（任务 ID）
     "input": "eyJtb2RlbCI6InZlby0zLjEtZmFzdC1nZW5lcmF0ZS1wcmV2aWV3IiwiaWQiOiJwcm9qZWN0cy9hYWRmZ2ZkZmcvbG9jYXRpb25zL2dsb2JhbC9wdWJsaXNoZXJzL2dvb2dsZS9tb2RlbHMvdmVvLTMuMS1mYXN0LWdlbmVyYXRlLXByZXZpZXcvb3BlcmF0aW9ucy8wM2Q3OWJlZS1kYmI1LTRhZjUtYTRlNS0xMjdjYTJmNzljYmYifQchannel4523",
 

@@ -302,14 +302,14 @@ export default defineConfig({
               //  { text: '百度绘图模型', link: '/baidu'},
 
                
-              {
-                text: 'Flux绘图模型',
-                collapsed: true,
-                items: [
-                  { text: 'flux-2-flex', link: '/flux-2-flex' },
-                  { text: 'flux-2-pro', link: '/flux-2-pro' },
-                ],
-              },
+              // {
+              //   text: 'Flux绘图模型',
+              //   collapsed: true,
+              //   items: [
+              //     { text: 'flux-2-flex', link: '/flux-2-flex' },
+              //     { text: 'flux-2-pro', link: '/flux-2-pro' },
+              //   ],
+              // },
 
               {
                 text: '阿里万相绘图模型',
