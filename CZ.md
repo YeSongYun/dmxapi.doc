@@ -10,7 +10,7 @@ https://www.dmxapi.cn/topup
 自定义充值步骤为①-④；兑换码充值步骤为A-B。
 ![CZ](img\cz_1.png)
 
-### 2. 邀请好友注册和发表DMXAPI文章的相关福利
+### 2. 发表DMXAPI文章的相关福利
 
 ![CZ](img\cz_2.png)
 

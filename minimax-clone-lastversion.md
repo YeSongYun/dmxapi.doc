@@ -62,8 +62,10 @@ payload = {
 
     "clone_prompt": {
 
-        # 示例音频文件 ID
-        # 通过 minimax-clone 接口上传音频（purpose="prompt_audio"）获取
+        # 示例音频文件 ID（整型）
+        # 先调用 minimax-clone-upload 接口上传音频（purpose="prompt_audio"），
+        # 上传成功后取响应体 file.file_id 字段的值填入此处
+        # 示例响应：{"file": {"file_id": 365865350209649, "purpose": "prompt_audio", ...}}
         "prompt_audio": 365589324152946,
         
         # 提示文本（描述音频内容或风格）
