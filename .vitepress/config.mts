@@ -381,15 +381,15 @@ export default defineConfig({
                 ],
               },
 
-              {
-                text: 'Veo视频模型',
-                collapsed: true,
-                items: [
+              // {
+              //   text: 'Veo视频模型',
+              //   collapsed: true,
+              //   items: [
               
-                  { text: 'veo-3.1-fast-generate-preview文生视频', link: '/veo-3.1-fast-generate-preview' },
-                  { text: 'veo-3.1-generate-preview文生视频', link: '/veo-3.1-generate-preview' },
-                ],
-              },
+              //     { text: 'veo-3.1-fast-generate-preview文生视频', link: '/veo-3.1-fast-generate-preview' },
+              //     { text: 'veo-3.1-generate-preview文生视频', link: '/veo-3.1-generate-preview' },
+              //   ],
+              // },
 
                {
                 text: 'Vidu视频模型',
