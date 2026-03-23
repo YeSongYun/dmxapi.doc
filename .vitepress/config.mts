@@ -461,6 +461,8 @@ export default defineConfig({
               { text: 'STT模型 whisper', link: '/opneai-stt' },
               { text: 'STT模型 gpt-4o-transcribe', link: '/gpt-4o-transcribe' },
               { text: 'STT模型 Qwen3-Omni-Captioner', link: '/Qwen3-Omni-Captioner' },
+              { text: 'STT模型 mimo-v2-tts', link: '/mimo-v2-tts' },
+              
               {
                 text: 'Minimax 声音克隆 ',
                 collapsed: true,
