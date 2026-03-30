@@ -13,56 +13,41 @@ https://www.dmxapi.cn/api/log/self
 import requests
 from datetime import datetime
 
-# 配置信息
-URL = "https://www.dmxapi.cn/api/log/self"
+# ===== 只需修改这里 =====
 
-# 认证信息 - 请替换为你自己的信息
-SYSTEM_TOKEN = "*********************"  # 替换为你的系统令牌
-USER_ID = "**********"  # 在 个人设置 中获得
+# 认证信息
+SYSTEM_TOKEN = "*********"  # 系统令牌，获取路径：登录DMXAPI → 工作台 → 个人设置 → 更多选项 → 系统令牌
+USER_ID = "*****"                 # 用户 ID，获取路径：登录DMXAPI → 工作台 → 个人设置
 
-# 每页显示条数
-PAGE_SIZE = 10
-
-# ============== 时间配置 ==============
-# 查询模式选择：
-#   "today"      - 查询今天的数据
-#   "yesterday"  - 查询昨天的数据
-#   "week"       - 查询最近7天的数据
-#   "month"      - 查询最近30天的数据
-#   "custom"     - 自定义时间范围（需要设置下方的 CUSTOM_START 和 CUSTOM_END）
+# 时间范围
+# 可选值："today"（今天）、"yesterday"（昨天）、"week"（最近7天）、"month"（最近30天）、"custom"（自定义）
 QUERY_MODE = "today"
 
 # 自定义时间范围（仅当 QUERY_MODE = "custom" 时生效）
-# 格式: "YYYY-MM-DD" 或 "YYYY-MM-DD HH:MM:SS"
+# 格式："YYYY-MM-DD" 或 "YYYY-MM-DD HH:MM:SS"
 CUSTOM_START = "2025-01-01 00:00:00"
 CUSTOM_END = "2025-01-01 23:59:59"
-# =====================================
+
+# 每页显示条数
+PAGE_SIZE = 50
+
+# 筛选条件（留空表示不筛选，查询全部）
+TOKEN_NAME = ""      # 按令牌名称筛选，例如 "我的令牌A"
+MODEL_NAME = ""      # 按模型名称筛选，例如 "gpt-5.4"、"claude-sonnet-4-20250514"
+IP_FILTER = ""       # 按 IP 地址筛选，例如 "192.168.1.1"
+
+# ========================
+
+# 以下为自动处理逻辑，无需修改
+URL = "https://www.dmxapi.cn/api/log/self"
 
 
 def get_log_detail(start_timestamp: int, end_timestamp: int, page: int = 1,
                    page_size: int = PAGE_SIZE, log_type: int = 0,
-                   token_name: str = "", token_group: str = "",
-                   model_name: str = "", ip: str = "",
+                   token_name: str = TOKEN_NAME, token_group: str = "",
+                   model_name: str = MODEL_NAME, ip: str = IP_FILTER,
                    response_id: str = "", request_id: str = ""):
-    """
-    获取消耗明细日志数据
-
-    Args:
-        start_timestamp: 开始时间戳
-        end_timestamp: 结束时间戳
-        page: 页码，从1开始
-        page_size: 每页条数
-        log_type: 日志类型，0为全部，2为消耗日志
-        token_name: 令牌名称筛选
-        token_group: 令牌分组筛选
-        model_name: 模型名称筛选
-        ip: IP地址筛选
-        response_id: 响应ID筛选
-        request_id: 请求ID筛选
-
-    Returns:
-        dict: 包含日志数据的字典
-    """
+    """获取消耗明细日志数据"""
     headers = {
         "Accept": "application/json",
         "Authorization": f"{SYSTEM_TOKEN}",
@@ -153,7 +138,7 @@ def print_log_detail(data: dict):
         print("  暂无消耗记录")
         return
 
-    print(f"{'序号':>4}  {'模型名称':<25} {'消耗额度':>10} {'输入Token':>10} {'输出Token':>10} {'耗时(ms)':>8} {'请求时间':<20}")
+    print(f"{'序号':>4}  {'模型名称':<25} {'消耗(元)':>10} {'输入Token':>10} {'输出Token':>10} {'耗时(ms)':>8} {'请求时间':<20}")
     print("-" * 120)
 
     for idx, item in enumerate(items, 1):
@@ -364,49 +349,119 @@ if __name__ == "__main__":
             analysis = analyze_logs(all_items)
 
             print(f"\n【快速统计】")
-            print(f"  总消耗: {analysis['total_consumption']:.4f}")
+            print(f"  总消耗: {analysis['total_consumption']:.4f} 元")
             print(f"  模型数: {analysis['model_count']}")
             print(f"  请求数: {analysis['request_count']}")
             print(f"  总输入Token: {analysis['total_prompt_tokens']:,}")
             print(f"  总输出Token: {analysis['total_completion_tokens']:,}")
 
+            # 各模型消耗排行
+            print(f"\n【各模型消耗排行】")
+            model_stats = analysis.get('model_stats', {})
+            for i, (model, stats) in enumerate(model_stats.items(), 1):
+                percentage = (stats['total_quota'] / analysis['total_consumption'] * 100) if analysis['total_consumption'] > 0 else 0
+                print(f"  {i}. {model}")
+                print(f"     消耗: {stats['total_quota']:.4f} 元 ({percentage:.1f}%) | 请求: {stats['count']} 次 | 输入: {stats['prompt_tokens']:,} | 输出: {stats['completion_tokens']:,}")
+
             # 保存到文件
             save_analysis_report(analysis, all_items, start_time, end_time)
-            
 ```
 ## 返回示例
 ```json
-查询时间范围: 2025-12-09 00:00:00 至 2025-12-09 23:59:59
+查询模式: today
+查询时间范围: 2026-03-26 00:00:00 至 2026-03-26 23:59:59
 
-分页信息: 第 1 页 | 每页 10 条 | 共 35 条记录
+分页信息: 第 1 页 | 每页 50 条 | 共 346 条记录
 ------------------------------------------------------------------------------------------------------------------------
-  序号  模型名称                            消耗额度    输入Token    输出Token   耗时(ms) 请求时间
+  序号  模型名称                           消耗(元)    输入Token    输出Token   耗时(ms) 请求时间
 ------------------------------------------------------------------------------------------------------------------------
-   1  gpt-5.1-chat                0.011712         10        233        6 2025-12-09 17:31:50
-   2  gpt-5.1-chat                0.003144          7         62        3 2025-12-09 17:06:57
-   3  gpt-5.1-chat                0.002994          7         59        3 2025-12-09 17:06:52
-   4  gpt-5.1-chat                0.003294          7         65        5 2025-12-09 16:08:50
-   5  gpt-5.1-chat                0.001694          7         33        3 2025-12-09 16:08:37
-   6  gpt-5.1-chat                0.001394          7         27        3 2025-12-09 16:08:31
-   7  gpt-5.1-chat                0.001494          7         29        2 2025-12-09 16:08:15
-   8  gpt-5.1-chat                0.002944          7         58        2 2025-12-09 16:08:11
-   9  gpt-5.1-chat                0.002944          7         58        3 2025-12-09 16:08:06
-  10  gpt-5.1-chat                0.002994          7         59        3 2025-12-09 16:07:09
+   1  claude-opus-4-6             3.176290          3          9        6 2026-03-26 15:03:47
+   2  claude-opus-4-6             0.153382          1        182        8 2026-03-26 15:03:03
+   3  claude-opus-4-6             0.438954          1       1335       32 2026-03-26 15:02:54
+   4  claude-sonnet-4-6           0.301516          1         58        3 2026-03-26 15:02:33
+   5  claude-sonnet-4-6           0.032740          1         88        3 2026-03-26 15:02:29
+   6  claude-sonnet-4-6           0.296932          3         92       10 2026-03-26 15:02:21
+   7  claude-opus-4-6             0.946908          1        219       57 2026-03-26 15:02:20
+   8  claude-opus-4-6             0.365540          1        284       66 2026-03-26 15:01:20
+   9  claude-opus-4-6-cc          2.408732          1         58       88 2026-03-26 15:01:15
+  10  claude-opus-4-6             0.271684          1        416       68 2026-03-26 15:00:11
+  11  claude-opus-4-6-cc          2.411176          3        144       60 2026-03-26 14:59:47
+  12  claude-opus-4-6             0.462750          3        206       25 2026-03-26 14:58:54
+  13  claude-opus-4-6-cc          0.308918          3        450       58 2026-03-26 14:58:34
+  14  claude-opus-4-6             0.301752          1         83       21 2026-03-26 14:57:27
+  15  claude-opus-4-6             0.306178          3         94       38 2026-03-26 14:57:06
+  16  claude-opus-4-6             3.595066          3        208       13 2026-03-26 14:54:53
+  17  claude-opus-4-6-cc          0.206170          1        154        7 2026-03-26 14:54:47
+  18  claude-opus-4-6-cc          0.227534          1        566       12 2026-03-26 14:54:40
+  19  claude-opus-4-6-cc          0.217624          1        323       14 2026-03-26 14:54:28
+  20  claude-opus-4-6-cc          0.205330          1        110        8 2026-03-26 14:54:13
+  21  claude-opus-4-6-cc          0.215576          1        110       15 2026-03-26 14:54:05
+  22  claude-opus-4-6-cc          2.304668          3        111        9 2026-03-26 14:53:49
+  23  claude-opus-4-6-cc          2.342270          3        967       72 2026-03-26 14:52:58
+  24  claude-opus-4-6-cc          0.010462          3        168       11 2026-03-26 14:51:45
+  25  claude-opus-4-6-cc          0.192330          1         40       22 2026-03-26 14:46:32
+  26  claude-opus-4-6-cc          2.274580          1        227       51 2026-03-26 14:46:09
+  27  claude-opus-4-6-cc          2.273518          3        294       14 2026-03-26 14:45:18
+  28  claude-opus-4-6-cc          0.213472          1        328       10 2026-03-26 14:37:39
+  29  claude-opus-4-6-cc          0.244946          1        305        6 2026-03-26 14:37:28
+  30  claude-opus-4-6-cc          0.195546          1        125        7 2026-03-26 14:37:22
+  31  claude-opus-4-6-cc          0.215616          1        479       13 2026-03-26 14:37:14
+  32  claude-opus-4-6-cc          0.218292          1        136        8 2026-03-26 14:37:01
+  33  claude-opus-4-6-cc          2.231842          1        358       10 2026-03-26 14:36:53
+  34  claude-opus-4-6-cc          2.256942          1       1037       21 2026-03-26 14:36:42
+  35  claude-opus-4-6-cc          0.193096          1        110       19 2026-03-26 14:36:21
+  36  claude-opus-4-6-cc          0.185164          3        111        7 2026-03-26 14:36:02
+  37  claude-opus-4-6-cc          2.180924          3        294      108 2026-03-26 14:34:06
+  38  claude-opus-4-6             3.162328          3          9       25 2026-03-26 14:34:06
+  39  claude-opus-4-6-cc          2.183204          3        489       25 2026-03-26 14:30:47
+  40                              0.000000          0          0        0 2026-03-26 14:26:10
+  41  claude-opus-4-6-cc          2.157950          3        135        8 2026-03-26 14:25:44
+  42  claude-opus-4-6-cc          0.210678          3        408       12 2026-03-26 14:23:30
+  43  claude-opus-4-6-cc          0.225500          3        818       14 2026-03-26 14:21:28
+  44  claude-opus-4-6-cc          0.377056          3        279       12 2026-03-26 14:19:35
+  45  claude-opus-4-6-cc          2.160540          3        821       28 2026-03-26 14:18:37
+  46  claude-opus-4-6-cc          0.221724          3       1102       22 2026-03-26 14:17:12
+  47  claude-opus-4-6-cc          0.004690          3         75        8 2026-03-26 14:16:50
+  48  gpt-5.4                     0.000000          0          0       75 2026-03-26 14:13:43
+  49  claude-opus-4-6-cc          1.950548          3        928       57 2026-03-26 14:13:13
+  50  claude-opus-4-6-cc          1.923774          3        715       34 2026-03-26 14:10:57
 
-正在获取全部 35 条记录...
-已获取 10/35 条记录...
-已获取 20/35 条记录...
-已获取 30/35 条记录...
+正在获取全部 346 条记录...
+已获取 50/346 条记录...
+已获取 100/346 条记录...
+已获取 150/346 条记录...
+已获取 200/346 条记录...
+已获取 250/346 条记录...
+已获取 300/346 条记录...
 
 正在生成分析报告...
 
 【快速统计】
-  总消耗: 0.0997
-  模型数: 3
-  请求数: 35
-  总输入Token: 247
-  总输出Token: 1,971
+  总消耗: 224.1485 元
+  模型数: 8
+  请求数: 346
+  总输入Token: 641,115
+  总输出Token: 134,404
 
+【各模型消耗排行】
+  1. claude-opus-4-6
+     消耗: 114.9335 元 (51.3%) | 请求: 139 次 | 输入: 227 | 输出: 35,910
+  2. claude-opus-4-6-cc
+     消耗: 103.6920 元 (46.3%) | 请求: 176 次 | 输入: 568,446 | 输出: 69,660
+  3. doubao-seedream-5.0-lite
+     消耗: 1.9800 元 (0.9%) | 请求: 5 次 | 输入: 5 | 输出: 19,800
+  4. gemini-2.5-flash-image-ssvip
+     消耗: 1.4438 元 (0.6%) | 请求: 9 次 | 输入: 4,175 | 输出: 6,551
+  5. claude-sonnet-4-6
+     消耗: 1.0768 元 (0.5%) | 请求: 9 次 | 输入: 13 | 输出: 920
+  6. gpt-5.4
+     消耗: 0.8564 元 (0.4%) | 请求: 6 次 | 输入: 68,230 | 输出: 47
+  7. gemini-3.1-flash-image-preview
+     消耗: 0.1660 元 (0.1%) | 请求: 1 次 | 输入: 19 | 输出: 1,516
+  8.
+     消耗: 0.0000 元 (0.0%) | 请求: 1 次 | 输入: 0 | 输出: 0
+
+分析报告已保存至: c:\Users\a1\Desktop\测试保存代码\消耗细化报告.txt
 ```
 
 
