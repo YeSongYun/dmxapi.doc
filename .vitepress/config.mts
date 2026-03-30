@@ -63,20 +63,31 @@ export default defineConfig({
         ],
       },
       {
-        text: '平台接口(余额/模型列表)',
+        text: '平台管理接口',
         collapsed: true,
         items: [
+          { text: '系统令牌&用户ID', link: '/security_token_ID' },
           { text: '余额查询', link: '/yuer' },
-          { text: '令牌余额', link: '/key-yuer' },
           { text: '模型列表', link: '/model-list' },
           { text: '模型统计', link: '/Model-statistics' },
           {
                 text: '日志查询',
                 collapsed: true,
                 items: [
-                  { text: '系统令牌&用户ID', link: '/security_token_ID' },
                   { text: '总消耗查询', link: '/log_query' },
                   { text: '消耗细化查询', link: '/log_query_all' }
+                ],
+          },
+          {
+                text: '令牌相关',
+                collapsed: true,
+                items: [
+                  { text: '获取所有令牌', link: '/Get_all_tokens' },
+                  { text: '搜索令牌', link: '/Search_token' },
+                  { text: '创建令牌', link: '/Create_token' },
+                  { text: '更新令牌', link: '/Update_token' },
+                  { text: '批量删除令牌', link: '/Batch_token_deletion' },
+                  { text: '令牌余额', link: '/key-yuer' },
                 ],
           },
         ],
@@ -139,7 +150,8 @@ export default defineConfig({
               { text: 'whisper-stt', link: '/opneai-stt' },
               { text: 'gpt-tts', link: '/openai-tts' },
               { text: 'gpt-5.2-pro', link: '/gpt-5.2-pro' },
-              { text: 'openai绘图模型', link: '/gpt-image' }
+              { text: 'openai绘图模型', link: '/gpt-image' },
+              { text: 'openai多轮对话', link: '/gpt-5.4_Multi-turn-dialogue' }
             ],
           },
           {
@@ -158,14 +170,7 @@ export default defineConfig({
               { text: 'GPT-5.2 指南', link: '/gpt-5.2' },
               { text: 'GPT-5.4 指南', link: '/GPT-5.4' },
               // { text: 'GPT-5.4 Computer Use', link: '/gpt-5.4_computer_use' },
-              {
-                text: 'M2-her',
-                collapsed: true,
-                items: [
-                  { text: '普通对话', link: '/m2-her-nc' },
-                  { text: '多轮对话', link: '/m2-her_multi-dia' },
-                ],
-              },
+
             ],
           },
           {
@@ -458,7 +463,7 @@ export default defineConfig({
             items: [
               { text: 'TTS模型Gemini系列', link: '/gemini-2.5-pro-preview-tts' },
               { text: 'TTS模型 MinMax-speech', link: '/minimax-speech' },
-              { text: 'STT模型 whisper', link: '/opneai-stt' },
+              // { text: 'STT模型 whisper', link: '/opneai-stt' },
               { text: 'STT模型 gpt-4o-transcribe', link: '/gpt-4o-transcribe' },
               { text: 'STT模型 Qwen3-Omni-Captioner', link: '/Qwen3-Omni-Captioner' },
               { text: 'STT模型 mimo-v2-tts', link: '/mimo-v2-tts' },
@@ -569,6 +574,14 @@ export default defineConfig({
               { text: 'qwen3-max-2026-01-23', link: '/qwen3-max-2026-01-23' }
             ],
           },
+          {
+                text: 'M2-her',
+                collapsed: true,
+                items: [
+                  { text: '普通对话', link: '/m2-her-nc' },
+                  { text: '多轮对话', link: '/m2-her_multi-dia' },
+                ],
+              },
 
   
         ]

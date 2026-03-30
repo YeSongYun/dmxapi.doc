@@ -2,6 +2,64 @@
 
 OpenClaw 是一款开源的 Claude Desktop 替代品，支持通过 MCP（Model Context Protocol）连接各类 AI 服务。本文档将指导你如何安装 OpenClaw 并使用配置插件快速接入 DMXAPI。
 
+## 环境准备
+
+在开始之前，请确保你的电脑已安装 **Node.js**（安装后会自带 npm 包管理器，后续安装 OpenClaw 需要用到）。
+
+### 检查是否已安装
+
+打开终端，运行以下命令：
+
+```bash
+node -v
+npm -v
+```
+
+如果能正常输出版本号（如下所示），说明已安装，可以跳过安装步骤：
+
+```text
+v22.14.0
+10.9.2
+```
+
+::: tip
+Node.js 建议使用 **v18 及以上**版本。如果版本过低，建议重新安装最新 LTS 版本。
+:::
+
+### 安装 Node.js
+
+如果提示 `node: command not found` 或 `'node' 不是内部或外部命令`，说明尚未安装，请按照你的操作系统选择对应方式安装：
+
+**Windows：**
+
+1. 访问 Node.js 官网：[https://nodejs.org/](https://nodejs.org/)
+2. 下载 **LTS（长期支持版）** 安装包
+3. 双击安装包，一路点击「Next」完成安装（保持默认选项即可）
+4. 安装完成后，**重新打开终端**，运行 `node -v` 验证
+
+**macOS：**
+
+方式一：使用 Homebrew 安装（推荐）
+
+```bash
+# 如果没有安装 Homebrew，先安装 Homebrew
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# 安装 Node.js
+brew install node
+```
+
+方式二：访问 [https://nodejs.org/](https://nodejs.org/) 下载 macOS 安装包，双击安装。
+
+**Linux（Ubuntu / Debian）：**
+
+```bash
+curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo bash -
+sudo apt-get install -y nodejs
+```
+
+安装完成后，运行 `node -v` 和 `npm -v` 确认安装成功。
+
 ## 一、安装 OpenClaw
 
 使用 npm 全局安装 OpenClaw：
