@@ -74,7 +74,7 @@ payload = {
         }
     ],
     # 【max_completion_tokens】(integer, 必填) 本次生成允许使用的最大输出 Token 数量
-    # 示例中设置为 1024，用于限制回复长度与成本
+    # 默认值为 32768
     "max_completion_tokens": 1024
 }
 

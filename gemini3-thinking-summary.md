@@ -20,7 +20,7 @@ from google import genai
 from google.genai import types
 
 # DMXAPI 配置
-API_KEY = "sk-rOQH5ITfGkp9pbvnIIbcQyPRCQclFUl8bSjD3dFRPeuDUQHl"
+API_KEY = "sk-******************************************"
 BASE_URL = "https://www.dmxapi.cn"
 
 # 初始化客户端
@@ -64,7 +64,7 @@ from google import genai
 from google.genai import types
 
 # DMXAPI 配置
-API_KEY = "sk-rOQH5ITfGkp9pbvnIIbcQyPRCQclFUl8bSjD3dFRPeuDUQHl"
+API_KEY = "sk-******************************************"
 BASE_URL = "https://www.dmxapi.cn"
 
 # 初始化客户端

@@ -32,7 +32,7 @@ payload = json.dumps(
 
 # 设置请求头
 headers = {
-    "Authorization": "sk-rOQH5ITfGkp9pbvnIIbcQyPRCQclFUl8bSjD3dFRPeuDUQHl",  # DMXAPI的API密钥
+    "Authorization": "sk-******************************************",  # DMXAPI的API密钥
     "Content-Type": "application/json",  # 指定请求内容类型为JSON
 }
 
