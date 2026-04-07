@@ -367,6 +367,33 @@ export default defineConfig({
             collapsed: true,
             items: [
               {
+                text: '豆包视频模型 ',
+                collapsed: true,
+                items: [
+                  {
+                    text: 'seedance 1.5',
+                    collapsed: true,
+                    items: [
+                      { text: '文生视频', link: '/doubao-seedance-1-5-pro-responses01' },
+                      { text: '图生视频', link: '/doubao-seedance-1-5-pro-responses02' },
+                      { text: '首尾帧生成视频', link: '/doubao-seedance-1-5-pro-responses03' },
+                    ],
+                  },
+                  {
+                    text: 'seedance 2.0',
+                    collapsed: true,
+                    items: [
+                      { text: '文生视频', link: '/doubao-seedance-2-0-text-to-video' },
+                      { text: '首帧生视频', link: '/doubao-seedance-2-0-260128-first-frame-to-video' },
+                      { text: '首尾帧生视频', link: '/doubao-seedance-2-0-first-last-frame-video' },
+                      { text: '视频编辑', link: '/doubao-seedance-2-0-260128-video-edit' },
+                      { text: '视频延长', link: '/doubao-seedance-2-0-video-extend' },
+                      { text: '多模态参考生视频', link: '/doubao-seedance-2-0-multimodal-reference-video' }
+                    ],
+                  },
+                ],
+              },
+              {
                 text: 'MiniMax 海螺视频 Hailuo ',
                 collapsed: true,
                 items: [
@@ -428,15 +455,7 @@ export default defineConfig({
                 ],
               },
               
-              {
-                text: '豆包视频模型 ',
-                collapsed: true,
-                items: [
-                  { text: '文生视频', link: '/doubao-seedance-1-5-pro-responses01' },
-                  { text: '图生视频', link: '/doubao-seedance-1-5-pro-responses02' },
-                  { text: '首尾帧生成视频', link: '/doubao-seedance-1-5-pro-responses03' }
-                ],
-              },
+
               {
                 text: '阿里万相视频模型',
                 collapsed: true,
@@ -464,8 +483,10 @@ export default defineConfig({
               { text: 'TTS模型Gemini系列', link: '/gemini-2.5-pro-preview-tts' },
               { text: 'TTS模型 MinMax-speech', link: '/minimax-speech' },
               // { text: 'STT模型 whisper', link: '/opneai-stt' },
+              { text: 'TTS模型 mimo-v2-tts', link: '/mimo-v2-tts' },
               { text: 'STT模型 gpt-4o-transcribe', link: '/gpt-4o-transcribe' },
               { text: 'STT模型 Qwen3-Omni-Captioner', link: '/Qwen3-Omni-Captioner' },
+              
               {
                 text: 'Minimax 声音克隆 ',
                 collapsed: true,
@@ -543,6 +564,15 @@ export default defineConfig({
             collapsed: true,
             items: [
               { text: 'qwen3-omni-flash全模态模型', link: '/qwen3-omni-flash' },
+              {
+                text: 'mimo-v2-omni全模态模型 ',
+                collapsed: true,
+                items: [
+                  { text: '视频分析', link: '/mimo-v2-omni-Video_understanding' },
+                  { text: '图片分析', link: '/mimo-v2-omni-pic_understanding' },
+                  { text: '音频分析', link: '/mimo-v2-omni-Audio_understanding' },
+                ],
+              },
              
             ],
           },
@@ -569,10 +599,8 @@ export default defineConfig({
               { text: 'qwen-deep-research', link: '/qwen-deep-research' },
               { text: '界面交互模型gui-plus', link: '/gui-plus' },
               { text: 'qwen-plus-character角色扮演模型', link: '/qwen-plus-character' },
-              { text: 'qwen3-max-2026-01-23', link: '/qwen3-max-2026-01-23' }
-            ],
-          },
-          {
+              { text: 'qwen3-max-2026-01-23', link: '/qwen3-max-2026-01-23' },
+              {
                 text: 'M2-her',
                 collapsed: true,
                 items: [
@@ -580,6 +608,8 @@ export default defineConfig({
                   { text: '多轮对话', link: '/m2-her_multi-dia' },
                 ],
               },
+            ],
+          },
 
   
         ]

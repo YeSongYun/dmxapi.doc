@@ -16,11 +16,8 @@ https://www.dmxapi.cn/v1/chat/completions
 
 ```python
 import requests
-
 url = "https://www.dmxapi.cn/v1/chat/completions"
-
 api_key = "sk-******************************************"
-
 headers = {
     "Authorization": api_key,
     "Content-Type": "application/json"
@@ -78,7 +75,7 @@ payload = {
         }
     ],
     # 【max_completion_tokens】(integer, 可选) 本次生成允许的最大输出 Token 数
-    # 用于限制模型回答长度；示例中设置为 1024
+    # 默认值为 32768
     "max_completion_tokens": 1024
 }
 
@@ -124,5 +121,5 @@ print(resp.json())
 ```
 
 <p align="center">
-  <small>© 2026 DMXAPI MiMo mimo-v2-omni 视频理解</small>
+  <small>© 2026 DMXAPI Xiaomi MiMo mimo-v2-omni 视频理解</small>
 </p>
