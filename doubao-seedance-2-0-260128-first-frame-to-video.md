@@ -158,7 +158,7 @@ import requests
 import json
 
 url = "https://www.dmxapi.cn/v1/responses"
-api_key = "sk-rOQH5ITfGkp9pbvnIIbcQyPRCQclFUl8bSjD3dFRPeuDUQHl"
+api_key = "sk-******************************************"
 
 headers = {
     "Content-Type": "application/json",
