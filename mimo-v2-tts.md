@@ -1,4 +1,4 @@
-# mimo-v2-tts 语音合成 API 使用文档
+# MiMo mimo-v2-tts 语音合成 API 使用文档
 
 MiMo V2 TTS 是小米 MiMo 大模型推出的文字转语音功能，基于 `/v1/chat/completions` 端点，支持 `mimo_default`、`default_zh`、`default_en` 三种预置音色，并可通过 `<style>` 标签灵活控制情绪、语速、方言及场景风格（如唱歌、角色扮演等）。合成结果以 Base64 编码的 WAV 音频返回，待合成文本须置于 `assistant` 消息中。
 
