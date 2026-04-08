@@ -403,15 +403,15 @@ export default defineConfig({
                 ],
               },
 
-               {
-                text: 'Sora视频模型',
-                collapsed: true,
-                items: [
+              //  {
+              //   text: 'Sora视频模型',
+              //   collapsed: true,
+              //   items: [
               
-                  { text: 'sora2文生视频', link: '/sora2_t2v' },
-                  { text: 'sora2-pro文生视频', link: '/sora2-pro_t2v' },
-                ],
-              },
+              //     { text: 'sora2文生视频', link: '/sora2_t2v' },
+              //     { text: 'sora2-pro文生视频', link: '/sora2-pro_t2v' },
+              //   ],
+              // },
 
               // {
               //   text: 'Veo视频模型',
