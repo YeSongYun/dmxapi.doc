@@ -558,6 +558,25 @@ export default defineConfig({
             ],
           },
 
+          {
+            text: '🔍搜索模型',
+            collapsed: true,
+            items: [
+              {
+                text: 'Perplexity Sonar 系列 ',
+                collapsed: true,
+                items: [
+                  { text: 'perplexity-deep-research-ssvip', link: '/perplexity-deep-research-ssvip' },
+                  { text: 'perplexity-sonar-pro-ssvip', link: '/perplexity-sonar-pro-ssvip' },
+                  { text: 'perplexity-sonar-reasoning-pro-ssvip', link: '/perplexity-sonar-reasoning-pro-ssvip' },
+                  { text: 'perplexity-sonar-pro-search-ssvip', link: '/perplexity-sonar-pro-search-ssvip' },
+                  { text: 'perplexity-sonar-ssvip', link: '/perplexity-sonar-ssvip' },
+                ],
+              },
+             
+            ],
+          },
+
 
          {
             text: '🚀全模态模型',
