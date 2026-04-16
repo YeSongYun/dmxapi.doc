@@ -202,6 +202,7 @@ export default defineConfig({
               { text: '缓存创建', link: '/claude-hc' },
               { text: '联网搜索', link: '/claude-serch' },
               { text: 'claude agent sdk', link: '/claude_agent_sdk' },
+              { text: 'Claude-Opus-4.7 使用指南', link: '/claude_opus_4_7' },
             ],
           },
           {
@@ -437,10 +438,15 @@ export default defineConfig({
                 text: '拍我 视频模型 ',
                 collapsed: true,
                 items: [      
-                  { text: '图片上传', link: '/paiwo_image_upload' },        
+                  { text: '图片上传', link: '/paiwo_image_upload' },                  
+                  { text: '音频上传', link: '/paiwo-audio-upload' },
+                  { text: '视频上传', link: '/paiwo-video-upload' },
                   { text: '文生视频', link: '/paiwo-v5.6-ttv' },
-                  { text: '图生视频', link: '/paiwo-v5.6-itv' },
+                  { text: '图生视频', link: '/paiwo-v5.6-itv' },                  
+
                   { text: '首尾帧生成视频', link: '/paiwo-v5.6-itv2' },
+
+                  { text: '数字人 Lipsync', link: '/paiwo-itv-hd-lipsync' },
 
                 ],
               },
@@ -647,6 +653,7 @@ export default defineConfig({
           { text: 'opencode', link: '/opencode' },
           { text: 'Cherry Studio', link: '/cherry-studio' },
           { text: 'Cherry Studio调用gpt-5.2-pro', link: '/cherry-studio-gpt-5.2-pro' },
+          { text: 'Cherry Studio调用 Perplexity Sonar 系列搜索模型', link: '/cherry_perplexity' },
           { text: 'Chatwise', link: '/chatwise' },
           { text: 'chatbox', link: '/chatbox' },
           { text: 'Dify', link: '/dify' },
@@ -665,6 +672,8 @@ export default defineConfig({
           { text: 'OpenClaw(DMXAPI汉化版)', link: '/clawdbot' },
           { text: '沉浸式翻译', link: '/chenjinshifanyi' },
           { text: 'fluentread', link: '/fluentread' },
+          { text: 'workbuddy', link: '/workbuddy' },
+          { text: '腾讯云openclaw', link: '/Tencent_openclaw' },
         ],
       },
       {
