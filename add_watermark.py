@@ -185,7 +185,13 @@ def main() -> None:
     # 填写相对于脚本所在目录的路径，例如 'img\\ruanzhu.png'
     # 可以根据实际需要修改这个列表
     image_files = [
-        'img/cherry_studio_06.png'
+        'img/workbuddy01.png',
+        'img/workbuddy02.png',
+        'img/workbuddy03.png',
+        'img/workbuddy04.png',
+        'img/workbuddy05.png',
+        'img/workbuddy06.png',
+        'img/workbuddy07.png',
     ]
     
     # 第三步：验证水印文件存在性
@@ -237,8 +243,8 @@ def main() -> None:
             watermark_path=watermark_path,
             output_path=output_path,
             position='bottom-right',  # 右下角位置，符合常见水印习惯
-            opacity=0.5,              # 50%透明度，平衡可见性和美观性
-            scale=0.12                # 12%缩放比例，确保水印不会过大
+            opacity=0.8,              # 80%透明度，平衡可见性和美观性
+            scale=0.2                 # 20%缩放比例，确保水印不会过大
         ):
             success_count += 1  # 成功计数器递增
             print(f"    ✅ 处理完成")
