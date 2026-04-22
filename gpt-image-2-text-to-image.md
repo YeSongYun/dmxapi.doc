@@ -1,4 +1,4 @@
-# OpenAI gpt-image-2 文生图 API 使用文档
+# gpt-image-2 文生图 API 使用文档
 
 基于 OpenAI GPT Image 2 模型的图像生成接口，通过 `/v1/images/generations` 端点调用，兼容 OpenAI 官方 Images API 协议。支持最大 32000 字符的超长提示词，可配置 auto / 1024×1024 / 1536×1024（横版）/ 1024×1536（竖版）等多种分辨率，、批量生成数量（n=1~10）等精细化控制
 
@@ -12,7 +12,7 @@ https://www.dmxapi.cn/v1/images/generations
 请妥善保管您的 API Key！严禁将密钥泄露给他人、硬编码到代码中或提交到公开的代码仓库。如果怀疑密钥已泄露，请立即前往 DMXAPI 官网重新生成。
 :::
 
-## 🤖 支持的模型
+## 🤖 模型名称
 
 - `gpt-image-2`
 
@@ -44,7 +44,6 @@ payload = {
 
     # 【n】(number, 可选) 单次请求生成图像的张数
     # 取值范围: [1, 10]，默认值为 1
-    # 注意：dall-e-3 仅支持 n=1；GPT image 系列支持多张批量生成
     "n": 2,
 
     # 【size】(string, 可选) 生成图像的分辨率

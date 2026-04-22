@@ -12,7 +12,7 @@ https://www.dmxapi.cn/v1/images/edits
 请妥善保管您的 API Key！严禁将密钥泄露给他人、硬编码到代码中或提交到公开的代码仓库。如果怀疑密钥已泄露，请立即前往 DMXAPI 官网重新生成。
 :::
 
-## 🤖 支持的模型
+## 🤖 模型名称
 
 - `gpt-image-2`
 
