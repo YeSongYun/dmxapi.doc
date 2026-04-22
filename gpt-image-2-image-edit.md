@@ -76,7 +76,7 @@ payload = {
     # 官方提供 low / medium / high / auto 四档，其中 low 适合快速草稿、缩略图和快速迭代
     # 超过 2560x1440（3,686,400 像素）的输出在官方文档中标注为 experimental
     # 可选值: "low" / "medium" / "high" / "auto"(默认)
-    # "quality": "auto",
+    "quality": "high",
 
     # 【n】(number, 可选) 单次请求生成的图片数量
     # 官方文档说明可一次返回多张图片，默认返回 1 张；当前页面未给出 gpt-image-2 的明确最大值
