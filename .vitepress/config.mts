@@ -213,8 +213,22 @@ export default defineConfig({
                 text: 'openai绘图模型',
                 collapsed: true,
                 items: [
-                  { text: '文生图', link: '/img-gpt-image-1' },
-                  { text: '图片编辑', link: '/gpt-image-edit' }
+                  {
+                    text: 'gpt-image-1.5',
+                    collapsed: true,
+                    items: [
+                      { text: '文生图', link: '/img-gpt-image-1' },
+                      { text: '图片编辑', link: '/gpt-image-edit' }
+                    ],
+                  },
+                  {
+                    text: 'gpt-image-2',
+                    collapsed: true,
+                    items: [
+                      { text: '文生图', link: '/gpt-image-2-text-to-image' },
+                      { text: '图片编辑', link: '/gpt-image-2-image-edit' }
+                    ],
+                  }
                 ],
               },
               {
@@ -321,13 +335,33 @@ export default defineConfig({
                 text: '阿里万相绘图模型',
                 collapsed: true,
                 items: [
-                  { text: 'wan2.6-t2i', link: '/wan2.6-t2i' },
                   {
                     text: 'wan2.6-image',
                     collapsed: true,
                     items: [
+                      { text: '文生图', link: '/wan2.6-t2i' },
                       { text: '图文混排', link: '/wan2.6-image-interleave' },
                       { text: '图片编辑', link: '/wan2.6-image-edit' },
+                    ],
+                  },
+                  {
+                    text: 'wan2.7-image',
+                    collapsed: true,
+                    items: [
+                      { text: '文生图', link: '/wan2.7-image-text-to-image' },
+                      { text: '图片编辑', link: '/wan2.7-image-image-editing' },
+                      { text: '组图生成', link: '/wan2.7-image-group-generation' },
+                      { text: '交互式编辑', link: '/wan2.7-image-interactive-edit' },
+                    ],
+                  },
+                  {
+                    text: 'wan2.7-image-pro',
+                    collapsed: true,
+                    items: [
+                      { text: '文生图', link: '/wan2.7-image-pro-text-to-image' },
+                      { text: '图片编辑', link: '/wan2.7-image-pro-image-editing' },
+                      { text: '组图生成', link: '/wan2.7-image-pro-group-image-generation' },
+                      { text: '交互式编辑', link: '/wan2.7-image-pro-interactive-edit' },
                     ],
                   },
                 ],
@@ -674,6 +708,7 @@ export default defineConfig({
           { text: 'fluentread', link: '/fluentread' },
           { text: 'workbuddy', link: '/workbuddy' },
           { text: '腾讯云openclaw', link: '/Tencent_openclaw' },
+          { text: 'Trae', link: '/Trae' },
         ],
       },
       {
