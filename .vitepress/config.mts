@@ -213,8 +213,22 @@ export default defineConfig({
                 text: 'openai绘图模型',
                 collapsed: true,
                 items: [
-                  { text: '文生图', link: '/img-gpt-image-1' },
-                  { text: '图片编辑', link: '/gpt-image-edit' }
+                  {
+                    text: 'gpt-image-1.5',
+                    collapsed: true,
+                    items: [
+                      { text: '文生图', link: '/img-gpt-image-1' },
+                      { text: '图片编辑', link: '/gpt-image-edit' }
+                    ],
+                  },
+                  {
+                    text: 'gpt-image-2',
+                    collapsed: true,
+                    items: [
+                      { text: '文生图', link: '/gpt-image-2-text-to-image' },
+                      { text: '图片编辑', link: '/gpt-image-2-image-edit' }
+                    ],
+                  }
                 ],
               },
               {
@@ -694,6 +708,7 @@ export default defineConfig({
           { text: 'fluentread', link: '/fluentread' },
           { text: 'workbuddy', link: '/workbuddy' },
           { text: '腾讯云openclaw', link: '/Tencent_openclaw' },
+          { text: 'Trae', link: '/Trae' },
         ],
       },
       {
