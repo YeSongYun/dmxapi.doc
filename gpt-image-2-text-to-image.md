@@ -44,7 +44,7 @@ payload = {
 
     # 【n】(number, 可选) 单次请求生成图像的张数
     # 取值范围: [1, 10]，默认值为 1
-    "n": 2,
+    "n": 1,
 
     # 【size】(string, 可选) 生成图像的分辨率
     # GPT image 系列可选值:
@@ -60,7 +60,7 @@ payload = {
     #   "high"      (GPT image 系列：高质量)
     #   "medium"    (GPT image 系列：中等质量)
     #   "low"       (GPT image 系列：低质量，生成更快成本更低)
-    "quality": "auto",
+    "quality": "high",
 }
 
 
