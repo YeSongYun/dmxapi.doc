@@ -34,7 +34,7 @@ image_paths = [
 
 # API 配置
 url = "https://www.dmxapi.cn/v1/images/edits"
-api_key = "sk-******************************************"
+api_key = "sk-*******************************************"
 headers = {
     "Authorization": f"Bearer {api_key}",
 }
@@ -50,11 +50,19 @@ payload = {
     # 官方文档说明图片编辑基于文本提示词执行，可整体修改，也可结合 mask 做局部替换
     "prompt": "给图里加上卡通版的卡皮巴拉",
 
-    # 【size】(string, 可选) 输出图像尺寸
-    # gpt-image-2 支持满足约束条件的任意分辨率，正方形通常生成更快
-    # 常用值: "1024x1024" / "1536x1024" / "1024x1536" / "2048x2048" / "2048x1152" / "3840x2160" / "2160x3840" / "auto"(默认)
+
+    # 【size】(string, 可选) 生成图像的分辨率
+    # GPT image 系列可选值:
+    #   "auto"       (自动选择最佳尺寸，默认值)
+    #   "1024x1024"  (正方形)
+    #   "1536x1024"  (横版/landscape)
+    #   "1024x1536"  (竖版/portrait)
+    #   "2048x2048"  (2k/方形1:1)
+    #   "2048x1152"  (2K/横版16:9)
+    #   "3840x2160"  (4K/横版16:9)
+    #   "2160x3840"  (4K/竖版9:16)
     # 约束: 最大边长 <= 3840px；宽高必须都是 16 的倍数；长宽比不能超过 3:1；总像素必须在 655,360 到 8,294,400 之间
-    "size": "1024x1024",
+    "size": "2160x3840",
 
     # 【background】(string, 可选) 控制输出背景模式
     # 官方文档给出的模式为 opaque 或 auto，且 background 支持 auto 自动选择
@@ -62,14 +70,14 @@ payload = {
     "background": "auto",
 
     # 【output_compression】(number, 可选) 控制 JPEG  输出压缩等级
-    # 仅在 output_format 为 jpeg 时生效；数值越高，压缩越强
+    # 仅在 output_format 为 jpeg或webp 时生效；数值越高，压缩越强
     # 取值范围: 0-100
     "output_compression": 100,
 
     # 【output_format】(string, 可选) 指定输出文件格式
     # Image API 默认格式为 png，也支持 jpeg 
     # 使用 jpeg 通常比 png 更快；若选择 jpeg ，可再配合 output_compression 调整压缩率
-    # 可选值: "png"(默认) / "jpeg"(延迟更低) 
+    # 可选值: "png"(默认) / "jpeg"(延迟更低) /"webp"(更高压缩率)
     "output_format": "png",
 
     # 【quality】(string, 可选) 控制渲染质量
