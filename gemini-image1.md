@@ -31,50 +31,31 @@ import base64
 # ═══════════════════════════════════════════════════════════════════════════════
 # 📋 配置参数
 # ═══════════════════════════════════════════════════════════════════════════════
-GEMINI_API_KEY = "sk-****************************"  # DMXAPI 访问令牌
+GEMINI_API_KEY = "sk-**************************************************"  # DMXAPI 访问令牌
 BASE_URL = "https://www.dmxapi.cn/v1beta"                               # API 基础地址
-IMG_URL = "https://goo.gle/instrument-img"                              # 待分析图片 URL
-MODEL = "gemini-2.5-flash"                                              # Gemini 模型版本
+IMG_URL = "https://www.w3.org/People/mimasa/test/imgformat/img/w3c_home.bmp"                              # 待分析图片 URL
+MODEL = "gemini-3.1-pro-preview"                                              # Gemini 模型版本
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # 🔧 工具函数
 # ═══════════════════════════════════════════════════════════════════════════════
 
+HEADERS = {"User-Agent": "Mozilla/5.0"}
+
+
 def get_image_mime_type(url):
-    """
-    获取图片的 MIME 类型
-
-    参数:
-        url (str): 图片的 URL 地址
-
-    返回:
-        str: MIME 类型字符串（如 'image/jpeg', 'image/png'）
-             获取失败时返回默认值 'image/jpeg'
-    """
     try:
-        response = requests.head(url, allow_redirects=True, timeout=10)
+        response = requests.head(url, headers=HEADERS, allow_redirects=True, timeout=10)
         mime_type = response.headers.get('Content-Type', '')
         if mime_type and mime_type.startswith('image/'):
             return mime_type.split(';')[0].strip()
     except Exception as e:
         print(f"⚠️  警告: 无法获取 MIME 类型 - {e}")
-    return "image/jpeg"  # 默认返回 JPEG 格式
+    return "image/jpeg"
 
 
 def download_and_encode_image(url):
-    """
-    下载图片并转换为 base64 编码
-
-    参数:
-        url (str): 图片的 URL 地址
-
-    返回:
-        str: base64 编码的图片数据字符串
-
-    异常:
-        requests.exceptions.RequestException: 下载失败时抛出
-    """
-    response = requests.get(url, timeout=10)
+    response = requests.get(url, headers=HEADERS, timeout=10)
     response.raise_for_status()
     return base64.b64encode(response.content).decode('utf-8')
 
@@ -169,7 +150,6 @@ if __name__ == "__main__":
         print(f"\n❌ 网络请求失败: {e}")
     except Exception as e:
         print(f"\n❌ 错误: {e}")
-
 
 ```
 ## 📤 返回示例

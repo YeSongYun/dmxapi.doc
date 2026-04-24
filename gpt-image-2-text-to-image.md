@@ -25,7 +25,7 @@ from datetime import datetime
 import requests
 
 url = "https://www.dmxapi.cn/v1/images/generations"
-api_key = "sk-**************************************************"
+api_key = "sk-*****************************************"
 
 headers = {
     "Content-Type": "application/json",
@@ -40,7 +40,7 @@ payload = {
     # 【prompt】(string, 必填) 期望生成图像的文本描述
     # GPT image 系列模型最大长度 32000 字符
     # 描述越具体、越场景化，生成效果越接近预期
-    "prompt": "墨菲特在召唤师峡谷高举欢迎DMXAPI的旗帜",
+    "prompt": "赛博朋克城市雨夜，霓虹招牌特写，电影画幅",
 
     # 【n】(number, 可选) 单次请求生成图像的张数
     # 取值范围: [1, 10]，默认值为 1
@@ -52,7 +52,13 @@ payload = {
     #   "1024x1024"  (正方形)
     #   "1536x1024"  (横版/landscape)
     #   "1024x1536"  (竖版/portrait)
-    "size": "auto",
+    #   "2048x2048"  (2k/方形1:1)
+    #   "2048x1152"  (2K/横版16:9)
+    #   "3840x2160"  (4K/横版16:9)
+    #   "2160x3840"  (4K/竖版9:16)
+    "size": "1024x1024",
+
+    "output_format": "png",  # 可选值: "png"(默认) / "jpeg"(更快)/"webp"
 
     # 【quality】(string, 可选) 生成图像的质量等级
     # 可选值:
@@ -61,6 +67,13 @@ payload = {
     #   "medium"    (GPT image 系列：中等质量)
     #   "low"       (GPT image 系列：低质量，生成更快成本更低)
     "quality": "high",
+
+    # 输出压缩率（0–100），仅 jpeg/webp 生效,必填范围: 0 <= x <= 100
+    # "output_compression": 85,
+
+    # 【moderation】(string, 可选) 内容审核强度
+    # 可选值: "auto"(默认) / "low"(更宽松)
+    "moderation": "low",
 }
 
 
@@ -79,6 +92,9 @@ def main():
         return
 
     ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+    ext = payload.get("output_format", "png").lower()
+    if ext == "jpeg":
+        ext = "jpg"
     for i, item in enumerate(data["data"], start=1):
         if item.get("b64_json"):
             image_bytes = base64.b64decode(item["b64_json"])
@@ -88,7 +104,7 @@ def main():
             print("no image payload in response item:", item)
             continue
 
-        filename = f"output_{ts}_{i}.png"
+        filename = f"output_{ts}_{i}.{ext}"
         with open(filename, "wb") as f:
             f.write(image_bytes)
         print(f"saved {filename}")
