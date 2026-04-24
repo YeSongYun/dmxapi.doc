@@ -15,24 +15,6 @@ main:
             password: ${GIT_ACCESS_TOKEN}
             force: true
 
-  pull_request:
-    - name: "AI 代码评审"
-      imports: https://cnb.cool/dmxapi/claude-code-my/-/blob/main/env.yml
-      runner:
-        tags: cnb:arch:amd64
-        cpus: 4
-      stages:
-        - name: code-review
-          image: cnbcool/code-review:latest
-          settings:
-            context: 50
-            verbose: true
-            comment: true
-            max_comments: 50
-            max_files: 150
-            max_diff_size: 200000
-            fail_on_critical: true
-
 $:
   tag_push:
     - name: "构建并部署文档"
