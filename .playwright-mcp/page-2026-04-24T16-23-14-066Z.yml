@@ -1,0 +1,516 @@
+- generic [ref=e2]:
+  - region "跳到主要内容":
+    - link "跳到主要内容" [ref=e3] [cursor=pointer]:
+      - /url: "#__docusaurus_skipToContent_fallback"
+  - navigation "主导航" [ref=e4]:
+    - generic [ref=e5]:
+      - link "DeepSeek API 文档 Logo DeepSeek API 文档" [ref=e7] [cursor=pointer]:
+        - /url: /zh-cn/
+        - img "DeepSeek API 文档 Logo" [ref=e9]
+        - generic [ref=e10]: DeepSeek API 文档
+      - generic [ref=e11]:
+        - button "中文（中国）" [ref=e13] [cursor=pointer]:
+          - img [ref=e14]
+          - text: 中文（中国）
+        - link "DeepSeek Platform" [ref=e16] [cursor=pointer]:
+          - /url: https://platform.deepseek.com/
+          - text: DeepSeek Platform
+          - img [ref=e17]
+        - button "切换浅色/暗黑模式（当前为浅色模式）" [disabled] [ref=e20]:
+          - img [ref=e21]
+  - generic [ref=e25]:
+    - complementary [ref=e26]:
+      - navigation "文档侧边栏" [ref=e29]:
+        - list [ref=e30]:
+          - listitem [ref=e31]:
+            - link "快速开始" [expanded] [ref=e33] [cursor=pointer]:
+              - /url: /zh-cn/
+            - list [ref=e34]:
+              - listitem [ref=e35]:
+                - link "首次调用 API" [ref=e36] [cursor=pointer]:
+                  - /url: /zh-cn/
+              - listitem [ref=e37]:
+                - link "模型 & 价格" [ref=e38] [cursor=pointer]:
+                  - /url: /zh-cn/quick_start/pricing
+              - listitem [ref=e39]:
+                - link "Token 用量计算" [ref=e40] [cursor=pointer]:
+                  - /url: /zh-cn/quick_start/token_usage
+              - listitem [ref=e41]:
+                - link "限速" [ref=e42] [cursor=pointer]:
+                  - /url: /zh-cn/quick_start/rate_limit
+              - listitem [ref=e43]:
+                - link "错误码" [ref=e44] [cursor=pointer]:
+                  - /url: /zh-cn/quick_start/error_codes
+          - listitem [ref=e45]:
+            - link "API 指南" [expanded] [ref=e47] [cursor=pointer]:
+              - /url: /zh-cn/guides/thinking_mode
+            - list [ref=e48]:
+              - listitem [ref=e49]:
+                - link "思考模式" [ref=e50] [cursor=pointer]:
+                  - /url: /zh-cn/guides/thinking_mode
+              - listitem [ref=e51]:
+                - link "多轮对话" [ref=e52] [cursor=pointer]:
+                  - /url: /zh-cn/guides/multi_round_chat
+              - listitem [ref=e53]:
+                - link "对话前缀续写（Beta）" [ref=e54] [cursor=pointer]:
+                  - /url: /zh-cn/guides/chat_prefix_completion
+              - listitem [ref=e55]:
+                - link "FIM 补全（Beta）" [ref=e56] [cursor=pointer]:
+                  - /url: /zh-cn/guides/fim_completion
+              - listitem [ref=e57]:
+                - link "JSON Output" [ref=e58] [cursor=pointer]:
+                  - /url: /zh-cn/guides/json_mode
+              - listitem [ref=e59]:
+                - link "Tool Calls" [ref=e60] [cursor=pointer]:
+                  - /url: /zh-cn/guides/tool_calls
+              - listitem [ref=e61]:
+                - link "上下文硬盘缓存" [ref=e62] [cursor=pointer]:
+                  - /url: /zh-cn/guides/kv_cache
+              - listitem [ref=e63]:
+                - link "接入 Coding Agents" [ref=e64] [cursor=pointer]:
+                  - /url: /zh-cn/guides/coding_agents
+              - listitem [ref=e65]:
+                - link "Anthropic API" [ref=e66] [cursor=pointer]:
+                  - /url: /zh-cn/guides/anthropic_api
+          - listitem [ref=e67]:
+            - link "API 文档" [ref=e69] [cursor=pointer]:
+              - /url: /zh-cn/api/deepseek-api
+          - listitem [ref=e70]:
+            - link "新闻" [ref=e72] [cursor=pointer]:
+              - /url: /zh-cn/news/news260424
+          - listitem [ref=e73]:
+            - link "其它资源" [ref=e75] [cursor=pointer]:
+              - /url: https://github.com/deepseek-ai/awesome-deepseek-integration/tree/main
+          - listitem [ref=e76]:
+            - link "常见问题" [ref=e77] [cursor=pointer]:
+              - /url: /zh-cn/faq
+          - listitem [ref=e78]:
+            - link "更新日志" [ref=e79] [cursor=pointer]:
+              - /url: /zh-cn/updates
+    - main [ref=e80]:
+      - generic [ref=e82]:
+        - generic [ref=e84]:
+          - article [ref=e85]:
+            - navigation "页面�路径" [ref=e86]:
+              - list [ref=e87]:
+                - listitem [ref=e88]:
+                  - link "主页面" [ref=e89] [cursor=pointer]:
+                    - /url: /zh-cn/
+                    - img [ref=e90]
+                - listitem [ref=e92]:
+                  - generic [ref=e93]: API 指南
+                - listitem [ref=e94]:
+                  - generic [ref=e95]: 思考模式
+            - generic [ref=e98]:
+              - heading "思考模式" [level=1] [ref=e99]
+              - paragraph [ref=e100]: DeepSeek 模型支持思考模式：在输出最终回答之前，模型会先输出一段思维链内容，以提升最终答案的准确性。
+              - heading "思考模式开关与思考强度控制思考模式开关与思考强度控制的直接链接" [level=2] [ref=e101]:
+                - text: 思考模式开关与思考强度控制
+                - link "思考模式开关与思考强度控制的直接链接" [ref=e102] [cursor=pointer]:
+                  - /url: "#思考模式开关与思考强度控制"
+                  - text: "#"
+              - table [ref=e105]:
+                - rowgroup [ref=e106]:
+                  - row "控制参数（OpenAI 格式） 控制参数（Anthropic 格式）" [ref=e107]:
+                    - cell [ref=e108]
+                    - cell "控制参数（OpenAI 格式）" [ref=e109]
+                    - cell "控制参数（Anthropic 格式）" [ref=e110]
+                  - 'row "思考模式开关(1) {\"thinking\": {\"type\": \"enabled/disabled\"}}" [ref=e111]':
+                    - cell "思考模式开关(1)" [ref=e112]:
+                      - text: 思考模式开关
+                      - superscript [ref=e113]: (1)
+                    - 'cell "{\"thinking\": {\"type\": \"enabled/disabled\"}}" [ref=e114]':
+                      - code [ref=e115]: "{\"thinking\": {\"type\": \"enabled/disabled\"}}"
+                  - 'row "思考强度控制(2)(3) {\"reasoning_effort\": \"high/max\"} {\"output_config\": {\"effort\": \"high/max\"}}" [ref=e116]':
+                    - cell "思考强度控制(2)(3)" [ref=e117]:
+                      - text: 思考强度控制
+                      - superscript [ref=e118]: (2)(3)
+                    - 'cell "{\"reasoning_effort\": \"high/max\"}" [ref=e119]':
+                      - code [ref=e120]: "{\"reasoning_effort\": \"high/max\"}"
+                    - 'cell "{\"output_config\": {\"effort\": \"high/max\"}}" [ref=e121]':
+                      - code [ref=e122]: "{\"output_config\": {\"effort\": \"high/max\"}}"
+              - paragraph [ref=e124]:
+                - text: (1) 默认思考开关为
+                - code [ref=e125]: enabled
+                - text: (2) 思考模式下，对普通请求，默认 effort 为 high；对一些复杂 Agent 类请求（如 Claude Code、OpenCode），effort 自动设置为
+                - code [ref=e126]: max
+                - text: (3) 思考模式下，出于兼容考虑
+                - code [ref=e127]: low
+                - text: 、
+                - code [ref=e128]: medium
+                - text: 会映射为
+                - code [ref=e129]: high
+                - text: ","
+                - code [ref=e130]: xhigh
+                - text: 会映射为
+                - code [ref=e131]: max
+              - paragraph [ref=e132]:
+                - text: 您在使用 OpenAI SDK 设置
+                - code [ref=e133]: thinking
+                - text: 参数时，需要将
+                - code [ref=e134]: thinking
+                - text: 参数传入
+                - code [ref=e135]: extra_body
+                - text: 中：
+              - generic [ref=e137]:
+                - code [ref=e139]:
+                  - generic [ref=e140]: response = client.chat.completions.create(
+                  - generic [ref=e141]: model="deepseek-v4-pro",
+                  - generic [ref=e142]: "# ..."
+                  - generic [ref=e143]: reasoning_effort="high",
+                  - generic [ref=e144]: "extra_body={\"thinking\": {\"type\": \"enabled\"}}"
+                  - generic [ref=e145]: )
+                - button "复制代码到剪贴板" [ref=e147] [cursor=pointer]:
+                  - generic [ref=e148]:
+                    - img [ref=e149]
+                    - img [ref=e151]
+              - heading "输入输出参数输入输出参数的直接链接" [level=2] [ref=e153]:
+                - text: 输入输出参数
+                - link "输入输出参数的直接链接" [ref=e154] [cursor=pointer]:
+                  - /url: "#输入输出参数"
+                  - text: "#"
+              - paragraph [ref=e155]:
+                - text: 思考模式不支持
+                - code [ref=e156]: temperature
+                - text: 、
+                - code [ref=e157]: top_p
+                - text: 、
+                - code [ref=e158]: presence_penalty
+                - text: 、
+                - code [ref=e159]: frequency_penalty
+                - text: 参数。请注意，为了兼容已有软件，设置参数不会报错，但也不会生效。
+              - paragraph [ref=e160]:
+                - text: 在思考模式下，思维链内容通过
+                - code [ref=e161]: reasoning_content
+                - text: 参数返回，与
+                - code [ref=e162]: content
+                - text: 同级。在后续的轮次的拼接中，可以选择性地返回
+                - code [ref=e163]: reasoning_content
+                - text: 给 API：
+              - list [ref=e164]:
+                - listitem [ref=e165]:
+                  - text: 在两个
+                  - code [ref=e166]: user
+                  - text: 消息之间，如果模型
+                  - strong [ref=e167]: 未进行工具调用
+                  - text: ，则中间
+                  - code [ref=e168]: assistant
+                  - text: 的
+                  - code [ref=e169]: reasoning_content
+                  - text: 无需参与上下文拼接，在后续轮次中将其传入 API 会被忽略。详见
+                  - link "多轮对话拼接" [ref=e170] [cursor=pointer]:
+                    - /url: "#%E5%A4%9A%E8%BD%AE%E5%AF%B9%E8%AF%9D%E6%8B%BC%E6%8E%A5"
+                  - text: 。
+                - listitem [ref=e171]:
+                  - text: 在两个
+                  - code [ref=e172]: user
+                  - text: 消息之间，如果模型
+                  - strong [ref=e173]: 进行了工具调用
+                  - text: ，则中间
+                  - code [ref=e174]: assistant
+                  - text: 的
+                  - code [ref=e175]: reasoning_content
+                  - text: 需参与上下文拼接，在后续所有 user 交互轮次中必须
+                  - strong [ref=e176]: 回传给 API
+                  - text: 。详见
+                  - link "工具调用" [ref=e177] [cursor=pointer]:
+                    - /url: "#%E5%B7%A5%E5%85%B7%E8%B0%83%E7%94%A8"
+                  - text: 。
+              - heading "多轮对话拼接多轮对话拼接的直接链接" [level=2] [ref=e178]:
+                - text: 多轮对话拼接
+                - link "多轮对话拼接的直接链接" [ref=e179] [cursor=pointer]:
+                  - /url: "#多轮对话拼接"
+                  - text: "#"
+              - paragraph [ref=e180]:
+                - text: 在每一轮对话过程中，模型会输出思维链内容（
+                - code [ref=e181]: reasoning_content
+                - text: ）和最终回答（
+                - code [ref=e182]: content
+                - text: ）。如果没有工具调用，则在下一轮对话中，之前轮输出的思维链内容不会被拼接到上下文中，如下图所示：
+              - img [ref=e184]
+              - heading "样例代码样例代码的直接链接" [level=3] [ref=e185]:
+                - text: 样例代码
+                - link "样例代码的直接链接" [ref=e186] [cursor=pointer]:
+                  - /url: "#样例代码"
+                  - text: "#"
+              - paragraph [ref=e187]: 下面的代码以 Python 语言为例，展示了如何访问思维链和最终回答，以及如何在多轮对话中进行上下文拼接。
+              - generic [ref=e188]:
+                - tablist [ref=e189]:
+                  - tab "非流式" [selected] [ref=e190] [cursor=pointer]
+                  - tab "流式" [ref=e191] [cursor=pointer]
+                - tabpanel [ref=e193]:
+                  - generic [ref=e195]:
+                    - code [ref=e197]:
+                      - generic [ref=e198]: from openai import OpenAI
+                      - generic [ref=e199]: client = OpenAI(api_key="<DeepSeek API Key>", base_url="https://api.deepseek.com")
+                      - generic [ref=e200]: "# Turn 1"
+                      - generic [ref=e201]: "messages = [{\"role\": \"user\", \"content\": \"9.11 and 9.8, which is greater?\"}]"
+                      - generic [ref=e202]: response = client.chat.completions.create(
+                      - generic [ref=e203]: model="deepseek-v4-pro",
+                      - generic [ref=e204]: messages=messages,
+                      - generic [ref=e205]: reasoning_effort="high"
+                      - generic [ref=e206]: "extra_body={\"thinking\": {\"type\": \"enabled\"}},"
+                      - generic [ref=e207]: )
+                      - generic [ref=e208]: reasoning_content = response.choices[0].message.reasoning_content
+                      - generic [ref=e209]: content = response.choices[0].message.content
+                      - generic [ref=e210]: "# Turn 2"
+                      - generic [ref=e211]: "# The reasoning_content will be ignored by the API"
+                      - generic [ref=e212]: messages.append(response.choices[0].message)
+                      - generic [ref=e213]: "messages.append({'role': 'user', 'content': \"How many Rs are there in the word 'strawberry'?\"})"
+                      - generic [ref=e214]: response = client.chat.completions.create(
+                      - generic [ref=e215]: model="deepseek-v4-pro",
+                      - generic [ref=e216]: messages=messages,
+                      - generic [ref=e217]: reasoning_effort="high"
+                      - generic [ref=e218]: "extra_body={\"thinking\": {\"type\": \"enabled\"}},"
+                      - generic [ref=e219]: )
+                      - generic [ref=e220]: "# ..."
+                    - button "复制代码到剪贴板" [ref=e222] [cursor=pointer]:
+                      - generic [ref=e223]:
+                        - img [ref=e224]
+                        - img [ref=e226]
+              - heading "工具调用工具调用的直接链接" [level=2] [ref=e228]:
+                - text: 工具调用
+                - link "工具调用的直接链接" [ref=e229] [cursor=pointer]:
+                  - /url: "#工具调用"
+                  - text: "#"
+              - paragraph [ref=e230]: DeepSeek 模型的思考模式支持工具调用功能。模型在输出最终答案之前，可以进行多轮的思考与工具调用，以提升答案的质量。其调用模式如下图所示：
+              - img [ref=e232]
+              - paragraph [ref=e233]:
+                - text: 请注意，区别于思考模式下的未进行工具调用的轮次，进行了工具调用的轮次，在后续所有请求中，必须完整回传
+                - code [ref=e234]: reasoning_content
+                - text: 给 API。
+              - paragraph [ref=e235]:
+                - text: 若您的代码中未正确回传
+                - code [ref=e236]: reasoning_content
+                - text: ，API 会返回 400 报错。正确回传方法请您参考下面的样例代码。
+              - heading "样例代码样例代码的直接链接" [level=3] [ref=e237]:
+                - text: 样例代码
+                - link "样例代码的直接链接" [ref=e238] [cursor=pointer]:
+                  - /url: "#样例代码-1"
+                  - text: "#"
+              - paragraph [ref=e239]: 下面是一个简单的在思考模式下进行工具调用的样例代码：
+              - generic [ref=e241]:
+                - code [ref=e243]:
+                  - generic [ref=e244]: import os
+                  - generic [ref=e245]: import json
+                  - generic [ref=e246]: from openai import OpenAI
+                  - generic [ref=e247]: from datetime import datetime
+                  - generic [ref=e248]: "# The definition of the tools"
+                  - generic [ref=e249]: tools = [
+                  - generic [ref=e250]: "{"
+                  - generic [ref=e251]: "\"type\": \"function\","
+                  - generic [ref=e252]: "\"function\": {"
+                  - generic [ref=e253]: "\"name\": \"get_date\","
+                  - generic [ref=e254]: "\"description\": \"Get the current date\","
+                  - generic [ref=e255]: "\"parameters\": { \"type\": \"object\", \"properties\": {} },"
+                  - generic [ref=e256]: "}"
+                  - generic [ref=e257]: "},"
+                  - generic [ref=e258]: "{"
+                  - generic [ref=e259]: "\"type\": \"function\","
+                  - generic [ref=e260]: "\"function\": {"
+                  - generic [ref=e261]: "\"name\": \"get_weather\","
+                  - generic [ref=e262]: "\"description\": \"Get weather of a location, the user should supply the location and date.\","
+                  - generic [ref=e263]: "\"parameters\": {"
+                  - generic [ref=e264]: "\"type\": \"object\","
+                  - generic [ref=e265]: "\"properties\": {"
+                  - generic [ref=e266]: "\"location\": { \"type\": \"string\", \"description\": \"The city name\" },"
+                  - generic [ref=e267]: "\"date\": { \"type\": \"string\", \"description\": \"The date in format YYYY-mm-dd\" },"
+                  - generic [ref=e268]: "},"
+                  - generic [ref=e269]: "\"required\": [\"location\", \"date\"]"
+                  - generic [ref=e270]: "},"
+                  - generic [ref=e271]: "}"
+                  - generic [ref=e272]: "},"
+                  - generic [ref=e273]: "]"
+                  - generic [ref=e274]: "# The mocked version of the tool calls"
+                  - generic [ref=e275]: "def get_date_mock():"
+                  - generic [ref=e276]: return datetime.now().strftime("%Y-%m-%d")
+                  - generic [ref=e277]: "def get_weather_mock(location, date):"
+                  - generic [ref=e278]: return "Cloudy 7~13°C"
+                  - generic [ref=e279]: "TOOL_CALL_MAP = {"
+                  - generic [ref=e280]: "\"get_date\": get_date_mock,"
+                  - generic [ref=e281]: "\"get_weather\": get_weather_mock"
+                  - generic [ref=e282]: "}"
+                  - generic [ref=e283]: "def run_turn(turn, messages):"
+                  - generic [ref=e284]: sub_turn = 1
+                  - generic [ref=e285]: "while True:"
+                  - generic [ref=e286]: response = client.chat.completions.create(
+                  - generic [ref=e287]: model='deepseek-v4-pro',
+                  - generic [ref=e288]: messages=messages,
+                  - generic [ref=e289]: tools=tools,
+                  - generic [ref=e290]: reasoning_effort="high",
+                  - generic [ref=e291]: "extra_body={ \"thinking\": { \"type\": \"enabled\" } },"
+                  - generic [ref=e292]: )
+                  - generic [ref=e293]: messages.append(response.choices[0].message)
+                  - generic [ref=e294]: reasoning_content = response.choices[0].message.reasoning_content
+                  - generic [ref=e295]: content = response.choices[0].message.content
+                  - generic [ref=e296]: tool_calls = response.choices[0].message.tool_calls
+                  - generic [ref=e297]: "print(f\"Turn {turn}.{sub_turn}\\n{reasoning_content=}\\n{content=}\\n{tool_calls=}\")"
+                  - generic [ref=e298]: "# If there is no tool calls, then the model should get a final answer and we need to stop the loop"
+                  - generic [ref=e299]: "if tool_calls is None:"
+                  - generic [ref=e300]: break
+                  - generic [ref=e301]: "for tool in tool_calls:"
+                  - generic [ref=e302]: tool_function = TOOL_CALL_MAP[tool.function.name]
+                  - generic [ref=e303]: tool_result = tool_function(**json.loads(tool.function.arguments))
+                  - generic [ref=e304]: "print(f\"tool result for {tool.function.name}: {tool_result}\\n\")"
+                  - generic [ref=e305]: "messages.append({"
+                  - generic [ref=e306]: "\"role\": \"tool\","
+                  - generic [ref=e307]: "\"tool_call_id\": tool.id,"
+                  - generic [ref=e308]: "\"content\": tool_result,"
+                  - generic [ref=e309]: "})"
+                  - generic [ref=e310]: sub_turn += 1
+                  - generic [ref=e311]: print()
+                  - generic [ref=e312]: client = OpenAI(
+                  - generic [ref=e313]: api_key=os.environ.get('DEEPSEEK_API_KEY'),
+                  - generic [ref=e314]: base_url=os.environ.get('DEEPSEEK_BASE_URL'),
+                  - generic [ref=e315]: )
+                  - generic [ref=e316]: "# The user starts a question"
+                  - generic [ref=e317]: turn = 1
+                  - generic [ref=e318]: "messages = [{"
+                  - generic [ref=e319]: "\"role\": \"user\","
+                  - generic [ref=e320]: "\"content\": \"How's the weather in Hangzhou Tomorrow\""
+                  - generic [ref=e321]: "}]"
+                  - generic [ref=e322]: run_turn(turn, messages)
+                  - generic [ref=e323]: "# The user starts a new question"
+                  - generic [ref=e324]: turn = 2
+                  - generic [ref=e325]: "messages.append({"
+                  - generic [ref=e326]: "\"role\": \"user\","
+                  - generic [ref=e327]: "\"content\": \"How's the weather in Guangzhou Tomorrow\""
+                  - generic [ref=e328]: "})"
+                  - generic [ref=e329]: run_turn(turn, messages)
+                - button "复制代码到剪贴板" [ref=e331] [cursor=pointer]:
+                  - generic [ref=e332]:
+                    - img [ref=e333]
+                    - img [ref=e335]
+              - paragraph [ref=e337]:
+                - text: 在 Turn 1 的每个子请求中，都携带了该 Turn 下产生的
+                - code [ref=e338]: reasoning_content
+                - text: 给 API，从而让模型继续之前的思考。
+                - code [ref=e339]: response.choices[0].message
+                - text: 携带了
+                - code [ref=e340]: assistant
+                - text: 消息的所有必要字段，包括
+                - code [ref=e341]: content
+                - text: 、
+                - code [ref=e342]: reasoning_content
+                - text: 、
+                - code [ref=e343]: tool_calls
+                - text: 。简单起见，可以直接用如下代码将消息 append 到 messages 结尾：
+              - generic [ref=e345]:
+                - code [ref=e347]:
+                  - generic [ref=e348]: messages.append(response.choices[0].message)
+                - button "复制代码到剪贴板" [ref=e350] [cursor=pointer]:
+                  - generic [ref=e351]:
+                    - img [ref=e352]
+                    - img [ref=e354]
+              - paragraph [ref=e356]: 这行代码等价于：
+              - generic [ref=e358]:
+                - code [ref=e360]:
+                  - generic [ref=e361]: "messages.append({"
+                  - generic [ref=e362]: "'role': 'assistant',"
+                  - generic [ref=e363]: "'content': response.choices[0].message.content,"
+                  - generic [ref=e364]: "'reasoning_content': response.choices[0].message.reasoning_content,"
+                  - generic [ref=e365]: "'tool_calls': response.choices[0].message.tool_calls,"
+                  - generic [ref=e366]: "})"
+                - button "复制代码到剪贴板" [ref=e368] [cursor=pointer]:
+                  - generic [ref=e369]:
+                    - img [ref=e370]
+                    - img [ref=e372]
+              - paragraph [ref=e374]:
+                - text: 且在 Turn 2 的请求中，我们仍然携带着 Turn1 所产生的
+                - code [ref=e375]: reasoning_content
+                - text: 给 API。
+              - paragraph [ref=e376]: 该代码的样例输出如下：
+              - generic [ref=e378]:
+                - code [ref=e380]:
+                  - generic [ref=e381]: Turn 1.1
+                  - generic [ref=e382]: reasoning_content="The user is asking about the weather in Hangzhou tomorrow. I need to get tomorrow's date first, then call the weather function."
+                  - generic [ref=e383]: content="Let me check tomorrow's weather in Hangzhou for you. First, let me get tomorrow's date."
+                  - generic [ref=e384]: "tool_calls=[ChatCompletionMessageFunctionToolCall(id='call_00_kw66qNnNto11bSfJVIdlV5Oo', function=Function(arguments='{}', name='get_date'), type='function', index=0)]"
+                  - generic [ref=e385]: "tool result for get_date: 2026-04-19"
+                  - generic [ref=e386]: Turn 1.2
+                  - generic [ref=e387]: reasoning_content="Today is 2026-04-19, so tomorrow is 2026-04-20. Now I'll call the weather function for Hangzhou."
+                  - generic [ref=e388]: content=''
+                  - generic [ref=e389]: "tool_calls=[ChatCompletionMessageFunctionToolCall(id='call_00_H2SCW6136vWJGq9SQlBuhVt4', function=Function(arguments='{\"location\": \"Hangzhou\", \"date\": \"2026-04-20\"}', name='get_weather'), type='function', index=0)]"
+                  - generic [ref=e390]: "tool result for get_weather: Cloudy 7~13°C"
+                  - generic [ref=e391]: Turn 1.3
+                  - generic [ref=e392]: reasoning_content='The weather result is in. Let me share this with the user.'
+                  - generic [ref=e393]: content="Here's the weather forecast for **Hangzhou tomorrow (April 20, 2026)**:\n\n- 🌤 **Condition:** Cloudy \n- 🌡 **Temperature:** 7°C ~ 13°C (45°F ~ 55°F)\n\nIt'll be on the cooler side, so you might want to bring a light jacket if you're heading out! Let me know if you need anything else."
+                  - generic [ref=e394]: tool_calls=None
+                  - generic [ref=e395]: Turn 2.1
+                  - generic [ref=e396]: reasoning_content='The user is asking about the weather in Guangzhou tomorrow. Today is 2026-04-19, so tomorrow is 2026-04-20. I can directly call the weather function.'
+                  - generic [ref=e397]: content=''
+                  - generic [ref=e398]: "tool_calls=[ChatCompletionMessageFunctionToolCall(id='call_00_8URkLt5NjmNkVKhDmMcNq9Mo', function=Function(arguments='{\"location\": \"Guangzhou\", \"date\": \"2026-04-20\"}', name='get_weather'), type='function', index=0)]"
+                  - generic [ref=e399]: "tool result for get_weather: Cloudy 7~13°C"
+                  - generic [ref=e400]: Turn 2.2
+                  - generic [ref=e401]: reasoning_content='The weather result for Guangzhou is the same as Hangzhou. Let me share this with the user.'
+                  - generic [ref=e402]: content="Here's the weather forecast for **Guangzhou tomorrow (April 20, 2026)**:\n\n- 🌤 **Condition:** Cloudy \n- 🌡 **Temperature:** 7°C ~ 13°C (45°F ~ 55°F)\n\nIt'll be cool and cloudy, so a light jacket would be a good idea if you're going out. Let me know if there's anything else you'd like to know!"
+                  - generic [ref=e403]: tool_calls=None
+                - button "复制代码到剪贴板" [ref=e405] [cursor=pointer]:
+                  - generic [ref=e406]:
+                    - img [ref=e407]
+                    - img [ref=e409]
+          - navigation "文件选项卡" [ref=e412]:
+            - link "上一页 « 错误码" [ref=e413] [cursor=pointer]:
+              - /url: /zh-cn/quick_start/error_codes
+              - generic [ref=e414]: 上一页
+              - generic [ref=e415]: « 错误码
+            - link "下一页 多轮对话 »" [ref=e416] [cursor=pointer]:
+              - /url: /zh-cn/guides/multi_round_chat
+              - generic [ref=e417]: 下一页
+              - generic [ref=e418]: 多轮对话 »
+        - list [ref=e421]:
+          - listitem [ref=e422]:
+            - link "思考模式开关与思考强度控制" [ref=e423] [cursor=pointer]:
+              - /url: "#思考模式开关与思考强度控制"
+          - listitem [ref=e424]:
+            - link "输入输出参数" [ref=e425] [cursor=pointer]:
+              - /url: "#输入输出参数"
+          - listitem [ref=e426]:
+            - link "多轮对话拼接" [ref=e427] [cursor=pointer]:
+              - /url: "#多轮对话拼接"
+            - list [ref=e428]:
+              - listitem [ref=e429]:
+                - link "样例代码" [ref=e430] [cursor=pointer]:
+                  - /url: "#样例代码"
+          - listitem [ref=e431]:
+            - link "工具调用" [ref=e432] [cursor=pointer]:
+              - /url: "#工具调用"
+            - list [ref=e433]:
+              - listitem [ref=e434]:
+                - link "样例代码" [ref=e435] [cursor=pointer]:
+                  - /url: "#样例代码-1"
+  - contentinfo [ref=e436]:
+    - generic [ref=e437]:
+      - generic [ref=e438]:
+        - generic [ref=e439]:
+          - generic [ref=e440]: 微信公众号
+          - list [ref=e441]:
+            - listitem [ref=e442]:
+              - img "WeChat QRcode" [ref=e443]
+        - generic [ref=e444]:
+          - generic [ref=e445]: 社区
+          - list [ref=e446]:
+            - listitem [ref=e447]:
+              - link "邮箱" [ref=e448] [cursor=pointer]:
+                - /url: mailto:api-service@deepseek.com
+                - text: 邮箱
+                - img [ref=e449]
+            - listitem [ref=e451]:
+              - link "Discord" [ref=e452] [cursor=pointer]:
+                - /url: https://discord.gg/Tc7c45Zzu5
+                - text: Discord
+                - img [ref=e453]
+            - listitem [ref=e455]:
+              - link "Twitter" [ref=e456] [cursor=pointer]:
+                - /url: https://twitter.com/deepseek_ai
+                - text: Twitter
+                - img [ref=e457]
+        - generic [ref=e459]:
+          - generic [ref=e460]: 更多
+          - list [ref=e461]:
+            - listitem [ref=e462]:
+              - link "GitHub" [ref=e463] [cursor=pointer]:
+                - /url: https://github.com/deepseek-ai
+                - text: GitHub
+                - img [ref=e464]
+      - generic [ref=e467]: Copyright © 2025 DeepSeek, Inc.

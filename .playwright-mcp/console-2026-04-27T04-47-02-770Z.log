@@ -1,0 +1,28 @@
+[     863ms] [LOG] %cWE ❤ NEWAPI%c Github: https://github.com/QuantumNous/new-api color: #10b981; font-weight: bold; font-size: 24px; color: inherit; font-size: 14px; @ https://www.dmxapi.cn/assets/app-gpW4OKC7.js:1
+[     863ms] [LOG] %cWe ❤ RixAPI%c Github: https://rixapi.com color:rgb(16, 123, 185); font-weight: bold; font-size: 24px; color: inherit; font-size: 14px; @ https://www.dmxapi.cn/assets/app-gpW4OKC7.js:1
+[     894ms] [ERROR] 获取语言列表失败: TypeError: Cannot read properties of null (reading 'find')
+    at a3t (https://www.dmxapi.cn/assets/app-gpW4OKC7.js:2:4616661)
+    at async https://www.dmxapi.cn/assets/app-gpW4OKC7.js:2:5319179 @ https://www.dmxapi.cn/assets/app-gpW4OKC7.js:1
+[     907ms] [LOG] 
+  ██████  ██ ██   ██  █████  ██████  ██ 
+  ██   ██ ██  ██ ██  ██   ██ ██   ██ ██ 
+  ██████  ██   ███   ███████ ██████  ██ 
+  ██   ██ ██  ██ ██  ██   ██ ██      ██ 
+  ██   ██ ██ ██   ██ ██   ██ ██      ██ 
+                                  
+  RixAPI vnull
+   @ https://www.dmxapi.cn/assets/app-gpW4OKC7.js:1
+[     922ms] [ERROR] 获取语言列表失败: TypeError: Cannot read properties of null (reading 'find')
+    at a3t (https://www.dmxapi.cn/assets/app-gpW4OKC7.js:2:4616661)
+    at async https://www.dmxapi.cn/assets/app-gpW4OKC7.js:2:4617974 @ https://www.dmxapi.cn/assets/app-gpW4OKC7.js:1
+[    1013ms] [LOG] License Features API Response: {success: true, rawData: Object, processedData: Object} @ https://www.dmxapi.cn/assets/app-gpW4OKC7.js:1
+[    1022ms] [LOG] Checking menu item: {content: /panel, displayType: internal_route, enabled: true, isDefault: true, name: 工作台} @ https://www.dmxapi.cn/assets/chunk-B_jxv1tL.js:0
+[    1023ms] [LOG] Checking menu item: {content: https://rmb.dmxapi.cn/, displayType: embed, enabled: true, isDefault: false, name: 💰模型价格} @ https://www.dmxapi.cn/assets/chunk-B_jxv1tL.js:0
+[    1023ms] [LOG] Found matching menu: {content: https://rmb.dmxapi.cn/, displayType: embed, enabled: true, isDefault: false, name: 💰模型价格} @ https://www.dmxapi.cn/assets/chunk-B_jxv1tL.js:0
+[    1023ms] [LOG] Menu config: {content: https://rmb.dmxapi.cn/, displayType: embed, enabled: true, isDefault: false, name: 💰模型价格} @ https://www.dmxapi.cn/assets/chunk-B_jxv1tL.js:0
+[    1028ms] [ERROR]  SyntaxError: Unexpected token ')'
+    at Function (<anonymous>)
+    at https://www.dmxapi.cn/assets/app-gpW4OKC7.js:2:5294465 @ https://www.dmxapi.cn/assets/app-gpW4OKC7.js:1
+[    1532ms] [LOG] checkLicenseStatus called: {enabled: true, isRoot: false, hasShownLicenseError: false, features: Array(0), loading: false} @ https://www.dmxapi.cn/assets/app-gpW4OKC7.js:1
+[    1532ms] [LOG] User is not root, skipping license check @ https://www.dmxapi.cn/assets/app-gpW4OKC7.js:1
+[    3046ms] [LOG] first visit, record version: 5.14.17 @ https://www.dmxapi.cn/assets/app-gpW4OKC7.js:1
