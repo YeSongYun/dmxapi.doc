@@ -1,0 +1,306 @@
+- generic [ref=e3]:
+  - link "Skip to content" [ref=e4] [cursor=pointer]:
+    - /url: "#VPContent"
+  - banner:
+    - generic:
+      - generic:
+        - generic:
+          - link "DMXAPI" [ref=e6] [cursor=pointer]:
+            - /url: /
+            - generic [ref=e7]: DMXAPI
+          - generic [ref=e8]:
+            - button "Search" [ref=e11] [cursor=pointer]:
+              - generic [ref=e14]: Search
+              - generic [ref=e15]:
+                - generic [ref=e16]: Ctrl
+                - generic [ref=e17]: K
+            - navigation "Main Navigation" [ref=e18]:
+              - generic [ref=e19]: Main Navigation
+              - link "文档首页" [ref=e20] [cursor=pointer]:
+                - /url: /
+                - generic [ref=e21]: 文档首页
+              - link "联系我们" [ref=e22] [cursor=pointer]:
+                - /url: /lianxi.html
+                - generic [ref=e23]: 联系我们
+              - generic [ref=e25]: "|"
+              - link "📗更新" [ref=e26] [cursor=pointer]:
+                - /url: https://www.dmxapi.cn/weblog
+                - generic [ref=e27]: 📗更新
+              - link "💰模型价格" [ref=e28] [cursor=pointer]:
+                - /url: https://www.dmxapi.cn/rmb
+                - generic [ref=e29]: 💰模型价格
+              - link "🐍Claude Code" [ref=e30] [cursor=pointer]:
+                - /url: /claude-code-new.html
+                - generic [ref=e31]: 🐍Claude Code
+              - link "🎫开发票" [ref=e32] [cursor=pointer]:
+                - /url: https://www.dmxapi.cn/fapiao
+                - generic [ref=e33]: 🎫开发票
+              - link "🗏 返回DMXAPI" [ref=e34] [cursor=pointer]:
+                - /url: https://dmxapi.cn
+                - generic [ref=e35]: 🗏 返回DMXAPI
+            - button "extra navigation" [ref=e37] [cursor=pointer]
+  - button "On this page" [ref=e42] [cursor=pointer]: On this page
+  - complementary [ref=e44]:
+    - navigation "Sidebar Navigation" [ref=e46]:
+      - generic [ref=e47]: Sidebar Navigation
+      - button "DMXAPI介绍 toggle section" [ref=e50] [cursor=pointer]:
+        - heading "DMXAPI介绍" [level=2] [ref=e52]
+        - button "toggle section" [ref=e53]
+      - button "平台管理接口 toggle section" [ref=e57] [cursor=pointer]:
+        - heading "平台管理接口" [level=2] [ref=e59]
+        - button "toggle section" [ref=e60]
+      - generic [ref=e63]:
+        - button "API调用 toggle section" [ref=e64] [cursor=pointer]:
+          - heading "API调用" [level=2] [ref=e66]
+          - button "toggle section" [ref=e67]
+        - generic [ref=e69]:
+          - link "欢迎使用" [ref=e73] [cursor=pointer]:
+            - /url: /jichu.html
+            - paragraph [ref=e74]: 欢迎使用
+          - generic [ref=e75]:
+            - button "快速入门 DMXAPI toggle section" [ref=e76] [cursor=pointer]:
+              - heading "快速入门 DMXAPI" [level=3] [ref=e78]
+              - button "toggle section" [ref=e79]
+            - generic [ref=e81]:
+              - link "快速开始" [ref=e85] [cursor=pointer]:
+                - /url: /kaishi.html
+                - paragraph [ref=e86]: 快速开始
+              - link "注册教程" [ref=e90] [cursor=pointer]:
+                - /url: /ZC.html
+                - paragraph [ref=e91]: 注册教程
+              - link "充值教程" [ref=e95] [cursor=pointer]:
+                - /url: /CZ.html
+                - paragraph [ref=e96]: 充值教程
+              - link "如何新建令牌Key" [ref=e100] [cursor=pointer]:
+                - /url: /lingpai.html
+                - paragraph [ref=e101]: 如何新建令牌Key
+              - link "获得 Base url" [ref=e105] [cursor=pointer]:
+                - /url: /baseurl.html
+                - paragraph [ref=e106]: 获得 Base url
+              - link "支持官方SDK" [ref=e110] [cursor=pointer]:
+                - /url: /sdk.html
+                - paragraph [ref=e111]: 支持官方SDK
+              - button "计费方式 toggle section" [ref=e113] [cursor=pointer]:
+                - heading "计费方式" [level=4] [ref=e115]
+                - button "toggle section" [ref=e116]
+              - link "常见报错码" [ref=e121] [cursor=pointer]:
+                - /url: /error-nub.html
+                - paragraph [ref=e122]: 常见报错码
+              - generic [ref=e123]:
+                - button "-thinking思考功能的开关 toggle section" [ref=e124] [cursor=pointer]:
+                  - heading "-thinking思考功能的开关" [level=4] [ref=e126]
+                  - button "toggle section" [ref=e127]
+                - generic [ref=e129]:
+                  - link "Claude 推理开关" [ref=e133] [cursor=pointer]:
+                    - /url: /thinking-claude.html
+                    - paragraph [ref=e134]: Claude 推理开关
+                  - link "Gemini 推理开关" [ref=e138] [cursor=pointer]:
+                    - /url: /thinking-gemini.html
+                    - paragraph [ref=e139]: Gemini 推理开关
+                  - link "Qwen 千问推理开关" [ref=e143] [cursor=pointer]:
+                    - /url: /thinking-qwen.html
+                    - paragraph [ref=e144]: Qwen 千问推理开关
+                  - link "Doubao 豆包推理开关" [ref=e148] [cursor=pointer]:
+                    - /url: /thinking-doubao.html
+                    - paragraph [ref=e149]: Doubao 豆包推理开关
+              - link "DMXAPI 搜索模型选型指南" [ref=e153] [cursor=pointer]:
+                - /url: /research.html
+                - paragraph [ref=e154]: DMXAPI 搜索模型选型指南
+          - button "Openai 请求格式（通用） toggle section" [ref=e156] [cursor=pointer]:
+            - heading "Openai 请求格式（通用）" [level=3] [ref=e158]
+            - button "toggle section" [ref=e159]
+          - button "Openai 请求格式（新） toggle section" [ref=e162] [cursor=pointer]:
+            - heading "Openai 请求格式（新）" [level=3] [ref=e164]
+            - button "toggle section" [ref=e165]
+          - button "Gemini 请求格式 toggle section" [ref=e168] [cursor=pointer]:
+            - heading "Gemini 请求格式" [level=3] [ref=e170]
+            - button "toggle section" [ref=e171]
+          - button "Claude 请求格式 toggle section" [ref=e174] [cursor=pointer]:
+            - heading "Claude 请求格式" [level=3] [ref=e176]
+            - button "toggle section" [ref=e177]
+          - button "🎨绘图模型 toggle section" [ref=e180] [cursor=pointer]:
+            - heading "🎨绘图模型" [level=3] [ref=e182]
+            - button "toggle section" [ref=e183]
+          - button "🎥视频模型 video toggle section" [ref=e186] [cursor=pointer]:
+            - heading "🎥视频模型 video" [level=3] [ref=e188]
+            - button "toggle section" [ref=e189]
+          - button "🔊️音频模型 TTS & STT toggle section" [ref=e192] [cursor=pointer]:
+            - heading "🔊️音频模型 TTS & STT" [level=3] [ref=e194]
+            - button "toggle section" [ref=e195]
+          - button "🎵音乐模型 toggle section" [ref=e198] [cursor=pointer]:
+            - heading "🎵音乐模型" [level=3] [ref=e200]
+            - button "toggle section" [ref=e201]
+          - button "📚RAG-向量/重排序 toggle section" [ref=e204] [cursor=pointer]:
+            - heading "📚RAG-向量/重排序" [level=3] [ref=e206]
+            - button "toggle section" [ref=e207]
+          - button "🌐翻译模型 toggle section" [ref=e210] [cursor=pointer]:
+            - heading "🌐翻译模型" [level=3] [ref=e212]
+            - button "toggle section" [ref=e213]
+          - button "🔍搜索模型 toggle section" [ref=e216] [cursor=pointer]:
+            - heading "🔍搜索模型" [level=3] [ref=e218]
+            - button "toggle section" [ref=e219]
+          - button "🚀全模态模型 toggle section" [ref=e222] [cursor=pointer]:
+            - heading "🚀全模态模型" [level=3] [ref=e224]
+            - button "toggle section" [ref=e225]
+          - button "数据处理（文档/PDF/OCR） toggle section" [ref=e228] [cursor=pointer]:
+            - heading "数据处理（文档/PDF/OCR）" [level=3] [ref=e230]
+            - button "toggle section" [ref=e231]
+          - button "其他示例 toggle section" [ref=e234] [cursor=pointer]:
+            - heading "其他示例" [level=3] [ref=e236]
+            - button "toggle section" [ref=e237]
+      - button "各类第三方应用配置 toggle section" [ref=e241] [cursor=pointer]:
+        - heading "各类第三方应用配置" [level=2] [ref=e243]
+        - button "toggle section" [ref=e244]
+      - generic [ref=e247]:
+        - button "服务条款" [ref=e248]:
+          - heading "服务条款" [level=2] [ref=e250]
+        - generic [ref=e251]:
+          - link "隐私条款" [ref=e255] [cursor=pointer]:
+            - /url: /tiaokuan.html
+            - paragraph [ref=e256]: 隐私条款
+          - link "服务承诺" [ref=e260] [cursor=pointer]:
+            - /url: /chengnuo.html
+            - paragraph [ref=e261]: 服务承诺
+          - link "帮助中心" [ref=e265] [cursor=pointer]:
+            - /url: /help-center.html
+            - paragraph [ref=e266]: 帮助中心
+  - generic [ref=e271]:
+    - main [ref=e272]:
+      - generic [ref=e274]:
+        - heading "Claude 思考参数说明 Permalink to \"Claude 思考参数说明\"" [level=1] [ref=e275]:
+          - text: Claude 思考参数说明
+          - link "Permalink to \"Claude 思考参数说明\"" [ref=e276] [cursor=pointer]:
+            - /url: "#claude-思考参数说明"
+            - text: "#"
+        - heading "📚 快速开始 Permalink to \"📚 快速开始\"" [level=2] [ref=e277]:
+          - text: 📚 快速开始
+          - link "Permalink to \"📚 快速开始\"" [ref=e278] [cursor=pointer]:
+            - /url: "#📚-快速开始"
+            - text: "#"
+        - paragraph [ref=e279]:
+          - text: 为了更方便的使用,我们在模型 ID 后缀增加
+          - code [ref=e280]: "-thinking"
+          - text: 和
+          - code [ref=e281]: "-nothinking"
+          - text: 就可以进行思考或者关闭思考了。
+        - list [ref=e282]:
+          - listitem [ref=e283]:
+            - strong [ref=e284]:
+              - code [ref=e285]: "-thinking"
+            - text: "- 打开并展示思考过程"
+          - listitem [ref=e286]:
+            - strong [ref=e287]:
+              - code [ref=e288]: "-nothinking"
+            - text: "- 关闭思考过程,回复更快,更省 token"
+        - separator [ref=e289]
+        - heading "💡 Claude 思考功能详细说明 Permalink to \"💡 Claude 思考功能详细说明\"" [level=2] [ref=e290]:
+          - text: 💡 Claude 思考功能详细说明
+          - link "Permalink to \"💡 Claude 思考功能详细说明\"" [ref=e291] [cursor=pointer]:
+            - /url: "#💡-claude-思考功能详细说明"
+            - text: "#"
+        - heading "概念介绍 Permalink to \"概念介绍\"" [level=3] [ref=e292]:
+          - text: 概念介绍
+          - link "Permalink to \"概念介绍\"" [ref=e293] [cursor=pointer]:
+            - /url: "#概念介绍"
+            - text: "#"
+        - paragraph [ref=e294]:
+          - text: 思考功能允许 Claude 在给出最终答案前展示其推理过程。启用该功能需要预留至少
+          - strong [ref=e295]: 1,024 个 token
+          - text: 的预算空间,这些 token 将计入总 token 限制 (
+          - code [ref=e296]: max_tokens
+          - text: )。
+        - separator [ref=e297]
+        - heading "🎯 支持的模型 Permalink to \"🎯 支持的模型\"" [level=2] [ref=e298]:
+          - text: 🎯 支持的模型
+          - link "Permalink to \"🎯 支持的模型\"" [ref=e299] [cursor=pointer]:
+            - /url: "#🎯-支持的模型"
+            - text: "#"
+        - list [ref=e300]:
+          - listitem [ref=e301]:
+            - code [ref=e302]: claude-haiku-4-5-20251001-thinking
+          - listitem [ref=e303]:
+            - code [ref=e304]: claude-opus-4-1-20250805-thinking
+          - listitem [ref=e305]:
+            - code [ref=e306]: claude-opus-4-20250514-thinking
+        - separator [ref=e307]
+        - heading "⚙️ 更深入的代码思考功能配置 Permalink to \"⚙️ 更深入的代码思考功能配置\"" [level=2] [ref=e308]:
+          - text: ⚙️ 更深入的代码思考功能配置
+          - link "Permalink to \"⚙️ 更深入的代码思考功能配置\"" [ref=e309] [cursor=pointer]:
+            - /url: "#⚙️-更深入的代码思考功能配置"
+            - text: "#"
+        - blockquote [ref=e310]:
+          - paragraph [ref=e311]:
+            - text: ⚠️
+            - strong [ref=e312]: 注意
+            - text: ": 仅在您确定知道如何使用该功能时才使用以下参数。否则,您应该使用默认值。"
+        - heading "配置参数 Permalink to \"配置参数\"" [level=3] [ref=e313]:
+          - text: 配置参数
+          - link "Permalink to \"配置参数\"" [ref=e314] [cursor=pointer]:
+            - /url: "#配置参数"
+            - text: "#"
+        - table [ref=e315]:
+          - rowgroup [ref=e316]:
+            - row "参数 类型 必填 说明" [ref=e317]:
+              - columnheader "参数" [ref=e318]
+              - columnheader "类型" [ref=e319]
+              - columnheader "必填" [ref=e320]
+              - columnheader "说明" [ref=e321]
+          - rowgroup [ref=e322]:
+            - 'row "type string ✅ 是 模式选择: enabled(启用) 或 disabled(禁用)" [ref=e323]':
+              - cell "type" [ref=e324]:
+                - code [ref=e325]: type
+              - cell "string" [ref=e326]
+              - cell "✅ 是" [ref=e327]
+              - 'cell "模式选择: enabled(启用) 或 disabled(禁用)" [ref=e328]':
+                - text: "模式选择:"
+                - code [ref=e329]: enabled
+                - text: (启用) 或
+                - code [ref=e330]: disabled
+                - text: (禁用)
+            - row "budget_tokens integer ⚠️ 启用时必填 分配给推理过程的 token 数量,必须 ≥1024 且 < max_tokens" [ref=e331]:
+              - cell "budget_tokens" [ref=e332]:
+                - code [ref=e333]: budget_tokens
+              - cell "integer" [ref=e334]
+              - cell "⚠️ 启用时必填" [ref=e335]
+              - cell "分配给推理过程的 token 数量,必须 ≥1024 且 < max_tokens" [ref=e336]
+        - heading "1️⃣ 启用模式 (-thinking 对应参数) Permalink to \"1️⃣ 启用模式 (-thinking 对应参数)\"" [level=3] [ref=e337]:
+          - text: 1️⃣ 启用模式 (-thinking 对应参数)
+          - link "Permalink to \"1️⃣ 启用模式 (-thinking 对应参数)\"" [ref=e338] [cursor=pointer]:
+            - /url: "#_1️⃣-启用模式-thinking-对应参数"
+            - text: "#"
+        - generic [ref=e339]:
+          - button "Copy Code" [ref=e340] [cursor=pointer]
+          - generic [ref=e341]: json
+          - code [ref=e343]:
+            - generic [ref=e344]: "{"
+            - generic [ref=e345]: "\"type\": \"enabled\","
+            - generic [ref=e346]: "\"budget_tokens\": 2048"
+            - generic [ref=e347]: "}"
+        - heading "2️⃣ 禁用模式 Permalink to \"2️⃣ 禁用模式\"" [level=3] [ref=e348]:
+          - text: 2️⃣ 禁用模式
+          - link "Permalink to \"2️⃣ 禁用模式\"" [ref=e349] [cursor=pointer]:
+            - /url: "#_2️⃣-禁用模式"
+            - text: "#"
+        - generic [ref=e350]:
+          - button "Copy Code" [ref=e351] [cursor=pointer]
+          - generic [ref=e352]: json
+          - code [ref=e354]:
+            - generic [ref=e355]: "{"
+            - generic [ref=e356]: "\"type\": \"disabled\""
+            - generic [ref=e357]: "}"
+        - separator [ref=e358]
+        - paragraph [ref=e359]: © 2025 DMXAPI Claude thinking
+    - contentinfo [ref=e360]:
+      - paragraph [ref=e363]:
+        - text: "最后更新:"
+        - time [ref=e364]: 2026/1/15 18:01
+      - navigation "Pager" [ref=e365]:
+        - generic [ref=e366]: Pager
+        - link "Previous page 常见报错码" [ref=e368] [cursor=pointer]:
+          - /url: /error-nub.html
+          - generic [ref=e369]: Previous page
+          - generic [ref=e370]: 常见报错码
+        - link "Next page Gemini 推理开关" [ref=e372] [cursor=pointer]:
+          - /url: /thinking-gemini.html
+          - generic [ref=e373]: Next page
+          - generic [ref=e374]: Gemini 推理开关
