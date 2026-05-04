@@ -737,7 +737,7 @@ export default defineConfig({
           { text: 'codebuddy', link: '/codebuddy' },
           { text: '腾讯云openclaw', link: '/Tencent_openclaw' },
           { text: 'Trae', link: '/Trae' },
-          { text: 'Claude-Desktop', link: '/claude_code_desktop' },
+          // { text: 'Claude-Desktop', link: '/claude_code_desktop' },
         ],
       },
       {
