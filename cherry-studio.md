@@ -57,5 +57,5 @@ Cherry Studio 是一款集多模型对话、知识库管理、AI 绘画、翻译
 ![](img\cherry_studio_16.png)
 
 <p align="center">
-  <small>© 2025 DMXAPI cherry s...</small>
+  <small>© 2026 DMXAPI cherry s...</small>
 </p>

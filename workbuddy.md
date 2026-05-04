@@ -43,13 +43,13 @@ WorkBuddy 是腾讯推出的 AI 桌面智能体，支持自然语言驱动本地
 
 回到 WorkBuddy 主界面，点击底部输入框左侧的 ① 模型选择器（默认显示当前使用的模型名），在弹出的下拉列表中找到「自定义模型」分组，选择 ② 刚才添加的模型即可切换生效。
 
-![workbuddy](./img/workbuddy05.png)
+![workbuddy](./img/workbuddy06.png)
 
 ### 第六步：发送消息测试
 
 在输入框中发送任意内容（如 `hi`），如果 WorkBuddy 正常返回回复，说明 DMXAPI 已成功接入，可以开始使用了。
 
-![workbuddy](./img/workbuddy06.png)
+![workbuddy](./img/workbuddy05.png)
 
 
 ## 连接手机端（可选）
