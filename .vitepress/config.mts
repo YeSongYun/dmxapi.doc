@@ -226,7 +226,7 @@ export default defineConfig({
                     collapsed: true,
                     items: [
                       { text: '文生图', link: '/gpt-image-2-text-to-image' },
-                      // { text: '图片编辑', link: '/gpt-image-2-image-edit' }
+                      { text: '图片编辑', link: '/gpt-image-2-image-edit' }
                     ],
                   }
                 ],
@@ -391,6 +391,24 @@ export default defineConfig({
                       { text: '多图融合', link: '/qwen-image-edit-plus-20260226-mul' },
                     ],
                   },
+                  {
+                    text: 'qwen-image-2.0',
+                    collapsed: true,
+                    items: [
+                      { text: '文生图', link: '/qwen-image-2.0-text-to-image' },
+                      { text: '图片编辑', link: '/qwen-image-2.0-image-editing' },
+                      { text: '多图融合', link: '/qwen-image-2.0-multi-image-fusion' },
+                    ],
+                  },
+                  {
+                    text: 'qwen-image-2.0-pro',
+                    collapsed: true,
+                    items: [
+                      { text: '文生图', link: '/qwen-image-2.0-pro-text-to-image' },
+                      { text: '图片编辑', link: '/qwen-image-2.0-pro-image-edit' },
+                      { text: '多图融合', link: '/qwen-image-2.0-pro-multi-image-fusion' },
+                    ],
+                  },
                 ],
               },
 
@@ -464,6 +482,15 @@ export default defineConfig({
                 items: [
                   { text: 'viduq2-pro（首尾帧）', link: '/viduq2-pro' },
                   { text: 'viduq2（多图参考）', link: '/vidu-ptv' },
+                  {
+                    text: 'viduq3-pro',
+                    collapsed: true,
+                    items: [
+                      { text: 'viduq3-pro（图生视频）', link: '/viduq3-pro-image-to-video' },
+                      { text: 'viduq3-pro（首尾帧）', link: '/viduq3-pro-start-end-to-video' },
+                      { text: 'viduq3-pro（文生视频）', link: '/viduq3-pro-text-to-video' },
+                    ],
+                  },
                 
                 ],
               },
@@ -707,8 +734,10 @@ export default defineConfig({
           { text: '沉浸式翻译', link: '/chenjinshifanyi' },
           { text: 'fluentread', link: '/fluentread' },
           { text: 'workbuddy', link: '/workbuddy' },
+          { text: 'codebuddy', link: '/codebuddy' },
           { text: '腾讯云openclaw', link: '/Tencent_openclaw' },
           { text: 'Trae', link: '/Trae' },
+          { text: 'Claude-Desktop', link: '/claude_code_desktop' },
         ],
       },
       {
