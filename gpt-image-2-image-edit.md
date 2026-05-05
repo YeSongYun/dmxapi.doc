@@ -15,7 +15,7 @@ https://www.dmxapi.cn/v1/images/edits
 
 ## 🤖 模型名称
 
-- `gpt-image-2`
+- `gpt-image-2-ssvip`
 
 ## 🧪 图片编辑 示例代码
 
