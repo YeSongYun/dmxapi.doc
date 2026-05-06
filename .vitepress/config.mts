@@ -725,6 +725,7 @@ export default defineConfig({
           { text: 'Cherry Studio', link: '/cherry-studio' },
           { text: 'Cherry Studio调用gpt-5.2-pro', link: '/cherry-studio-gpt-5.2-pro' },
           { text: 'Cherry Studio调用 Perplexity Sonar 系列搜索模型', link: '/cherry_perplexity' },
+          { text: 'Cherry Studio 使用 Gemini 模型联网搜索', link: '/cherry_gemini_web' },
           { text: 'Chatwise', link: '/chatwise' },
           { text: 'chatbox', link: '/chatbox' },
           { text: 'Dify', link: '/dify' },
