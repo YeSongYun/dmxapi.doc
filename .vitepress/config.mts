@@ -513,14 +513,14 @@ export default defineConfig({
               },
 
 
-               {
-                text: 'Kling 视频模型 ',
-                collapsed: true,
-                items: [              
-                  { text: 'kling-v2-6-text2video', link: '/kling-v2-6-text2video' },
-                  { text: 'kling-v2-6-image2video', link: '/kling-v2-6-image2video'}
-                ],
-              },
+              //  {
+              //   text: 'Kling 视频模型 ',
+              //   collapsed: true,
+              //   items: [              
+              //     { text: 'kling-v2-6-text2video', link: '/kling-v2-6-text2video' },
+              //     { text: 'kling-v2-6-image2video', link: '/kling-v2-6-image2video'}
+              //   ],
+              // },
               
 
               {
