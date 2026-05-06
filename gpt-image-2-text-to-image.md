@@ -18,7 +18,7 @@ https://www.dmxapi.cn/v1/images/generations
 
 ## 🤖 模型名称
 
-- `gpt-image-2`
+- `gpt-image-2-ssvip`
 
 ## 🎨 文生图 示例代码
 
