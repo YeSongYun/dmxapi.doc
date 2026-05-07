@@ -513,14 +513,18 @@ export default defineConfig({
               },
 
 
-              //  {
-              //   text: 'Kling 视频模型 ',
-              //   collapsed: true,
-              //   items: [              
-              //     { text: 'kling-v2-6-text2video', link: '/kling-v2-6-text2video' },
-              //     { text: 'kling-v2-6-image2video', link: '/kling-v2-6-image2video'}
-              //   ],
-              // },
+               {
+                text: 'Kling 视频模型 ',
+                collapsed: true,
+                items: [
+                  { text: 'kling-v3-video-generation 文生视频', link: '/kling-v3-video-generation-t2v' },
+                  { text: 'kling-v3-video-generation 文生视频（智能分镜）', link: '/kling-v3-video-generation-text-to-video' },
+                  { text: 'kling-v3-video-generation 首帧生视频', link: '/kling-v3-video-generation-first-frame-to-video' },
+                  { text: 'kling-v3-video-generation 首尾帧生视频', link: '/kling-v3-video-generation-first-last-frame' },
+                  // { text: 'kling-v2-6-text2video', link: '/kling-v2-6-text2video' },
+                  // { text: 'kling-v2-6-image2video', link: '/kling-v2-6-image2video'}
+                ],
+              },
               
 
               {
@@ -749,6 +753,8 @@ export default defineConfig({
           { text: '腾讯云openclaw', link: '/Tencent_openclaw' },
           { text: 'Trae', link: '/Trae' },
           // { text: 'Claude-Desktop', link: '/claude_code_desktop' },
+          { text: 'pi_agent', link: '/pi_agent' },
+          { text: 'kilo_code', link: '/kilo_code' },
         ],
       },
       {
