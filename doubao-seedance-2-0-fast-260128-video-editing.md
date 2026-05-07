@@ -146,7 +146,7 @@ response = requests.post(url, headers=headers, json=payload)
 print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 ```
 
-### 返回示例
+## 返回示例
 
 ```json
 {
@@ -174,19 +174,22 @@ import requests
 import json
 
 url = "https://www.dmxapi.cn/v1/responses"
+
+# DMXAPI 密钥 (请替换为您自己的密钥)
 api_key = "sk-******************************************"
 
 headers = {
     "Content-Type": "application/json",
+    # 获取结果接口使用 Bearer 认证方式
     "Authorization": f"Bearer {api_key}",
 }
 
 payload = {
-    # 【model】(string, 必填) 查询模型固定为 "seedance-2-0-get"
+    # 【model】(string, 必填) 查询模型，固定为 seedance-2-0-get
     "model": "seedance-2-0-get",
-    # 【input】(string, 必填) 第一步返回的任务 ID
-    # 任务状态: queued(排队中) / running(生成中) / succeeded(成功) / failed(失败) / expired(超时)
-    "input": "cgt-20260428165939-ccb9g"
+
+    # 【input】(string, 必填) 第一步提交任务返回的任务 ID
+    "input": "cgt-20260507191840-fpbsd"
 }
 
 response = requests.post(url, headers=headers, json=payload)
@@ -199,11 +202,14 @@ try:
     inner = json.loads(text)
     video_url = inner["content"]["video_url"]
     print(f"\n视频链接: {video_url}")
+    last_frame_url = inner["content"].get("last_frame_url")
+    if last_frame_url:
+        print(f"尾帧图像: {last_frame_url}")
 except Exception as e:
     print(f"提取 URL 失败: {e}")
 ```
 
-### 返回示例
+## 返回示例
 
 ```json
 {
