@@ -480,15 +480,24 @@ export default defineConfig({
                 text: 'Vidu视频模型',
                 collapsed: true,
                 items: [
-                  { text: 'viduq2-pro（首尾帧）', link: '/viduq2-pro' },
-                  { text: 'viduq2（多图参考）', link: '/vidu-ptv' },
+                  // { text: 'viduq2-pro（首尾帧）', link: '/viduq2-pro' },
+                  // { text: 'viduq2（多图参考）', link: '/vidu-ptv' },
+                  {
+                    text: 'viduq2-pro',
+                    collapsed: true,
+                    items: [
+                      { text: '首尾帧', link: '/viduq2-pro' },
+                      { text: '多图参考', link: '/vidu-ptv' },
+                    ],
+                  },
                   {
                     text: 'viduq3-pro',
                     collapsed: true,
                     items: [
-                      { text: 'viduq3-pro（图生视频）', link: '/viduq3-pro-image-to-video' },
-                      { text: 'viduq3-pro（首尾帧）', link: '/viduq3-pro-start-end-to-video' },
-                      { text: 'viduq3-pro（文生视频）', link: '/viduq3-pro-text-to-video' },
+                      { text: '文生视频', link: '/viduq3-pro-text-to-video' },
+                      { text: '图生视频', link: '/viduq3-pro-image-to-video' },
+                      { text: '首尾帧生视频', link: '/viduq3-pro-start-end-to-video' },
+                      
                     ],
                   },
                 
