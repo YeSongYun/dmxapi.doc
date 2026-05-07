@@ -448,7 +448,7 @@ export default defineConfig({
                     text: 'seedance 2.0-fast',
                     collapsed: true,
                     items: [
-                      { text: '文生视频', link: '/doubao-seedance-2-0-fast-text-to-video.md' },
+                      { text: '文生视频', link: '/doubao-seedance-2-0-fast-text-to-video' },
                       { text: '首帧生视频', link: '/doubao-seedance-2-0-fast-260128-first-frame-to-video' },
                       { text: '首尾帧生视频', link: '/doubao-seedance-2-0-fast-260128-first-last-frame' },
                       { text: '视频编辑', link: '/doubao-seedance-2-0-fast-260128-video-editing' },
