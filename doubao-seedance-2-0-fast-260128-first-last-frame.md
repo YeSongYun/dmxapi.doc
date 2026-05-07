@@ -17,22 +17,6 @@ doubao-seedance-2-0-fast-260128 首尾帧生视频是字节跳动豆包 Seedance
 请妥善保管您的 API Key！严禁将密钥泄露给他人、硬编码到代码中或提交到公开的代码仓库。
 :::
 
-## 请求参数
-
-| 参数 | 类型 | 必填 | 默认值 | 说明 |
-|------|------|------|--------|------|
-| model | string | 是 | — | 模型 ID，固定为 `doubao-seedance-2-0-fast-260128` |
-| input | array | 是 | — | 输入内容列表，首尾帧生视频场景需包含文本（可选）+ 首帧图片（role: first_frame）+ 尾帧图片（role: last_frame） |
-| generate_audio | boolean | 否 | true | 是否生成同步音频；true：含音频；false：无声视频 |
-| resolution | string | 否 | 720p | 视频分辨率；可选值：`480p` / `720p`（seedance 2.0 fast 不支持 `1080p`） |
-| ratio | string | 否 | adaptive | 视频宽高比；可选值：`16:9` / `4:3` / `1:1` / `3:4` / `9:16` / `21:9` / `adaptive` |
-| duration | integer | 否 | 5 | 视频时长（秒）；取值范围 [4, 15] 或 -1（由模型智能选择） |
-| seed | integer | 否 | -1 | 随机种子；取值范围 [-1, 2^32-1]；-1 表示随机 |
-| watermark | boolean | 否 | false | 是否添加水印；false：不含水印；true：含水印 |
-| callback_url | string | 否 | — | 任务状态变化时的回调通知地址（POST 推送） |
-| return_last_frame | boolean | 否 | false | 是否返回生成视频的尾帧图像（PNG 格式，无水印） |
-| execution_expires_after | integer | 否 | 172800 | 任务超时阈值（秒）；取值范围 [3600, 259200] |
-| tools | array | 否 | — | 工具配置，仅 seedance 2.0 & 2.0 fast 支持；`web_search` 启用联网搜索 |
 
 ## 首尾帧生视频 示例代码
 
@@ -112,7 +96,6 @@ payload = {
 
     # 【duration】(integer, 可选) 视频时长（秒），默认值 5
     # seedance 2.0 & 2.0 fast 支持取值范围 [4, 15]，或设置为 -1 由模型智能选择
-    # duration 和 frames 二选一，frames 优先级高于 duration
     "duration": 5,
 
     # 【seed】(integer, 可选) 随机种子，默认值 -1
@@ -151,7 +134,7 @@ response = requests.post(url, headers=headers, json=payload)
 print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 ```
 
-### 返回示例
+## 返回示例
 
 ```json
 {
@@ -179,18 +162,22 @@ import requests
 import json
 
 url = "https://www.dmxapi.cn/v1/responses"
+
+# DMXAPI 密钥 (请替换为您自己的密钥)
 api_key = "sk-******************************************"
 
 headers = {
     "Content-Type": "application/json",
+    # 获取结果接口使用 Bearer 认证方式
     "Authorization": f"Bearer {api_key}",
 }
 
 payload = {
-    # 【model】(string, 必填) 查询模型 ID，固定为 "seedance-2-0-get"
+    # 【model】(string, 必填) 查询模型，固定为 seedance-2-0-get
     "model": "seedance-2-0-get",
-    # 【input】(string, 必填) 待查询的视频生成任务 ID（提交任务时返回的 id 字段）
-    "input": "cgt-20260428165939-ccb9g"
+
+    # 【input】(string, 必填) 第一步提交任务返回的任务 ID
+    "input": "cgt-20260507191840-fpbsd"
 }
 
 response = requests.post(url, headers=headers, json=payload)
@@ -203,11 +190,14 @@ try:
     inner = json.loads(text)
     video_url = inner["content"]["video_url"]
     print(f"\n视频链接: {video_url}")
+    last_frame_url = inner["content"].get("last_frame_url")
+    if last_frame_url:
+        print(f"尾帧图像: {last_frame_url}")
 except Exception as e:
     print(f"提取 URL 失败: {e}")
 ```
 
-### 返回示例
+## 返回示例
 
 ```json
 {

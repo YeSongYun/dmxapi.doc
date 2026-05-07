@@ -1,4 +1,4 @@
-# doubao-seedance-2-0-fast-260128 文生视频 API 使用文档
+# doubao-seedance-2-0-fast-260128 多模态参考生视频 API 使用文档
 
 doubao-seedance-2-0-fast-260128 是字节跳动 Seedance 2.0 Fast 系列的多模态视频生成模型，支持文本、图片、视频、音频的灵活组合输入（共 8 种组合方式），能够生成 480p/720p 分辨率、16:9/adaptive 等多种宽高比的短视频，时长范围 4–15 秒（支持 -1 智能选择）。模型原生支持生成与画面同步的音频（人声、音效、背景音乐），并支持 web_search 工具增强内容准确性。视频生成采用两步异步模式：先提交任务获得任务 ID，再通过 seedance-2-0-get 查询并拉取视频链接，生成结果保存 7 天。
 
@@ -157,7 +157,7 @@ response = requests.post(url, headers=headers, json=payload)
 print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 ```
 
-### 返回示例
+## 返回示例
 
 ```json
 {
@@ -191,16 +191,16 @@ api_key = "sk-******************************************"
 
 headers = {
     "Content-Type": "application/json",
+    # 获取结果接口使用 Bearer 认证方式
     "Authorization": f"Bearer {api_key}",
 }
 
 payload = {
-    # 【model】(string, 必填) 查询视频生成任务结果的固定模型 ID
+    # 【model】(string, 必填) 查询模型，固定为 seedance-2-0-get
     "model": "seedance-2-0-get",
 
-    # 【input】(string, 必填) 提交任务时返回的任务 ID（id 字段）
-    # 任务 ID 格式如: cgt-20260428165939-ccb9g
-    "input": "cgt-20260428165939-ccb9g"
+    # 【input】(string, 必填) 第一步提交任务返回的任务 ID
+    "input": "cgt-20260507191840-fpbsd"
 }
 
 response = requests.post(url, headers=headers, json=payload)
@@ -213,11 +213,14 @@ try:
     inner = json.loads(text)
     video_url = inner["content"]["video_url"]
     print(f"\n视频链接: {video_url}")
+    last_frame_url = inner["content"].get("last_frame_url")
+    if last_frame_url:
+        print(f"尾帧图像: {last_frame_url}")
 except Exception as e:
     print(f"提取 URL 失败: {e}")
 ```
 
-### 返回示例
+## 返回示例
 
 ```json
 {
@@ -249,7 +252,6 @@ except Exception as e:
 视频链接: https://ark-acg-cn-beijing.tos-cn-beijing.volces.com/doubao-seedance-2-0-fast/02177736688829100000000000000000000ffffac177fcdd9df5d.mp4?...
 ```
 
-> 当 `status` 为 `succeeded` 时，从 `text` 字段中解析 JSON 可获取 `content.video_url`，即生成视频的下载链接。若任务尚未完成，可稍后重试查询。任务状态枚举：`queued`（排队中）/ `running`（运行中）/ `succeeded`（成功）/ `failed`（失败）/ `expired`（已超时）。
 
 <p align="center">
   <small>© 2026 DMXAPI doubao-seedance-2-0-fast-260128 文生视频</small>
