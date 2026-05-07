@@ -149,7 +149,226 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
   }
 }
 ```
+## 获取生成视频 示例代码
+```python
+"""
+================================================================================
+DMXAPI 视频生成任务查询脚本
+================================================================================
 
+功能说明:
+    本脚本用于查询 DMXAPI 平台上视频生成任务的状态和结果。
+    通过提供任务 ID，可以实时获取视频生成进度，并在完成后获取下载链接。
+依赖库:
+    - requests: HTTP 请求库，用于发送 API 请求
+    - json: JSON 解析库，用于处理响应数据
+
+================================================================================
+"""
+
+import requests  # HTTP 请求库 - 用于发送网络请求
+import json      # JSON 处理库 - 用于解析 API 响应数据
+
+# ╔════════════════════════════════════════════════════════════════════════════╗
+# ║                           第一部分: API 连接配置                              ║
+# ╚════════════════════════════════════════════════════════════════════════════╝
+#
+# 说明: 此部分配置 API 服务器地址和身份验证信息
+#       请确保 API 密钥的安全性，不要泄露给他人
+#
+
+# API 服务端点地址
+# - 生产环境: https://www.dmxapi.cn/v1/responses
+# - 该接口用于查询视频生成任务的状态和结果
+url = "https://www.dmxapi.cn/v1/responses"
+
+# API 密钥 (API Key)
+# - 用途: 身份验证，确保只有授权用户可以访问 API
+# - 格式: 以 "sk-" 开头的字符串
+# - 注意: 请妥善保管，不要将密钥提交到公开代码仓库
+api_key = "sk-***********************************************"
+
+# ╔════════════════════════════════════════════════════════════════════════════╗
+# ║                          第二部分: HTTP 请求头配置                            ║
+# ╚════════════════════════════════════════════════════════════════════════════╝
+#
+# 说明: HTTP 请求头用于告知服务器请求的格式和认证信息
+#       这是 RESTful API 调用的标准配置
+#
+
+headers = {
+    # Content-Type: 指定请求体的媒体类型
+    # - application/json 表示请求体为 JSON 格式
+    # - 服务器会根据此字段正确解析请求数据
+    "Content-Type": "application/json",
+
+    # Authorization: 身份验证头
+    # - 认证方案: OAuth 2.0 标准的令牌认证方式
+    # - 格式: "<token>"
+    # - 服务器通过此字段验证请求者身份
+    "Authorization": f"{api_key}",
+}
+
+# ╔════════════════════════════════════════════════════════════════════════════╗
+# ║                          第三部分: 请求参数配置                               ║
+# ╚════════════════════════════════════════════════════════════════════════════╝
+#
+# 说明: 此部分定义发送给 API 的核心参数
+#       包括模型选择、任务 ID 和响应模式
+#
+
+data = {
+    # model: 指定查询所使用的模型/接口
+    # - viduq2-pro-get: Vidu Q2 Pro 版本的任务查询接口（这个模型不要更改，就用viduq2-pro-get）
+    # - 不同模型对应不同的视频生成能力
+    "model": "vidu-get",
+
+    # input: 要查询的任务 ID
+    # - 此 ID 由创建任务时返回
+    # - 每个任务有唯一的 ID 标识
+    # - 请替换为您实际的任务 ID
+    "input": "949909892414607360",
+
+    # stream: 是否启用流式响应
+    # - True: 启用 SSE 流式传输，实时接收生成进度
+    # - False: 等待任务完成后一次性返回结果
+    # - 推荐使用 True 以获得更好的用户体验
+    "stream": True
+}
+
+# ╔════════════════════════════════════════════════════════════════════════════╗
+# ║                       第四部分: 发送请求并处理响应                             ║
+# ╚════════════════════════════════════════════════════════════════════════════╝
+#
+# 说明: 此部分负责发送 HTTP 请求并处理服务器返回的流式响应
+#       使用 SSE 技术实时接收任务进度更新
+#
+
+# ----------------------------- 4.1 输出启动信息 -----------------------------
+# 向用户显示程序已开始执行，提供清晰的视觉分隔
+print("=" * 60)
+print("🚀 发送流式请求...")
+print("=" * 60)
+
+# ----------------------------- 4.2 发送 API 请求 -----------------------------
+# requests.post() 参数说明:
+# - url: API 服务端点地址
+# - headers: HTTP 请求头，包含认证信息
+# - json: 请求体数据，会自动序列化为 JSON
+# - stream=True: 启用流式响应，允许逐行读取返回数据
+response = requests.post(url, headers=headers, json=data, stream=True)
+
+# 输出 HTTP 状态码，便于调试和确认请求是否成功
+# - 200: 请求成功
+# - 401: 认证失败（检查 API 密钥）
+# - 404: 任务不存在（检查任务 ID）
+# - 500: 服务器内部错误
+print(f"状态码: {response.status_code}")
+print("-" * 60)
+print()
+
+# ----------------------------- 4.3 处理流式响应 -----------------------------
+# SSE (Server-Sent Events) 响应格式说明:
+# - 每条消息以 "data: " 开头
+# - 后跟 JSON 格式的数据
+# - 消息之间用空行分隔
+#
+# 响应数据结构示例:
+# {
+#     "delta": "当前进度: 50%",        // 增量更新内容
+#     "type": "response.completed"    // 响应类型标识
+# }
+#
+try:
+    # iter_lines(): 迭代器方法，逐行读取响应内容
+    # - 避免一次性加载全部数据到内存
+    # - 适合处理大量或持续的流式数据
+    for line in response.iter_lines():
+        # 跳过空行（SSE 协议中用于分隔消息）
+        if line:
+            # 将字节数据解码为 UTF-8 字符串
+            decoded_line = line.decode('utf-8')
+
+            # --------------- 4.3.1 解析 SSE 数据格式 ---------------
+            # 检查是否为标准 SSE 数据行
+            if decoded_line.startswith('data: '):
+                # 提取 JSON 部分（去掉 "data: " 前缀，共 6 个字符）
+                json_str = decoded_line[6:]
+
+                try:
+                    # 将 JSON 字符串解析为 Python 字典
+                    data_obj = json.loads(json_str)
+
+                    # --------------- 4.3.2 处理增量更新 ---------------
+                    # delta 字段包含实时进度信息
+                    if 'delta' in data_obj:
+                        delta_text = data_obj['delta']
+
+                        # 检测任务完成信号
+                        # 当收到完成消息时，显示 100% 进度条
+                        if '✅ 视频生成完成' in delta_text:
+                            print('\r[████████████████████] 100.00% 生成完成!', flush=True)
+
+                        # 输出增量内容
+                        # - end='': 不换行，保持进度条在同一行更新
+                        # - flush=True: 立即刷新输出缓冲区
+                        print(delta_text, end='', flush=True)
+
+                    # --------------- 4.3.3 处理完成信号 ---------------
+                    # type='response.completed' 表示响应流结束
+                    elif data_obj.get('type') == 'response.completed':
+                        # 响应完成，无需额外处理
+                        # 此时所有数据已通过 delta 输出
+                        pass
+
+                except json.JSONDecodeError:
+                    # JSON 解析失败时，直接输出原始内容
+                    # 可能是服务器返回了非标准格式的数据
+                    print(decoded_line)
+
+# ----------------------------- 4.4 异常处理 -----------------------------
+except KeyboardInterrupt:
+    # 捕获 Ctrl+C 中断信号
+    # 允许用户优雅地终止长时间运行的查询
+    print("\n\n⚠️ 用户中断了请求")
+
+except Exception as e:
+    # 捕获所有其他异常
+    # 包括网络错误、连接超时等
+    print(f"\n\n❌ 发生错误: {e}")
+
+# ----------------------------- 4.5 输出结束信息 -----------------------------
+# 程序执行完毕，输出结束标识
+print()
+print("=" * 60)
+print("🏁 流式输出结束")
+print("=" * 60)
+```
+
+## 返回示例
+```json
+============================================================
+🚀 发送流式请求...
+============================================================
+状态码: 200
+------------------------------------------------------------
+
+[████████████████████] 100.00% 生成完成!
+
+
+✅ 视频生成完成！
+
+任务ID: 949914319443734528
+
+--- 创作 1 ---
+视频URL: https://prod-ss-vidu.s3.cn-northwest-1.amazonaws.com.cn/infer_28/tasks/26/0507/10/949914319443734528/creation-01/video.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Checksum-Mode=ENABLED&X-Amz-Credential=AKIARRHG6JR7EMNHVUWT%2F20260507%2Fcn-northwest-1%2Fs3%2Faws4_request&X-Amz-Date=20260507T101339Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&response-cache-control=max-age%3D86400&response-content-disposition=attachment%3Bfilename%3Dgeneral-6-2026-05-07T10%253A13%253A38Z.mp4&x-id=GetObject&X-Amz-Signature=07911f85ec9e30d1f793af32ae81e967fa708c940f0821df27d095c13254a914
+封面URL: https://prod-ss-vidu.s3.cn-northwest-1.amazonaws.com.cn/infer_28/tasks/26/0507/10/949914319443734528/creation-01/cover.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Checksum-Mode=ENABLED&X-Amz-Credential=AKIARRHG6JR7EMNHVUWT%2F20260507%2Fcn-northwest-1%2Fs3%2Faws4_request&X-Amz-Date=20260507T101339Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&response-cache-control=max-age%3D86400&x-id=GetObject&X-Amz-Signature=b331a2daa9b32bd3df7decb57bf252e3286acca1a6c8ffdab2f24417231364f0
+
+============================================================
+🏁 流式输出结束
+============================================================
+
+```
 
 
 <p align="center">
