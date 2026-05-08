@@ -57,7 +57,7 @@ codex --version
 
     ```toml
     model_provider = "DMX1"
-    model = "gpt-5-codex"
+    model = "gpt-5.5"
     model_reasoning_effort = "high"
     disable_response_storage = true
     preferred_auth_method = "apikey"
@@ -157,7 +157,7 @@ codex --version
 
     ```toml
     model_provider = "api111"
-    model = "gpt-5-codex"
+    model = "gpt-5.5"
     model_reasoning_effort = "high"
     disable_response_storage = true
     preferred_auth_method = "apikey"
@@ -252,7 +252,7 @@ codex --version
     按 `i` 进入插入模式，粘贴以下内容，然后按 `ESC` 键，输入 `:wq` 并回车保存退出。
     ```toml
     model_provider = "api111"
-    model = "gpt-5-codex"
+    model = "gpt-5.5"
     model_reasoning_effort = "high"
     disable_response_storage = true
     preferred_auth_method = "apikey"
