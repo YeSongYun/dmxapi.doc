@@ -708,7 +708,22 @@ export default defineConfig({
                   { text: '音频分析', link: '/mimo-v2-omni-Audio_understanding' },
                 ],
               },
-             
+              {
+                text: 'qwen3.5-omni-plus-all全模态模型',
+                collapsed: true,
+                items: [
+                  { text: '文 生 文+音频', link: '/qwen3.5-omni-plus-all-text-to-text-audio' },
+                  { text: '文+音频 生 文+音频', link: '/qwen3.5-omni-plus-all-text-audio-to-text-audio' },
+                  { text: '文+本地音频 生 文+音频', link: '/qwen3.5-omni-plus-all-audio-to-text-audio' },
+                  { text: '文本+本地图片 生 文本+音频', link: '/qwen3.5-omni-plus-all-local-image-to-text-audio' },
+                  { text: '文+图 生 文+音频', link: '/qwen3.5-omni-plus-all-text-image-to-text-audio' },
+                  { text: '文+视频 生 文+音频', link: '/qwen3.5-omni-plus-all-video-text-to-text-audio' },
+                  { text: '文本+本地视频 生 文本+音频', link: '/qwen3.5-omni-plus-all-video-to-text-audio' },
+                  { text: '多轮对话', link: '/qwen3.5-omni-plus-all-multi-turn-dialog' },
+                  { text: '多模态组合输入', link: '/qwen3.5-omni-plus-all-multimodal-combined' },
+                ],
+              },
+
             ],
           },
 
