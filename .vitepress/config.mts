@@ -519,15 +519,29 @@ export default defineConfig({
                {
                 text: '拍我 视频模型 ',
                 collapsed: true,
-                items: [      
-                  { text: '图片上传', link: '/paiwo_image_upload' },                  
+                items: [
+                  { text: '图片上传', link: '/paiwo_image_upload' },
                   { text: '音频上传', link: '/paiwo-audio-upload' },
                   { text: '视频上传', link: '/paiwo-video-upload' },
-                  { text: '文生视频', link: '/paiwo-v5.6-ttv' },
-                  { text: '图生视频', link: '/paiwo-v5.6-itv' },                  
-
-                  { text: '首尾帧生成视频', link: '/paiwo-v5.6-itv2' },
-
+                  {
+                    text: 'paiwo-v5.6',
+                    collapsed: true,
+                    items: [
+                      { text: '文生视频', link: '/paiwo-v5.6-ttv' },
+                      { text: '图生视频', link: '/paiwo-v5.6-itv' },
+                      { text: '首尾帧生成视频', link: '/paiwo-v5.6-itv2' },
+                    ],
+                  },
+                  {
+                    text: 'PixVerse-C1',
+                    collapsed: true,
+                    items: [
+                      { text: '文生视频', link: '/PixVerse-C1-text-to-video' },
+                      { text: '图生视频', link: '/PixVerse-C1-image-to-video' },
+                      { text: '首尾帧生成视频', link: '/PixVerse-C1-first-last-frame-to-video' },
+                      { text: '参考生视频', link: '/PixVerse-C1-reference-to-video' },
+                    ],
+                  },
                   { text: '数字人 Lipsync', link: '/paiwo-itv-hd-lipsync' },
 
                 ],
