@@ -371,8 +371,8 @@ export default defineConfig({
                 text: '千问绘图模型',
                 collapsed: true,
                 items: [
-                  { text: 'img-qwen-image', link: '/img-qwen-image' },
-                  { text: 'img-qwen-image-edit', link: '/img-qwen-image-edit' },
+                  { text: 'qwen-image', link: '/img-qwen-image' },
+                  { text: 'qwen-image-edit', link: '/img-qwen-image-edit' },
                   { text: 'qwen-image-max', link: '/qwen-image-max' },
                   { text: 'qwen-image-plus-2026-01-09', link: '/qwen-image-plus-2026-01-09' },
                   {
@@ -572,7 +572,7 @@ export default defineConfig({
                 items: [
                   { text: '文生视频', link: '/wan2.6-t2v' },
                   { text: '首帧生视频', link: '/wan2.6-i2v' },
-                  { text: '参考生视频', link: '/wan2.6-r2v' }
+                  // { text: '参考生视频', link: '/wan2.6-r2v' }
                 ],
               },
             ],
