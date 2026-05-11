@@ -42,7 +42,6 @@ headers = {
 # 步骤3: 配置请求参数
 payload = {
     # 【model】(string, 必填) 模型名称
-    # 可选值: "v3.5" / "v4" / "v4.5" / "v5" / "v5.5" / "v5.6" / "v6" / "c1"
     "model": "PixVerse-V6",
 
     # 【input】(string, 必填) 视频内容描述提示词
@@ -58,10 +57,7 @@ payload = {
     "last_frame_img": 177602101,
 
     # 【duration】(integer, 必填) 视频生成时长（秒）
-    # v3.5/v4/v4.5: 5 或 8（v3.5 1080p 不支持 8）
-    # v5: 5 或 8
-    # v5.5/v5.6: 5、8 或 10（1080p 不支持 10）
-    # v6/c1: 1~15 任意时长
+    # 1~15s 任意时长
     "duration": 5,
 
     # 【quality】(string, 必填) 输出视频分辨率
@@ -69,7 +65,6 @@ payload = {
     "quality": "540p",
 
     # 【generate_audio_switch】(boolean, 可选) AI 音效开关
-    # 支持 v5.5、v5.6、v6、c1 使用
     # true: 开启音效生成，false: 关闭音效生成
     "generate_audio_switch": True,
 
@@ -79,7 +74,7 @@ payload = {
 
     # 【motion_mode】(string, 可选) 运动模式
     # 可选值: "normal"（标准运动）/ "fast"（快速运动）
-    # 注意: "fast" 不支持 8s 时长，"v5" 不支持此字段
+    # 注意: "fast" 不支持 8s 时长
     "motion_mode": "normal",
 }
 
@@ -89,7 +84,7 @@ response = requests.post(url, headers=headers, json=payload)
 print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 ```
 
-### 返回示例
+## 返回示例
 
 ```json
 {
@@ -132,7 +127,7 @@ video_id = 401770462988288
 
 payload = {
     # 【model】(string, 必填) 查询模型名称，固定格式为提交模型名 + "-get"
-    "model": "PixVerse-V6-get",
+    "model": "paiwo-get",
 
     # 【input】(string, 必填) 第一步提交任务返回的 video_id
     "input": str(video_id),
@@ -153,7 +148,7 @@ while True:
     time.sleep(5)
 ```
 
-### 返回示例
+## 返回示例
 
 ```json
 {

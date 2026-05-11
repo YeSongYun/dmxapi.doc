@@ -49,7 +49,6 @@ headers = {
 
 payload = {
     # 【model】(string, 必需) 视频生成模型名称
-    # DMXAPI 封装模型，对应 PixVerse 原生 v6 版本
     "model": "PixVerse-V6",
 
     # 【input】(string, 必需) 视频生成的文字描述（提示词）
@@ -66,7 +65,7 @@ payload = {
     "style": "3d_animation",
 
     # 【duration】(integer, 必需) 视频生成时长（秒）
-    # v6/c1: 1~15 任意时长；v5.5/5.6: 5/8/10（1080p 无法使用 10）；v5: 5/8；v3.5/v4/v4.5: 5/8
+    # 支持 1~15s 任意时长
     "duration": 5,
 
     # 【quality】(string, 必需) 视频分辨率
@@ -83,10 +82,10 @@ payload = {
 
     # 【negative_prompt】(string, 可选) 负向提示词
     # 2048 字符以内，描述不希望出现在视频中的内容
-    "negative_prompt": "string",
+    "negative_prompt": "",
 
     # 【motion_mode】(string, 可选) 运动模式
-    # 可选值: "normal"(普通) / "fast"(快速)；"fast" 不支持 8s；v5 及以上版本不支持此字段
+    # 可选值: "normal"(普通) / "fast"(快速)；"fast" 不支持 8s
     "motion_mode": "normal",
 
     # 【template_id】(integer, 可选) 特效模板 ID
@@ -109,7 +108,7 @@ response = requests.post(url, headers=headers, json=payload)
 print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 ```
 
-### 返回示例
+## 返回示例
 
 ```json
 {
@@ -154,7 +153,7 @@ headers = {
 
 payload = {
     # 【model】(string, 必需) 查询模型名称，固定填写 "PixVerse-V6-get"
-    "model": "PixVerse-V6-get",
+    "model": "paiwo-get",
 
     # 【input】(string, 必需) 提交任务时返回的 video_id
     # 用于查询视频生成状态与获取最终视频链接
@@ -174,7 +173,7 @@ if video_url:
     print(f"\n视频下载链接: {video_url}")
 ```
 
-### 返回示例
+## 返回示例
 
 ```json
 {

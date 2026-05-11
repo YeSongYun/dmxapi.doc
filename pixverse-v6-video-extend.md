@@ -48,7 +48,6 @@ headers = {
 
 payload = {
     # 【model】(string, 必填) 使用的视频延长模型
-    # 可选值: "v3.5" / "v4" / "v4.5" / "v5" / "v5.5" / "v6"（此处使用 DMXAPI 完整模型名）
     "model": "PixVerse-V6",
 
     # 【source_video_id】(integer, 可选) 要延长的源视频 ID（来自平台已生成视频）
@@ -64,9 +63,7 @@ payload = {
     "input": "across the universe",
 
     # 【duration】(integer, 必填) 延长的视频时长（秒）
-    # v6: 支持 1~15 任意整数时长
-    # v3.5/v4/v4.5: 5 或 8（v3.5 的 1080p 不支持 8）
-    # v5/v5.5: 5 或 8；v5.5 额外支持 10（1080p 不支持 10）
+    # 支持 1~15 任意整数时长
     "duration": 5,
 
     # 【quality】(string, 必填) 输出视频分辨率
@@ -98,7 +95,7 @@ response = requests.post(url, headers=headers, json=payload)
 print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 ```
 
-### 返回示例
+## 返回示例
 
 ```json
 {
@@ -143,7 +140,7 @@ video_id = 401828562288405
 
 payload = {
     # 【model】(string, 必填) 查询模型，固定使用提交模型名加 "-get" 后缀
-    "model": "PixVerse-V6-get",
+    "model": "paiwo-get",
 
     # 【input】(string, 必填) 传入第一步返回的 video_id（字符串形式）
     "input": str(video_id),
@@ -171,7 +168,7 @@ while True:
     time.sleep(10)
 ```
 
-### 返回示例
+## 返回示例
 
 ```json
 {
@@ -190,8 +187,6 @@ while True:
   }
 }
 ```
-
-> `status` 任务状态枚举：`queued`（排队中）/ `running`（生成中）/ `succeeded`（成功）/ `failed`（失败）/ `expired`（已过期）。当 `status` 为 `succeeded` 时，`video_url` 字段即为可下载的视频链接。
 
 <p align="center">
   <small>© 2026 DMXAPI PixVerse-V6 视频延长</small>
