@@ -43,70 +43,51 @@ headers = {
 
 payload = {
     # 【model】(string, 必填) 模型名称
-    # 指定使用 PixVerse-V6 模型
     "model": "PixVerse-V6",
-
     # 【input】(string, 必填) 视频生成提示词
     # 描述想要生成的视频内容，5000 字符以内
     "input": "可爱的小猫在海边愉快的玩耍",
-
     # 【duration】(integer, 必填) 视频生成时长（秒）
     # 可选值: 1~15 秒
     "duration": 5,
-
     # 【quality】(string, 必填) 视频输出画质
     # 可选值: "360p" / "540p" / "720p" / "1080p"
     "quality": "360p",
-
     # 【aspect_ratio】(string, 必填) 视频画幅比例
-    # 基础版本支持: "16:9" / "9:16" / "4:3" / "3:4" / "1:1"
-    # v6/c1 额外支持: "2:3" / "3:2" / "21:9"
+    #  "16:9" / "9:16" / "4:3" / "3:4" / "1:1" / "2:3" / "3:2" / "21:9"
     "aspect_ratio": "16:9",
-
     # 【generate_audio_switch】(boolean, 可选) 音频生成开关
-    # 支持 v5.5/v5.6/v6/c1，true: 开启音频生成，false: 关闭音频生成
+    # true: 开启音频生成，false: 关闭音频生成
     "generate_audio_switch": True,
-
     # 【seed】(integer, 可选) 随机种子
     # 取值范围: 0 - 2147483647，固定种子可复现相同生成结果
     "seed": 0,
-
     # 【negative_prompt】(string, 可选) 负向提示词
-    # 2048 字符以内，描述不希望在视频中出现的内容（官方文档未列出，推断）
-    "negative_prompt": "string",
-
+    "negative_prompt": "",
     # 【motion_mode】(string, 可选) 运动模式
     # 可选值: "normal"(标准运动) / "fast"(快速运动)
-    # 注意: "fast" 不支持 8s 时长，v5 及以上版本不支持此字段
+    # 注意: "fast" 不支持 8s 时长
     "motion_mode": "normal",
-
     # 【template_id】(integer, 可选) 模板（特效）ID
     # 使用前需先在平台激活对应模板
     "template_id": 0,
-
     # 【generate_multi_clip_switch】(boolean, 可选) 多镜头控制开关
     # 支持 v5.6/v6，true: 多镜头模式，false: 单镜头模式
     "generate_multi_clip_switch": True,
-
     # 【thinking_type】(string, 可选) 提示词优化模式
-    # 支持 v5.5/v5.6/v6，控制是否启用系统自动优化提示词功能
     # 可选值: "enabled"(开启) / "disabled"(关闭) / "auto"(由模型自动决定，默认)
     "thinking_type": "auto",
 }
-
 # 步骤4: 发送请求并输出结果
-
 response = requests.post(url, headers=headers, json=payload)
 result = response.json()
-
 print(json.dumps(result, indent=2, ensure_ascii=False))
-
 # 提取任务 ID，用于第二步查询视频结果
 video_id = result.get("video_id")
 print(f"任务 ID: {video_id}")
 ```
 
-### 返回示例
+## 返回示例
 
 ```json
 {
@@ -132,48 +113,39 @@ print(f"任务 ID: {video_id}")
 import requests
 import json
 import time
-
 # DMXAPI 服务端点地址
 url = "https://www.dmxapi.cn/v1/responses"
-
 # DMXAPI 密钥 (请替换为您自己的密钥)
 api_key = "sk-******************************************"
-
 headers = {
     "Content-Type": "application/json",
     "Authorization": f"{api_key}",
 }
-
 # 替换为第一步返回的 video_id
 video_id = 401769244895246
-
 payload = {
     # 【model】(string, 必填) 查询模型名称，固定为 PixVerse-V6-get
-    "model": "PixVerse-V6-get",
+    "model": "paiwo-get",
 
     # 【input】(integer, 必填) 视频任务 ID
     # 填入第一步返回的 video_id 值
     "input": video_id,
 }
-
 # 轮询获取视频生成结果
 while True:
     response = requests.post(url, headers=headers, json=payload)
     result = response.json()
-
     print(json.dumps(result, indent=2, ensure_ascii=False))
-
     # 提取视频链接
     video_url = result.get("video_url")
     if video_url:
         print(f"视频链接: {video_url}")
         break
-
     # 等待 5 秒后重试
     time.sleep(5)
 ```
 
-### 返回示例
+## 返回示例
 
 ```json
 {

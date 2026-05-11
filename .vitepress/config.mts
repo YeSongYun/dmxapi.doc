@@ -532,16 +532,16 @@ export default defineConfig({
                       { text: '首尾帧生成视频', link: '/paiwo-v5.6-itv2' },
                     ],
                   },
-                  // {
-                  //   text: 'paiwo-v6',
-                  //   collapsed: true,
-                  //   items: [
-                  //     { text: '文生视频', link: '/pixverse-v6-text-to-video' },
-                  //     { text: '图生视频', link: '/pixverse-v6-img-to-video' },
-                  //     { text: '首尾帧生成视频', link: '/pixverse-v6-first-last-frame' },
-                  //     { text: '视频延长', link: '/pixverse-v6-video-extend' },
-                  //   ],
-                  // },
+                  {
+                    text: 'paiwo-v6',
+                    collapsed: true,
+                    items: [
+                      { text: '文生视频', link: '/pixverse-v6-text-to-video' },
+                      { text: '图生视频', link: '/pixverse-v6-img-to-video' },
+                      { text: '首尾帧生成视频', link: '/pixverse-v6-first-last-frame' },
+                      { text: '视频延长', link: '/pixverse-v6-video-extend' },
+                    ],
+                  },
                   {
                     text: 'PixVerse-C1',
                     collapsed: true,
