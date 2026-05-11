@@ -1,0 +1,433 @@
+- generic [ref=e3]:
+  - link "Skip to content" [ref=e4] [cursor=pointer]:
+    - /url: "#VPContent"
+  - banner:
+    - generic:
+      - generic:
+        - generic:
+          - link "DMXAPI" [ref=e6] [cursor=pointer]:
+            - /url: /
+            - generic [ref=e7]: DMXAPI
+          - generic [ref=e8]:
+            - button "Search" [ref=e11] [cursor=pointer]:
+              - generic [ref=e14]: Search
+              - generic [ref=e15]:
+                - generic [ref=e16]: Ctrl
+                - generic [ref=e17]: K
+            - navigation "Main Navigation" [ref=e18]:
+              - generic [ref=e19]: Main Navigation
+              - link "文档首页" [ref=e20] [cursor=pointer]:
+                - /url: /
+                - generic [ref=e21]: 文档首页
+              - link "联系我们" [ref=e22] [cursor=pointer]:
+                - /url: /lianxi.html
+                - generic [ref=e23]: 联系我们
+              - generic [ref=e25]: "|"
+              - link "📗更新" [ref=e26] [cursor=pointer]:
+                - /url: https://www.dmxapi.cn/weblog
+                - generic [ref=e27]: 📗更新
+              - link "💰模型价格" [ref=e28] [cursor=pointer]:
+                - /url: https://www.dmxapi.cn/rmb
+                - generic [ref=e29]: 💰模型价格
+              - link "🐍Claude Code" [ref=e30] [cursor=pointer]:
+                - /url: /claude-code-new.html
+                - generic [ref=e31]: 🐍Claude Code
+              - link "🎫开发票" [ref=e32] [cursor=pointer]:
+                - /url: https://www.dmxapi.cn/fapiao
+                - generic [ref=e33]: 🎫开发票
+              - link "🗏 返回DMXAPI" [ref=e34] [cursor=pointer]:
+                - /url: https://dmxapi.cn
+                - generic [ref=e35]: 🗏 返回DMXAPI
+            - button "extra navigation" [ref=e37] [cursor=pointer]
+  - button "On this page" [ref=e42] [cursor=pointer]: On this page
+  - complementary [ref=e44]:
+    - navigation "Sidebar Navigation" [ref=e46]:
+      - generic [ref=e47]: Sidebar Navigation
+      - button "DMXAPI介绍 toggle section" [ref=e50] [cursor=pointer]:
+        - heading "DMXAPI介绍" [level=2] [ref=e52]
+        - button "toggle section" [ref=e53]
+      - button "平台管理接口 toggle section" [ref=e57] [cursor=pointer]:
+        - heading "平台管理接口" [level=2] [ref=e59]
+        - button "toggle section" [ref=e60]
+      - generic [ref=e63]:
+        - button "API调用 toggle section" [ref=e64] [cursor=pointer]:
+          - heading "API调用" [level=2] [ref=e66]
+          - button "toggle section" [ref=e67]
+        - generic [ref=e69]:
+          - link "欢迎使用" [ref=e73] [cursor=pointer]:
+            - /url: /jichu.html
+            - paragraph [ref=e74]: 欢迎使用
+          - button "快速入门 DMXAPI toggle section" [ref=e76] [cursor=pointer]:
+            - heading "快速入门 DMXAPI" [level=3] [ref=e78]
+            - button "toggle section" [ref=e79]
+          - button "Openai 请求格式（通用） toggle section" [ref=e82] [cursor=pointer]:
+            - heading "Openai 请求格式（通用）" [level=3] [ref=e84]
+            - button "toggle section" [ref=e85]
+          - button "Openai 请求格式（新） toggle section" [ref=e88] [cursor=pointer]:
+            - heading "Openai 请求格式（新）" [level=3] [ref=e90]
+            - button "toggle section" [ref=e91]
+          - button "Gemini 请求格式 toggle section" [ref=e94] [cursor=pointer]:
+            - heading "Gemini 请求格式" [level=3] [ref=e96]
+            - button "toggle section" [ref=e97]
+          - button "Claude 请求格式 toggle section" [ref=e100] [cursor=pointer]:
+            - heading "Claude 请求格式" [level=3] [ref=e102]
+            - button "toggle section" [ref=e103]
+          - button "🎨绘图模型 toggle section" [ref=e106] [cursor=pointer]:
+            - heading "🎨绘图模型" [level=3] [ref=e108]
+            - button "toggle section" [ref=e109]
+          - generic [ref=e111]:
+            - button "🎥视频模型 video toggle section" [ref=e112] [cursor=pointer]:
+              - heading "🎥视频模型 video" [level=3] [ref=e114]
+              - button "toggle section" [ref=e115]
+            - generic [ref=e117]:
+              - button "豆包视频模型 toggle section" [ref=e119] [cursor=pointer]:
+                - heading "豆包视频模型" [level=4] [ref=e121]
+                - button "toggle section" [ref=e122]
+              - button "MiniMax 海螺视频 Hailuo toggle section" [ref=e125] [cursor=pointer]:
+                - heading "MiniMax 海螺视频 Hailuo" [level=4] [ref=e127]
+                - button "toggle section" [ref=e128]
+              - button "Vidu视频模型 toggle section" [ref=e131] [cursor=pointer]:
+                - heading "Vidu视频模型" [level=4] [ref=e133]
+                - button "toggle section" [ref=e134]
+              - generic [ref=e136]:
+                - button "拍我 视频模型 toggle section" [ref=e137] [cursor=pointer]:
+                  - heading "拍我 视频模型" [level=4] [ref=e139]
+                  - button "toggle section" [ref=e140]
+                - generic [ref=e142]:
+                  - link "图片上传" [ref=e146] [cursor=pointer]:
+                    - /url: /paiwo_image_upload.html
+                    - paragraph [ref=e147]: 图片上传
+                  - link "音频上传" [ref=e151] [cursor=pointer]:
+                    - /url: /paiwo-audio-upload.html
+                    - paragraph [ref=e152]: 音频上传
+                  - link "视频上传" [ref=e156] [cursor=pointer]:
+                    - /url: /paiwo-video-upload.html
+                    - paragraph [ref=e157]: 视频上传
+                  - button "paiwo-v5.6 toggle section" [ref=e159] [cursor=pointer]:
+                    - heading "paiwo-v5.6" [level=5] [ref=e161]
+                    - button "toggle section" [ref=e162]
+                  - generic [ref=e164]:
+                    - button "PixVerse-C1 toggle section" [ref=e165] [cursor=pointer]:
+                      - heading "PixVerse-C1" [level=5] [ref=e167]
+                      - button "toggle section" [ref=e168]
+                    - generic [ref=e170]:
+                      - link "文生视频" [ref=e174] [cursor=pointer]:
+                        - /url: /PixVerse-C1-text-to-video.html
+                        - paragraph [ref=e175]: 文生视频
+                      - link "图生视频" [ref=e179] [cursor=pointer]:
+                        - /url: /PixVerse-C1-image-to-video.html
+                        - paragraph [ref=e180]: 图生视频
+                      - link "首尾帧生成视频" [ref=e184] [cursor=pointer]:
+                        - /url: /PixVerse-C1-first-last-frame-to-video.html
+                        - paragraph [ref=e185]: 首尾帧生成视频
+                      - link "参考生视频" [ref=e189] [cursor=pointer]:
+                        - /url: /PixVerse-C1-reference-to-video.html
+                        - paragraph [ref=e190]: 参考生视频
+                  - link "数字人 Lipsync" [ref=e194] [cursor=pointer]:
+                    - /url: /paiwo-itv-hd-lipsync.html
+                    - paragraph [ref=e195]: 数字人 Lipsync
+              - button "Kling 视频模型 toggle section" [ref=e197] [cursor=pointer]:
+                - heading "Kling 视频模型" [level=4] [ref=e199]
+                - button "toggle section" [ref=e200]
+              - button "阿里万相视频模型 toggle section" [ref=e203] [cursor=pointer]:
+                - heading "阿里万相视频模型" [level=4] [ref=e205]
+                - button "toggle section" [ref=e206]
+              - button "阿里 快乐马视频模型 toggle section" [ref=e209] [cursor=pointer]:
+                - heading "阿里 快乐马视频模型" [level=4] [ref=e211]
+                - button "toggle section" [ref=e212]
+              - link "更多视频模型正在赶来..." [ref=e217] [cursor=pointer]:
+                - /url: /video-more.html
+                - paragraph [ref=e218]: 更多视频模型正在赶来...
+          - button "🔊️音频模型 TTS & STT toggle section" [ref=e220] [cursor=pointer]:
+            - heading "🔊️音频模型 TTS & STT" [level=3] [ref=e222]
+            - button "toggle section" [ref=e223]
+          - button "🎵音乐模型 toggle section" [ref=e226] [cursor=pointer]:
+            - heading "🎵音乐模型" [level=3] [ref=e228]
+            - button "toggle section" [ref=e229]
+          - button "📚RAG-向量/重排序 toggle section" [ref=e232] [cursor=pointer]:
+            - heading "📚RAG-向量/重排序" [level=3] [ref=e234]
+            - button "toggle section" [ref=e235]
+          - button "🌐翻译模型 toggle section" [ref=e238] [cursor=pointer]:
+            - heading "🌐翻译模型" [level=3] [ref=e240]
+            - button "toggle section" [ref=e241]
+          - button "🔍搜索模型 toggle section" [ref=e244] [cursor=pointer]:
+            - heading "🔍搜索模型" [level=3] [ref=e246]
+            - button "toggle section" [ref=e247]
+          - button "🚀全模态模型 toggle section" [ref=e250] [cursor=pointer]:
+            - heading "🚀全模态模型" [level=3] [ref=e252]
+            - button "toggle section" [ref=e253]
+          - button "数据处理（文档/PDF/OCR） toggle section" [ref=e256] [cursor=pointer]:
+            - heading "数据处理（文档/PDF/OCR）" [level=3] [ref=e258]
+            - button "toggle section" [ref=e259]
+          - button "其他示例 toggle section" [ref=e262] [cursor=pointer]:
+            - heading "其他示例" [level=3] [ref=e264]
+            - button "toggle section" [ref=e265]
+      - button "各类第三方应用配置 toggle section" [ref=e269] [cursor=pointer]:
+        - heading "各类第三方应用配置" [level=2] [ref=e271]
+        - button "toggle section" [ref=e272]
+      - generic [ref=e275]:
+        - button "服务条款" [ref=e276]:
+          - heading "服务条款" [level=2] [ref=e278]
+        - generic [ref=e279]:
+          - link "隐私条款" [ref=e283] [cursor=pointer]:
+            - /url: /tiaokuan.html
+            - paragraph [ref=e284]: 隐私条款
+          - link "服务承诺" [ref=e288] [cursor=pointer]:
+            - /url: /chengnuo.html
+            - paragraph [ref=e289]: 服务承诺
+          - link "帮助中心" [ref=e293] [cursor=pointer]:
+            - /url: /help-center.html
+            - paragraph [ref=e294]: 帮助中心
+  - generic [ref=e299]:
+    - main [ref=e300]:
+      - generic [ref=e302]:
+        - heading "PixVerse-C1 图生视频 API 使用文档 Permalink to \"PixVerse-C1 图生视频 API 使用文档\"" [level=1] [ref=e303]:
+          - text: PixVerse-C1 图生视频 API 使用文档
+          - link "Permalink to \"PixVerse-C1 图生视频 API 使用文档\"" [ref=e304] [cursor=pointer]:
+            - /url: "#pixverse-c1-图生视频-api-使用文档"
+            - text: "#"
+        - paragraph [ref=e305]: PixVerse-C1 是拍我AI（PaiVideo）推出的新一代图生视频模型。基于上传的参考图像和文字提示，可生成 1~15 秒任意时长的高质量视频，支持最高 1080p 画质输出，内置 5 种艺术风格预设（动漫、3D 动画、日常、赛博朋克、漫画），并可选择开启同步音频生成。适用于社交媒体内容创作、广告营销、产品演示等多种图像驱动型视频生成场景。
+        - generic [ref=e306]:
+          - paragraph [ref=e307]: WARNING
+          - paragraph [ref=e308]: 使用本 API 前，请先完成前置依赖文档中的调用以获取必要的参数值。
+          - paragraph [ref=e309]:
+            - link "前置依赖文档" [ref=e310] [cursor=pointer]:
+              - /url: https://doc.dmxapi.cn/paiwo_image_upload.html
+        - heading "模型名称 Permalink to \"模型名称\"" [level=2] [ref=e311]:
+          - text: 模型名称
+          - link "Permalink to \"模型名称\"" [ref=e312] [cursor=pointer]:
+            - /url: "#模型名称"
+            - text: "#"
+        - list [ref=e313]:
+          - listitem [ref=e314]:
+            - code [ref=e315]: PixVerse-C1
+        - heading "接口地址 Permalink to \"接口地址\"" [level=2] [ref=e316]:
+          - text: 接口地址
+          - link "Permalink to \"接口地址\"" [ref=e317] [cursor=pointer]:
+            - /url: "#接口地址"
+            - text: "#"
+        - table [ref=e318]:
+          - rowgroup [ref=e319]:
+            - row "接口 请求方式 URL" [ref=e320]:
+              - columnheader "接口" [ref=e321]
+              - columnheader "请求方式" [ref=e322]
+              - columnheader "URL" [ref=e323]
+          - rowgroup [ref=e324]:
+            - row "提交任务 POST https://www.dmxapi.cn/v1/responses" [ref=e325]:
+              - cell "提交任务" [ref=e326]
+              - cell "POST" [ref=e327]
+              - cell "https://www.dmxapi.cn/v1/responses" [ref=e328]:
+                - code [ref=e329]: https://www.dmxapi.cn/v1/responses
+            - row "获取结果 POST https://www.dmxapi.cn/v1/responses" [ref=e330]:
+              - cell "获取结果" [ref=e331]
+              - cell "POST" [ref=e332]
+              - cell "https://www.dmxapi.cn/v1/responses" [ref=e333]:
+                - code [ref=e334]: https://www.dmxapi.cn/v1/responses
+        - generic [ref=e335]:
+          - paragraph [ref=e336]: WARNING
+          - paragraph [ref=e337]: 请妥善保管您的 API Key！严禁将密钥泄露给他人、硬编码到代码中或提交到公开的代码仓库。
+        - heading "图生视频 示例代码 Permalink to \"图生视频 示例代码\"" [level=2] [ref=e338]:
+          - text: 图生视频 示例代码
+          - link "Permalink to \"图生视频 示例代码\"" [ref=e339] [cursor=pointer]:
+            - /url: "#图生视频-示例代码"
+            - text: "#"
+        - generic [ref=e340]:
+          - button "Copy Code" [ref=e341] [cursor=pointer]
+          - generic [ref=e342]: python
+          - code [ref=e344]:
+            - generic [ref=e345]: import requests
+            - generic [ref=e346]: import json
+            - generic [ref=e347]: "# ═══════════════════════════════════════════════════════════════"
+            - generic [ref=e348]: "# 步骤1: 配置 API 连接信息"
+            - generic [ref=e349]: "# ═══════════════════════════════════════════════════════════════"
+            - generic [ref=e350]: "# DMXAPI 服务端点地址"
+            - generic [ref=e351]: url = "https://www.dmxapi.cn/v1/responses"
+            - generic [ref=e352]: "# DMXAPI 密钥 (请替换为您自己的密钥)"
+            - generic [ref=e353]: "# 获取方式: 登录 DMXAPI 官网 -> 个人中心 -> API 密钥管理"
+            - generic [ref=e354]: api_key = "sk-******************************************"
+            - generic [ref=e355]: "# ═══════════════════════════════════════════════════════════════"
+            - generic [ref=e356]: "# 步骤2: 配置请求头"
+            - generic [ref=e357]: "# ═══════════════════════════════════════════════════════════════"
+            - generic [ref=e358]: "headers = {"
+            - generic [ref=e359]: "\"Content-Type\": \"application/json\", # 指定请求体为 JSON 格式"
+            - generic [ref=e360]: "\"Authorization\": f\"{api_key}\", # token 认证方式"
+            - generic [ref=e361]: "}"
+            - generic [ref=e362]: "# ═══════════════════════════════════════════════════════════════"
+            - generic [ref=e363]: "# 步骤3: 配置请求参数"
+            - generic [ref=e364]: "# ═══════════════════════════════════════════════════════════════"
+            - generic [ref=e365]: "payload = {"
+            - generic [ref=e366]: "# 【model】(string, 必需) 模型名称"
+            - generic [ref=e367]: "# 本文档对应模型: \"PixVerse-C1\""
+            - generic [ref=e368]: "\"model\": \"PixVerse-C1\","
+            - generic [ref=e369]: "# 【input】(string, 必需) 文本提示词（对应官方文档中的 prompt 字段）"
+            - generic [ref=e370]: "# 描述希望生成视频的内容画面"
+            - generic [ref=e371]: "# 长度限制: 2048 Characters 以内"
+            - generic [ref=e372]: "\"input\": \"可爱的小猫在海边愉快的玩耍\","
+            - generic [ref=e373]: "# 【img_id】(integer, 必需) 上传图片后获取的图片 ID"
+            - generic [ref=e374]: "# 通过前置依赖\"拍我图片上传 API\"调用后返回的 img_id"
+            - generic [ref=e375]: "\"img_id\": 177602101,"
+            - generic [ref=e376]: "# 【style】(string, 可选) 视频风格预设，如非必要可不传"
+            - generic [ref=e377]: "# 可选值: \"anime\"(动漫) / \"3d_animation\"(3D 动画) / \"day\"(日常) /"
+            - generic [ref=e378]: "# \"cyberpunk\"(赛博朋克) / \"comic\"(漫画)"
+            - generic [ref=e379]: "\"style\": \"3d_animation\","
+            - generic [ref=e380]: "# 【duration】(integer, 必需) 视频生成时长（单位: 秒）"
+            - generic [ref=e381]: "# 取值范围: 1~15 秒"
+            - generic [ref=e382]: "\"duration\": 5,"
+            - generic [ref=e383]: "# 【quality】(string, 必需) 视频画质"
+            - generic [ref=e384]: "# 可选值: \"360p\" / \"540p\" / \"720p\" / \"1080p\""
+            - generic [ref=e385]: "\"quality\": \"540p\","
+            - generic [ref=e386]: "# 【generate_audio_switch】(boolean, 可选) 控制音频开关"
+            - generic [ref=e387]: "# true: Audio on (开启音频生成)"
+            - generic [ref=e388]: "# false: Audio off (关闭音频生成)"
+            - generic [ref=e389]: "\"generate_audio_switch\": True,"
+            - generic [ref=e390]: "# 【seed】(integer, 可选) 随机数种子"
+            - generic [ref=e391]: "# 取值范围: 0 - 2147483647"
+            - generic [ref=e392]: "# 相同 seed 在相同参数下可复现生成结果"
+            - generic [ref=e393]: "\"seed\": 0,"
+            - generic [ref=e394]: "# 【negative_prompt】(string, 可选) 负向提示词"
+            - generic [ref=e395]: "# 描述不希望出现在视频中的元素"
+            - generic [ref=e396]: "# 长度限制: 2048 Characters 以内"
+            - generic [ref=e397]: "\"negative_prompt\": \"string\","
+            - generic [ref=e398]: "# 【motion_mode】(string, 可选) 运动模式"
+            - generic [ref=e399]: "# 可选值: \"normal\"(标准模式)"
+            - generic [ref=e400]: "\"motion_mode\": \"normal\","
+            - generic [ref=e401]: "# 【template_id】(integer, 可选) 模板(特效) ID"
+            - generic [ref=e402]: "# 使用前需先激活对应模板"
+            - generic [ref=e403]: "# 0 表示不使用模板"
+            - generic [ref=e404]: "\"template_id\": 0,"
+            - generic [ref=e405]: "}"
+            - generic [ref=e406]: "# ═══════════════════════════════════════════════════════════════"
+            - generic [ref=e407]: "# 步骤4: 发送请求并输出结果"
+            - generic [ref=e408]: "# ═══════════════════════════════════════════════════════════════"
+            - generic [ref=e409]: "# 发送 POST 请求到 API 服务器"
+            - generic [ref=e410]: response = requests.post(url, headers=headers, json=payload)
+            - generic [ref=e411]: "# 格式化输出 JSON 响应"
+            - generic [ref=e412]: "# - indent=2: 缩进 2 空格，便于阅读"
+            - generic [ref=e413]: "# - ensure_ascii=False: 正确显示中文字符"
+            - generic [ref=e414]: print(json.dumps(response.json(), indent=2, ensure_ascii=False))
+        - heading "返回示例 Permalink to \"返回示例\"" [level=2] [ref=e415]:
+          - text: 返回示例
+          - link "Permalink to \"返回示例\"" [ref=e416] [cursor=pointer]:
+            - /url: "#返回示例"
+            - text: "#"
+        - generic [ref=e417]:
+          - button "Copy Code" [ref=e418] [cursor=pointer]
+          - generic [ref=e419]: json
+          - code [ref=e421]:
+            - generic [ref=e422]: "{"
+            - generic [ref=e423]: "\"ErrCode\": 0,"
+            - generic [ref=e424]: "\"ErrMsg\": \"success\","
+            - generic [ref=e425]: "\"Resp\": {"
+            - generic [ref=e426]: "\"video_id\": 397959847631781,"
+            - generic [ref=e427]: "\"credits\": 50"
+            - generic [ref=e428]: "},"
+            - generic [ref=e429]: "\"usage\": {"
+            - generic [ref=e430]: "\"total_tokens\": 150000,"
+            - generic [ref=e431]: "\"input_tokens\": 0,"
+            - generic [ref=e432]: "\"input_tokens_details\": {"
+            - generic [ref=e433]: "\"cached_tokens\": 0"
+            - generic [ref=e434]: "},"
+            - generic [ref=e435]: "\"output_tokens\": 150000,"
+            - generic [ref=e436]: "\"output_tokens_details\": {"
+            - generic [ref=e437]: "\"reasoning_tokens\": 0"
+            - generic [ref=e438]: "}"
+            - generic [ref=e439]: "}"
+            - generic [ref=e440]: "}"
+        - blockquote [ref=e441]:
+          - paragraph [ref=e442]:
+            - text: 返回示例中的
+            - code [ref=e443]: Resp.video_id
+            - text: 即为任务 ID，用于下一步"获取结果"查询。
+        - heading "获取结果 示例代码 Permalink to \"获取结果 示例代码\"" [level=2] [ref=e444]:
+          - text: 获取结果 示例代码
+          - link "Permalink to \"获取结果 示例代码\"" [ref=e445] [cursor=pointer]:
+            - /url: "#获取结果-示例代码"
+            - text: "#"
+        - generic [ref=e446]:
+          - button "Copy Code" [ref=e447] [cursor=pointer]
+          - generic [ref=e448]: python
+          - code [ref=e450]:
+            - generic [ref=e451]: import requests
+            - generic [ref=e452]: import json
+            - generic [ref=e453]: "# ═══════════════════════════════════════════════════════════════"
+            - generic [ref=e454]: "# 步骤1: 配置 API 连接信息"
+            - generic [ref=e455]: "# ═══════════════════════════════════════════════════════════════"
+            - generic [ref=e456]: "# DMXAPI 服务端点地址"
+            - generic [ref=e457]: url = "https://www.dmxapi.cn/v1/responses"
+            - generic [ref=e458]: "# DMXAPI 密钥 (请替换为您自己的密钥)"
+            - generic [ref=e459]: "# 获取方式: 登录 DMXAPI 官网 -> 个人中心 -> API 密钥管理"
+            - generic [ref=e460]: api_key = "sk-******************************************"
+            - generic [ref=e461]: "# ═══════════════════════════════════════════════════════════════"
+            - generic [ref=e462]: "# 步骤2: 配置请求头"
+            - generic [ref=e463]: "# ═══════════════════════════════════════════════════════════════"
+            - generic [ref=e464]: "headers = {"
+            - generic [ref=e465]: "\"Content-Type\": \"application/json\", # 指定请求体为 JSON 格式"
+            - generic [ref=e466]: "\"Authorization\": f\"{api_key}\", # token 认证方式"
+            - generic [ref=e467]: "}"
+            - generic [ref=e468]: "# ═══════════════════════════════════════════════════════════════"
+            - generic [ref=e469]: "# 步骤3: 配置请求参数"
+            - generic [ref=e470]: "# ═══════════════════════════════════════════════════════════════"
+            - generic [ref=e471]: "payload = {"
+            - generic [ref=e472]: "# 【model】(string, 必需) 固定使用查询模型"
+            - generic [ref=e473]: "\"model\": \"paiwo-get\","
+            - generic [ref=e474]: "# 【input】(string, 必需) 上一步提交任务返回的 video_id"
+            - generic [ref=e475]: "\"input\": \"398402303529744\","
+            - generic [ref=e476]: "}"
+            - generic [ref=e477]: "# ═══════════════════════════════════════════════════════════════"
+            - generic [ref=e478]: "# 步骤4: 发送请求并输出结果"
+            - generic [ref=e479]: "# ═══════════════════════════════════════════════════════════════"
+            - generic [ref=e480]: "# 发送 POST 请求到 API 服务器"
+            - generic [ref=e481]: response = requests.post(url, headers=headers, json=payload)
+            - generic [ref=e482]: "# 格式化输出 JSON 响应"
+            - generic [ref=e483]: "# - indent=2: 缩进 2 空格，便于阅读"
+            - generic [ref=e484]: "# - ensure_ascii=False: 正确显示中文字符"
+            - generic [ref=e485]: print(json.dumps(response.json(), indent=2, ensure_ascii=False))
+        - heading "返回示例 Permalink to \"返回示例\"" [level=2] [ref=e486]:
+          - text: 返回示例
+          - link "Permalink to \"返回示例\"" [ref=e487] [cursor=pointer]:
+            - /url: "#返回示例-1"
+            - text: "#"
+        - generic [ref=e488]:
+          - button "Copy Code" [ref=e489] [cursor=pointer]
+          - generic [ref=e490]: json
+          - code [ref=e492]:
+            - generic [ref=e493]: "{"
+            - generic [ref=e494]: "\"ErrCode\": 0,"
+            - generic [ref=e495]: "\"ErrMsg\": \"Success\","
+            - generic [ref=e496]: "\"Resp\": {"
+            - generic [ref=e497]: "\"id\": 398402303529744,"
+            - generic [ref=e498]: "\"prompt\": \"可爱的小猫在海边愉快的玩耍\","
+            - generic [ref=e499]: "\"negative_prompt\": \"string\","
+            - generic [ref=e500]: "\"url\": \"https://media.pixverseai.cn/pixverse%2Fmp4%2Fmedia%2Fweb%2Fori%2F5d302b9d-4d96-43d1-9729-ca3502a2af8c_seed1949340905.mp4\","
+            - generic [ref=e501]: "\"status\": 1,"
+            - generic [ref=e502]: "\"seed\": 1949340905,"
+            - generic [ref=e503]: "\"create_time\": \"2026-04-20T03:12:09Z\","
+            - generic [ref=e504]: "\"modify_time\": \"2026-04-20T03:12:43Z\","
+            - generic [ref=e505]: "\"outputWidth\": 1024,"
+            - generic [ref=e506]: "\"outputHeight\": 576,"
+            - generic [ref=e507]: "\"has_audio\": true,"
+            - generic [ref=e508]: "\"credits\": 50"
+            - generic [ref=e509]: "}"
+            - generic [ref=e510]: "}"
+        - blockquote [ref=e511]:
+          - paragraph [ref=e512]:
+            - text: 返回结果中
+            - code [ref=e513]: Resp.url
+            - text: 即为生成的视频下载地址，
+            - code [ref=e514]: status
+            - text: 字段表示任务状态。
+        - paragraph [ref=e515]: © 2026 DMXAPI PixVerse-C1 图生视频
+    - contentinfo [ref=e516]:
+      - paragraph [ref=e519]:
+        - text: "最后更新:"
+        - time [ref=e520]: 2026/5/8 12:57
+      - navigation "Pager" [ref=e521]:
+        - generic [ref=e522]: Pager
+        - link "Previous page 文生视频" [ref=e524] [cursor=pointer]:
+          - /url: /PixVerse-C1-text-to-video.html
+          - generic [ref=e525]: Previous page
+          - generic [ref=e526]: 文生视频
+        - link "Next page 首尾帧生成视频" [ref=e528] [cursor=pointer]:
+          - /url: /PixVerse-C1-first-last-frame-to-video.html
+          - generic [ref=e529]: Next page
+          - generic [ref=e530]: 首尾帧生成视频
