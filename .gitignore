@@ -23,3 +23,6 @@ img/Thumbs.db
 # Python 缓存
 __pycache__/
 *.pyc
+
+# Playwright 临时文件
+.playwright-mcp/
