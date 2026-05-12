@@ -110,7 +110,7 @@ payload = {
     "watermark": True,
 
     # 【resolution】(string, 可选) 视频分辨率
-    # 可选值: "480p" / "720p"（Seedance 2.0 不支持 "1080p"）
+    # 可选值: "480p" / "720p"/ "1080p"
     # 默认值: 720p
     "resolution": "480p",
 
