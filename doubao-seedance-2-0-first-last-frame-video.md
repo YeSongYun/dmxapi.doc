@@ -1,6 +1,6 @@
 # doubao-seedance-2-0-260128 首尾帧生视频 API 使用文档
 
-基于 doubao-seedance-2-0-260128 模型的 AI 视频生成接口，支持输入首帧图片 + 尾帧图片 + 文本提示词生成目标视频。模型根据首尾两帧图像自动补全中间动态画面，支持自动音频生成，可选 480p / 720p 分辨率，宽高比支持 16:9、9:16、adaptive 等 7 种规格，视频时长范围 4~15 秒（可设为 -1 由模型自动决定）。采用异步任务模式，提交后通过单次查询获取结果视频 URL。
+基于 doubao-seedance-2-0-260128 模型的 AI 视频生成接口，支持输入首帧图片 + 尾帧图片 + 文本提示词生成目标视频。模型根据首尾两帧图像自动补全中间动态画面，支持自动音频生成，可选 480p / 720p /1080p 分辨率，宽高比支持 16:9、9:16、adaptive 等 7 种规格，视频时长范围 4~15 秒（可设为 -1 由模型自动决定）。采用异步任务模式，提交后通过单次查询获取结果视频 URL。
 
 ## 🎬 模型名称
 
@@ -82,7 +82,7 @@ payload = {
     "generate_audio": True,
 
     # 【resolution】(string, 可选) 视频分辨率，默认 720p
-    # 可选值: "480p" / "720p"（Seedance 2.0 不支持 1080p）
+    # 可选值: "480p" / "720p"/ "1080p"
     "resolution": "720p",
 
     # 【ratio】(string, 可选) 视频宽高比，默认 adaptive
@@ -213,7 +213,6 @@ except Exception as e:
 视频链接: https://ark-acg-cn-beijing.tos-cn-beijing.volces.com/doubao-seedance-2-0/02177520799968800000000000000000000ffffac14d8d3a26bee.mp4?...
 ```
 
-> 视频链接有效期为 **24 小时**，请及时下载保存。`status` 字段说明：`succeeded`（成功）/ `failed`（失败）/ `running`（生成中）/ `queued`（排队中）/ `expired`（已超时）。
 
 <p align="center">
   <small>© 2026 DMXAPI doubao-seedance-2-0-260128 首尾帧生视频</small>

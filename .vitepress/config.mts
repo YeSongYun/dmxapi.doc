@@ -188,7 +188,8 @@ export default defineConfig({
                 { text: '多轮对话', link: '/duolunduihua' },
               { text: '联网搜索', link: '/gemini-internet' },
               { text: 'Gemini 3 开发者指南', link: '/gemini-3' },
-              { text: 'Gemini 3 思考总结', link: '/gemini3-thinking-summary' }
+              { text: 'Gemini 3 思考总结', link: '/gemini3-thinking-summary' },
+              { text: '多模态向量化', link: '/gemini-embedding-2-preview' },
             ],
           },
           {
@@ -816,6 +817,7 @@ export default defineConfig({
           // { text: 'Claude-Desktop', link: '/claude_code_desktop' },
           { text: 'pi_agent', link: '/pi_agent' },
           { text: 'kilo_code', link: '/kilo_code' },
+          { text: 'hermes_agent', link: '/hermes_agent' },
         ],
       },
       {
