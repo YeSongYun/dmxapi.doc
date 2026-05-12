@@ -817,7 +817,7 @@ export default defineConfig({
           // { text: 'Claude-Desktop', link: '/claude_code_desktop' },
           { text: 'pi_agent', link: '/pi_agent' },
           { text: 'kilo_code', link: '/kilo_code' },
-          { text: 'hermes_agent', link: '/hermes_agent' },
+          { text: 'hermes', link: '/hermes_agent' },
         ],
       },
       {
