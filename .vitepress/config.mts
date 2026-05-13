@@ -534,7 +534,7 @@ export default defineConfig({
                     ],
                   },
                   {
-                    text: 'paiwo-v6',
+                    text: 'PixVerse-V6',
                     collapsed: true,
                     items: [
                       { text: '文生视频', link: '/pixverse-v6-text-to-video' },
