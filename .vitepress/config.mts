@@ -534,7 +534,7 @@ export default defineConfig({
                     ],
                   },
                   {
-                    text: 'paiwo-v6',
+                    text: 'PixVerse-V6',
                     collapsed: true,
                     items: [
                       { text: '文生视频', link: '/pixverse-v6-text-to-video' },
@@ -630,16 +630,16 @@ export default defineConfig({
             text: '🎵音乐模型',
             collapsed: true,
             items: [
-              {
-                text: 'suno-music',
-                collapsed: true,
-                items: [
-                  { text: 'suno音乐生成', link: '/suno-music-all' },
-                  // { text: 'chirp-v5使用指南', link: '/suno-music' }
+              // {
+              //   text: 'suno-music',
+              //   collapsed: true,
+              //   items: [
+              //     { text: 'suno音乐生成', link: '/suno-music-all' },
+              //     // { text: 'chirp-v5使用指南', link: '/suno-music' }
              
                   
-                ],
-              },
+              //   ],
+              // },
 
               {
                 text: 'MiniMax-music',
@@ -701,7 +701,7 @@ export default defineConfig({
                   { text: 'perplexity-sonar-ssvip', link: '/perplexity-sonar-ssvip' },
                 ],
               },
-             
+              { text: 'Tencent-Search 联网搜索', link: '/tencent-search-web-search' },
             ],
           },
 
