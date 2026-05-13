@@ -701,7 +701,7 @@ export default defineConfig({
                   { text: 'perplexity-sonar-ssvip', link: '/perplexity-sonar-ssvip' },
                 ],
               },
-              { text: 'Tencent-Search 联网搜索', link: '/tencent-search-web-search' },
+              // { text: 'Tencent-Search 联网搜索', link: '/tencent-search-web-search' },
             ],
           },
 
