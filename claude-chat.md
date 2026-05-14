@@ -9,8 +9,6 @@
 ```text
 https://www.dmxapi.cn/v1/messages
 ```
-
-
 ## 💻 示例代码
 
 ```python
@@ -21,7 +19,7 @@ import json
 # DMXAPI 配置
 # ============================================
 url = 'https://www.dmxapi.cn/v1/messages'  # DMXAPI 端点
-key = 'sk-****************************************'  # DMXAPI 密钥
+key = 'sk-*****************************************************'  # DMXAPI 密钥
 
 # 请求头配置
 headers = {
@@ -34,11 +32,12 @@ headers = {
 # 请求数据配置
 # ============================================
 data = {
-    "model": "claude-sonnet-4-6",  # 使用的模型版本
+    "model": "claude-opus-4-7",  # 使用的模型版本
+    "system": "你是一个严谨的助手，提供准确的多种思路的回答,你回答完毕后会总结内容",  # 系统提示词，指导模型行为
     "messages": [  # 消息列表（当前为简单单轮对话）
         {
             "role": "user",
-            "content": "你好"
+            "content": "1+1为什么不等于3?"
         }
     ],
 
@@ -181,7 +180,7 @@ data = {
 
     "stream": False,  # 是否启用流式响应
 
-    # Opus 4.6 和 Sonnet 4.6 的扩展思维推荐方式是使用自适应思维，可以根据每个请求的复杂性动态地决定何时以及思考多少。
+    # Opus 4.7 的扩展思维推荐方式是使用自适应思维，可以根据每个请求的复杂性动态地决定何时以及思考多少。
     # 可以用 【thinking: {"type": "adaptive"}】 结合 【effort】 参数来设置它
     # 【effort】：可选择的努力程度：
                 # max - Claude 的思考深度不受任何限制（ Opus 4.6 独有）
@@ -314,6 +313,7 @@ print(f"Status Code: {response.status_code}")
 # 格式化打印 JSON 响应（美化输出，保持中文字符）
 print("Response:")
 print(json.dumps(response.json(), indent=4, ensure_ascii=False))
+
 ```
 
 
@@ -323,25 +323,31 @@ print(json.dumps(response.json(), indent=4, ensure_ascii=False))
 Status Code: 200
 Response:
 {
-    "id": "msg_01PddaRQ5YG47XR2UsF8eR62",
+    "id": "msg_016MhUmCgY5VNxxabch9DcEg",
     "type": "message",
     "role": "assistant",
-    "model": "claude-sonnet-4-6",
+    "model": "claude-opus-4-7",
     "content": [
         {
+            "type": "thinking",
+            "thinking": "",
+            "signature": "ErMCClkIDRgCKkBK05ASEWO/d94H3SlGOqDH60sCJ8PTOOfvONmQrlkVXR0YmBbLbT+txOa1E2CfRF19W2EUQNvHShqmWEtCq65iMg9jbGF1ZGUtb3B1cy00LTc4ABIMYmS5lYF8dbHvhlMSGgzqCnBYbfFAAPmHeMgiMBIQB8+DumBiqg+xq1nGo/ShCQsrBMYWUFCa/OTgzwiNZwqCl60No9XzGUqSyFdPBiqHAeIAEAOA5P+mHpvm5Z+vDJ6rTT+45N5WDh8VZfa/GaE4GON3A8bsxtREv8wUb3+VsfowP2OGQgrGdg/qF9ZzQ7et5zE+jS549VHF1h2b0pb1gn+57vhf8SSiV/QV+5or26PAeBKES3uyVRyoqbfPtay0nMQ9hc+zEEy3XJ3aQAOUxO4c5h7RKBgB"
+        },
+        {
             "type": "text",
-            "text": "你好！😊 有什么我可以帮助你的吗？"
+            "text": "# 为什么 1+1 ≠ 3\n\n因为在标准算术(皮亚诺公理体系)下,`1+1` 的定义结果就是 `2`,而 `2 ≠ 3`。\n\n## 简要推导\n\n1. **自然数的定义**:用后继函数 `S(n)` 表示\"n 的下一个数\"。\n   - `1 = S(0)`\n   - `2 = S(1) = S(S(0))`\n   - `3 = S(2) = S(S(S(0)))`\n\n2. **加法的定义**:\n   - `a + 0 = a`\n   - `a + S(b) = S(a + b)`\n\n3. **计算 `1 + 1`**:\n   ```\n   1 + 1 = 1 + S(0) = S(1 + 0) = S(1) = 2\n   ```\n\n4. **结论**:`1 + 1 = 2`,而 `3 = S(2) ≠ 2`,所以 `1+1 ≠ 3`。\n\n## 什么时候\"1+1\"看起来等于 3?\n\n- **修辞/玩笑**:\"一对夫妻 + 一个孩子\" → 家庭里有 3 个人,但这是计数对象变了,不是算术变了。\n- **不同进位/符号系统**:如果你重新定义符号 `3` 表示自然数 `2`,那式子成立,但只是换了记号。\n- **非标准代数结构**:在某些有限环或自定义运算里可以让 `1⊕1=3`,但那已经不是普通加法。\n\n简而言之:在我们日常使用的数学规则下,`1+1=2` 是由定义决定的事实,不是可以协商的约定。"
         }
     ],
     "stop_reason": "end_turn",
     "usage": {
-        "input_tokens": 10,
+        "input_tokens": 92,
         "cache_creation_input_tokens": 0,
         "cache_read_input_tokens": 0,
-        "output_tokens": 24,
-        "cache_creation": {},
-        "claude_cache_creation_5_m_tokens": 0,
-        "claude_cache_creation_1_h_tokens": 0
+        "output_tokens": 552,
+        "cache_creation": {
+            "ephemeral_5m_input_tokens": 0,
+            "ephemeral_1h_input_tokens": 0
+        }
     }
 }
 ```
