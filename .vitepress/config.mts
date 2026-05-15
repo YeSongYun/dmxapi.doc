@@ -90,6 +90,7 @@ export default defineConfig({
                   { text: '令牌余额', link: '/key-yuer' },
                 ],
           },
+          // { text: '多 Key 用量监控', link: '/Multi_key_usage' },
         ],
       },
       {
