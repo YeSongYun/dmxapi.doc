@@ -2,6 +2,10 @@
 
 基于 Perplexity Sonar Reasoning Pro 模型（`perplexity-sonar-reasoning-pro-ssvip`）的 Responses 端点接口，在视觉理解与联网搜索的基础上融入链式推理能力，答题前会先输出完整的思考过程（`reasoning`）再给出结论。相比 Sonar Pro，该接口更适合需要逐步分析、结合搜索结果推理的复杂视觉问答场景，返回结果同时包含推理过程（`reasoning`/`reasoning_details`）与 URL 引用注释（`annotations`）。
 
+## 💡 在 Cherry Studio 中使用
+
+如果你希望直接在 Cherry Studio 客户端中调用本搜索模型，请参考：[Cherry Studio 调用 Perplexity Sonar 系列搜索模型](/cherry_perplexity)。
+
 ## 🌐 请求地址
 
 ```

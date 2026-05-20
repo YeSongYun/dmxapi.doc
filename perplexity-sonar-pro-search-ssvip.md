@@ -2,6 +2,10 @@
 
 基于 Perplexity Sonar Pro Search 模型（`perplexity-sonar-pro-search-ssvip`）的 Responses 端点接口，专注于实时联网检索与结构化内容生成，能够自动聚合多源网络资料并以 Markdown 表格、列表等格式输出，同时附上 URL 引用注释。该接口支持通过 `reasoning.enabled` 参数按需开启推理模式，适合信息查询、资料汇总、对比分析等需要实时网络数据的场景。
 
+## 💡 在 Cherry Studio 中使用
+
+如果你希望直接在 Cherry Studio 客户端中调用本搜索模型，请参考：[Cherry Studio 调用 Perplexity Sonar 系列搜索模型](/cherry_perplexity)。
+
 ## 🌐 请求地址
 
 ```

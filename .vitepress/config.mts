@@ -90,7 +90,7 @@ export default defineConfig({
                   { text: '令牌余额', link: '/key-yuer' },
                 ],
           },
-          // { text: '多 Key 用量监控', link: '/Multi_key_usage' },
+          { text: '多 Key 用量监控', link: '/Multi_key_usage' },
         ],
       },
       {
@@ -564,10 +564,28 @@ export default defineConfig({
                 text: 'Kling 视频模型 ',
                 collapsed: true,
                 items: [
-                  { text: 'kling-v3-video-generation 文生视频', link: '/kling-v3-video-generation-t2v' },
-                  { text: 'kling-v3-video-generation 文生视频（智能分镜）', link: '/kling-v3-video-generation-text-to-video' },
-                  { text: 'kling-v3-video-generation 首帧生视频', link: '/kling-v3-video-generation-first-frame-to-video' },
-                  { text: 'kling-v3-video-generation 首尾帧生视频', link: '/kling-v3-video-generation-first-last-frame' },
+                  {
+                    text: 'kling-v3-video-generation',
+                    collapsed: true,
+                    items: [
+                      { text: '文生视频', link: '/kling-v3-video-generation-t2v' },
+                      { text: '文生视频（智能分镜）', link: '/kling-v3-video-generation-text-to-video' },
+                      { text: '首帧生视频', link: '/kling-v3-video-generation-first-frame-to-video' },
+                      { text: '首尾帧生视频', link: '/kling-v3-video-generation-first-last-frame' },
+                    ],
+                  },
+                  // {
+                  //   text: 'kling-v3',
+                  //   collapsed: true,
+                  //   items: [
+                  //     { text: '文生视频（单镜头）', link: '/kling-v3-text-to-video-single-shot' },
+                  //     { text: '文生视频（多镜头）', link: '/kling-v3-text-to-video-multishot' },
+                  //     { text: '单镜头视频生成（仅首帧）', link: '/kling-v3-image-to-video-first-frame' },
+                  //     { text: '首尾帧生视频（一镜到底）', link: '/kling-v3-first-last-frame-to-video' },
+                  //     { text: '图生视频(主体控制)', link: '/kling-v3-subject-control-image-to-video' },
+                  //     { text: '图生视频(多镜头)', link: '/kling-v3-image-to-video-multishot' },
+                  //   ],
+                  // },
                   // { text: 'kling-v2-6-text2video', link: '/kling-v2-6-text2video' },
                   // { text: 'kling-v2-6-image2video', link: '/kling-v2-6-image2video'}
                 ],
@@ -608,7 +626,7 @@ export default defineConfig({
             text: '🔊️音频模型 TTS & STT',
             collapsed: true,
             items: [
-              { text: 'TTS模型Gemini系列', link: '/gemini-2.5-pro-preview-tts' },
+              // { text: 'TTS模型Gemini系列', link: '/gemini-2.5-pro-preview-tts' },
               { text: 'TTS模型 MinMax-speech', link: '/minimax-speech' },
               // { text: 'STT模型 whisper', link: '/opneai-stt' },
               { text: 'TTS模型 mimo-v2-tts', link: '/mimo-v2-tts' },
@@ -808,7 +826,7 @@ export default defineConfig({
           { text: '提示词优化器', link: '/prompt-optimizer' },
           // { text: 'GitHub Copilot', link: '/GitHub Copilot' },
           { text: 'OpenClaw官方版配置DMXAPI', link: '/openclaw_config' },
-          { text: 'OpenClaw(DMXAPI汉化版)', link: '/clawdbot' },
+          // { text: 'OpenClaw(DMXAPI汉化版)', link: '/clawdbot' },
           { text: '沉浸式翻译', link: '/chenjinshifanyi' },
           { text: 'fluentread', link: '/fluentread' },
           { text: 'workbuddy', link: '/workbuddy' },
