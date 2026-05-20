@@ -153,7 +153,7 @@ try:
         # ── 遍历返回的每张图片 ──────────────────────────────────────────────────
         for i, image_data in enumerate(result['data']):
 
-            # ─── 格式 A: Base64 编码图片 (nano-banana-2 / gpt-image-1 返回格式) ───
+            # ─── 格式 A: Base64 编码图片 (nano-banana-2 返回格式) ───
             if 'b64_json' in image_data:
                 # 解码 Base64 数据为二进制
                 base64_data = image_data['b64_json']

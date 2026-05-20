@@ -30,7 +30,7 @@ import anthropic
 
 client = anthropic.Anthropic(
     api_key="YOUR_DMXAPI_KEY",
-    base_url="https://www.dmxapi.cn/v1",
+    base_url="https://www.dmxapi.cn",
 )
 
 response = client.beta.messages.create(

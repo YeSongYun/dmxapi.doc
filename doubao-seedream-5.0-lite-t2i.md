@@ -141,7 +141,7 @@ url = "https://www.dmxapi.cn/v1/responses"
 
 # 🔐 DMXAPI 密钥 (请替换为您自己的密钥)
 # 获取方式: 登录 DMXAPI 官网 -> 个人中心 -> API 密钥管理
-api_key = "sk-****************************************"
+api_key = "sk-********************************************"
 
 # ═══════════════════════════════════════════════════════════════
 # 📋 步骤2: 配置请求头
@@ -246,8 +246,14 @@ for line in response.iter_lines():
 
         # 只输出图片生成事件和完成事件
         if current_event == 'response.output_text.delta':
+            # data_str 是 JSON 字符串；其中 delta 字段里的 URL 用 & 表示 &，
+            # 必须 json.loads 之后再取 delta，得到的才是浏览器可直接打开的真实 URL
+            try:
+                delta = json.loads(data_str).get('delta', '')
+            except json.JSONDecodeError:
+                delta = data_str
             print(f"event: {current_event}")
-            print(data_str)
+            print(delta)
         elif current_event == 'response.completed':
             try:
                 data = json.loads(data_str)
@@ -337,17 +343,17 @@ for line in response.iter_lines():
 ```text [流式]
 200
 event: response.output_text.delta
-{"content_index":0,"delta":"![Image 1](https://ark-acg-cn-beijing.tos-cn-beijing.volces.com/doubao-seedream-5-0/02177246206533281a9193ce9f89e3456d252c7b9d01d03b8ca0e_0.png?X-Tos-Algorithm=TOS4-HMAC-SHA256&X-Tos-Expires=86400&X-Tos-Signature=dbf25a09...&X-Tos-SignedHeaders=host)","item_id":"msg_0ad09f964a3e4a2786d27d589160049b","logprobs":[],"output_index":0,"sequence_number":4,"type":"response.output_text.delta"}
+![Image 1](https://ark-acg-cn-beijing.tos-cn-beijing.volces.com/doubao-seedream-5-0/021779274638395d54a2e8b6146550b9b78e5e06cf50b2233c9be_0.png?X-Tos-Algorithm=TOS4-HMAC-SHA256&X-Tos-Credential=AKLTYWJkZTExNjA1ZDUyNDc3YzhjNTM5OGIyNjBhNDcyOTQ%2F20260520%2Fcn-beijing%2Ftos%2Frequest&X-Tos-Date=20260520T105746Z&X-Tos-Expires=86400&X-Tos-Signature=ac9efa4a6f6da9457144e0e6cda82950487a3c65b6a5272c5eef6b6b381f8477&X-Tos-SignedHeaders=host)
 event: response.output_text.delta
-{"content_index":0,"delta":"![Image 2](https://ark-acg-cn-beijing.tos-cn-beijing.volces.com/doubao-seedream-5-0/02177246206533281a9193ce9f89e3456d252c7b9d01d03b8ca0e_2.png?X-Tos-Algorithm=TOS4-HMAC-SHA256&X-Tos-Expires=86400&X-Tos-Signature=152b2c3e...&X-Tos-SignedHeaders=host)","item_id":"msg_0ad09f964a3e4a2786d27d589160049b","logprobs":[],"output_index":0,"sequence_number":5,"type":"response.output_text.delta"}
+![Image 2](https://ark-acg-cn-beijing.tos-cn-beijing.volces.com/doubao-seedream-5-0/021779274638395d54a2e8b6146550b9b78e5e06cf50b2233c9be_4.png?X-Tos-Algorithm=TOS4-HMAC-SHA256&X-Tos-Credential=AKLTYWJkZTExNjA1ZDUyNDc3YzhjNTM5OGIyNjBhNDcyOTQ%2F20260520%2Fcn-beijing%2Ftos%2Frequest&X-Tos-Date=20260520T105813Z&X-Tos-Expires=86400&X-Tos-Signature=0c6ba0ae42d1ba33d2edd0998c6cf4841c65cbd2a97c0b4404fa53fcc7a99742&X-Tos-SignedHeaders=host)
 event: response.output_text.delta
-{"content_index":0,"delta":"![Image 3](https://ark-acg-cn-beijing.tos-cn-beijing.volces.com/doubao-seedream-5-0/02177246206533281a9193ce9f89e3456d252c7b9d01d03b8ca0e_4.png?X-Tos-Algorithm=TOS4-HMAC-SHA256&X-Tos-Expires=86400&X-Tos-Signature=a2d0bb5b...&X-Tos-SignedHeaders=host)","item_id":"msg_0ad09f964a3e4a2786d27d589160049b","logprobs":[],"output_index":0,"sequence_number":6,"type":"response.output_text.delta"}
+![Image 3](https://ark-acg-cn-beijing.tos-cn-beijing.volces.com/doubao-seedream-5-0/021779274638395d54a2e8b6146550b9b78e5e06cf50b2233c9be_2.png?X-Tos-Algorithm=TOS4-HMAC-SHA256&X-Tos-Credential=AKLTYWJkZTExNjA1ZDUyNDc3YzhjNTM5OGIyNjBhNDcyOTQ%2F20260520%2Fcn-beijing%2Ftos%2Frequest&X-Tos-Date=20260520T105820Z&X-Tos-Expires=86400&X-Tos-Signature=c5cfd85211bab860b88eba45833df1d18a24a909a1e942587681f712651f9d24&X-Tos-SignedHeaders=host)
 event: response.output_text.delta
-{"content_index":0,"delta":"![Image 4](https://ark-acg-cn-beijing.tos-cn-beijing.volces.com/doubao-seedream-5-0/02177246206533281a9193ce9f89e3456d252c7b9d01d03b8ca0e_3.png?X-Tos-Algorithm=TOS4-HMAC-SHA256&X-Tos-Expires=86400&X-Tos-Signature=6c1c6841...&X-Tos-SignedHeaders=host)","item_id":"msg_0ad09f964a3e4a2786d27d589160049b","logprobs":[],"output_index":0,"sequence_number":7,"type":"response.output_text.delta"}
+![Image 4](https://ark-acg-cn-beijing.tos-cn-beijing.volces.com/doubao-seedream-5-0/021779274638395d54a2e8b6146550b9b78e5e06cf50b2233c9be_1.png?X-Tos-Algorithm=TOS4-HMAC-SHA256&X-Tos-Credential=AKLTYWJkZTExNjA1ZDUyNDc3YzhjNTM5OGIyNjBhNDcyOTQ%2F20260520%2Fcn-beijing%2Ftos%2Frequest&X-Tos-Date=20260520T105826Z&X-Tos-Expires=86400&X-Tos-Signature=ea80218b9f1db4ad4bb6312f881064fab2ba2c9bceaaf8acc19afb030dafc638&X-Tos-SignedHeaders=host)
 event: response.output_text.delta
-{"content_index":0,"delta":"![Image 5](https://ark-acg-cn-beijing.tos-cn-beijing.volces.com/doubao-seedream-5-0/02177246206533281a9193ce9f89e3456d252c7b9d01d03b8ca0e_1.png?X-Tos-Algorithm=TOS4-HMAC-SHA256&X-Tos-Expires=86400&X-Tos-Signature=38a045eb...&X-Tos-SignedHeaders=host)","item_id":"msg_0ad09f964a3e4a2786d27d589160049b","logprobs":[],"output_index":0,"sequence_number":8,"type":"response.output_text.delta"}
+![Image 5](https://ark-acg-cn-beijing.tos-cn-beijing.volces.com/doubao-seedream-5-0/021779274638395d54a2e8b6146550b9b78e5e06cf50b2233c9be_3.png?X-Tos-Algorithm=TOS4-HMAC-SHA256&X-Tos-Credential=AKLTYWJkZTExNjA1ZDUyNDc3YzhjNTM5OGIyNjBhNDcyOTQ%2F20260520%2Fcn-beijing%2Ftos%2Frequest&X-Tos-Date=20260520T105833Z&X-Tos-Expires=86400&X-Tos-Signature=d29e4609e2567a3ff579d9a6f56759ccc40b5c524b4df73135cb2b5357c4b7c1&X-Tos-SignedHeaders=host)
 event: response.completed
-{"status": "completed", "usage": {"input_tokens": 0, "input_tokens_details": {"cached_tokens": 0}, "output_tokens": 11000, "output_tokens_details": {"reasoning_tokens": 0}, "total_tokens": 11000}}
+{"status": "completed", "usage": {"input_tokens": 1, "input_tokens_details": {"cached_tokens": 0}, "output_tokens": 11000, "output_tokens_details": {"reasoning_tokens": 0}, "total_tokens": 11001}}
 ```
 
 :::
