@@ -2,6 +2,10 @@
 
 基于 Perplexity 深度研究模型（`perplexity-deep-research-ssvip`）的 Responses 端点接口，能够对复杂问题展开多步骤网络检索与深度推理，自动引用来源并输出带注释的长篇研究报告。相比普通对话模型，该接口内置搜索与推理链，适合需要综合大量资料、输出结构化深度内容的场景，返回结果包含完整的推理过程（`reasoning`）和 URL 引用注释（`annotations`）。
 
+## 💡 在 Cherry Studio 中使用
+
+如果你希望直接在 Cherry Studio 客户端中调用本搜索模型，请参考：[Cherry Studio 调用 Perplexity Sonar 系列搜索模型](/cherry_perplexity)。
+
 ## 🌐 请求地址
 
 ```

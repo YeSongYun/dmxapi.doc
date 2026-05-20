@@ -2,6 +2,10 @@
 
 基于 Perplexity Sonar 模型（`perplexity-sonar-ssvip`）的 Responses 端点接口，支持文本与图像混合输入，结合实时联网搜索对图像内容进行识别与描述，并附上 URL 引用注释。相比 Sonar Pro，该接口响应更轻量、token 消耗更少，适合对速度和成本敏感、无需深度推理的图像问答与视觉搜索场景。
 
+## 💡 在 Cherry Studio 中使用
+
+如果你希望直接在 Cherry Studio 客户端中调用本搜索模型，请参考：[Cherry Studio 调用 Perplexity Sonar 系列搜索模型](/cherry_perplexity)。
+
 ## 🌐 请求地址
 
 ```
