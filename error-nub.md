@@ -40,7 +40,7 @@
 
 ## 实在搞不定，请联系在线客服或网站管理员
 请到网站首页，在右下角联系在线客服，或扫码添加工程师微信为您服务
-<img src="/img/WeChat_Work.jpg" alt="客服微信" width="240" />
+<img src="/img/hzy_image.jpg" alt="客服微信" width="240" />
 
 ---
 
