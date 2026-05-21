@@ -419,10 +419,19 @@ export default defineConfig({
                       { text: '多图融合', link: '/qwen-image-2.0-pro-multi-image-fusion' },
                     ],
                   },
+
                 ],
               },
 
-              
+              {
+                text: 'Recraft 矢量图模型',
+                collapsed: true,
+                items: [
+                  { text: 'recraft-v4.1-pro-vector-vector-image', link: '/recraft-v4.1-pro-vector-vector-image' },
+                ],
+              },
+
+
             ],
           },
           {
