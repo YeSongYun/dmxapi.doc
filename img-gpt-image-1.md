@@ -11,8 +11,6 @@ https://www.dmxapi.cn/v1/images/generations
 | 模型名称 | 状态 |
 |---------|------|
 | `gpt-image-1.5` | ✅ 可用 |
-| `gpt-image-1` | ✅ 可用 |
-| `gpt-image-1-mini` | ✅ 可用 |
 | `dall-e-3` | ✅ 可用 |
 
 ## 💻 图像生成 Python 调用示例

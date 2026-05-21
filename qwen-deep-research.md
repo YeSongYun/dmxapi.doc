@@ -52,11 +52,11 @@ data = {
       ]
     }
   ],
-  "store": false,
+  "store": False,
   "include": [
     "reasoning.encrypted_content"
   ],
-  "stream": true
+  "stream": True
 }
 # ============================================================================
 # 发送请求并处理流式响应

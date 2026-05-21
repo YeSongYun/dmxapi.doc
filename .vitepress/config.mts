@@ -68,6 +68,14 @@ export default defineConfig({
         items: [
           { text: '系统令牌&用户ID', link: '/security_token_ID' },
           { text: '余额查询', link: '/yuer' },
+          {
+            text: '余额不足预警',
+            collapsed: true,
+            items: [
+              { text: '飞书通知配置', link: '/warn_feishu' },
+              { text: '企业微信通知配置', link: '/warn_qw' },
+            ],
+          },
           { text: '模型列表', link: '/model-list' },
           { text: '模型统计', link: '/Model-statistics' },
           {
@@ -90,7 +98,7 @@ export default defineConfig({
                   { text: '令牌余额', link: '/key-yuer' },
                 ],
           },
-          { text: '多 Key 用量监控', link: '/Multi_key_usage' },
+          // { text: '多 Key 用量监控', link: '/Multi_key_usage' },
         ],
       },
       {
@@ -518,46 +526,46 @@ export default defineConfig({
                 ],
               },
                
-               {
-                text: '拍我 视频模型 ',
-                collapsed: true,
-                items: [
-                  { text: '图片上传', link: '/paiwo_image_upload' },
-                  { text: '音频上传', link: '/paiwo-audio-upload' },
-                  { text: '视频上传', link: '/paiwo-video-upload' },
-                  {
-                    text: 'paiwo-v5.6',
-                    collapsed: true,
-                    items: [
-                      { text: '文生视频', link: '/paiwo-v5.6-ttv' },
-                      { text: '图生视频', link: '/paiwo-v5.6-itv' },
-                      { text: '首尾帧生成视频', link: '/paiwo-v5.6-itv2' },
-                    ],
-                  },
-                  {
-                    text: 'PixVerse-V6',
-                    collapsed: true,
-                    items: [
-                      { text: '文生视频', link: '/pixverse-v6-text-to-video' },
-                      { text: '图生视频', link: '/pixverse-v6-img-to-video' },
-                      { text: '首尾帧生成视频', link: '/pixverse-v6-first-last-frame' },
-                      { text: '视频延长', link: '/pixverse-v6-video-extend' },
-                    ],
-                  },
-                  {
-                    text: 'PixVerse-C1',
-                    collapsed: true,
-                    items: [
-                      { text: '文生视频', link: '/PixVerse-C1-text-to-video' },
-                      { text: '图生视频', link: '/PixVerse-C1-image-to-video' },
-                      { text: '首尾帧生成视频', link: '/PixVerse-C1-first-last-frame-to-video' },
-                      { text: '参考生视频', link: '/PixVerse-C1-reference-to-video' },
-                    ],
-                  },
-                  { text: '数字人 Lipsync', link: '/paiwo-itv-hd-lipsync' },
+              //  {
+              //   text: '拍我 视频模型 ',
+              //   collapsed: true,
+              //   items: [
+              //     { text: '图片上传', link: '/paiwo_image_upload' },
+              //     { text: '音频上传', link: '/paiwo-audio-upload' },
+              //     { text: '视频上传', link: '/paiwo-video-upload' },
+              //     {
+              //       text: 'paiwo-v5.6',
+              //       collapsed: true,
+              //       items: [
+              //         { text: '文生视频', link: '/paiwo-v5.6-ttv' },
+              //         { text: '图生视频', link: '/paiwo-v5.6-itv' },
+              //         { text: '首尾帧生成视频', link: '/paiwo-v5.6-itv2' },
+              //       ],
+              //     },
+              //     {
+              //       text: 'PixVerse-V6',
+              //       collapsed: true,
+              //       items: [
+              //         { text: '文生视频', link: '/pixverse-v6-text-to-video' },
+              //         { text: '图生视频', link: '/pixverse-v6-img-to-video' },
+              //         { text: '首尾帧生成视频', link: '/pixverse-v6-first-last-frame' },
+              //         { text: '视频延长', link: '/pixverse-v6-video-extend' },
+              //       ],
+              //     },
+              //     {
+              //       text: 'PixVerse-C1',
+              //       collapsed: true,
+              //       items: [
+              //         { text: '文生视频', link: '/PixVerse-C1-text-to-video' },
+              //         { text: '图生视频', link: '/PixVerse-C1-image-to-video' },
+              //         { text: '首尾帧生成视频', link: '/PixVerse-C1-first-last-frame-to-video' },
+              //         { text: '参考生视频', link: '/PixVerse-C1-reference-to-video' },
+              //       ],
+              //     },
+              //     // { text: '数字人 Lipsync', link: '/paiwo-itv-hd-lipsync' },
 
-                ],
-              },
+              //   ],
+              // },
 
 
                {
