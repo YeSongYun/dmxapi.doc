@@ -15,7 +15,7 @@ http://qa.dmxapi.cn
 更多，请联系客服帮助。
 
 请到网站首页，在首页右下角联系在线客服，或者扫码添加工程师微信咨询。
-<img src="/img/WeChat_Work.jpg" alt="客服微信" width="240" />
+<img src="/img/hzy_image.jpg" alt="客服微信" width="240" />
 
 <p align="center">
   <small>© 2025 DMXAPI 帮助中心</small>
