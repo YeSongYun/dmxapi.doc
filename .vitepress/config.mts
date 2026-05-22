@@ -619,7 +619,7 @@ export default defineConfig({
                 items: [
                   { text: '文生视频', link: '/wan2.6-t2v' },
                   { text: '首帧生视频', link: '/wan2.6-i2v' },
-                  { text: '参考生视频', link: '/wan2.6-r2v' }
+                  // { text: '参考生视频', link: '/wan2.6-r2v' }
                 ],
               },
             ],
