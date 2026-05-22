@@ -113,51 +113,63 @@ print(f"任务 ID: {video_id}")
 import requests
 import json
 import time
-# DMXAPI 服务端点地址
+
 url = "https://www.dmxapi.cn/v1/responses"
-# DMXAPI 密钥 (请替换为您自己的密钥)
-api_key = "sk-******************************************"
+api_key = "sk-**************************************"  # 填你的 key
+
 headers = {
     "Content-Type": "application/json",
-    "Authorization": f"{api_key}",
+    "Authorization": f"Bearer {api_key}",  # 标准是带 Bearer 前缀
 }
-# 替换为第一步返回的 video_id
-video_id = 401769244895246
-payload = {
-    # 【model】(string, 必填) 查询模型名称，固定为 PixVerse-V6-get
-    "model": "paiwo-get",
 
-    # 【input】(integer, 必填) 视频任务 ID
-    # 填入第一步返回的 video_id 值
-    "input": video_id,
+video_id = 404136280092976
+
+payload = {
+    "model": "paiwo-get",
+    "input": str(video_id),  # 必须是字符串，且用变量值不要写字面量
 }
-# 轮询获取视频生成结果
-while True:
+
+max_retries = 60  # 最长轮询 5 分钟
+for i in range(max_retries):
     response = requests.post(url, headers=headers, json=payload)
-    result = response.json()
-    print(json.dumps(result, indent=2, ensure_ascii=False))
-    # 提取视频链接
-    video_url = result.get("video_url")
+
+    print("=" * 60)
+    print(f"[第 {i+1} 次] HTTP Status: {response.status_code}")
+    print(f"Response Headers: {dict(response.headers)}")
+    print(f"Raw Body:\n{response.text}")
+    print("=" * 60)
+
+    try:
+        result = response.json()
+    except Exception as e:
+        print(f"JSON 解析失败: {e}")
+        break
+
+    if "error" in result:
+        print(f"接口返回错误，停止轮询: {result['error']}")
+        break
+
+    video_url = result.get("video_url") or (result.get("Resp") or {}).get("url")
     if video_url:
         print(f"视频链接: {video_url}")
         break
-    # 等待 5 秒后重试
+
     time.sleep(5)
+else:
+    print("轮询超时，未获取到视频链接")
 ```
 
 ## 返回示例
 
 ```json
-{
-  "video_url": "https://cdn.pixverse.ai/video/xxxxxx.mp4",
-  "video_id": 401769244895246,
-  "status": "succeeded",
-  "usage": {
-    "total_tokens": 135000,
-    "input_tokens": 0,
-    "output_tokens": 135000
-  }
-}
+============================================================
+[第 1 次] HTTP Status: 200
+Response Headers: {'Server': 'nginx', 'Date': 'Fri, 22 May 2026 13:03:27 GMT', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '431', 'Connection': 'keep-alive', 'X-Rixapi-Request-Id': '20260522210326751646573zOace2dW', 'Strict-Transport-Security': 'max-age=31536000'}
+Raw Body:
+{"ErrCode":0,"ErrMsg":"Success","Resp":{"id":404137115562463,"prompt":"可爱的小猫在海边愉快的玩耍","negative_prompt":"","url":"https://media.pixverseai.cn/pixverse%2Fmp4%2Fmedia%2Fweb%2Fori%2F5242b6ba-0b25-4f87-956f-3c08cfc85a1c_seed413618676.mp4","status":1,"seed":413618676,"create_time":"2026-05-22T13:02:10Z","modify_time":"2026-05-22T13:02:27Z","outputWidth":640,"outputHeight":360,"has_audio":true,"credits":7}}
+
+============================================================
+视频链接: https://media.pixverseai.cn/pixverse%2Fmp4%2Fmedia%2Fweb%2Fori%2F5242b6ba-0b25-4f87-956f-3c08cfc85a1c_seed413618676.mp4
 ```
 
 <p align="center">

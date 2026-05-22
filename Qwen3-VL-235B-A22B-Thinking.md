@@ -1,4 +1,4 @@
-# Qwen3-VL-235B-A22B-Thinking 网络视频分析 API 文档
+# qwen3-vl-235b-a22b-thinking 网络视频分析 API 文档
 
 ## 📖 接口说明
 
@@ -6,7 +6,7 @@
 
 ## ✨模型名称
 
-`Qwen3-VL-235B-A22B-Thinking`
+`qwen3-vl-235b-a22b-thinking`
 
 ## 🔗 接口地址
 
@@ -20,7 +20,7 @@ https://www.dmxapi.cn/v1/chat/completions
 """
 ╔══════════════════════════════════════════════════════════════════════════════╗
 ║                     DMX API 多模态视频识别示例                                ║
-║                  Qwen3-VL-235B-A22B-Thinking 模型调用                         ║
+║                  qwen3-vl-235b-a22b-thinking 模型调用                         ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
 【功能说明】
@@ -32,7 +32,7 @@ https://www.dmxapi.cn/v1/chat/completions
     - 文本 (text)           : 用户的文字提示或问题
     - 图片 (image_url)      : 通过 URL 传入的图片
     - 视频 (video_url)      : 通过 URL 传入的视频
-    - 模型名称              : Qwen3-VL-235B-A22B-Thinking
+    - 模型名称              : qwen3-vl-235b-a22b-thinking
 
 【API 端点】
     - 地址      : https://www.dmxapi.cn/v1/chat/completions
@@ -124,9 +124,7 @@ payload = {
     # ========================================================================
     # 模型选择 (Model Selection)
     # ========================================================================
-    # Qwen3-VL-235B-A22B-Thinking:
-    # ========================================================================
-    "model": "Qwen3-VL-235B-A22B-Thinking",
+    "model": "qwen3-vl-235b-a22b-thinking",
 
     # ========================================================================
     # 消息数组 (Messages Array)

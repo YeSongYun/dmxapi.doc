@@ -115,7 +115,7 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 }
 ```
 
-> `video_id` 即为任务 ID，用于第二步查询视频生成状态和获取视频链接。`credits` 表示本次任务消耗的积分数。
+> `video_id` 即为任务 ID，用于第二步查询视频生成状态和获取视频链接。
 
 ## 获取结果 示例代码
 
@@ -123,12 +123,13 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 import requests
 import json
 import time
+import urllib.parse
 
 # DMXAPI 服务端点地址
 url = "https://www.dmxapi.cn/v1/responses"
 
 # DMXAPI 密钥 (请替换为您自己的密钥)
-api_key = "sk-******************************************"
+api_key = "sk-****************************************"
 
 headers = {
     "Content-Type": "application/json",
@@ -136,7 +137,7 @@ headers = {
 }
 
 # 将第一步返回的 video_id 填入此处
-video_id = 401828562288405
+video_id = 403970341870197
 
 payload = {
     # 【model】(string, 必填) 查询模型，固定使用提交模型名加 "-get" 后缀
@@ -147,24 +148,33 @@ payload = {
 }
 
 # 轮询查询，直到视频生成完成
+# status 含义: 5=排队/处理中, 1=生成完成 (以 outputWidth>0 作为辅助判定)
 while True:
     response = requests.post(url, headers=headers, json=payload)
     result = response.json()
+
+    resp = result.get("Resp", {}) or {}
+    # 修复 URL 中被双重编码的斜杠 (%2F -> /)
+    if resp.get("url"):
+        resp["url"] = urllib.parse.unquote(resp["url"])
+
     print(json.dumps(result, indent=2, ensure_ascii=False))
 
-    # 提取视频链接
-    video_url = result.get("video_url") or result.get("url")
-    if video_url:
-        print(f"\n视频链接: {video_url}")
+    status = resp.get("status")
+    video_url = resp.get("url")
+    width = resp.get("outputWidth", 0)
+
+    # status == 1 且已有真实分辨率 视为生成完成
+    if status == 1 and video_url and width > 0:
+        print(f"\n✅ 视频生成完成，链接: {video_url}")
         break
 
-    # 视频尚未生成完成，等待后重试
-    status = result.get("status", "")
-    if status in ("failed", "expired"):
-        print(f"任务失败，状态: {status}")
+    # 失败状态 (根据需要扩展)
+    if status in (7, 8):
+        print(f"❌ 任务失败，status={status}")
         break
 
-    print("视频生成中，10 秒后重试...")
+    print(f"视频生成中 (status={status})，10 秒后重试...")
     time.sleep(10)
 ```
 

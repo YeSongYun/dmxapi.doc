@@ -112,10 +112,11 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 import requests
 import json
 import time
+import urllib.parse
 
 url = "https://www.dmxapi.cn/v1/responses"
 
-api_key = "sk-******************************************"
+api_key = "sk-*******************************************"
 
 headers = {
     "Content-Type": "application/json",
@@ -123,7 +124,7 @@ headers = {
 }
 
 # 将第一步返回的 video_id 填入此处
-video_id = 401770462988288
+video_id = 403969648419292
 
 payload = {
     # 【model】(string, 必填) 查询模型名称，固定格式为提交模型名 + "-get"
@@ -134,17 +135,28 @@ payload = {
 }
 
 # 轮询查询视频生成状态
+# status 含义: 5=排队/处理中, 1=生成完成 (以 outputWidth>0 作为辅助判定)
 while True:
     response = requests.post(url, headers=headers, json=payload)
     result = response.json()
+
+    resp = result.get("Resp", {}) or {}
+    # 修复 URL 中被双重编码的斜杠 (%2F -> /)
+    if resp.get("url"):
+        resp["url"] = urllib.parse.unquote(resp["url"])
+
     print(json.dumps(result, indent=2, ensure_ascii=False))
 
-    # 获取到视频 URL 后退出循环
-    if result.get("video_url"):
-        print(f"视频生成完成，链接: {result['video_url']}")
+    status = resp.get("status")
+    video_url = resp.get("url")
+    width = resp.get("outputWidth", 0)
+
+    # status == 1 且已有真实分辨率 视为生成完成
+    if status == 1 and video_url and width > 0:
+        print(f"\n✅ 视频生成完成，链接: {video_url}")
         break
 
-    print("视频生成中，5 秒后重试...")
+    print(f"视频生成中 (status={status})，5 秒后重试...")
     time.sleep(5)
 ```
 
