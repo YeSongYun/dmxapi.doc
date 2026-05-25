@@ -44,7 +44,7 @@ URL = "https://www.dmxapi.cn/api/log/self/stat"
 # ------------------------------------------------------------------------------
 # SYSTEM_TOKEN: 系统令牌，用于 API 认证
 #               获取方式: 登录 dmxapi.cn -> 个人设置 -> API 令牌
-SYSTEM_TOKEN = "sk-********************"  # 替换为你的系统令牌
+SYSTEM_TOKEN = "你的系统令牌"  # 替换为你的系统令牌
 
 # USER_ID: 用户唯一标识
 #          获取方式: 登录 dmxapi.cn -> 个人设置 -> 用户 ID
