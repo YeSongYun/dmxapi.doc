@@ -38,3 +38,20 @@ $:
             chmod 600 ~/.ssh/id_ed25519
             SSH_OPTS="-i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
             scp -r $SSH_OPTS .vitepress/dist/* root@114.66.11.141:/www/wwwroot/cn.doc/
+
+  pull_request:
+    - name: "自动触发NPC审查"
+      imports: https://cnb.cool/dmxapi/claude-code-my/-/blob/main/env.yml
+      runner:
+        tags: cnb:arch:amd64
+        cpus: 2
+      stages:
+        - name: 触发dmxapi-npc审查
+          image: curlimages/curl:latest
+          script: |
+            echo "正在触发 dmxapi/dmxapi-npc 对 PR #${CNB_PULL_REQUEST_IID} 进行审查..."
+            # 通过 API 在 PR 中评论 @npc，触发 NPC
+            curl -X POST "${CNB_API_ENDPOINT}/api/v1/repos/${CNB_REPO_SLUG}/pulls/${CNB_PULL_REQUEST_IID}/notes" \
+              -H "Authorization: Bearer ${CNB_TOKEN}" \
+              -H "Content-Type: application/json" \
+              -d '{"body": "@dmxapi/dmxapi-npc 请对本次 PR 进行代码审查"}'
