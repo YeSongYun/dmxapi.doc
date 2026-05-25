@@ -591,20 +591,20 @@ export default defineConfig({
                       { text: '首尾帧生视频', link: '/kling-v3-video-generation-first-last-frame' },
                     ],
                   },
-                  // {
-                  //   text: 'kling-v3',
-                  //   collapsed: true,
-                  //   items: [
-                  //     { text: '文生视频（单镜头）', link: '/kling-v3-text-to-video-single-shot' },
-                  //     { text: '文生视频（多镜头）', link: '/kling-v3-text-to-video-multishot' },
-                  //     { text: '单镜头视频生成（仅首帧）', link: '/kling-v3-image-to-video-first-frame' },
-                  //     { text: '首尾帧生视频（一镜到底）', link: '/kling-v3-first-last-frame-to-video' },
-                  //     { text: '图生视频(主体控制)', link: '/kling-v3-subject-control-image-to-video' },
-                  //     { text: '图生视频(多镜头)', link: '/kling-v3-image-to-video-multishot' },
-                  //   ],
-                  // },
-                  // { text: 'kling-v2-6-text2video', link: '/kling-v2-6-text2video' },
-                  // { text: 'kling-v2-6-image2video', link: '/kling-v2-6-image2video'}
+                  {
+                    text: 'kling-v3',
+                    collapsed: true,
+                    items: [
+                      { text: '文生视频（单镜头）', link: '/kling-v3-text-to-video-single-shot' },
+                      { text: '文生视频（多镜头）', link: '/kling-v3-text-to-video-multishot' },
+                      { text: '单镜头视频生成（仅首帧）', link: '/kling-v3-image-to-video-first-frame' },
+                      { text: '首尾帧生视频（一镜到底）', link: '/kling-v3-first-last-frame-to-video' },
+                      { text: '图生视频(主体控制)', link: '/kling-v3-subject-control-image-to-video' },
+                      { text: '图生视频(多镜头)', link: '/kling-v3-image-to-video-multishot' },
+                    ],
+                  },
+                  { text: 'kling-v2-6-text2video', link: '/kling-v2-6-text2video' },
+                  { text: 'kling-v2-6-image2video', link: '/kling-v2-6-image2video'}
                 ],
               },
               

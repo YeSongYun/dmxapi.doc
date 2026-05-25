@@ -22,6 +22,8 @@ kling-v3 单镜头视频生成（仅首帧）接口基于可灵 3.0 视频大模
 ```python
 import requests
 import json
+import base64
+import os
 
 # ═══════════════════════════════════════════════════════════════
 # 步骤1: 配置 API 连接信息
@@ -32,7 +34,7 @@ url = "https://www.dmxapi.cn/v1/responses"
 
 # DMXAPI 密钥 (请替换为您自己的密钥)
 # 获取方式: 登录 DMXAPI 官网 -> 个人中心 -> API 密钥管理
-api_key = "sk-**********************************************"
+api_key = "sk-***********************************************"
 
 # ═══════════════════════════════════════════════════════════════
 # 步骤2: 配置请求头
@@ -44,7 +46,29 @@ headers = {
 }
 
 # ═══════════════════════════════════════════════════════════════
-# 步骤3: 配置请求参数
+# 步骤3: 图片输入适配 (URL / 本地路径 二选一)
+# ═══════════════════════════════════════════════════════════════
+# 同时支持两种图片传入方式:
+#   1) URL  : 以 http:// 或 https:// 开头的可访问图片链接，直接传给 API
+#   2) 本地 : 本地图片文件路径，自动读取并转为 Base64 编码后传给 API
+# 使用 Base64 时不要添加 data:image/png;base64, 之类的前缀，仅传 Base64 字符串本体
+
+def load_image(source: str) -> str:
+    """根据输入自动适配: URL 原样返回; 本地路径读取并转 Base64"""
+    if source.startswith("http://") or source.startswith("https://"):
+        return source
+    if os.path.isfile(source):
+        with open(source, "rb") as f:
+            return base64.b64encode(f.read()).decode("utf-8")
+    # 既不是 URL 也不是存在的本地文件，则按原样返回（例如已是 Base64 字符串）
+    return source
+
+# 首帧图片来源: 可填 URL，也可填本地路径，例如:
+#   "C:/Users/15664/Desktop/test.png"
+image_source = "https://prod-ss-images.s3.cn-northwest-1.amazonaws.com.cn/vidu-maas/template/image2video.png"
+
+# ═══════════════════════════════════════════════════════════════
+# 步骤4: 配置请求参数
 # ═══════════════════════════════════════════════════════════════
 
 payload = {
@@ -58,7 +82,7 @@ payload = {
     # 图片格式支持 .jpg / .jpeg / .png
     # 图片文件大小不能超过 10MB
     # 图片宽高尺寸不小于 300px，图片宽高比介于 1:2.5 ~ 2.5:1 之间
-    "image": "https://prod-ss-images.s3.cn-northwest-1.amazonaws.com.cn/vidu-maas/template/image2video.png",
+    "image": load_image(image_source),
 
     # 【文本提示词】(string, 必填) 描述视频内容的正向提示词（在 DMXAPI Responses 风格中以 input 字段承载，对应官方 prompt）
     # 可包含正向描述和负向描述，建议通过模板化提示词满足不同生成需求
@@ -95,7 +119,7 @@ payload = {
 }
 
 # ═══════════════════════════════════════════════════════════════
-# 步骤4: 发送请求并输出结果
+# 步骤5: 发送请求并输出结果
 # ═══════════════════════════════════════════════════════════════
 # 发送 POST 请求到 API 服务器
 response = requests.post(url, headers=headers, json=payload)
@@ -104,6 +128,7 @@ response = requests.post(url, headers=headers, json=payload)
 # - indent=2: 缩进 2 空格，便于阅读
 # - ensure_ascii=False: 正确显示中文字符
 print(json.dumps(response.json(), indent=2, ensure_ascii=False))
+
 ```
 
 ## 返回示例
