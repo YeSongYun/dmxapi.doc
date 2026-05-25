@@ -854,6 +854,7 @@ export default defineConfig({
           { text: 'pi_agent', link: '/pi_agent' },
           { text: 'kilo_code', link: '/kilo_code' },
           { text: 'hermes', link: '/hermes_agent' },
+          { text: 'magic_resume', link: '/magic_resume' },
         ],
       },
       {
