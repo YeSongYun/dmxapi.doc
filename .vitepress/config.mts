@@ -778,7 +778,7 @@ export default defineConfig({
 
 
           {
-            text: '数据处理（文档/PDF/OCR）',
+            text: '📄数据处理（文档/PDF/OCR）',
             collapsed: true,
             items: [
               { text: 'deepseek-ocr', link: '/deepseek-ocr' },
@@ -786,6 +786,14 @@ export default defineConfig({
               { text: 'somark', link: '/somark' },
               { text: '合合文档解析模型', link: '/hehe' }
               
+            ],
+          },
+
+          {
+            text: '🩺医疗模型',
+            collapsed: true,
+            items: [
+              { text: 'WiseDiag 医疗大模型', link: '/WiseDiag' },
             ],
           },
 
