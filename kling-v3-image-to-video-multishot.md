@@ -178,47 +178,117 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 视频生成通常需要 1~5 分钟，建议每隔 15 秒轮询一次，直到任务完成。
 
 ```python
+"""
+╔═══════════════════════════════════════════════════════════════╗
+║                  DMXAPI 自研接口                               ║
+╚═══════════════════════════════════════════════════════════════╝
+
+📝 功能说明:
+   本脚本演示如何使用 requests 库调用 DMXAPI 的自研接口
+
+═══════════════════════════════════════════════════════════════
+"""
 import requests
 import json
+import io
+import sys
 
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+# ═══════════════════════════════════════════════════════════════
+# 🔑 步骤1: 配置 API 连接信息
+# ═══════════════════════════════════════════════════════════════
+# 🌐 DMXAPI 服务端点地址
 url = "https://www.dmxapi.cn/v1/responses"
-api_key = "sk-******************************************"
 
+# 🔐 DMXAPI 密钥 (请替换为您自己的密钥)
+# 获取方式: 登录 DMXAPI 官网 -> 个人中心 -> API 密钥管理
+api_key = "sk-************************************************"
+# ═══════════════════════════════════════════════════════════════
+# 📋 步骤2: 配置请求头
+# ═══════════════════════════════════════════════════════════════
 headers = {
-    "Content-Type": "application/json",
-    "Authorization": f"{api_key}",
+    "Content-Type": "application/json",      # 指定请求体为 JSON 格式
+    "Authorization": f"{api_key}",    # token 认证方式
 }
 
+# ═══════════════════════════════════════════════════════════════
+# 💬 步骤3: 配置请求参数
+# ═══════════════════════════════════════════════════════════════
 payload = {
-    # 【model】(string, 必填) 查询模型名称，固定为 "kling-v3-get"
-    "model": "kling-v3-get",
-    # 【input】(string, 必填) 待查询的任务 ID
-    # 填入提交任务时返回的 taskId
-    "input": "tsk-geuy499g0bnmmfuf"
+    "model": "kling-v3-get-all",
+    "input": "tsk-ge0vtur0xjesi736", 
 }
 
+# ═══════════════════════════════════════════════════════════════
+# 📤 步骤4: 发送请求并输出结果
+# ═══════════════════════════════════════════════════════════════
+# 发送 POST 请求到 API 服务器
 response = requests.post(url, headers=headers, json=payload)
-result = response.json()
+data = response.json()
+# ═══════════════════════════════════════════════════════════════
+# 📊 步骤5: 输出完整响应 + 视频清单
+# ═══════════════════════════════════════════════════════════════
 
+print("=" * 60)
+print("完整响应")
+print("=" * 60)
+print(json.dumps(data, indent=2, ensure_ascii=False))
+
+# Responses API 把上游真实 JSON 字符串化塞进 output[0].content[0].text，需要再解一层
 try:
-    text_str = result["output"][0]["content"][0]["text"]
-    video_info = json.loads(text_str)
-    print("视频 URL：")
-    print(video_info.get("video_url", "未找到"))
-    print("\n水印版视频 URL：")
-    print(video_info.get("watermark_video_url", "未找到"))
-except Exception as e:
-    print(f"提取 URL 失败: {e}")
+    inner = json.loads(data["output"][0]["content"][0]["text"])
+    videos = (inner.get("data", {}).get("task_result") or {}).get("videos", [])
+except (KeyError, IndexError, json.JSONDecodeError, TypeError):
+    videos = []
+
+if videos:
+    print(f"\n视频输出（共 {len(videos)} 个）")
+    for v in videos:
+        print(f"  ┌─ id            {v.get('id')}")
+        print(f"  │  时长          {v.get('duration')} 秒")
+        print(f"  │  无水印 URL    {v.get('url')}")
+        if v.get("watermark_url"):
+            print(f"  │  水印版 URL    {v.get('watermark_url')}")
+        print(f"  └─")
 ```
 
 ### 返回示例
 
 ```
-视频 URL：
-https://v4-fdl.kechuangai.com/ksc2/xxxx-视频文件链接.mp4?cacheKey=...
+============================================================
+完整响应
+============================================================
+{
+  "request_id": "d173b308-9e8d-467d-92b0-9f36c2c8fec0",
+  "output": [
+    {
+      "type": "message",
+      "content": [
+        {
+          "type": "output_text",
+          "text": "{\"code\":0,\"message\":\"SUCCEED\",\"data\":{\"task_id\":\"tsk-ge0vtur0xjesi736\",\"task_status\":\"succeed\",\"task_info\":{},\"task_result\":{\"videos\":[{\"id\":\"mda-ge0vt6fvv0m91uw8\",\"url\":\"https://gcdy5vxfrcse3j396atj.exp.bcevod.com/mda-ge0vt6fvv0m91uw8/_src/mda-ge0vt6fvv0m91uw8/ge0vjeg3nw7nn9vbux89.mp4\",\"duration\":\"5.041\"}]},\"task_status_msg\":\"\",\"created_at\":1779707654605,\"updated_at\":1779707770260,\"final_unit_deduction\":\"6\"},\"request_id\":\"d173b308-9e8d-467d-92b0-9f36c2c8fec0\"}"
+        }
+      ]
+    }
+  ],
+  "usage": {
+    "total_tokens": 0,
+    "input_tokens": 0,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 0,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  }
+}
 
-水印版视频 URL：
-https://v4-fdl.kechuangai.com/ksc2/xxxx-水印视频文件链接.mp4?cacheKey=...
+视频输出（共 1 个）
+  ┌─ id            mda-ge0vt6fvv0m91uw8
+  │  时长          5.041 秒
+  │  无水印 URL    https://gcdy5vxfrcse3j396atj.exp.bcevod.com/mda-ge0vt6fvv0m91uw8/_src/mda-ge0vt6fvv0m91uw8/ge0vjeg3nw7nn9vbux89.mp4
+  └─
 ```
 
 <p align="center">
