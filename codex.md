@@ -1,5 +1,52 @@
 # Openai Codex 安装与配置教程
 
+::: warning 注意
+Codex 仅支持配置 **GPT-5 系列** 模型（如 `gpt-5.5`），请勿填写其他系列的模型，否则将无法正常调用。
+:::
+
+::: tip 建议
+为防止 Codex 在使用过程中调用到非用户想定系列模型，建议前往 DMXAPI 控制台编辑您的令牌，**启用「模型限制」并选定 `gpt-5.5`**（或其他 GPT-5 系列模型）。
+:::
+
+## 创建带模型限制的令牌（推荐）
+
+按照以下步骤创建一个仅允许调用 GPT-5 系列模型的专用令牌，避免 Codex 误调用其他模型造成意外消费。
+
+**1. 进入 API 令牌页面**
+
+登录 [DMXAPI 控制台](https://www.dmxapi.cn/)，进入左侧菜单的「API 令牌」页，点击「添加令牌」按钮。
+
+![点击添加令牌创建新的令牌](/img/codex_shen1.png)
+
+**2. 填写基本信息**
+
+在弹出的「创建新的令牌」对话框中：
+
+- ① 自定义令牌名称（例如 `codex测试`），方便后续识别。
+- ② 选择令牌过期时间（如「永不过期」、「一个月」等，按需选择）。
+- ③ 令牌渠道分组保持默认的 `default` 即可。
+
+![填写令牌基本信息](/img/codex_shen2.png)
+
+**3. 启用模型限制并提交**
+
+继续在同一对话框中下滑到「安全设置」：
+
+- ① 按需设置令牌额度（不需要可保留默认 `∞`）。
+- ② 按需设置令牌次数限制。
+- ③ **勾选「启用模型限制」**，在下方搜索并选定 `gpt-5.5`（Codex 仅支持 GPT-5 系列模型）。
+- ④ 点击「提交」按钮保存。
+
+![启用模型限制并提交保存](/img/codex_shen3.png)
+
+**4. （可选）为已有令牌补充模型限制**
+
+如果不想新建令牌，也可以在令牌列表中点击已有令牌的编辑按钮，在弹出的「更新令牌信息」对话框中同样勾选「启用模型限制」并选定 `gpt-5.5`，然后点击「提交」保存即可。
+
+![为已有令牌启用模型限制](/img/codex_shen.png)
+
+创建或更新完成后，将该令牌的 Key（`sk-...`）填入下文 Codex 的 `auth.json` 配置中即可。
+
 ## Windows 版本教程
 
 ### 系统要求
@@ -38,7 +85,7 @@ codex --version
 
     **注意**：如果看不到该目录，说明您没有打开 Windows 的“显示隐藏的项目”，请先在文件资源管理器中开启。
     
-![image.png](https://api.apifox.com/api/v1/projects/5443236/resources/575120/image-preview)
+![Windows 显示隐藏的项目设置](/img/codex_shen4.png)
 
 2.  如果没有 `.codex` 文件夹，请手动创建该文件夹，然后在其中创建 `config.toml` 以及 `auth.json` 两个文件。
 
@@ -91,11 +138,11 @@ codex
 
 以上配置完成后，在 VSCode 扩展商店中搜索并安装 `codex` 即可。
 
-![image.png](https://api.apifox.com/api/v1/projects/5443236/resources/575123/image-preview)
+![在 VSCode 扩展商店搜索 codex](/img/codex_shen5.png)
 
 安装完成后会出现在侧边栏。
 
-![image.png](https://api.apifox.com/api/v1/projects/5443236/resources/575124/image-preview)
+![安装后出现在侧边栏](/img/codex_shen6.png)
 
 ---
 
