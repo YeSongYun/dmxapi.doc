@@ -85,7 +85,7 @@ codex --version
 
     **注意**：如果看不到该目录，说明您没有打开 Windows 的“显示隐藏的项目”，请先在文件资源管理器中开启。
     
-![image.png](https://api.apifox.com/api/v1/projects/5443236/resources/575120/image-preview)
+![Windows 显示隐藏的项目设置](/img/codex_shen4.png)
 
 2.  如果没有 `.codex` 文件夹，请手动创建该文件夹，然后在其中创建 `config.toml` 以及 `auth.json` 两个文件。
 
@@ -138,11 +138,11 @@ codex
 
 以上配置完成后，在 VSCode 扩展商店中搜索并安装 `codex` 即可。
 
-![image.png](https://api.apifox.com/api/v1/projects/5443236/resources/575123/image-preview)
+![在 VSCode 扩展商店搜索 codex](/img/codex_shen5.png)
 
 安装完成后会出现在侧边栏。
 
-![image.png](https://api.apifox.com/api/v1/projects/5443236/resources/575124/image-preview)
+![安装后出现在侧边栏](/img/codex_shen6.png)
 
 ---
 
