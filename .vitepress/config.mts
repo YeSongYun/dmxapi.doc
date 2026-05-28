@@ -536,7 +536,7 @@ export default defineConfig({
               },
                
                {
-                text: '拍我 视频模型 ',
+                text: 'Pixverse 视频模型 ',
                 collapsed: true,
                 items: [
                   { text: '图片上传', link: '/paiwo_image_upload' },
@@ -793,7 +793,22 @@ export default defineConfig({
             text: '🩺医疗模型',
             collapsed: true,
             items: [
-              { text: 'WiseDiag 医疗大模型', link: '/WiseDiag' },
+              {
+                text: 'WiseDiag 医疗大模型',
+                collapsed: true,
+                items: [
+                  { text: 'wisediag-large-latest', link: '/wisediag-large-latest' },
+                  {
+                    text: 'zzkj-chat',
+                    collapsed: true,
+                    items: [
+                      { text: '热量识别', link: '/zzkj-chat_Calories_Identify' },
+                      { text: '报告解读', link: '/zzkj-chat_Report_Interpretation' },
+                      { text: '智能问诊', link: '/zzkj-chat_Smart_Consultation' },
+                    ],
+                  },
+                ],
+              },
             ],
           },
 
