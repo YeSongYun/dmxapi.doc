@@ -813,6 +813,26 @@ export default defineConfig({
           },
 
           {
+            text: '🧊3D大模型',
+            collapsed: true,
+            items: [
+              {
+                text: 'Tripo-P1.0',
+                collapsed: true,
+                items: [
+                  { text: '文生3D模型（无贴图）', link: '/Tripo-P1.0_Text-to-3D_Model(Without Texture)' },
+                  { text: '文生3D模型（有贴图）', link: '/Tripo-P1.0_Text-to-3D_Model(with Textures)' },
+                  { text: '单图生3D模型（无贴图）', link: '/Tripo-P1.0_Single_Image_to_3D_Model(No Texture)' },
+                  { text: '单图生3D模型（有贴图）', link: '/Tripo-P1.0_Single_Image_to_3D_Model(with Texture)' },
+                  { text: '多图生3D模型（2张图）', link: '/Tripo-P1.0_Multi-image_to_3D_model(2 images)' },
+                  { text: '多图生3D模型（无贴图）', link: '/Tripo-P1.0_Multi-image_to_3D_model(without textures)' },
+                  { text: '多图生3D模型（有贴图）', link: '/Tripo-P1.0_Multi-image_to_3D_model_generation(with textures)' },
+                ],
+              },
+            ],
+          },
+
+          {
             text: '其他示例',
             collapsed: true,
             items: [
