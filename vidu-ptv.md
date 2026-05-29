@@ -221,7 +221,6 @@ headers = {
 
 data = {
     # model: 指定查询所使用的模型/接口
-    # - viduq2-pro-get: Vidu Q2 Pro 版本的任务查询接口（这个模型不要更改，就用viduq2-pro-get）
     # - 不同模型对应不同的视频生成能力
     "model": "vidu-get",
     # input: 要查询的任务 ID
