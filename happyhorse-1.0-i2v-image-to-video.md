@@ -22,28 +22,72 @@ HappyHorse 首帧生视频模型以首帧图片为基础，支持通过文本提
 ```python
 import requests
 import json
+import base64
+import mimetypes
+
 
 # ═══════════════════════════════════════════════════════════════
-# 步骤1: 配置 API 连接信息
+# 🔑 步骤1: 配置 API 连接信息
 # ═══════════════════════════════════════════════════════════════
 
-# DMXAPI 服务端点地址
+# 🌐 DMXAPI 服务端点地址
 url = "https://www.dmxapi.cn/v1/responses"
 
-# DMXAPI 密钥 (请替换为您自己的密钥)
+# 🔐 DMXAPI 密钥 (请替换为您自己的密钥)
+# 获取方式: 登录 DMXAPI 官网 -> 个人中心 -> API 密钥管理
 api_key = "sk-******************************************"
 
 # ═══════════════════════════════════════════════════════════════
-# 步骤2: 配置请求头
+# 📋 步骤2: 配置请求头
 # ═══════════════════════════════════════════════════════════════
 
 headers = {
-    "Content-Type": "application/json",
-    "Authorization": f"{api_key}",
+    "Content-Type": "application/json",      # 指定请求体为 JSON 格式
+    "Authorization": f"{api_key}",           # token 认证方式
 }
 
 # ═══════════════════════════════════════════════════════════════
-# 步骤3: 配置请求参数
+# 📁 步骤3: 选择图片来源 (二选一即可)
+# ═══════════════════════════════════════════════════════════════
+
+# 【方式一】本地图片路径 (请替换为您自己的图片路径)
+# image_source = "C:/Users/a1/Pictures/1689320796087949.png"
+
+# 【方式二】网络图片 URL (支持 HTTP / HTTPS 协议)
+# 格式: JPEG、JPG、PNG、WEBP；宽高比: 1:2.5～2.5:1
+image_source = "https://cdn.translate.alibaba.com/r/wanx-demo-1.png"
+
+
+# ╔═══════════════════════════════════════════════════════════════╗
+# ║          ⚙️ 图片处理逻辑（无需修改）                            ║
+# ╚═══════════════════════════════════════════════════════════════╝
+
+def image_to_base64(image_path):
+    mime_map = {
+        ".jpg":  "image/jpeg",
+        ".jpeg": "image/jpeg",
+        ".png":  "image/png",
+        ".webp": "image/webp",
+    }
+    ext = "." + image_path.rsplit(".", 1)[-1].lower()
+    mime_type = mime_map.get(ext)
+    if mime_type is None:
+        mime_type = mimetypes.guess_type(image_path)[0] or "image/png"
+    with open(image_path, "rb") as f:
+        base64_data = base64.b64encode(f.read()).decode("utf-8")
+    return f"data:{mime_type};base64,{base64_data}"
+
+def get_image_url(image_source):
+    if image_source.lower().startswith(("http://", "https://")):
+        return image_source
+    else:
+        return image_to_base64(image_source)
+
+image_url = get_image_url(image_source)
+
+
+# ═══════════════════════════════════════════════════════════════
+# 💬 步骤4: 配置请求参数
 # ═══════════════════════════════════════════════════════════════
 
 payload = {
@@ -59,10 +103,13 @@ payload = {
                 # 可选值: "first_frame"(以此图作为视频首帧)
                 # 素材限制：有且仅有 1 张首帧图像
                 "type": "first_frame",
-                # 【url】(string, 必填) 首帧图像的 URL，支持 HTTP 或 HTTPS 协议
+                # 【url】(string, 必填) 首帧图像的 URL
+                # 兼容两种格式:
+                #   1. 网络图像 URL (支持 HTTP 或 HTTPS 协议)
+                #   2. 本地图像 Base64 Data URL (data:image/png;base64,xxxxxx)
                 # 格式：JPEG、JPG、PNG、WEBP
                 # 宽高比：1:2.5～2.5:1
-                "url": "https://cdn.translate.alibaba.com/r/wanx-demo-1.png"
+                "url": image_url
             }
         ]
     }],
@@ -86,15 +133,16 @@ payload = {
     }
 }
 
+
 # ═══════════════════════════════════════════════════════════════
-# 步骤4: 发送请求并输出结果
+# 📤 步骤5: 发送请求并输出结果
 # ═══════════════════════════════════════════════════════════════
 
 response = requests.post(url, headers=headers, json=payload)
 print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 ```
 
-### 返回示例
+## 返回示例
 
 ```json
 {
