@@ -23,24 +23,68 @@
 ```python
 import requests
 import json
+import base64
+import os
 
-# 步骤1: 配置 API 连接信息
 
-# DMXAPI 服务端点地址
+# ═══════════════════════════════════════════════════════════════
+# 🔑 步骤1: 配置 API 连接信息
+# ═══════════════════════════════════════════════════════════════
+
+# 🌐 DMXAPI 服务端点地址
 url = "https://www.dmxapi.cn/v1/responses"
 
-# DMXAPI 密钥 (请替换为您自己的密钥)
+# 🔐 DMXAPI 密钥 (请替换为您自己的密钥)
 # 获取方式: 登录 DMXAPI 官网 -> 个人中心 -> API 密钥管理
-api_key = "sk-********************************************"
+api_key = "sk-************************************************"
 
-# 步骤2: 配置请求头
+# ═══════════════════════════════════════════════════════════════
+# 📋 步骤2: 配置请求头
+# ═══════════════════════════════════════════════════════════════
 
 headers = {
-    "Content-Type": "application/json",
-    "Authorization": f"{api_key}",
+    "Content-Type": "application/json",      # 指定请求体为 JSON 格式
+    "Authorization": f"{api_key}",           # token 认证方式
 }
 
-# 步骤3: 配置请求参数
+# ═══════════════════════════════════════════════════════════════
+# 🖼️ 步骤3: 配置首帧图片来源 (二选一即可)
+# ═══════════════════════════════════════════════════════════════
+
+# 【方式一】网络图片 URL (支持 HTTP / HTTPS 协议)
+# image_source = "https://img.shetu66.com/2023/07/14/1689320796087949.png"
+
+# 【方式二】本地图片路径 (请替换为您自己的图片路径)
+image_source = "C:/Users/a1/Pictures/1689320796087949.png"
+
+
+# ╔═══════════════════════════════════════════════════════════════╗
+# ║     ⚙️ 图片处理函数（自动识别网络URL或本地路径，无需修改）       ║
+# ╚═══════════════════════════════════════════════════════════════╝
+
+def resolve_image_url(source):
+    """
+    自动识别图片来源并返回可用的 URL 字符串
+
+    - 网络图片: 直接返回原始 URL
+    - 本地图片: 读取文件并转换为 Base64 Data URL
+
+    :param source: 网络图片 URL 或本地图片文件路径
+    :return: 可直接用于 API 请求的图片 URL 字符串
+    """
+    if source.startswith("http://") or source.startswith("https://"):
+        return source
+    ext = os.path.splitext(source)[1].lower().lstrip(".")
+    if ext == "jpg":
+        ext = "jpeg"
+    with open(source, "rb") as f:
+        base64_data = base64.b64encode(f.read()).decode("utf-8")
+    return f"data:image/{ext};base64,{base64_data}"
+
+
+# ═══════════════════════════════════════════════════════════════
+# 💬 步骤4: 配置请求参数
+# ═══════════════════════════════════════════════════════════════
 
 payload = {
     # 【model】(string, 必填) 调用的模型 ID
@@ -59,10 +103,10 @@ payload = {
             # 【type】(string, 必填) 内容类型，图片固定为 "image_url"
             "type": "image_url",
             "image_url": {
-                # 【url】(string, 必填) 首帧图片地址，支持公网 URL、Base64 编码或素材 ID
+                # 【url】(string, 必填) 首帧图片地址，支持公网 URL 或 Base64 编码
                 # 图片格式：jpeg、png、webp、bmp、tiff、gif
                 # 宽高比要求：(0.4, 2.5)，宽高长度：(300, 6000) px，大小不超过 30 MB
-                "url": "https://img.shetu66.com/2023/07/14/1689320796087949.png"
+                "url": resolve_image_url(image_source)
             },
             # 【role】(string, 条件必填) 图片用途：首帧生视频固定填 "first_frame"
             "role": "first_frame"
@@ -124,10 +168,12 @@ payload = {
     "tools": [{"type": "web_search"}]
 }
 
-# 步骤4: 发送请求并输出结果
+
+# ═══════════════════════════════════════════════════════════════
+# 📤 步骤5: 发送请求并输出结果
+# ═══════════════════════════════════════════════════════════════
 
 response = requests.post(url, headers=headers, json=payload)
-
 print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 ```
 
@@ -135,7 +181,7 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 
 ```json
 {
-  "id": "cgt-20260402221030-dmf5x",
+  "id": "cgt-20260603165348-mcqlc",
   "usage": {
     "total_tokens": 40000,
     "input_tokens": 0,
