@@ -29,7 +29,6 @@ import os
 # ╔═══════════════════════════════════════════════════════════════╗
 # ║                 👇 用户配置区域 (请根据需要修改)               ║
 # ╚═══════════════════════════════════════════════════════════════╝
-
 # ═══════════════════════════════════════════════════════════════
 # 🔑 API 连接信息
 # ═══════════════════════════════════════════════════════════════
@@ -38,7 +37,7 @@ import os
 url = "https://www.dmxapi.cn/v1/responses"
 
 # 🔐 DMXAPI 密钥 (请替换为您自己的密钥)
-api_key = "sk-*********************************************"
+api_key = "sk-***************************************************"
 
 # ═══════════════════════════════════════════════════════════════
 # 🖼️ 图片上传方式选择
@@ -51,7 +50,7 @@ upload_mode = "base64"
 
 # ---------- 方式1: 本地图片路径 (upload_mode = "base64" 时生效) ----------
 # 请替换为你自己的本地图片路径
-first_frame_path = r"C:\Users\a1\Pictures\1689320796087949.png"  # 首帧图片路径
+first_frame_path = r"C:\Users\a1\Pictures\1689320796087949.png"   # 首帧图片路径
 last_frame_path  = r"C:\Users\a1\Pictures\20230301120626930.jpg"   # 尾帧图片路径
 
 # ---------- 方式2: 图片公网 URL (upload_mode = "url" 时生效) ----------
@@ -132,9 +131,13 @@ def image_to_base64(image_path):
     # 获取图片扩展名并转为小写（去掉开头的点）
     ext = os.path.splitext(image_path)[1].lower().lstrip(".")
 
-    # 处理常见的格式别名
-    if ext == "jpg":
-        ext = "jpeg"
+    # 处理常见的格式别名，统一为标准 MIME 类型
+    # 官方支持格式: jpeg/png/webp/bmp/tiff/gif
+    ext_map = {
+        "jpg": "jpeg",
+        "tif": "tiff",
+    }
+    ext = ext_map.get(ext, ext)
 
     # 读取图片二进制内容并编码为 Base64
     with open(image_path, "rb") as f:
@@ -142,12 +145,9 @@ def image_to_base64(image_path):
 
     # 拼接成符合官方要求的 Data URL 格式
     return f"data:image/{ext};base64,{base64_str}"
-
-
 # ═══════════════════════════════════════════════════════════════
 # 🔄 根据上传方式获取图片 URL
 # ═══════════════════════════════════════════════════════════════
-
 if upload_mode == "base64":
     # 方式1: 将本地图片转换为 Base64 Data URL
     print(f"📂 使用本地图片 Base64 编码上传")
@@ -175,7 +175,6 @@ headers = {
     "Content-Type": "application/json",      # 指定请求体为 JSON 格式
     "Authorization": f"{api_key}",           # token 认证方式
 }
-
 # ═══════════════════════════════════════════════════════════════
 # 📦 构建请求体
 # ═══════════════════════════════════════════════════════════════
@@ -218,7 +217,6 @@ payload = {
     "return_last_frame": return_last_frame,
     "execution_expires_after": execution_expires_after,
 }
-
 # 根据配置决定是否启用联网搜索工具
 if enable_web_search:
     payload["tools"] = [{"type": "web_search"}]
@@ -226,7 +224,6 @@ if enable_web_search:
 # ═══════════════════════════════════════════════════════════════
 # 📤 发送请求并输出结果
 # ═══════════════════════════════════════════════════════════════
-
 print("\n🚀 正在发送请求...")
 response = requests.post(url, headers=headers, json=payload)
 
@@ -235,7 +232,7 @@ print("\n📨 响应结果:")
 print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 ```
 
-### 返回示例
+## 返回示例
 
 ```json
 {
@@ -291,7 +288,7 @@ except Exception as e:
     print(f"提取 URL 失败: {e}")
 ```
 
-### 返回示例
+## 返回示例
 
 ```json
 {
