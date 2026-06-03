@@ -3,9 +3,7 @@
 基于字节跳动 Seedance 2.0 多模态视频生成模型，doubao-seedance-2-0-260128 支持参考图片和视频进行智能视频编辑，可实现场景替换、主体替换、视频延长、风格迁移等多种编辑效果。支持多模态输入（文本 + 图片 + 视频 + 音频组合），最多接受 9 张参考图和 3 段参考视频，生成分辨率支持 480p/720p/1080p，时长 4~15 秒可控。采用异步任务模式，提交任务后获取任务 ID，再通过专用接口获取生成的视频 URL。
 
 ## 🎬 模型名称
-
 - `doubao-seedance-2-0-260128`
-
 ## 🔗 接口地址
 
 | 接口 | 请求方式 | URL |
@@ -23,26 +21,68 @@
 ```python
 import requests
 import json
+import base64
 
-# 步骤1: 配置 API 连接信息
-url = "https://www.dmxapi.cn/v1/responses"
+# ╔═══════════════════════════════════════════════════════════════╗
+# ║              ⚙️ 基础配置（密钥 & 输入素材）                     ║
+# ╚═══════════════════════════════════════════════════════════════╝
 
-# DMXAPI 密钥 (请替换为您自己的密钥)
-api_key = "sk-******************************************"
+# ---------- 🔐 API 密钥 ----------
+# 获取方式: 登录 DMXAPI 官网 -> 个人中心 -> API 密钥管理
+api_key = "sk-****************************************************"
 
-# 步骤2: 配置请求头
+# ---------- 🖼️ 图片输入 ----------
+IMAGE_INPUT_MODE = "base64"          # "base64" = 本地图片 | "url" = 网络图片
+
+image_path       = "C:/Users/a1/Pictures/20230301120626930.jpg"                          # 本地图片路径（base64 模式）
+image_remote_url = "https://ark-project.tos-cn-beijing.volces.com/doc_image/r2v_edit_pic1.jpg"  # 网络图片地址（url 模式）
+
+# ---------- 🎬 视频输入 ----------
+video_url = "https://ark-project.tos-cn-beijing.volces.com/doc_video/r2v_edit_video1.mp4"
+
+# ---------- 📝 提示词 ----------
+prompt_text = "将视频1礼盒中的香水替换成图片1中的面霜，运镜不变"
+
+
+# ╔═══════════════════════════════════════════════════════════════╗
+# ║           🔩 内部处理逻辑（无需修改）                            ║
+# ╚═══════════════════════════════════════════════════════════════╝
+
+def encode_image_to_base64(path):
+    ext = path.lower().split(".")[-1]
+    mime_map = {
+        "jpg": "image/jpeg", "jpeg": "image/jpeg",
+        "png": "image/png",  "webp": "image/webp",
+        "gif": "image/gif",
+    }
+    mime_type = mime_map.get(ext, "image/jpeg")
+    with open(path, "rb") as f:
+        encoded = base64.b64encode(f.read()).decode("utf-8")
+    return f"data:{mime_type};base64,{encoded}"
+
+
+def get_image_url():
+    if IMAGE_INPUT_MODE == "base64":
+        return encode_image_to_base64(image_path)
+    elif IMAGE_INPUT_MODE == "url":
+        return image_remote_url
+    else:
+        raise ValueError(f"不支持的 IMAGE_INPUT_MODE: {IMAGE_INPUT_MODE}（仅支持 'url' / 'base64'）")
+
+
+# ╔═══════════════════════════════════════════════════════════════╗
+# ║              📋 请求参数配置（按需调整）                         ║
+# ╚═══════════════════════════════════════════════════════════════╝
+
 headers = {
     "Content-Type": "application/json",
-    # Authorization: 直接传入 API Key，无需添加 Bearer 前缀
     "Authorization": f"{api_key}",
 }
 
-# 步骤3: 配置请求参数
 payload = {
     # 【model】(string, 必填) 调用的模型 ID
     "model": "doubao-seedance-2-0-260128",
     # 【input】(object[], 必填) 多模态输入内容数组
-    # 支持组合：文本 / 文本+图片 / 文本+视频 / 文本+图片+视频 / 文本+图片+视频+音频 等
     "input": [
         {
             # 【type】(string, 必填) 内容类型，text 表示文本提示词
@@ -50,7 +90,7 @@ payload = {
             # 【text】(string, 可选) 文本提示词，描述编辑指令
             # 支持中英文，建议中文不超过 500 字，英文不超过 1000 词
             # 可使用 [图1][图2] 等方式明确指定参考图片的用途
-            "text": "将视频1礼盒中的香水替换成图片1中的面霜，运镜不变"
+            "text": prompt_text,
         },
         {
             # 【type】(string, 必填) 内容类型，image_url 表示图片
@@ -59,26 +99,26 @@ payload = {
                 # 【url】(string) 图片 URL、Base64 编码或素材 ID
                 # 图片格式：jpeg/png/webp/bmp/tiff/gif
                 # 宽高比：(0.4, 2.5)，宽高长度：(300, 6000) px，单张不超过 30 MB
-                "url": "https://ark-project.tos-cn-beijing.volces.com/doc_image/r2v_edit_pic1.jpg"
+                "url": get_image_url(),
             },
             # 【role】(string, 条件必填) 图片用途
             # 可选值: "first_frame"(首帧) / "last_frame"(尾帧) / "reference_image"(参考图)
             # 多模态参考生视频场景必填，最多支持 9 张参考图
-            "role": "reference_image"
+            "role": "reference_image",
         },
         {
             # 【type】(string, 必填) 内容类型，video_url 表示视频
             "type": "video_url",
             "video_url": {
-                # 【url】(string) 视频 URL 或素材 ID
+                # 【url】(string) 视频 URL 或素材 ID (视频仅支持 URL 方式)
                 # 视频格式：mp4/mov，分辨率：480p/720p/1080p
                 # 时长：[2, 15] s，最多传入 3 个参考视频，总时长不超过 15s
                 # 单个视频不超过 50 MB，帧率：[24, 60] FPS
-                "url": "https://ark-project.tos-cn-beijing.volces.com/doc_video/r2v_edit_video1.mp4"
+                "url": video_url,
             },
             # 【role】(string, 条件必填) 视频用途
             # 可选值: "reference_video"(参考视频)
-            "role": "reference_video"
+            "role": "reference_video",
         },
     ],
     # 【generate_audio】(boolean, 可选) 是否生成同步音频
@@ -91,7 +131,7 @@ payload = {
     # Seedance 2.0 默认值: adaptive
     "ratio": "16:9",
     # 【duration】(integer, 可选) 视频时长（秒）
-    # Seedance 2.0 & 2.0 fast 取值范围: [4, 15] 
+    # Seedance 2.0 & 2.0 fast 取值范围: [4, 15]
     # 默认值: 5
     "duration": 5,
     # 【watermark】(boolean, 可选) 是否添加水印
@@ -121,19 +161,23 @@ payload = {
     "execution_expires_after": 172800,
     # 【tools】(object[], 可选) 工具配置，仅 Seedance 2.0 & 2.0 fast 支持
     # web_search: 联网搜索工具，可提升视频时效性，但会增加一定时延
-    "tools": [{"type": "web_search"}]
+    "tools": [{"type": "web_search"}],
 }
 
-# 步骤4: 发送请求并输出结果
-response = requests.post(url, headers=headers, json=payload)
+
+# ╔═══════════════════════════════════════════════════════════════╗
+# ║              📤 发送请求（无需修改）                             ║
+# ╚═══════════════════════════════════════════════════════════════╝
+
+response = requests.post("https://www.dmxapi.cn/v1/responses", headers=headers, json=payload)
 print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 ```
 
-### 返回示例
+## 返回示例
 
 ```json
 {
-  "id": "cgt-20260402221419-2kcc7",
+  "id": "cgt-20260602184148-6bq7m",
   "usage": {
     "total_tokens": 60850,
     "input_tokens": 0,

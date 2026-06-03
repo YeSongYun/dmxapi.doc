@@ -24,29 +24,69 @@ HappyHorse 视频编辑模型支持输入视频与参考图，结合文本指令
 ```python
 import requests
 import json
+import base64
+import os
+
 
 # ═══════════════════════════════════════════════════════════════
-# 步骤1: 配置 API 连接信息
+# 🔑 步骤1: 配置 API 连接信息
 # ═══════════════════════════════════════════════════════════════
 
-# DMXAPI 服务端点地址
+# 🌐 DMXAPI 服务端点地址
 url = "https://www.dmxapi.cn/v1/responses"
 
-# DMXAPI 密钥 (请替换为您自己的密钥)
+# 🔐 DMXAPI 密钥 (请替换为您自己的密钥)
 # 获取方式: 登录 DMXAPI 官网 -> 个人中心 -> API 密钥管理
-api_key = "sk-******************************************"
+api_key = "sk-**********************************************"
 
 # ═══════════════════════════════════════════════════════════════
-# 步骤2: 配置请求头
+# 📋 步骤2: 配置请求头
 # ═══════════════════════════════════════════════════════════════
 
 headers = {
-    "Content-Type": "application/json",   # 指定请求体为 JSON 格式
-    "Authorization": f"{api_key}",        # token 认证方式
+    "Content-Type": "application/json",      # 指定请求体为 JSON 格式
+    "Authorization": f"{api_key}",           # token 认证方式
 }
 
 # ═══════════════════════════════════════════════════════════════
-# 步骤3: 配置请求参数
+# 📁 步骤3: 配置参考图片来源 (二选一即可)
+# ═══════════════════════════════════════════════════════════════
+
+# 【方式一】本地图片路径 (请替换为您自己的图片路径)
+reference_image_source = "C:/Users/a1/Pictures/wan-video-edit-clothes-1.webp"
+
+# 【方式二】网络图片 URL (支持 HTTP / HTTPS 协议)
+# reference_image_source = "https://help-static-aliyun-doc.aliyuncs.com/file-manage-files/zh-CN/20260415/hynnff/wan-video-edit-clothes.webp"
+
+
+# ╔═══════════════════════════════════════════════════════════════╗
+# ║        ⚙️ 图片处理逻辑（无需修改）                              ║
+# ╚═══════════════════════════════════════════════════════════════╝
+
+MIME_TYPE_MAP = {
+    ".jpg": "image/jpeg", ".jpeg": "image/jpeg",
+    ".png": "image/png",  ".webp": "image/webp",
+}
+
+def image_to_base64(image_path):
+    ext = os.path.splitext(image_path)[1].lower()
+    if ext not in MIME_TYPE_MAP:
+        raise ValueError(f"不支持的图片格式: {ext}，仅支持: {list(MIME_TYPE_MAP.keys())}")
+    mime_type = MIME_TYPE_MAP[ext]
+    with open(image_path, "rb") as f:
+        base64_data = base64.b64encode(f.read()).decode("utf-8")
+    return f"data:{mime_type};base64,{base64_data}"
+
+def resolve_image_url(image):
+    if image.startswith("http://") or image.startswith("https://"):
+        return image
+    return image_to_base64(image)
+
+reference_image_url = resolve_image_url(reference_image_source)
+
+
+# ═══════════════════════════════════════════════════════════════
+# 💬 步骤4: 配置请求参数
 # ═══════════════════════════════════════════════════════════════
 
 payload = {
@@ -54,7 +94,7 @@ payload = {
     # 固定值，使用 happyhorse-1.0-video-edit-15s 进行视频编辑
     "model": "happyhorse-1.0-video-edit-15s",
 
-    # 【input】(object, 必选) 输入信息，包括待编辑的视频、参考图片和提示词
+    # 【input】(array, 必选) 输入信息，包括待编辑的视频、参考图片和提示词
     "input": [{
         # 【prompt】(string, 必选) 文本提示词，描述对视频的编辑意图（如风格转换、局部替换）
         # 支持任何语言输入，最长 5000 个非中文字符或 2500 个中文字符，超出部分自动截断
@@ -77,10 +117,11 @@ payload = {
             {
                 # 【type】(string, 必选) 媒体素材类型，此处为参考图像
                 "type": "reference_image",
-                # 【url】(string, 必选) 参考图像的公网可访问 URL
+                # 【url】(string, 必选) 参考图像地址
+                # 既可以是公网 URL，也可以是本地图片转换后的 Base64 Data URL
                 # 图像要求: 格式 JPEG/JPG/PNG/WEBP，宽高尺寸不小于 300px
                 # 宽高比 1:2.5~2.5:1，文件大小不超过 10MB
-                "url": "https://help-static-aliyun-doc.aliyuncs.com/file-manage-files/zh-CN/20260415/hynnff/wan-video-edit-clothes.webp"
+                "url": reference_image_url
             }
         ]
     }],
@@ -107,31 +148,27 @@ payload = {
     }
 }
 
+
 # ═══════════════════════════════════════════════════════════════
-# 步骤4: 发送请求并输出结果
+# 📤 步骤5: 发送请求并输出结果
 # ═══════════════════════════════════════════════════════════════
 
-# 发送 POST 请求到 API 服务器
 response = requests.post(url, headers=headers, json=payload)
-
-# 格式化输出 JSON 响应
-# - indent=2: 缩进 2 空格，便于阅读
-# - ensure_ascii=False: 正确显示中文字符
 print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 ```
 
-### 返回示例
+## 返回示例
 
 ```json
 {
-  "request_id": "f9d01fac-abc7-99ed-925f-ad566360a93f",
+  "request_id": "ae9d104d-c0f8-9b55-8825-1aac95620735",
   "output": [
     {
       "type": "message",
       "content": [
         {
           "type": "output_text",
-          "text": "{\"task_id\":\"28aa37fd-eb06-44f0-b0df-e71afdeba3c6\",\"task_status\":\"PENDING\"}"
+          "text": "{\"task_id\":\"75719032-e04d-4c2c-91f4-bc7cb6b444fe\",\"task_status\":\"PENDING\"}"
         }
       ]
     }
@@ -149,8 +186,6 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
   }
 }
 ```
-
-> 返回的 `output[0].content[0].text` 为 JSON 字符串，其中 `task_id` 即为任务 ID，用于第二步查询结果。任务状态 `PENDING` 表示排队中，通常需等待 1~5 分钟后查询结果。
 
 ## 获取结果 示例代码
 

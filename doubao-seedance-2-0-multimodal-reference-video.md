@@ -23,19 +23,98 @@
 ```python
 import requests
 import json
+import base64
+import mimetypes
 
-# 步骤1: 配置 API 连接信息
+# ╔═══════════════════════════════════════════════════════════════╗
+# ║              👇 以下为用户配置区，按需修改                       ║
+# ╚═══════════════════════════════════════════════════════════════╝
+
+# ══════════════════════════════════════════════════════════════
+# 🔑 API 连接信息
+# ═══════════════════════════════════════════════════════════════
+
+# 🌐 DMXAPI 服务端点地址
 url = "https://www.dmxapi.cn/v1/responses"
-api_key = "sk-******************************************"
 
-# 步骤2: 配置请求头
+# 🔐 DMXAPI 密钥 (请替换为您自己的密钥)
+# 获取方式: 登录 DMXAPI 官网 -> 个人中心 -> API 密钥管理
+api_key = "sk-************************************************"
+
+# 📋 请求头
 headers = {
     "Content-Type": "application/json",
-    # token 认证方式，注意此处不加 Bearer 前缀
-    "Authorization": f"{api_key}",
+    "Authorization": f"{api_key}",           # token 认证方式，注意此处不加 Bearer 前缀
 }
 
-# 步骤3: 配置请求参数
+
+# ═══════════════════════════════════════════════════════════════
+# 📁 素材路径（图片/音频支持本地路径 或 公网URL，自动识别）
+# ═══════════════════════════════════════════════════════════════
+
+# 🖼️ 图片（支持本地路径 或 公网URL）
+image1_path = "C:/Users/a1/Pictures/1689320796087949.png"
+image2_path = "C:/Users/a1/Pictures/20230301120626930.jpg"
+
+# 🎵 音频（支持本地路径 或 公网URL）
+audio1_path = "C:/Users/a1/Pictures/3.mp3"
+
+# 🎬 视频（仅支持公网URL，不支持本地上传）
+video1_url = "https://ark-project.tos-cn-beijing.volces.com/doc_video/r2v_tea_video1.mp4"
+
+
+# ═══════════════════════════════════════════════════════════════
+# 📝 文本提示词
+# ═══════════════════════════════════════════════════════════════
+
+prompt_text = (
+    "全程使用视频1的第一视角构图，全程使用音频1作为背景音乐。"
+    "第一人称视角果茶宣传广告，seedance牌「苹苹安安」苹果果茶限定款；"
+    "首帧为图片1，你的手摘下一颗带晨露的阿克苏红苹果，轻脆的苹果碰撞声；"
+    "2-4 秒：快速切镜，你的手将苹果块投入雪克杯，加入冰块与茶底，用力摇晃，"
+    "冰块碰撞声与摇晃声卡点轻快鼓点，背景音：「鲜切现摇」；"
+    "4-6 秒：第一人称成品特写，分层果茶倒入透明杯，你的手轻挤奶盖在顶部铺展，"
+    "在杯身贴上粉红包标，镜头拉近看奶盖与果茶的分层纹理；"
+    "6-8 秒：第一人称手持举杯，你将图片2中的果茶举到镜头前（模拟递到观众面前的视角），"
+    "杯身标签清晰可见，背景音「来一口鲜爽」，尾帧定格为图片2。"
+    "背景声音统一为女生音色。"
+)
+
+
+# ╔═══════════════════════════════════════════════════════════════╗
+# ║               ⚙️ 内部工具函数（无需修改）                       ║
+# ╚═══════════════════════════════════════════════════════════════╝
+
+def is_url(path):
+    return path.startswith("http://") or path.startswith("https://")
+
+def file_to_base64_data_url(file_path, default_mime="application/octet-stream"):
+    mime_type, _ = mimetypes.guess_type(file_path)
+    if mime_type is None:
+        mime_type = default_mime
+    with open(file_path, "rb") as f:
+        encoded = base64.b64encode(f.read()).decode("utf-8")
+    return f"data:{mime_type};base64,{encoded}"
+
+def resolve_resource(path, default_mime="application/octet-stream"):
+    if is_url(path):
+        return path
+    else:
+        return file_to_base64_data_url(path, default_mime=default_mime)
+
+# 智能解析：本地文件自动转 base64，公网URL原样使用
+image1_data = resolve_resource(image1_path, default_mime="image/jpeg")
+image2_data = resolve_resource(image2_path, default_mime="image/jpeg")
+audio1_data = resolve_resource(audio1_path, default_mime="audio/mpeg")
+
+# ╔═══════════════════════════════════════════════════════════════╗
+# ║              👇 以下为请求参数配置，按需修改                      ║
+# ╚═══════════════════════════════════════════════════════════════╝
+
+# ═══════════════════════════════════════════════════════════════
+# 💬 请求参数
+# ═══════════════════════════════════════════════════════════════
+
 payload = {
     # 【model】(string, 必填) 模型 ID
     "model": "doubao-seedance-2-0-260128",
@@ -49,7 +128,7 @@ payload = {
             "type": "text",
             # 【text】(string, 可选) 文本提示词，建议中文不超过 500 字
             # 可用 "[图1]xxx，[图2]xxx" 格式指定多张图片的组合
-            "text": "全程使用视频1的第一视角构图，全程使用音频1作为背景音乐。第一人称视角果茶宣传广告，seedance牌「苹苹安安」苹果果茶限定款；首帧为图片1，你的手摘下一颗带晨露的阿克苏红苹果，轻脆的苹果碰撞声；2-4 秒：快速切镜，你的手将苹果块投入雪克杯，加入冰块与茶底，用力摇晃，冰块碰撞声与摇晃声卡点轻快鼓点，背景音：「鲜切现摇」；4-6 秒：第一人称成品特写，分层果茶倒入透明杯，你的手轻挤奶盖在顶部铺展，在杯身贴上粉红包标，镜头拉近看奶盖与果茶的分层纹理；6-8 秒：第一人称手持举杯，你将图片2中的果茶举到镜头前（模拟递到观众面前的视角），杯身标签清晰可见，背景音「来一口鲜爽」，尾帧定格为图片2。背景声音统一为女生音色。"
+            "text": prompt_text
         },
         {
             # 【type】(string, 必填) 输入类型，此处为图片
@@ -58,7 +137,7 @@ payload = {
                 # 【url】(string) 图片公网 URL、Base64 编码或素材 ID
                 # 支持格式：jpeg/png/webp/bmp/tiff/gif
                 # 宽高比范围 (0.4, 2.5)，宽高像素范围 (300, 6000)，单张小于 30 MB
-                "url": "https://ark-project.tos-cn-beijing.volces.com/doc_image/r2v_tea_pic1.jpg"
+                "url": image1_data
             },
             # 【role】(string, 条件必填) 图片角色，多模态参考场景固定为 reference_image
             "role": "reference_image"
@@ -66,7 +145,7 @@ payload = {
         {
             "type": "image_url",
             "image_url": {
-                "url": "https://ark-project.tos-cn-beijing.volces.com/doc_image/r2v_tea_pic2.jpg"
+                "url": image2_data
             },
             "role": "reference_image"
         },
@@ -77,7 +156,7 @@ payload = {
                 # 【url】(string) 视频公网 URL 或素材 ID
                 # 支持格式：mp4/mov，分辨率 480p/720p，帧率 [24, 60] FPS
                 # 单个视频时长 [2, 15]s，最多传入 3 个，总时长不超过 15s，大小不超过 50 MB
-                "url": "https://ark-project.tos-cn-beijing.volces.com/doc_video/r2v_tea_video1.mp4"
+                "url": video1_url
             },
             # 【role】(string, 条件必填) 视频角色，当前仅支持 reference_video（参考视频）
             "role": "reference_video"
@@ -88,7 +167,7 @@ payload = {
             "audio_url": {
                 # 【url】(string) 音频公网 URL、Base64 编码或素材 ID
                 # 支持格式：wav/mp3，单段时长 [2, 15]s，最多传入 3 段，总时长不超过 15s，大小不超过 15 MB
-                "url": "https://ark-project.tos-cn-beijing.volces.com/doc_audio/r2v_tea_audio1.mp3"
+                "url": audio1_data
             },
             # 【role】(string, 条件必填) 音频角色，当前仅支持 reference_audio（参考音频）
             "role": "reference_audio"
@@ -144,8 +223,10 @@ payload = {
     # "web_search"：联网搜索工具，模型自主判断是否搜索互联网内容，可提升视频时效性
     "tools": [{"type": "web_search"}]
 }
+# ═══════════════════════════════════════════════════════════════
+# 📤 发送请求并输出结果
+# ═══════════════════════════════════════════════════════════════
 
-# 步骤4: 发送请求并输出结果
 response = requests.post(url, headers=headers, json=payload)
 print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 ```
@@ -154,7 +235,7 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 
 ```json
 {
-  "id": "cgt-20260402203437-bfb5r",
+  "id": "cgt-20260602183016-gs6ll",
   "usage": {
     "total_tokens": 60850,
     "input_tokens": 0,

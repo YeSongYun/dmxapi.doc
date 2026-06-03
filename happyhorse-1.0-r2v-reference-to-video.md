@@ -22,100 +22,148 @@ HappyHorse-参考生视频模型支持传入多张参考图像，通过文本提
 ```python
 import requests
 import json
+import base64
+import mimetypes
 
-# 步骤1: 配置 API 连接信息
-# DMXAPI 服务端点地址
+
+# ═══════════════════════════════════════════════════════════════
+# 🔑 步骤1: 配置 API 连接信息
+# ═══════════════════════════════════════════════════════════════
+
+# 🌐 DMXAPI 服务端点地址
 url = "https://www.dmxapi.cn/v1/responses"
 
-# DMXAPI 密钥 (请替换为您自己的密钥)
-api_key = "sk-******************************************"
+# 🔐 DMXAPI 密钥 (请替换为您自己的密钥)
+# 获取方式: 登录 DMXAPI 官网 -> 个人中心 -> API 密钥管理
+api_key = "sk-***************************************************"
 
-# 步骤2: 配置请求头
+# ═══════════════════════════════════════════════════════════════
+# 📋 步骤2: 配置请求头
+# ═══════════════════════════════════════════════════════════════
+
 headers = {
     "Content-Type": "application/json",      # 指定请求体为 JSON 格式
     "Authorization": f"{api_key}",           # token 认证方式
 }
 
-# 步骤3: 配置请求参数
-payload = {
-    # 【model】(string, 必选) 模型名称
-    # 固定值: happyhorse-1.0-r2v
-    "model": "happyhorse-1.0-r2v",
-    # 【input】(array, 必选) 输入的基本信息，包括参考图像和提示词
-    # 数组中包含一个对象，对象有 prompt 和 media 两个字段
-    "input": [{
-        # 【prompt】(string, 必选) 文本提示词，用来描述生成视频中期望包含的元素和视觉特点
-        # 支持任何语言输入，长度不超过 5000 个非中文字符或 2500 个中文字符，超出部分会自动截断
-        # 参考指代：在prompt中通过“[Image 1]、[Image 2]”标识指代media数组中对应位置的参考图像，顺序与media数组顺序一致。使用
-        # 时需要指明参考图中的具体对象，例如“[Image 1]中身着红色旗袍的女性”。
-        #注意！prompt提示词中必须明确标明[Image 1]、[Image 2]等，否则模型会报错
-        "prompt": "[Image 1]中身着红色旗袍的女性，镜头先以侧面中景勾勒旗袍修身剪裁与S型曲线，随即切换至低角度仰拍，捕捉她轻抬玉手展开[Image 2]中的折扇的同时，[Image 3]中的流苏耳坠随头部转动轻盈摆动的细节，最后推近至面部特写，定格在她指尖轻点扇骨、眼波流转间的含蓄风情，多视角全方位展现东方韵味。",
-        # 【media】(array, 必选) 媒体素材列表，用于指定参考图像
-        # 数组的每个元素为一个媒体对象，包含 type 和 url 字段
-        # 按照数组顺序定义 prompt 中角色引用的顺序，第 1 个对应 character1，第 2 个对应 character2，以此类推
-        # 参考图像数量限制: 1~9 张
-        "media": [
-            {
-                # 【type】(string, 必选) 媒体素材类型
-                # 固定值: reference_image（参考图像）
-                "type": "reference_image",
-                # 【url】(string, 必选) 图像文件的 URL 地址，必须为公网可访问的 URL
-                # 支持 HTTP 或 HTTPS 协议，示例值: https://xxx/xxx.jpg
-                # 图像限制: 格式 JPEG/JPG/PNG/WEBP，短边不低于 400 像素，推荐 720P 以上，文件大小不超过 10MB
-                "url": "https://help-static-aliyun-doc.aliyuncs.com/file-manage-files/zh-CN/20260424/mvzfud/hh-v2v-girl.jpg"
-            },
-            {
-                "type": "reference_image",
-                "url": "https://help-static-aliyun-doc.aliyuncs.com/file-manage-files/zh-CN/20260424/fvuihk/hh-v2v2-folding-fan.jpg"
-            },
-            {
-                "type": "reference_image",
-                "url": "https://help-static-aliyun-doc.aliyuncs.com/file-manage-files/zh-CN/20260424/imerii/hh-v2v-earrings.jpg"
-            }
-        ]
-    }],
-    # 【parameters】(object, 可选) 视频生成参数，如设置视频分辨率、宽高比、时长等
-    "parameters": {
-        # 【resolution】(string, 可选) 生成视频的分辨率档位
-        # 可选值: "1080P"(默认) / "720P"
-        "resolution": "720P",
-        # 【ratio】(string, 可选) 生成视频的宽高比
-        # 可选值: "16:9"(默认) / "9:16" / "3:4" / "4:3" / "1:1"
-        "ratio": "16:9",
-        # 【duration】(integer, 可选) 生成视频的时长，单位为秒
-        # 取值范围: 3~15 之间的整数，默认值为 5
-        "duration": 5,
-        # 【watermark】(boolean, 可选) 是否在生成的视频上添加水印标识
-        # 水印位于视频右下角，文案固定为 "Happy Horse"
-        # 可选值: true(默认，添加水印) / false(不添加水印)
-        "watermark": True,
-        # 【seed】(integer, 可选) 随机数种子
-        # 取值范围: [0, 2147483647]，未指定时系统自动生成随机种子
-        # 若需提升生成结果的可复现性，建议固定 seed 值
-        # 注意: 由于模型生成具有概率性，即使使用相同 seed，也不能保证每次生成结果完全一致
-        "seed": 11
+# ═══════════════════════════════════════════════════════════════
+# 📁 步骤3: 配置参考图片来源 (本地路径 或 公网URL 任意混用)
+# ═══════════════════════════════════════════════════════════════
+
+# 按照数组顺序定义 prompt 中角色引用的顺序:
+#   第 1 个对应 [Image 1], 第 2 个对应 [Image 2], 以此类推
+# 参考图像数量限制: 1~9 张
+#
+# 每个元素既可以是本地文件路径, 也可以是公网 URL 地址, 程序会自动识别:
+#   - 本地路径示例: "C:/Users/15664/Desktop/hh-v2v-girl.jpg"
+#   - 公网 URL 示例: "https://xxx/xxx.jpg"
+reference_image_sources = [
+    # 示例1: 本地图片路径 (请替换为您自己的图片路径)
+    "C:/Users/a1/Pictures/hh-v2v-girl01.jpg",
+
+    # 示例2: 公网 URL 地址 (与本地路径可混用)
+    "https://help-static-aliyun-doc.aliyuncs.com/file-manage-files/zh-CN/20260424/fvuihk/hh-v2v2-folding-fan.jpg",
+
+    # 示例3: 本地图片路径
+    "C:/Users/a1/Pictures/hh-v2v-earrings03.jpg",
+]
+
+
+# ╔═══════════════════════════════════════════════════════════════╗
+# ║        ⚙️ 图片处理逻辑（无需修改）                              ║
+# ╚═══════════════════════════════════════════════════════════════╝
+
+def image_to_base64(image_path):
+    mime_map = {
+        ".jpg": "image/jpeg", ".jpeg": "image/jpeg",
+        ".png": "image/png",  ".webp": "image/webp",
     }
+    ext = "." + image_path.rsplit(".", 1)[-1].lower()
+    mime_type = mime_map.get(ext)
+    if mime_type is None:
+        mime_type = mimetypes.guess_type(image_path)[0] or "image/png"
+    with open(image_path, "rb") as f:
+        base64_data = base64.b64encode(f.read()).decode("utf-8")
+    return f"data:{mime_type};base64,{base64_data}"
+
+def build_image_url(image_source):
+    src = image_source.strip()
+    if src.lower().startswith(("http://", "https://")):
+        return src
+    else:
+        return image_to_base64(src)
+
+media_list = []
+for source in reference_image_sources:
+    media_list.append({
+        "type": "reference_image",
+        "url": build_image_url(source),
+    })
+
+
+# ═══════════════════════════════════════════════════════════════
+# 💬 步骤4: 配置请求参数
+# ═══════════════════════════════════════════════════════════════
+
+payload = {
+    # 【model】(string, 必选) 模型名称, 固定值: happyhorse-1.0-r2v
+    "model": "happyhorse-1.0-r2v",
+
+    # 【input】(array, 必选) 输入的基本信息, 包括参考图像和提示词
+    "input": [{
+        # 【prompt】(string, 必选) 文本提示词
+        # 支持任何语言, 长度不超过 5000 个非中文字符或 2500 个中文字符
+        # 注意! prompt 中必须明确标明 [Image 1]、[Image 2] 等, 否则模型会报错
+        "prompt": (
+            "[Image 1]中身着红色旗袍的女性，镜头先以侧面中景勾勒旗袍修身剪裁与S型曲线，"
+            "随即切换至低角度仰拍，捕捉她轻抬玉手展开[Image 2]中的折扇的同时，"
+            "[Image 3]中的流苏耳坠随头部转动轻盈摆动的细节，最后推近至面部特写，"
+            "定格在她指尖轻点扇骨、眼波流转间的含蓄风情，多视角全方位展现东方韵味。"
+        ),
+
+        # 【media】(array, 必选) 媒体素材列表
+        # 由步骤3的 reference_image_sources 自动构建, 无需手动修改
+        "media": media_list,
+    }],
+
+    # 【parameters】(object, 可选) 视频生成参数
+    "parameters": {
+        # 【resolution】(string, 可选) 分辨率档位: "1080P"(默认) / "720P"
+        "resolution": "720P",
+        # 【ratio】(string, 可选) 宽高比: "16:9"(默认)/"9:16"/"3:4"/"4:3"/"1:1"
+        "ratio": "16:9",
+        # 【duration】(integer, 可选) 时长(秒), 取值 3~15, 默认 5
+        "duration": 3,
+        # 【watermark】(boolean, 可选) 是否添加水印, true(默认)/false
+        # 水印位于视频右下角, 文案固定为 "Happy Horse"
+        "watermark": True,
+        # 【seed】(integer, 可选) 随机数种子, 取值 [0, 2147483647]
+        # 固定 seed 可提升结果可复现性 (但不保证完全一致)
+        "seed": 11,
+    },
 }
 
-# 步骤4: 发送请求并输出结果
-response = requests.post(url, headers=headers, json=payload)
 
-# 格式化输出 JSON 响应
+# ═══════════════════════════════════════════════════════════════
+# 📤 步骤5: 发送请求并输出结果
+# ═══════════════════════════════════════════════════════════════
+
+response = requests.post(url, headers=headers, json=payload)
 print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 ```
 
-### 返回示例
+## 返回示例
 
 ```json
 {
-  "request_id": "b6a5987e-d3d3-9b95-8466-f6cd427766c7",
+  "request_id": "3adf70fc-8ad8-98b2-b56e-b5741e21fd58",
   "output": [
     {
       "type": "message",
       "content": [
         {
           "type": "output_text",
-          "text": "{\"task_id\":\"3ee935d2-e094-4146-8878-ade4d9336403\",\"task_status\":\"PENDING\"}"
+          "text": "{\"task_id\":\"f6801082-d1f5-470b-b81e-74360fe72d29\",\"task_status\":\"PENDING\"}"
         }
       ]
     }
@@ -125,11 +173,11 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
     "input_tokens_details": {
       "cached_tokens": 0
     },
-    "output_tokens": 45000,
+    "output_tokens": 27000,
     "output_tokens_details": {
       "reasoning_tokens": 0
     },
-    "total_tokens": 45000
+    "total_tokens": 27000
   }
 }
 ```
@@ -184,7 +232,7 @@ except (KeyError, IndexError, json.JSONDecodeError) as e:
     print("\n解析 video_url 失败:", e)
 ```
 
-### 返回示例
+## 返回示例
 
 ```json
 {

@@ -23,27 +23,75 @@ doubao-seedance-2-0-fast-260128 首尾帧生视频是字节跳动豆包 Seedance
 ```python
 import requests
 import json
+import base64
+import os
 
-# 步骤1: 配置 API 连接信息
 
-# DMXAPI 服务端点地址
+# ╔═══════════════════════════════════════════════════════════════╗
+# ║               🔑 API 配置（请替换为您自己的密钥）               ║
+# ╚═══════════════════════════════════════════════════════════════╝
+
+# 🌐 DMXAPI 服务端点地址
 url = "https://www.dmxapi.cn/v1/responses"
 
-# DMXAPI 密钥 (请替换为您自己的密钥)
-api_key = "sk-******************************************"
+# 🔐 DMXAPI 密钥
+api_key = "sk-****************************************"
 
-# 步骤2: 配置请求头
+
+# ╔═══════════════════════════════════════════════════════════════╗
+# ║          🖼️ 图片来源（填写网络 URL 或本地文件路径均可）          ║
+# ╚═══════════════════════════════════════════════════════════════╝
+
+# 方式一: 使用网络 URL
+# first_frame_source = "https://img.shetu66.com/2023/07/14/1689320796087949.png"
+# last_frame_source  = "https://img.sucaijishi.com/uploadfile/2023/0301/20230301120626930.png"
+
+# 方式二: 使用本地图片路径
+first_frame_source = "C:/Users/a1/Pictures/1689320796087949.png"    # 首帧图片
+last_frame_source  = "C:/Users/a1/Pictures/20230301120626930.jpg"   # 尾帧图片
+
+
+# ╔═══════════════════════════════════════════════════════════════╗
+# ║              📦 图片处理工具函数（无需修改）                     ║
+# ╚═══════════════════════════════════════════════════════════════╝
+
+def image_to_base64(image_path):
+    ext = os.path.splitext(image_path)[1].lower().lstrip(".")
+    if ext == "jpg":
+        ext = "jpeg"
+    with open(image_path, "rb") as f:
+        base64_str = base64.b64encode(f.read()).decode("utf-8")
+    return f"data:image/{ext};base64,{base64_str}"
+
+
+def resolve_image(image_source):
+    if image_source.startswith(("http://", "https://", "data:image")):
+        return image_source
+    else:
+        return image_to_base64(image_source)
+
+
+first_frame_url = resolve_image(first_frame_source)
+last_frame_url  = resolve_image(last_frame_source)
+
+
+# ╔═══════════════════════════════════════════════════════════════╗
+# ║                 📋 请求头配置（无需修改）                       ║
+# ╚═══════════════════════════════════════════════════════════════╝
 
 headers = {
     "Content-Type": "application/json",
     "Authorization": f"{api_key}",
 }
 
-# 步骤3: 配置请求参数
+
+# ╔═══════════════════════════════════════════════════════════════╗
+# ║                 🎬 请求参数配置（按需修改）                     ║
+# ╚═══════════════════════════════════════════════════════════════╝
 
 payload = {
     # 【model】(string, 必填) 模型 ID
-    "model": "doubao-seedance-2-0-fast-260128",
+    "model": "doubao-seedance-2-0-260128",
 
     # 【input】(array, 必填) 输入内容列表
     # 首尾帧生视频场景：文本（可选）+ 首帧图片 + 尾帧图片
@@ -63,7 +111,7 @@ payload = {
                 # 【input[].image_url.url】(string, 必填) 图片 URL、Base64 编码或素材 ID
                 # 格式：jpeg、png、webp、bmp、tiff、gif
                 # 宽高比（宽/高）范围：(0.4, 2.5)；宽高像素：(300, 6000)；单张大小 < 30 MB
-                "url": "https://img.shetu66.com/2023/07/14/1689320796087949.png"
+                "url": first_frame_url
             },
             # 【input[].role】(string, 条件必填) 图片位置/用途
             # 首帧图片填 "first_frame"，尾帧图片填 "last_frame"
@@ -73,7 +121,7 @@ payload = {
         {
             "type": "image_url",
             "image_url": {
-                "url": "https://img.sucaijishi.com/uploadfile/2023/0301/20230301120626930.png?imageMogr2/format/jpg/blur/1x0/quality/60"
+                "url": last_frame_url
             },
             # 尾帧图片对应的 role 为 "last_frame"
             "role": "last_frame"
@@ -87,7 +135,7 @@ payload = {
 
     # 【resolution】(string, 可选) 视频分辨率，默认值 "720p"
     # 可选值："480p" / "720p"（seedance 2.0 fast 不支持 "1080p"）
-    "resolution": "720p",
+    "resolution": "480p",
 
     # 【ratio】(string, 可选) 视频宽高比，默认值 "adaptive"
     # 可选值："16:9" / "4:3" / "1:1" / "3:4" / "9:16" / "21:9" / "adaptive"
@@ -96,7 +144,7 @@ payload = {
 
     # 【duration】(integer, 可选) 视频时长（秒），默认值 5
     # seedance 2.0 & 2.0 fast 支持取值范围 [4, 15]，或设置为 -1 由模型智能选择
-    "duration": 5,
+    "duration": 4,
 
     # 【seed】(integer, 可选) 随机种子，默认值 -1
     # 取值范围：[-1, 2^32-1]；-1 表示使用随机数
@@ -127,10 +175,12 @@ payload = {
     "tools": [{"type": "web_search"}]
 }
 
-# 步骤4: 发送请求并输出结果
+
+# ╔═══════════════════════════════════════════════════════════════╗
+# ║                 📤 发送请求并输出结果（无需修改）                ║
+# ╚═══════════════════════════════════════════════════════════════╝
 
 response = requests.post(url, headers=headers, json=payload)
-
 print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 ```
 
@@ -138,14 +188,14 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 
 ```json
 {
-  "id": "cgt-20260424185225-sb9vm",
+  "id": "cgt-20260602185051-tjq4f",
   "usage": {
-    "total_tokens": 40200,
+    "total_tokens": 18480,
     "input_tokens": 0,
     "input_tokens_details": {
       "cached_tokens": 0
     },
-    "output_tokens": 40200,
+    "output_tokens": 18480,
     "output_tokens_details": {
       "reasoning_tokens": 0
     }
