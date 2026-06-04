@@ -109,7 +109,7 @@ print("=" * 60)
 response = requests.post(url, headers=headers, json=data)
 result = response.json()
 
-if "candidates" in result:
+if result.get("candidates"):
     print("\n" + "=" * 60)
     print("响应解析成功！")
     print("=" * 60 + "\n")
@@ -419,7 +419,7 @@ print("=" * 60)
 response = requests.post(url, headers=headers, json=data)
 result = response.json()
 
-if "candidates" in result:
+if result.get("candidates"):
     print("\n" + "=" * 60)
     print("响应解析成功！")
     print("=" * 60 + "\n")
