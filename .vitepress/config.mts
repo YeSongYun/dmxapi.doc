@@ -280,7 +280,7 @@ export default defineConfig({
                 collapsed: true,
                 items: [
                   {
-                text: 'gemini-3.1-flash-image-preview',
+                text: 'gemini-3.1-flash-image',
                 collapsed: true,
                 items: [
                   { text: '文生图', link: '/gemini-3.1-flash-image-preview' },
@@ -291,7 +291,7 @@ export default defineConfig({
                 },
 
                   {
-                text: 'gemini-3-pro-image-preview',
+                text: 'gemini-3-pro-image',
                 collapsed: true,
                 items: [
                   { text: '文生图', link: '/img-3pro-t2i' },

@@ -1,18 +1,18 @@
-# Gemini 3.1 Flash Image Preview 多轮图片修改 API 文档
+# Gemini 3.1 Flash Image 多轮图片修改 API 文档
 
-Gemini 3.1 Flash Image Preview 的多轮图片修改功能支持你以"对话"的方式来生成并持续调整图片：你可以先用一句话描述想要的画面生成初稿，然后像和设计师沟通一样，在后续轮次里不断补充细节或提出修改要求，例如更换背景、调整风格与色调、添加或删除元素、改变人物姿态与表情等。系统会理解上下文并记住前几轮的修改结果，每一次调整都会基于上一张图继续迭代，因此不需要你反复从头描述。整体上，建议用聊天或多轮对话逐步打磨作品，从"先有大方向"到"再精修细节"，效率更高、效果也更可控。
+Gemini 3.1 Flash Image 的多轮图片修改功能支持你以"对话"的方式来生成并持续调整图片：你可以先用一句话描述想要的画面生成初稿，然后像和设计师沟通一样，在后续轮次里不断补充细节或提出修改要求，例如更换背景、调整风格与色调、添加或删除元素、改变人物姿态与表情等。系统会理解上下文并记住前几轮的修改结果，每一次调整都会基于上一张图继续迭代，因此不需要你反复从头描述。整体上，建议用聊天或多轮对话逐步打磨作品，从"先有大方向"到"再精修细节"，效率更高、效果也更可控。
 
 ## 模型名称
 
-### Gemini 3.1 Flash Image Preview
-- **模型名称**: `gemini-3.1-flash-image-preview`
+### Gemini 3.1 Flash Image
+- **模型名称**: `gemini-3.1-flash-image`
 - **特点**: 支持多轮对话式图片修改，每轮基于上一张图迭代调整
 - **新特性**: 支持 Image Search（图片搜索），支持 Thinking 思考配置
 
 ## 接口地址
 
 ```
-https://www.dmxapi.cn/v1beta/models/gemini-3.1-flash-image-preview:generateContent
+https://www.dmxapi.cn/v1beta/models/gemini-3.1-flash-image:generateContent
 
 ```
 :::warning 注意：
@@ -45,7 +45,7 @@ from datetime import datetime
 # ==============================================================================
 
 # API 请求地址
-url = "https://www.dmxapi.cn/v1beta/models/gemini-3.1-flash-image-preview:generateContent"
+url = "https://www.dmxapi.cn/v1beta/models/gemini-3.1-flash-image:generateContent"
 
 # API 密钥（请妥善保管，不要泄露）
 api_key = "sk-***************************************"
@@ -234,7 +234,7 @@ from datetime import datetime
 # ==============================================================================
 
 # API 请求地址
-url = "https://www.dmxapi.cn/v1beta/models/gemini-3.1-flash-image-preview:generateContent"
+url = "https://www.dmxapi.cn/v1beta/models/gemini-3.1-flash-image:generateContent"
 
 # API 密钥（请妥善保管，不要泄露）
 api_key = "sk-*********************************************"

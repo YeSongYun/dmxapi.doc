@@ -1,9 +1,9 @@
-# Gemini 3 Pro Image Preview 多图融合
+# Gemini 3 Pro Image 多图融合
 多图融合功能允许你将多张图像智能融合生成新图像，支持对象合成、场景混合等多种创意应用。通过简单的提示词即可实现复杂的图像合成效果。
 
 ## 接口地址
 ```
-https://www.dmxapi.cn/v1beta/models/gemini-3-pro-image-preview:generateContent
+https://www.dmxapi.cn/v1beta/models/gemini-3-pro-image:generateContent
 ```
 
 :::warning 注意：
@@ -12,7 +12,8 @@ https://www.dmxapi.cn/v1beta/models/gemini-3-pro-image-preview:generateContent
 
 ## 模型名称
 
-- `gemini-3-pro-image-preview`：支持 1K/2K/4K 分辨率，最多 6 张对象图片 + 5 张角色图片，10 种宽高比
+- `gemini-3-pro-image`：支持 1K/2K/4K 分辨率，最多 6 张对象图片 + 5 张角色图片，10 种宽高比
+- **别名**: Nano Banana Pro（香蕉Pro）
 
 ## 示例代码
 
@@ -39,7 +40,7 @@ api_key = "sk-*********************************************"  # 替换为你的 
 BASE_URL = "https://www.dmxapi.cn"
 
     # ┌──────────────────────────────────────┐
-    # │ Gemini 3 Pro Image 预览版             │
+    # │ Gemini 3 Pro Image                    │
     # ├──────────────────────────────────────┤
     # │ 最多 6 张高保真对象图片               │
     # │ 用于包含在最终图片中                  │
@@ -73,7 +74,7 @@ prompt = (
 
 response = client.models.generate_content(
     # 模型名称
-    model="gemini-3-pro-image-preview",
+    model="gemini-3-pro-image",
 
     contents=[prompt] + images,
 
@@ -89,7 +90,7 @@ response = client.models.generate_content(
             # aspect_ratio: 设置输出图片的宽高比（注意：使用下划线命名）
             #
             # ┌─────────────────────────────────────────────────────────────────┐
-            # │ Gemini 3 Pro Image 预览版                                        │
+            # │ Gemini 3 Pro Image                                               │
             # ├──────────┬─────────────┬────────┬─────────────┬───────────────┐│
             # │ 宽高比    │ 1K 分辨率   │ 1K令牌  │ 2K 分辨率   │ 4K 分辨率      ││
             # ├──────────┼─────────────┼────────┼─────────────┼───────────────┤│
@@ -180,7 +181,7 @@ BASE_URL = "https://www.dmxapi.cn/v1beta"
 # 图片配置
 # ========================================
     # ┌──────────────────────────────────────┐
-    # │ Gemini 3 Pro Image 预览版             │
+    # │ Gemini 3 Pro Image                    │
     # ├──────────────────────────────────────┤
     # │ 最多 6 张高保真对象图片               │
     # │ 用于包含在最终图片中                  │
@@ -236,7 +237,7 @@ for path in INPUT_IMAGE_PATHS:
         })
 
 payload = {
-    "model": "gemini-3-pro-image-preview",                   # 指定使用的 AI 模型
+    "model": "gemini-3-pro-image",                   # 指定使用的 AI 模型
     "contents": [{
         "parts": [
             {"text": "将CL二维码.png中的二维码换到cl.png中."},  # 图片生成提示词
@@ -254,7 +255,7 @@ payload = {
             # aspectRatio: 设置输出图片的宽高比
             #
             # ┌─────────────────────────────────────────────────────────────────┐
-            # │ Gemini 3 Pro Image 预览版                                        │
+            # │ Gemini 3 Pro Image                                               │
             # ├──────────┬─────────────┬────────┬─────────────┬───────────────┐│
             # │ 宽高比    │ 1K 分辨率   │ 1K令牌  │ 2K 分辨率   │ 4K 分辨率      ││
             # ├──────────┼─────────────┼────────┼─────────────┼───────────────┤│

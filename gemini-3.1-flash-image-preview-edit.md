@@ -1,10 +1,10 @@
-# Gemini 3.1 Flash Image Preview 图片编辑
-使用 Gemini 3.1 Flash Image Preview 模型进行智能图片编辑
+# Gemini 3.1 Flash Image 图片编辑
+使用 Gemini 3.1 Flash Image 模型进行智能图片编辑
 
 ## 接口地址
 
 ```
-https://www.dmxapi.cn/v1beta/models/gemini-3.1-flash-image-preview:generateContent
+https://www.dmxapi.cn/v1beta/models/gemini-3.1-flash-image:generateContent
 
 ```
 :::warning 注意：
@@ -13,8 +13,8 @@ https://www.dmxapi.cn/v1beta/models/gemini-3.1-flash-image-preview:generateConte
 
 ## 模型名称
 
-### Gemini 3.1 Flash Image Preview
-- **模型名称**: `gemini-3.1-flash-image-preview`
+### Gemini 3.1 Flash Image
+- **模型名称**: `gemini-3.1-flash-image`
 - **特点**: 速度优先，支持 1K/2K/4K 分辨率，支持 Image Search 和 Thinking
 
 ## 示例代码
@@ -65,7 +65,7 @@ prompt = (
 
 response = client.models.generate_content(
     # 模型名称
-    model="gemini-3.1-flash-image-preview",
+    model="gemini-3.1-flash-image",
 
     # 输入内容：提示词 + 原始图像
     contents=[prompt, image],
@@ -82,7 +82,7 @@ response = client.models.generate_content(
             # aspect_ratio: 设置输出图片的宽高比（注意：使用驼峰命名）
             #
             # ┌────────────────────────────────────────────────────────────────┐
-            # │ Gemini 3.1 Flash Image 预览版                                   │
+            # │ Gemini 3.1 Flash Image                                          │
             # ├──────────┬─────────────┬────────┬─────────────┬────────────┤
             # │ 宽高比    │ 1K 分辨率   │ 1K令牌  │ 2K 分辨率   │ 4K 分辨率  │
             # ├──────────┼─────────────┼────────┼─────────────┼────────────┤
@@ -174,7 +174,7 @@ for part in response.parts:
 ```python [request]
 """
 ================================================================
-Gemini 3.1 Flash Image Preview 图文生图示例
+Gemini 3.1 Flash Image 图文生图示例
 ================================================================
 功能说明：
     使用 Google Gemini API 的接口，根据文字提示词和输入图片生成新图片。
@@ -236,7 +236,7 @@ headers = {
 img_base64, mime_type = encode_image_to_base64(INPUT_IMAGE_PATH)
 
 payload = {
-    "model": "gemini-3.1-flash-image-preview",                          # 指定使用的 AI 模型
+    "model": "gemini-3.1-flash-image",                          # 指定使用的 AI 模型
     "contents": [{
         "parts": [
             {"text": "在图像中加入梵高的自画像,画面左上角有今天的日期"},
@@ -259,7 +259,7 @@ payload = {
             # aspectRatio: 设置输出图片的宽高比
             #
             # ┌────────────────────────────────────────────────────────────────┐
-            # │ Gemini 3.1 Flash Image 预览版                                   │
+            # │ Gemini 3.1 Flash Image                                          │
             # ├──────────┬─────────────┬────────┬─────────────┬────────────┤
             # │ 宽高比    │ 1K 分辨率   │ 1K令牌  │ 2K 分辨率   │ 4K 分辨率  │
             # ├──────────┼─────────────┼────────┼─────────────┼────────────┤
