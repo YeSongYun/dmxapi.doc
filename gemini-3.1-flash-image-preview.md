@@ -333,5 +333,5 @@ else:
 ---
 
 <p align="center">
-  <small>© 2025 DMXAPI Gemini模型</small>
+  <small>© 2026 DMXAPI Gemini模型</small>
 </p>
