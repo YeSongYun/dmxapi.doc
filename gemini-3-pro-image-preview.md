@@ -1,6 +1,6 @@
-# gemini-3-pro-image-preview 返回格式变化的说明
+# gemini-3-pro-image 返回格式变化的说明
 
-`gemini-3-pro-image-preview` 是 Google 最新推出的图像生成与处理模型，支持图像输入和多模态推理。在实际使用中，部分用户反馈该模型的返回格式存在不确定性：同一提示词可能返回标准的 `inlineData` 结构，也可能返回文本形式的 base64 字符串。本文档记录了这一现象，并提供可复现的测试代码。
+`gemini-3-pro-image` 是 Google 最新推出的图像生成与处理模型，支持图像输入和多模态推理。在实际使用中，部分用户反馈该模型的返回格式存在不确定性：同一提示词可能返回标准的 `inlineData` 结构，也可能返回文本形式的 base64 字符串。本文档记录了这一现象，并提供可复现的测试代码。
 
 ## 常规的返回格式
 
@@ -42,7 +42,7 @@
     ],
     "thoughtsTokenCount": 748
   },
-  "modelVersion": "gemini-3-pro-image-preview",
+  "modelVersion": "gemini-3-pro-image",
   "responseId": "DOd6afWPNZfjjrEPpZ3c0AM"
 }
 
@@ -75,7 +75,7 @@ import requests
 import json
 
 # API 配置
-url = "https://www.dmxapi.cn/v1beta/models/gemini-3-pro-image-preview:generateContent"
+url = "https://www.dmxapi.cn/v1beta/models/gemini-3-pro-image:generateContent"
 headers = {
     "Content-Type": "application/json",
     "Authorization": "sk-******************************" #请填写您的密钥
@@ -147,12 +147,12 @@ except (json.JSONDecodeError, ValueError) as e:
     ],
     "thoughtsTokenCount": 959
   },
-  "modelVersion": "gemini-3-pro-image-preview",
+  "modelVersion": "gemini-3-pro-image",
   "responseId": "s-h6aY_uI4jQ-8YP8ZmUuAE"
 }
 ```
 
 <p align="center">
-  <small>© 2026 DMXAPI gemini-3-pro-image-preview 返回格式变化的说明</small>
+  <small>© 2026 DMXAPI gemini-3-pro-image 返回格式变化的说明</small>
 </p>
 

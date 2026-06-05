@@ -1,8 +1,8 @@
-# Gemini 3.1 Flash Image Preview 文生图（Nano Banana 2）
-通过 Gemini 3.1 Flash Image Preview 模型生成高质量图像，支持多种宽高比和分辨率配置。
+# Gemini 3.1 Flash Image 文生图（Nano Banana 2）
+通过 Gemini 3.1 Flash Image 模型生成高质量图像，支持多种宽高比和分辨率配置。
 
-:::tip 推荐模型：gemini-3.1-flash-image-preview
-**Gemini 3.1 Flash Image Preview** 是目前最新的图像生成模型，相比前代有以下重要升级：
+:::tip 推荐模型：gemini-3.1-flash-image
+**Gemini 3.1 Flash Image** 是目前最新的图像生成模型，相比前代有以下重要升级：
 - **多档分辨率**：支持  1K / 2K / 4K 三档分辨率
 - **更多宽高比**：新增 1:4、4:1、1:8、8:1 等极端比例，共支持 14 种宽高比
 - **Image Search 图片搜索**：全新工具，可从网络图片中获取视觉参考辅助生成
@@ -13,7 +13,7 @@
 ## 接口地址
 
 ```
-https://www.dmxapi.cn/v1beta/models/gemini-3.1-flash-image-preview:generateContent
+https://www.dmxapi.cn/v1beta/models/gemini-3.1-flash-image:generateContent
 
 ```
 :::warning 注意：
@@ -22,8 +22,8 @@ https://www.dmxapi.cn/v1beta/models/gemini-3.1-flash-image-preview:generateConte
 
 ## 模型名称
 
-### Gemini 3.1 Flash Image Preview
-- **模型名称**: `gemini-3.1-flash-image-preview`
+### Gemini 3.1 Flash Image
+- **模型名称**: `gemini-3.1-flash-image`
 - **别名**: Nano Banana 2
 - **特点**: 速度优先，支持 1K/2K/4K 分辨率
 - **新特性**: 支持 Image Search（图片搜索）生成、Thinking 思考配置
@@ -69,7 +69,7 @@ prompt = (
 
 response = client.models.generate_content(
     # 模型名称
-    model="gemini-3.1-flash-image-preview",
+    model="gemini-3.1-flash-image",
 
     # 输入内容
     contents=[prompt],
@@ -86,7 +86,7 @@ response = client.models.generate_content(
             # aspect_ratio: 设置输出图片的宽高比（注意：使用驼峰命名）
             #
             # ┌────────────────────────────────────────────────────────────────┐
-            # │ Gemini 3.1 Flash Image 预览版                                   │
+            # │ Gemini 3.1 Flash Image                                          │
             # ├──────────┬─────────────┬────────┬─────────────┬────────────┤
             # │ 宽高比    │ 1K 分辨率   │ 1K令牌  │ 2K 分辨率   │ 4K 分辨率  │
             # ├──────────┼─────────────┼────────┼─────────────┼────────────┤
@@ -162,7 +162,7 @@ for part in response.parts:
 
 ```python [request]
 """
-Gemini 3.1 Flash Image Preview - 文生图 API 调用示例
+Gemini 3.1 Flash Image - 文生图 API 调用示例
 =================================================
 """
 
@@ -176,7 +176,7 @@ import base64    # Base64 编解码库
 API_KEY = "sk-****************************************"
 
 # API 请求地址
-API_URL = "https://www.dmxapi.cn/v1beta/models/gemini-3.1-flash-image-preview:generateContent"
+API_URL = "https://www.dmxapi.cn/v1beta/models/gemini-3.1-flash-image:generateContent"
 
 # ============================================================================
 # 请求头
@@ -213,7 +213,7 @@ data = {
             # aspectRatio: 设置输出图片的宽高比
             #
             # ┌────────────────────────────────────────────────────────────────┐
-            # │ Gemini 3.1 Flash Image 预览版                                   │
+            # │ Gemini 3.1 Flash Image                                          │
             # ├──────────┬─────────────┬────────┬─────────────┬────────────┤
             # │ 宽高比    │ 1K 分辨率   │ 1K令牌  │ 2K 分辨率   │ 4K 分辨率  │
             # ├──────────┼─────────────┼────────┼─────────────┼────────────┤
@@ -327,11 +327,11 @@ else:
 - 生成的图像会自动保存到 `output` 文件夹（如不存在会自动创建）
 - `response_modalities` 参数可以控制返回内容类型（仅图像或图像+文本）
 - 为获得最佳性能，请使用以下语言：英语、阿拉伯语（埃及）、德语（德国）、西班牙语（墨西哥）、法语（法国）、印地语（印度）、印度尼西亚语（印度尼西亚）、意大利语（意大利）、日语（日本）、韩语（韩国）、葡萄牙语（巴西）、俄语（俄罗斯）、乌克兰语（乌克兰）、越南语（越南）、中文（中国）。
-- gemini-3.1-flash-image-preview 支持额外的 1:4, 4:1, 1:8, 8:1 宽高比。
-- gemini-3.1-flash-image-preview 支持 Image Search 图片搜索工具，可从网络图片中获取视觉参考。
+- gemini-3.1-flash-image 支持额外的 1:4, 4:1, 1:8, 8:1 宽高比。
+- gemini-3.1-flash-image 支持 Image Search 图片搜索工具，可从网络图片中获取视觉参考。
 
 ---
 
 <p align="center">
-  <small>© 2025 DMXAPI Gemini模型</small>
+  <small>© 2026 DMXAPI Gemini模型</small>
 </p>
