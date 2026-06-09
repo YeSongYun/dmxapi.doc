@@ -187,7 +187,6 @@ def main() -> None:
     image_files = [
         'img/forget-password1.png',
         'img/forget-password2.png',
-        'img/forget-password3.png',
         'img/forget-password4.png',
         'img/forget-password5.png',
         'img/forget-password6.png',
