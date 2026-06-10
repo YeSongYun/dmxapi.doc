@@ -112,6 +112,7 @@ export default defineConfig({
             items: [
               { text: '快速开始', link: '/kaishi' },
               { text: '注册教程', link: '/ZC' },
+              { text: '重置密码教程', link: '/forget-password' },
               { text: '充值教程', link: '/CZ' },
               { text: '如何新建令牌Key', link: '/lingpai' },
               { text: '获得 Base url', link: '/baseurl' },
@@ -280,7 +281,7 @@ export default defineConfig({
                 collapsed: true,
                 items: [
                   {
-                text: 'gemini-3.1-flash-image-preview',
+                text: 'gemini-3.1-flash-image',
                 collapsed: true,
                 items: [
                   { text: '文生图', link: '/gemini-3.1-flash-image-preview' },
@@ -291,7 +292,7 @@ export default defineConfig({
                 },
 
                   {
-                text: 'gemini-3-pro-image-preview',
+                text: 'gemini-3-pro-image',
                 collapsed: true,
                 items: [
                   { text: '文生图', link: '/img-3pro-t2i' },
@@ -862,6 +863,7 @@ export default defineConfig({
 
           // { text: 'Claude code(推荐)', link: '/claude-code' },
           { text: 'Claude code(推荐)', link: '/claude-code-new' },
+          { text: 'cc switch配置claude code桌面端', link: '/cc_switch_to_claude_code_desktop' },
           { text: 'cc switch配置codex', link: '/cc_switch' },
           // { text: 'cc switch配置claude code', link: '/cc_switch_to_claude code' },
           { text: 'Qwen3 coder', link: '/qwen-coder' },

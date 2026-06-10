@@ -1,11 +1,11 @@
-# Gemini 3 Pro Image Preview 图片编辑
+# Gemini 3 Pro Image 图片编辑
 
 使用 Gemini 3 Pro Image 模型进行智能图片编辑
 
 ## 接口地址
 
 ```
-https://www.dmxapi.cn/v1beta/models/gemini-3-pro-image-preview:generateContent
+https://www.dmxapi.cn/v1beta/models/gemini-3-pro-image:generateContent
 ```
 :::warning 注意：
 需要升级谷歌sdk为最新版
@@ -13,7 +13,8 @@ https://www.dmxapi.cn/v1beta/models/gemini-3-pro-image-preview:generateContent
 
 ## 模型名称
 
-- `gemini-3-pro-image-preview`：支持 1K/2K/4K 分辨率的高级图像编辑模型
+- `gemini-3-pro-image`：支持 1K/2K/4K 分辨率的高级图像编辑模型
+- **别名**: Nano Banana Pro（香蕉Pro）
 
 ## 示例代码
 
@@ -63,7 +64,7 @@ prompt = (
 
 response = client.models.generate_content(
     # 模型名称
-    model="gemini-3-pro-image-preview",
+    model="gemini-3-pro-image",
 
     # 输入内容：提示词 + 原始图像
     contents=[prompt, image],
@@ -80,7 +81,7 @@ response = client.models.generate_content(
             # aspect_ratio: 设置输出图片的宽高比（注意：使用驼峰命名）
             #
             # ┌─────────────────────────────────────────────────────────────────┐
-            # │ Gemini 3 Pro Image 预览版                                        │
+            # │ Gemini 3 Pro Image                                               │
             # ├──────────┬─────────────┬────────┬─────────────┬───────────────┐│
             # │ 宽高比    │ 1K 分辨率   │ 1K令牌  │ 2K 分辨率   │ 4K 分辨率      ││
             # ├──────────┼─────────────┼────────┼─────────────┼───────────────┤│
@@ -222,7 +223,7 @@ headers = {
 img_base64, mime_type = encode_image_to_base64(INPUT_IMAGE_PATH)
 
 payload = {
-    "model": "gemini-3-pro-image-preview",                          # 指定使用的 AI 模型
+    "model": "gemini-3-pro-image",                          # 指定使用的 AI 模型
     "contents": [{
         "parts": [
             {"text": "在图像中加入梵高的自画像,画面左上角有今天的日期"},
@@ -245,7 +246,7 @@ payload = {
             # aspectRatio: 设置输出图片的宽高比
             #
             # ┌─────────────────────────────────────────────────────────────────┐
-            # │ Gemini 3 Pro Image 预览版                                        │
+            # │ Gemini 3 Pro Image                                               │
             # ├──────────┬─────────────┬────────┬─────────────┬───────────────┐│
             # │ 宽高比    │ 1K 分辨率   │ 1K令牌  │ 2K 分辨率   │ 4K 分辨率      ││
             # ├──────────┼─────────────┼────────┼─────────────┼───────────────┤│

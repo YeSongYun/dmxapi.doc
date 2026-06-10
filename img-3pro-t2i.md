@@ -1,11 +1,11 @@
-# Gemini 3 Pro Image Preview 文生图
+# Gemini 3 Pro Image 文生图
 通过 Gemini 3 Pro Image 模型生成高质量图像，支持多种宽高比和分辨率配置。
 
 
 ## 接口地址
 
 ```
-https://www.dmxapi.cn/v1beta/models/gemini-3-pro-image-preview:generateContent
+https://www.dmxapi.cn/v1beta/models/gemini-3-pro-image:generateContent
 
 ```
 :::warning 注意：
@@ -14,8 +14,9 @@ https://www.dmxapi.cn/v1beta/models/gemini-3-pro-image-preview:generateContent
 
 ## 模型名称
 
-### Gemini 3 Pro Image Preview
-- **模型名称**: `gemini-3-pro-image-preview`
+### Gemini 3 Pro Image
+- **模型名称**: `gemini-3-pro-image`
+- **别名**: Nano Banana Pro（香蕉Pro）
 - **特点**: 支持 1K/2K/4K 分辨率
 - **新特性**: 支持联网搜索生成图片！
 
@@ -60,7 +61,7 @@ prompt = (
 
 response = client.models.generate_content(
     # 模型名称
-    model="gemini-3-pro-image-preview",
+    model="gemini-3-pro-image",
 
     # 输入内容
     contents=[prompt],
@@ -77,7 +78,7 @@ response = client.models.generate_content(
             # aspect_ratio: 设置输出图片的宽高比（注意：使用驼峰命名）
             #
             # ┌─────────────────────────────────────────────────────────────────┐
-            # │ Gemini 3 Pro Image 预览版                                        │
+            # │ Gemini 3 Pro Image                                               │
             # ├──────────┬─────────────┬────────┬─────────────┬───────────────┐│
             # │ 宽高比    │ 1K 分辨率   │ 1K令牌  │ 2K 分辨率   │ 4K 分辨率      ││
             # ├──────────┼─────────────┼────────┼─────────────┼───────────────┤│
@@ -141,7 +142,7 @@ for part in response.parts:
 
 ```python [request]
 """
-Gemini 3 Pro Image Preview - 文生图 API 调用示例
+Gemini 3 Pro Image - 文生图 API 调用示例
 =================================================
 """
 
@@ -155,7 +156,7 @@ import base64    # Base64 编解码库
 API_KEY = "sk-****************************************"
 
 # API 请求地址
-API_URL = "https://www.dmxapi.cn/v1beta/models/gemini-3-pro-image-preview:generateContent"
+API_URL = "https://www.dmxapi.cn/v1beta/models/gemini-3-pro-image:generateContent"
 
 # ============================================================================
 # 请求头
@@ -192,7 +193,7 @@ data = {
             # aspectRatio: 设置输出图片的宽高比
             #
             # ┌─────────────────────────────────────────────────────────────────┐
-            # │ Gemini 3 Pro Image 预览版                                        │
+            # │ Gemini 3 Pro Image                                               │
             # ├──────────┬─────────────┬────────┬─────────────┬───────────────┐│
             # │ 宽高比    │ 1K 分辨率   │ 1K令牌  │ 2K 分辨率   │ 4K 分辨率      ││
             # ├──────────┼─────────────┼────────┼─────────────┼───────────────┤│
@@ -303,5 +304,5 @@ else:
 ---
 
 <p align="center">
-  <small>© 2025 DMXAPI Gemini模型</small>
+  <small>© 2026 DMXAPI Gemini模型</small>
 </p>
