@@ -20,8 +20,8 @@
 ```python
 import requests 
 from datetime import datetime
-SYSTEM_TOKEN = "你的系统令牌"  
-USER_ID = "你的用户 ID"  
+SYSTEM_TOKEN = ""  # 系统令牌
+USER_ID = ""  # 当前用户 ID
 headers = {
     "Authorization": f"Bearer {SYSTEM_TOKEN}",
     "Rix-Api-User": USER_ID,
@@ -45,6 +45,9 @@ while page <= 100:  # 最多100页防死循环
     resp = requests.get("https://www.dmxapi.cn/api/token/", headers=headers, params={"p": page, "size": 100})
     data = resp.json()["data"]
     batch = data["items"]
+    if not batch:
+        print("令牌数量为 0")
+        break
     items.extend(batch)
     print(f"第{page}页：获取{len(batch)}条，共{data['total']}条")
     if len(items) >= data["total"]:
