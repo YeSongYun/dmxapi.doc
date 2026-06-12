@@ -49,9 +49,9 @@ api_key = "sk-***********************************************"
 #   - 文件大小: 小于等于 30MB
 #   - 数量: 最多上传 5 张图片
 image_sources = [
-    r"C:\Users\a1\Pictures\front_view.png",   # 参考图 1: 正视图
-    r"C:\Users\a1\Pictures\side_view.png",    # 参考图 2: 侧视图
-    r"C:\Users\a1\Pictures\back_view.png",    # 参考图 3: 背视图
+    "./front_view.png",   # 参考图 1: 正视图
+    "./side_view.png",    # 参考图 2: 侧视图
+    "./back_view.png",    # 参考图 3: 背视图
 ]
 
 def to_image_url(source):
@@ -130,12 +130,12 @@ payload = {
             #       - true : 强制标准绑定姿态，T-Pose 还是 A-Pose 由模型判定
             #       - false: 不强制，由模型自行决定姿态
             #   --subdivisionlevel (string, 可选, 简写 sl)
-            #     多边形面数档位（本示例中因已设 quality_override 而失效）:
+            #     多边形面数档位（与 --quality_override 同时使用时失效，本示例已用 quality_override 指定面数，故未传）:
             #       - mesh_mode 为 Raw  时(默认 high)  : high=500k / medium=150k / low=20k
             #       - mesh_mode 为 Quad 时(默认 medium): high=50k  / medium=18k  / low=8k
             #   --fileformat (string, 可选, 默认值 glb, 简写 ff)
             #     输出 3D 模型文件格式，可选值: "glb" / "obj" / "usdz" / "fbx" / "stl"
-            "text": "Generate a 3D model from these three reference images showing front, side, and back views. --mesh_mode Raw --hd_texture true --material PBR --addons HighPack --quality_override 1000000 --use_original_alpha false --bbox_condition [100,100,100] --TAPose false --subdivisionlevel high --fileformat glb"
+            "text": "Generate a 3D model from these three reference images showing front, side, and back views. --mesh_mode Raw --hd_texture true --material PBR --addons HighPack --quality_override 1000000 --use_original_alpha false --TAPose false --fileformat glb"
         }
     ] + [
         {

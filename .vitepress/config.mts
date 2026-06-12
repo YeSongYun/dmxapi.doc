@@ -841,7 +841,7 @@ export default defineConfig({
                 text: 'hitem3d-2-0-251223',
                 collapsed: true,
                 items: [
-                  { text: '图生3D模型', link: '/hitem3d-2-0-251223-image-to-3d' },
+                  { text: '多图生3D模型', link: '/hitem3d-2-0-251223-image-to-3d' },
                 ],
               },
               {

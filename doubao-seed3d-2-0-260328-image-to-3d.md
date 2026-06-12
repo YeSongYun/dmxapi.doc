@@ -47,7 +47,7 @@ api_key = "sk-***********************************************"
 #   - 文件大小: 小于等于 10MB
 #   - 宽高比: (0.4, 2.5)
 #   - 格式支持: jpg、jpeg、png、webp、bmp
-image_source = r"C:\Users\a1\Pictures\per(1).png"
+image_source = "your_image.png"
 
 if image_source.startswith("http://") or image_source.startswith("https://"):
     # 远程图片: 直接使用 URL，请确保图片 URL 可被公网访问

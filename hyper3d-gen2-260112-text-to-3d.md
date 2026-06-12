@@ -98,12 +98,12 @@ payload = {
             #       - true : 强制标准绑定姿态，T-Pose 还是 A-Pose 由模型判定
             #       - false: 不强制，由模型自行决定姿态
             #   --subdivisionlevel (string, 可选, 简写 sl)
-            #     多边形面数档位（本示例中因已设 quality_override 而失效）:
+            #     多边形面数档位（与 --quality_override 同时使用时失效，本示例已用 quality_override 指定面数，故未传）:
             #       - mesh_mode 为 Raw  时(默认 high)  : high=500k / medium=150k / low=20k
             #       - mesh_mode 为 Quad 时(默认 medium): high=50k  / medium=18k  / low=8k
             #   --fileformat (string, 可选, 默认值 glb, 简写 ff)
             #     输出 3D 模型文件格式，可选值: "glb" / "obj" / "usdz" / "fbx" / "stl"
-            "text": "Complete full-body quadrupedal mech robot, orange and black armored, rounded head with glowing blue sensors, 4 articulated mechanical legs, hard-surface sci-fi design, high-detail joints, photorealistic 8K, fully assembled, no missing parts. --mesh_mode Raw --hd_texture true --material PBR --addons HighPack --quality_override 1000000 --use_original_alpha false --bbox_condition [100,100,100] --TAPose false --subdivisionlevel high --fileformat glb"
+            "text": "Complete full-body quadrupedal mech robot, orange and black armored, rounded head with glowing blue sensors, 4 articulated mechanical legs, hard-surface sci-fi design, high-detail joints, photorealistic 8K, fully assembled, no missing parts. --mesh_mode Raw --hd_texture true --material PBR --addons HighPack --quality_override 1000000 --use_original_alpha false --TAPose false --fileformat glb"
         }
     ],
 
