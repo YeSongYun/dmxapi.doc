@@ -830,6 +830,28 @@ export default defineConfig({
                   { text: '多图生3D模型（有贴图）', link: '/Tripo-P1.0_Multi-image_to_3D_model_generation(with textures)' },
                 ],
               },
+              {
+                text: 'doubao-seed3d-2-0-260328',
+                collapsed: true,
+                items: [
+                  { text: '图生3D模型', link: '/doubao-seed3d-2-0-260328-image-to-3d' },
+                ],
+              },
+              {
+                text: 'hitem3d-2-0-251223',
+                collapsed: true,
+                items: [
+                  { text: '图生3D模型', link: '/hitem3d-2-0-251223-image-to-3d' },
+                ],
+              },
+              {
+                text: 'hyper3d-gen2-260112',
+                collapsed: true,
+                items: [
+                  { text: '文生3D模型', link: '/hyper3d-gen2-260112-text-to-3d' },
+                  { text: '图生3D模型', link: '/hyper3d-gen2-260112-image-to-3d' },
+                ],
+              },
             ],
           },
 
