@@ -135,7 +135,7 @@ payload = {
             #       - mesh_mode 为 Quad 时(默认 medium): high=50k  / medium=18k  / low=8k
             #   --fileformat (string, 可选, 默认值 glb, 简写 ff)
             #     输出 3D 模型文件格式，可选值: "glb" / "obj" / "usdz" / "fbx" / "stl"
-            "text": "Generate a 3D model from these three reference images showing front, side, and back views,--mesh_mode Raw --hd_texture true --material PBR --addons HighPack --quality_override 1000000 --use_original_alpha false --bbox_condition [100,100,100] --TAPose false --subdivisionlevel high --fileformat glb"
+            "text": "Generate a 3D model from these three reference images showing front, side, and back views. --mesh_mode Raw --hd_texture true --material PBR --addons HighPack --quality_override 1000000 --use_original_alpha false --bbox_condition [100,100,100] --TAPose false --subdivisionlevel high --fileformat glb"
         }
     ] + [
         {
@@ -258,7 +258,7 @@ print(json.dumps(result, indent=2, ensure_ascii=False))
 # ═══════════════════════════════════════════════════════════════
 
 # 返回体中 output[0].content[0].text 是一段 JSON 字符串（嵌套 JSON），
-# 需要再次 json.loads 解析（json.loads 会自动把 & 还原成 &）
+# 需要再次 json.loads 解析（json.loads 会自动把 \u0026 还原成 &）
 # status 为 "succeeded" 表示生成成功；下载链接有效期 7 天，请及时保存
 try:
     inner = json.loads(result["output"][0]["content"][0]["text"])   # 二次解析为字典

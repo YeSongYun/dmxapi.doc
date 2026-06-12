@@ -128,7 +128,7 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 
 ```json
 {
-  "id": "cgt-20260611185730-wzzsq",
+  "id": "cgt-20260611175315-tjsbh",
   "usage": {
     "total_tokens": 24000,
     "input_tokens": 0,
@@ -220,8 +220,8 @@ try:
     print("\n=== 下载链接 ===")
     print(file_url)
 except Exception:
-    # 任务尚未完成或返回结构异常时不打印下载链接，可稍后重试查询
-    pass
+    # 任务尚未完成或返回结构异常时走此分支，可稍后重试查询
+    print("\n未获取到文件链接（任务可能尚未完成或返回结构异常）")
 ```
 
 ## 返回示例

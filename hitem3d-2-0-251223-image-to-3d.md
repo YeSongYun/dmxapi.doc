@@ -95,7 +95,7 @@ payload = {
             #       - "1010": 前视图 + 左视图，图片顺序 [前视图, 左视图]
             #       - "1111": 四视图齐全，图片顺序 [前视图, 后视图, 左视图, 右视图]
             #       - "0101": 后视图 + 右视图，图片顺序 [后视图, 右视图]
-            "text": "--ff 2 --resolution 1536pro --face 2000000 --request_type 3 --multi_images_bit 1100 ",
+            "text": "--ff 2 --resolution 1536pro --face 2000000 --request_type 3 --multi_images_bit 1100",
         },
         {
             # 【图片信息 1】前视图 (对应 multi_images_bit 第 1 位)

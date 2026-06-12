@@ -215,7 +215,7 @@ print(json.dumps(result, indent=2, ensure_ascii=False))
 # ═══════════════════════════════════════════════════════════════
 
 # 返回体中 output[0].content[0].text 是一段 JSON 字符串（嵌套 JSON），
-# 需要再次 json.loads 解析（json.loads 会自动把 & 还原成 &）
+# 需要再次 json.loads 解析（json.loads 会自动把 \u0026 还原成 &）
 # status 为 "succeeded" 表示生成成功；下载链接有效期 7 天，请及时保存
 try:
     inner = json.loads(result["output"][0]["content"][0]["text"])   # 二次解析为字典
