@@ -689,7 +689,15 @@ export default defineConfig({
                     items: [
                       { text: 'music-2.5非流式输出', link: '/music-2.5-feiliushi' },
                       { text: 'music-2.5流式输出', link: '/music-2.5-liushi' }
-                      
+
+                    ],
+                  },
+                  { text: 'music-2.6', link: '/music-2.6-music-generation' },
+                  {
+                    text: '歌词生成',
+                    collapsed: true,
+                    items: [
+                      { text: 'lyric_generation', link: '/lyric_generation-lyrics-generation' }
                     ],
                   }
                 ],
