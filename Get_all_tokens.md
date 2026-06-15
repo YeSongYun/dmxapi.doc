@@ -18,10 +18,11 @@
 ## 代码示例
 
 ```python
-import requests 
+import requests
+import time
 from datetime import datetime
-SYSTEM_TOKEN = ""  # 系统令牌
-USER_ID = ""  # 当前用户 ID
+SYSTEM_TOKEN = "****************"  # 系统令牌
+USER_ID = "******"  # 当前用户 ID
 headers = {
     "Authorization": f"Bearer {SYSTEM_TOKEN}",
     "Rix-Api-User": USER_ID,
@@ -42,10 +43,10 @@ def fmt_status(v):
 items = []
 page = 1
 while page <= 100:  # 最多100页防死循环
-    resp = requests.get("https://www.dmxapi.cn/api/token/", headers=headers, params={"p": page, "size": 100})
+    resp = requests.get("https://www.dmxapi.cn/api/token/", headers=headers, params={"page": page, "page_size": 10})
     resp.raise_for_status()
-    data = resp.json()["data"]
-    batch = data["items"]
+    data = resp.json().get("data", {})
+    batch = data.get("items", [])
     if not batch:
         if page == 1:
             print("令牌数量为 0")
@@ -54,6 +55,7 @@ while page <= 100:  # 最多100页防死循环
     print(f"第{page}页：获取{len(batch)}条，共{data['total']}条")
     if len(items) >= data["total"]:
         break
+    time.sleep(1)  # 规避接口 IP 级限流
     page += 1
 
 for i, token in enumerate(items, 1):
