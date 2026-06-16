@@ -22,13 +22,13 @@ ZCode 官网下载地址：
 https://zcode.z.ai/cn
 ```
 
-![zcode](img\Zcode1.png)
+![zcode](img/Zcode1.png)
 
 ### 2. 下载完成后进行安装
 
 下载完成后，双击安装包（如 `ZCode-3.0.1-win-x64.exe`）进行安装。
 
-![zcode](img\Zcode2.png)
+![zcode](img/Zcode2.png)
 
 ## 二、启动并跳过登录
 
@@ -36,13 +36,13 @@ https://zcode.z.ai/cn
 
 安装完成后打开 ZCode，在欢迎界面点击 **使用 API key**。
 
-![zcode](img\Zcode3.png)
+![zcode](img/Zcode3.png)
 
 ### 4. 点击"暂时跳过"
 
 在登录界面无需填写官方 API Key，直接点击 **暂时跳过**，后续我们使用自定义供应商接入 DMXAPI。
 
-![zcode](img\Zcode4.png)
+![zcode](img/Zcode4.png)
 
 ## 三、添加 DMXAPI 模型供应商
 
@@ -52,7 +52,7 @@ ZCode 支持自定义供应商，下面分别演示 **Chat Completions**、**Res
 
 在左侧菜单进入 **模型设置**，在自定义供应商区域点击 **+ 添加供应商**。
 
-![zcode](img\Zcode5.png)
+![zcode](img/Zcode5.png)
 
 ### 6. 了解三种 API 格式
 
@@ -62,7 +62,7 @@ ZCode 的"API 格式"提供三种选项，分别对应 DMXAPI 的三种接入格
 2. **Chat Completions（/chat/completions）** —— Chat Completions 格式
 3. **Responses（/responses）** —— Responses 格式
 
-![zcode](img\Zcode6.png)
+![zcode](img/Zcode6.png)
 
 ### 7. 配置 Chat Completions 格式供应商
 
@@ -76,19 +76,19 @@ ZCode 的"API 格式"提供三种选项，分别对应 DMXAPI 的三种接入格
 - **API Key**：填写您的 DMXAPI 密钥
 - **API 格式**：选择 **Chat Completions（/chat/completions）**
 
-![zcode](img\Zcode7.png)
+![zcode](img/Zcode7.png)
 
 ### 8. 点击"添加模型"
 
 填写完基本信息后，点击 **+ 添加模型**，准备录入要使用的模型。
 
-![zcode](img\Zcode8.png)
+![zcode](img/Zcode8.png)
 
 ### 9. 查询模型名称与上下文
 
 可在 DMXAPI 的模型广场查看 **模型名称** 与对应的 **上下文** 长度，复制需要使用的模型名称。
 
-![zcode](img\Zcode9.png)
+![zcode](img/Zcode9.png)
 
 ### 10. 填写模型 ID 与上下文窗口
 
@@ -99,13 +99,13 @@ ZCode 的"API 格式"提供三种选项，分别对应 DMXAPI 的三种接入格
 
 填写完成后点击 **保存**。
 
-![zcode](img\Zcode10.png)
+![zcode](img/Zcode10.png)
 
 ### 11. 完成 Chat 供应商配置
 
 确认名称、Base URL、API Key、API 格式与模型列表无误后，点击 **添加供应商** 完成保存。
 
-![zcode](img\Zcode11.png)
+![zcode](img/Zcode11.png)
 
 ### 12.（可选）配置 Responses 格式供应商
 
@@ -122,7 +122,7 @@ ZCode 的"API 格式"提供三种选项，分别对应 DMXAPI 的三种接入格
 
 填写完成后点击 **添加供应商**。
 
-![zcode](img\Zcode12.png)
+![zcode](img/Zcode12.png)
 
 ### 13.（可选）配置 Anthropic 格式供应商
 
@@ -139,13 +139,13 @@ ZCode 的"API 格式"提供三种选项，分别对应 DMXAPI 的三种接入格
 
 填写完成后点击 **添加供应商**。
 
-![zcode](img\Zcode13.png)
+![zcode](img/Zcode13.png)
 
 ### 14. 完成三种格式配置
 
 完成后即可在自定义供应商列表中看到 **DMXAPI-Chat**、**DMXAPI-Responses**、**DMXAPI-Anthropic** 三个供应商，恭喜您已完成三个格式的配置，现在可以使用模型了！
 
-![zcode](img\Zcode14.png)
+![zcode](img/Zcode14.png)
 
 ## 四、选择模型开始使用
 
@@ -153,7 +153,7 @@ ZCode 的"API 格式"提供三种选项，分别对应 DMXAPI 的三种接入格
 
 新建任务，在聊天框右下角的模型选择处，即可随意选择您想用的模型（DMXAPI-Chat / DMXAPI-Responses / DMXAPI-Anthropic 下的模型）进行使用。
 
-![zcode](img\Zcode15.png)
+![zcode](img/Zcode15.png)
 
 可以开始用起来啦！！！！
 
