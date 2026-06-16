@@ -899,6 +899,7 @@ export default defineConfig({
           { text: 'Qwen3 coder', link: '/qwen-coder' },
           { text: 'Openai Codex', link: '/codex' },
           { text: 'opencode', link: '/opencode' },
+          { text: 'ZCode', link: '/zcode' },
           { text: 'Cherry Studio', link: '/cherry-studio' },
           { text: 'Cherry Studio调用gpt-5.2-pro', link: '/cherry-studio-gpt-5.2-pro' },
           { text: 'Cherry Studio调用 Perplexity Sonar 系列搜索模型', link: '/cherry_perplexity' },
