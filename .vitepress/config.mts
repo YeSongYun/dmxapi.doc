@@ -138,6 +138,7 @@ export default defineConfig({
                   { text: 'Gemini 推理开关', link: '/thinking-gemini' },
                   { text: 'Qwen 千问推理开关', link: '/thinking-qwen' },
                   { text: 'Doubao 豆包推理开关', link: '/thinking-doubao' },
+                  { text: 'DeepSeek 推理开关', link: '/thinking-deepseek' },
                 ],
               },
 
