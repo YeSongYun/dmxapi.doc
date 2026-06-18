@@ -17,7 +17,7 @@ https://www.dmxapi.cn/v1/chat/completions
 ```python
 """
 DMXAPI 对话接口调用示例
-功能：使用 DeepSeek-V3.2-Fast 模型进行智能对话
+功能：使用 deepseek-v4-flash 模型进行智能对话
 """
 
 import json
@@ -38,7 +38,7 @@ headers = {
 
 # 构造请求数据
 payload = {
-    "model": "DeepSeek-V3.2-Fast",  # 选择使用的模型
+    "model": "deepseek-v4-flash",  # 选择使用的模型
     "messages": [
         {
             "role": "system", 
@@ -82,32 +82,27 @@ API 响应结果：
       "index": 0,
       "logprobs": null,
       "message": {
-        "annotations": [],
-        "content": "不是。周树人就是鲁迅本人。鲁迅是他的笔名（本名周树人，生卒年1881—1936），因此两者不是兄弟，而是同一人。",
-        "refusal": null,
+        "content": "鲁迅（1881年9月25日－1936年10月19日），原名周树人，字豫才，浙江绍兴人，是中国现代文学的奠基人之一、著名文学家、思想家、革命家。他以犀利的笔锋揭露旧社会的黑暗与国民性的弱点，被誉为“民族魂”。代表作品包括中国第一篇现代白话小说《狂人日记》，以及小说集《呐喊》《彷徨》、散文集《朝花夕拾》、散文诗集《野草》、杂文集《坟》《热风》等。其作品深刻影响了中国现代文学和思想的发展。",
+        "reasoning_content": "我们被问到“介绍下鲁迅”。这是一个中文问题，需要提供关于鲁迅的简介。鲁迅是中国现代文学的重要人物，原名周树人。我们需要给出一个简明扼要的介绍，包括他的生卒、主要成就、代表作品、文学地位等。使用中文回答。",
         "role": "assistant"
       }
     }
   ],
-  "created": 1762512287,
-  "id": "chatcmpl-CZEFTZKtwzH7x5Dgiliucuc7qIzfg",
-  "model": "DeepSeek-V3.2-Fast",
+  "created": 1781774236,
+  "id": "chatcmpl-3eaf7cfa-cc25-9fde-a77a-89abe3d07a53",
+  "model": "deepseek-v4-flash",
   "object": "chat.completion",
   "system_fingerprint": null,
   "usage": {
-    "completion_tokens": 502,
+    "completion_tokens": 181,
     "completion_tokens_details": {
-      "accepted_prediction_tokens": 0,
-      "audio_tokens": 0,
-      "reasoning_tokens": 448,
-      "rejected_prediction_tokens": 0
+      "reasoning_tokens": 57
     },
-    "prompt_tokens": 27,
+    "prompt_tokens": 13,
     "prompt_tokens_details": {
-      "audio_tokens": 0,
       "cached_tokens": 0
     },
-    "total_tokens": 529
+    "total_tokens": 194
   }
 }
 ```
@@ -119,7 +114,7 @@ API 响应结果：
 ```python
 """
 DMXAPI OpenAI SDK 调用示例
-功能：使用 OpenAI 官方 SDK 调用 DMXAPI 接口进行对话
+功能：使用 deepseek-v4-flash 模型进行智能对话
 """
 
 from openai import OpenAI
@@ -143,7 +138,7 @@ chat_completion = client.chat.completions.create(
             "content": "周树人和鲁迅是兄弟吗？"  # 用户提问
         }
     ],
-    model= "DeepSeek-V3.2-Fast"  # 指定使用的模型
+    model= "deepseek-v4-flash"  # 指定使用的模型
 )
 
 # ==================== 格式化输出结果 ====================
@@ -171,49 +166,53 @@ print(f"  • Token 使用: {result['usage']['total_tokens']} (输入: {result['
 ✨ API 响应结果
 ==================================================
 {
-  "id": "chatcmpl-CZEGlYYxCrQ7JBt8fefXKBJ2MnIfJ",
+  "id": "chatcmpl-bfd8742b-34e6-9953-92d1-a49066669e7a",
   "choices": [
     {
       "finish_reason": "stop",
       "index": 0,
       "logprobs": null,
       "message": {
-        "content": "不是。周树人就是鲁迅的本名，鲁迅是他的笔名，所以两者是同一个人，不是兄弟。鲁迅（本名周树人，1881–1936）是中国现代著名作家。（他的弟弟是周作人。）",
+        "content": "不是的。**周树人和鲁迅是同一个人**。\n\n鲁迅（1881年9月25日－1936年10月19日），原名**周樟寿**，后改名**周树人**，“鲁迅”是他1918年发表《狂人日记》时开始使用的笔名。因此，周树人是鲁迅的本名，他们是同一人，而非兄弟关系。",
         "refusal": null,
         "role": "assistant",
-        "annotations": [],
+        "annotations": null,
         "audio": null,
         "function_call": null,
-        "tool_calls": null
+        "tool_calls": null,
+        "reasoning_content": "用户问的是周树人和鲁迅是不是兄弟。这是一个常见的误解。周树人是鲁迅的本名，鲁迅是他的笔名。所以他们是同一个人，不是兄弟。需要直接澄清这个事实。解释清楚名字和笔名的关系，避免用户继续困惑。"
       }
     }
   ],
-  "created": 1762512367,
-  "model": "DeepSeek-V3.2-Fast",
+  "created": 1781774332,
+  "model": "deepseek-v4-flash",
   "object": "chat.completion",
   "service_tier": null,
   "system_fingerprint": null,
   "usage": {
-    "completion_tokens": 392,
-    "prompt_tokens": 17,
-    "total_tokens": 409,
+    "completion_tokens": 134,
+    "prompt_tokens": 12,
+    "total_tokens": 146,
     "completion_tokens_details": {
-      "accepted_prediction_tokens": 0,
-      "audio_tokens": 0,
-      "reasoning_tokens": 320,
-      "rejected_prediction_tokens": 0
+      "accepted_prediction_tokens": null,
+      "audio_tokens": null,
+      "reasoning_tokens": 53,
+      "rejected_prediction_tokens": null
     },
     "prompt_tokens_details": {
-      "audio_tokens": 0,
+      "audio_tokens": null,
       "cached_tokens": 0
     }
   }
 }
 ==================================================
 📊 关键信息摘要：
-  • 模型: DeepSeek-V3.2-Fast
-  • 回复: 不是。周树人就是鲁迅的本名，鲁迅是他的笔名，所以两者是同一个人，不是兄弟。鲁迅（本名周树人，1881–1936）是中国现代著名作家。（他的弟弟是周作人。）
-  • Token 使用: 409 (输入: 17, 输出: 392)
+  • 模型: deepseek-v4-flash
+  • 回复: 不是的。**周树人和鲁迅是同一个人**。
+
+鲁迅（1881年9月25日－1936年10月19日），原名**周樟寿**，后改名**周树人**，“鲁迅”是他1918年发表《狂人日记》时开始使用的笔名。因此，周树人是鲁迅的本名，他们是同一人，而非兄弟关系。
+  • Token 使用: 146 (输入: 12, 输出: 134)
+==================================================
 ```
 
 
@@ -226,5 +225,5 @@ print(f"  • Token 使用: {result['usage']['total_tokens']} (输入: {result['
 ---
 
 <p align="center">
-  <small>© 2025 DMXAPI OpenAI Chat</small>
+  <small>© 2026 DMXAPI OpenAI Chat</small>
 </p>
