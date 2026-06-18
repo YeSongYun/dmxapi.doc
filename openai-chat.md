@@ -17,7 +17,7 @@ https://www.dmxapi.cn/v1/chat/completions
 ```python
 """
 DMXAPI 对话接口调用示例
-功能：使用 DeepSeek-V3.2-Fast 模型进行智能对话
+功能：使用 deepseek-v4-flash 模型进行智能对话
 """
 
 import json
@@ -114,7 +114,7 @@ API 响应结果：
 ```python
 """
 DMXAPI OpenAI SDK 调用示例
-功能：使用 OpenAI 官方 SDK 调用 DMXAPI 接口进行对话
+功能：使用 deepseek-v4-flash 模型进行智能对话
 """
 
 from openai import OpenAI
