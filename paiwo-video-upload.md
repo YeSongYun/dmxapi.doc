@@ -199,7 +199,7 @@ api_key = "sk-******************************************"
 
 headers = {
     "Content-Type": "application/json",      # 指定请求体为 JSON 格式
-    "Authorization": f"{api_key}",           # token 认证方式
+    "Authorization": f"Bearer {api_key}",           # token 认证方式
 }
 
 # 步骤3: 配置请求参数

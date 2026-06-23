@@ -47,7 +47,7 @@ api_key = "sk-****************************************"  # 替换为你的 DMXAP
 
 headers = {
     "Content-Type": "application/json",
-    "Authorization": f"{api_key}",
+    "Authorization": f"Bearer {api_key}",
 }
 
 # 读取本地图片并转 base64
@@ -74,7 +74,7 @@ api_key = "sk-****************************************"  # 替换为你的 DMXAP
 
 headers = {
     "Content-Type": "application/json",
-    "Authorization": f"{api_key}",
+    "Authorization": f"Bearer {api_key}",
 }
 
 # 读取本地图片并转 base64
@@ -106,7 +106,7 @@ api_key = "sk-****************************************"  # 替换为你的 DMXAP
 
 headers = {
     "Content-Type": "application/json",
-    "Authorization": f"{api_key}",
+    "Authorization": f"Bearer {api_key}",
 }
 
 payload = {
@@ -128,7 +128,7 @@ api_key = "sk-****************************************"  # 替换为你的 DMXAP
 
 headers = {
     "Content-Type": "application/json",
-    "Authorization": f"{api_key}",
+    "Authorization": f"Bearer {api_key}",
 }
 
 payload = {
