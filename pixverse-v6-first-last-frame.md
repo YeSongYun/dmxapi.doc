@@ -15,6 +15,7 @@ PixVerse-V6 首尾帧生视频 API 支持通过指定起始帧和结束帧图片
 
 :::warning
 使用本 API 前，请先完成前置依赖文档中的调用以获取所需的img_id。
+本模型请使用 `pixverse-picture` 上传。
 
 [图片上传](https://doc.dmxapi.cn/paiwo_image_upload.html)
 :::
