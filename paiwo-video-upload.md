@@ -51,8 +51,8 @@ api_key = "sk-******************************************"
 headers = {
     # 【Content-Type】(string, 必需) 请求体格式，固定为 application/json
     "Content-Type": "application/json",
-    # 【Authorization】(string, 必需) API 鉴权密钥，直接传入 DMXAPI Key，无需加 Bearer 前缀
-    "Authorization": f"{api_key}",
+    # 【Authorization】(string, 必需) API 鉴权密钥，直接传入 DMXAPI Key
+    "Authorization": f"Bearer {api_key}",
 }
 
 # 步骤3: 读取文件并配置请求参数
@@ -99,7 +99,7 @@ api_key = "sk-******************************************"
 
 headers = {
     "Content-Type": "application/json",      # 指定请求体为 JSON 格式
-    "Authorization": f"{api_key}",           # token 认证方式
+    "Authorization": f"Bearer {api_key}",           # token 认证方式
 }
 
 # 步骤3: 配置请求参数
@@ -154,8 +154,8 @@ api_key = "sk-******************************************"
 headers = {
     # 【Content-Type】(string, 必需) 请求体格式，固定为 application/json
     "Content-Type": "application/json",
-    # 【Authorization】(string, 必需) API 鉴权密钥，直接传入 DMXAPI Key，无需加 Bearer 前缀
-    "Authorization": f"{api_key}",
+    # 【Authorization】(string, 必需) API 鉴权密钥，直接传入 DMXAPI Key
+    "Authorization": f"Bearer {api_key}",
 }
 
 # 步骤3: 读取文件并配置请求参数

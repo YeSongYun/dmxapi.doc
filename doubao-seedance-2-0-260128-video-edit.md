@@ -30,7 +30,7 @@ import os
 
 # ---------- 🔐 API 密钥 ----------
 # 获取方式: 登录 DMXAPI 官网 -> 个人中心 -> API 密钥管理
-api_key = "sk-GSo30rearuurO4KP8wt3rvbWIWcGpWyHjelmpJHsEaETogVR"
+api_key = "sk-****************************************"
 
 # ---------- 🖼️ 图片输入 ----------
 # 无需手动选择模式，直接填入即可，程序会自动识别以下三种格式：
