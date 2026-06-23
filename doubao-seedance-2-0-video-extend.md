@@ -2,11 +2,11 @@
 
 基于 doubao-seedance-2-0-260128 模型的多模态视频延长接口，支持输入 1~3 段参考视频（单段时长 2~15 秒，总时长不超过 15 秒）配合文本提示词，生成 4~15 秒的延续视频。支持有声视频输出，可自动合成人声、音效与背景音乐；支持联网搜索增强生成效果；采用异步任务模式，提交任务后通过单次查询接口获取结果视频 URL。
 
-## 🎬 模型名称
+## 模型名称
 
 - `doubao-seedance-2-0-260128`
 
-## 🌐 接口地址
+## 接口地址
 
 | 接口 | 请求方式 | URL |
 |------|---------|-----|
@@ -18,7 +18,7 @@
 :::
 
 
-## 🎥 视频延长 示例代码
+##  视频延长 示例代码
 
 ```python
 import requests
@@ -147,7 +147,7 @@ response = requests.post(url, headers=headers, json=payload)
 print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 ```
 
-### 返回示例
+## 返回示例
 
 ```json
 {
@@ -168,7 +168,7 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 
 > 返回的 `id` 即为任务 ID，用于后续查询生成结果。任务 ID 仅保存 7 天，超时后自动清除。
 
-## 📥 获取结果 示例代码
+##  获取结果 示例代码
 
 ```python
 import requests
@@ -203,7 +203,7 @@ except Exception as e:
     print(f"提取 URL 失败: {e}")
 ```
 
-### 返回示例
+## 返回示例
 
 ```json
 {

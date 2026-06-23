@@ -3,6 +3,7 @@
 PixVerse-C1 参考生视频是拍我 AI 推出的多主体（多参考）视频生成能力，通过 DMXAPI 聚合接口即可调用。支持同时传入 1–3 张主体或背景参考图，并使用 `@ref_name` 语法在提示词中精确引用对应角色或场景，实现主体一致性的生成效果。支持 `720p` 画质与 `2:3/3:2/21:9` 等 C1 专属画幅，最长可生成 5 秒视频，并可通过 `generate_audio_switch` 开启配套音频。
 :::warning
 使用本 API 前，请先完成前置依赖文档中的调用以获取必要的参数值。
+本模型请使用 `pixverse-picture` 上传。
 
 [前置依赖文档](https://doc.dmxapi.cn/paiwo_image_upload.html)
 :::

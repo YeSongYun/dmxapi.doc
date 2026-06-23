@@ -477,6 +477,15 @@ export default defineConfig({
                       { text: '多模态参考生视频', link: '/doubao-seedance-2-0-fast-260128-video' }
                     ],
                   },
+                  {
+                    text: 'seedance 2.0 真人方案',
+                    collapsed: true,
+                    items: [
+                      { text: '方案一 · 信任产物', link: '/seedance-2-0-real-person-plan1-trusted-output' },
+                      { text: '方案二 · 预置虚拟人像', link: '/seedance-2-0-real-person-plan2-preset-portrait' },
+                      { text: '方案三 · 授权真人', link: '/seedance-2-0-real-person-plan3-authorized-real-person' },
+                    ],
+                  },
                 ],
               },
               {

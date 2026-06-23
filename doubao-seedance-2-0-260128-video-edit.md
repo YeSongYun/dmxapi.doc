@@ -22,6 +22,7 @@
 import requests
 import json
 import base64
+import os
 
 # ╔═══════════════════════════════════════════════════════════════╗
 # ║              ⚙️ 基础配置（密钥 & 输入素材）                     ║
@@ -29,19 +30,26 @@ import base64
 
 # ---------- 🔐 API 密钥 ----------
 # 获取方式: 登录 DMXAPI 官网 -> 个人中心 -> API 密钥管理
-api_key = "sk-****************************************************"
+api_key = "sk-****************************************"
 
 # ---------- 🖼️ 图片输入 ----------
-IMAGE_INPUT_MODE = "base64"          # "base64" = 本地图片 | "url" = 网络图片
-
-image_path       = "C:/Users/a1/Pictures/20230301120626930.jpg"                          # 本地图片路径（base64 模式）
-image_remote_url = "https://ark-project.tos-cn-beijing.volces.com/doc_image/r2v_edit_pic1.jpg"  # 网络图片地址（url 模式）
+# 无需手动选择模式，直接填入即可，程序会自动识别以下三种格式：
+#   1. 网络图片 URL    （http:// 或 https:// 开头）
+#   2. 素材库 ID       （asset:// 开头，如 asset://asset-20260401123823-6d4x2）
+#   3. 本地图片路径    （上述两种以外，按本地文件读取并转 Base64）
+# image_input = "C:/Users/a1/Pictures/20230301120626930.jpg"
+# image_input = "https://ark-project.tos-cn-beijing.volces.com/doc_image/r2v_edit_pic1.jpg"
+image_input = "asset://asset-20260401123823-6d4x2"
 
 # ---------- 🎬 视频输入 ----------
-video_url = "https://ark-project.tos-cn-beijing.volces.com/doc_video/r2v_edit_video1.mp4"
+# 无需手动选择模式，直接填入即可，程序会自动识别以下两种格式：
+#   1. 网络视频 URL    （http:// 或 https:// 开头）
+#   2. 素材库 ID       （asset:// 开头，如 asset://asset-20260224190654-9nbbl）
+# ⚠️ 注意：视频仅支持 URL / 素材 ID，不支持本地路径转 Base64
+video_url = "asset://asset-20260224190654-9nbbl"
 
 # ---------- 📝 提示词 ----------
-prompt_text = "将视频1礼盒中的香水替换成图片1中的面霜，运镜不变"
+prompt_text = "图片1中的人物将视频1礼盒中的香水拿起来喷到自己的身上"
 
 
 # ╔═══════════════════════════════════════════════════════════════╗
@@ -49,6 +57,7 @@ prompt_text = "将视频1礼盒中的香水替换成图片1中的面霜，运镜
 # ╚═══════════════════════════════════════════════════════════════╝
 
 def encode_image_to_base64(path):
+    """读取本地图片并转换为 Base64 Data URL"""
     ext = path.lower().split(".")[-1]
     mime_map = {
         "jpg": "image/jpeg", "jpeg": "image/jpeg",
@@ -61,13 +70,51 @@ def encode_image_to_base64(path):
     return f"data:{mime_type};base64,{encoded}"
 
 
-def get_image_url():
-    if IMAGE_INPUT_MODE == "base64":
-        return encode_image_to_base64(image_path)
-    elif IMAGE_INPUT_MODE == "url":
-        return image_remote_url
-    else:
-        raise ValueError(f"不支持的 IMAGE_INPUT_MODE: {IMAGE_INPUT_MODE}（仅支持 'url' / 'base64'）")
+def resolve_image_url(source):
+    """
+    自动识别图片来源并返回可用的 URL 字符串：
+      - 网络图片 URL  : 直接返回原始 URL
+      - 素材库 ID     : 形如 asset://asset-xxx，直接返回原始素材 ID
+      - 本地图片路径  : 读取文件并转换为 Base64 Data URL
+    """
+    source = source.strip()
+
+    # 网络图片 URL：直接返回
+    if source.startswith("http://") or source.startswith("https://"):
+        return source
+
+    # 素材库 ID：形如 asset://asset-20260401123823-6d4x2，直接返回
+    if source.startswith("asset://"):
+        return source
+
+    # 其余情况按本地图片路径处理
+    return encode_image_to_base64(source)
+
+
+def resolve_video_url(source):
+    """
+    自动识别视频来源并返回可用的 URL 字符串：
+      - 网络视频 URL  : 直接返回原始 URL（http:// 或 https:// 开头）
+      - 素材库 ID     : 形如 asset://asset-xxx，直接返回原始素材 ID
+    ⚠️ 注意：视频仅支持 URL / 素材 ID 方式，不支持本地路径转 Base64。
+            如需使用本地视频，请先上传至素材库或对象存储获取 URL。
+    """
+    source = source.strip()
+
+    # 网络视频 URL：直接返回
+    if source.startswith("http://") or source.startswith("https://"):
+        return source
+
+    # 素材库 ID：形如 asset://asset-20260224190654-9nbbl，直接返回
+    if source.startswith("asset://"):
+        return source
+
+    # 其余情况（如本地路径）不被支持，主动报错提示
+    raise ValueError(
+        f"❌ 视频输入不支持该格式: {source}\n"
+        f"   视频仅支持: 1) 公网 URL(http/https)  2) 素材库 ID(asset://)\n"
+        f"   如需使用本地视频，请先上传至素材库或对象存储获取 URL。"
+    )
 
 
 # ╔═══════════════════════════════════════════════════════════════╗
@@ -96,10 +143,13 @@ payload = {
             # 【type】(string, 必填) 内容类型，image_url 表示图片
             "type": "image_url",
             "image_url": {
-                # 【url】(string) 图片 URL、Base64 编码或素材 ID
+                # 【url】(string) 图片地址，支持以下三种格式（程序自动识别）：
+                #   1. 公网 URL（http:// 或 https://）
+                #   2. Base64 编码（data:image/...;base64,...，由本地图片自动生成）
+                #   3. 素材库 ID（形如 asset://asset-20260401123823-6d4x2）
                 # 图片格式：jpeg/png/webp/bmp/tiff/gif
                 # 宽高比：(0.4, 2.5)，宽高长度：(300, 6000) px，单张不超过 30 MB
-                "url": get_image_url(),
+                "url": resolve_image_url(image_input),
             },
             # 【role】(string, 条件必填) 图片用途
             # 可选值: "first_frame"(首帧) / "last_frame"(尾帧) / "reference_image"(参考图)
@@ -110,11 +160,13 @@ payload = {
             # 【type】(string, 必填) 内容类型，video_url 表示视频
             "type": "video_url",
             "video_url": {
-                # 【url】(string) 视频 URL 或素材 ID (视频仅支持 URL 方式)
+                # 【url】(string) 视频 URL 或素材 ID（视频仅支持 URL / 素材 ID 方式，程序自动识别）：
+                #   1. 公网 URL（http:// 或 https://）
+                #   2. 素材库 ID（形如 asset://asset-20260224190654-9nbbl）
                 # 视频格式：mp4/mov，分辨率：480p/720p/1080p
                 # 时长：[2, 15] s，最多传入 3 个参考视频，总时长不超过 15s
                 # 单个视频不超过 50 MB，帧率：[24, 60] FPS
-                "url": video_url,
+                "url": resolve_video_url(video_url),
             },
             # 【role】(string, 条件必填) 视频用途
             # 可选值: "reference_video"(参考视频)
@@ -141,7 +193,7 @@ payload = {
     # 【resolution】(string, 可选) 视频分辨率
     # 可选值: "480p" / "720p"/ "1080p"
     # 默认值: 720p
-    "resolution": "720p",
+    "resolution": "480p",
     # 【seed】(integer, 可选) 随机种子，控制生成内容的随机性
     # 取值范围: [-1, 2^32-1]，-1 表示使用随机数
     # 相同 seed 值生成类似结果，但不保证完全一致
@@ -171,25 +223,6 @@ payload = {
 
 response = requests.post("https://www.dmxapi.cn/v1/responses", headers=headers, json=payload)
 print(json.dumps(response.json(), indent=2, ensure_ascii=False))
-```
-
-## 返回示例
-
-```json
-{
-  "id": "cgt-20260602184148-6bq7m",
-  "usage": {
-    "total_tokens": 60850,
-    "input_tokens": 0,
-    "input_tokens_details": {
-      "cached_tokens": 0
-    },
-    "output_tokens": 60850,
-    "output_tokens_details": {
-      "reasoning_tokens": 0
-    }
-  }
-}
 ```
 
 ## 📥 获取结果 示例代码
@@ -231,7 +264,7 @@ except Exception as e:
     print(f"提取 URL 失败: {e}")
 ```
 
-### 返回示例
+## 返回示例
 
 ```json
 {

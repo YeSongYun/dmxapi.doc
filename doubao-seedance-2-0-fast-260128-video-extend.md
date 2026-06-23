@@ -68,7 +68,7 @@ payload = {
             # 【input[].type】(string) 内容类型，此处为视频 URL
             "type": "video_url",
             "video_url": {
-                # 【input[].video_url.url】(string) 视频公网 URL 或素材 ID
+                
                 # 单个视频要求: mp4/mov 格式，时长 [2,15] s，大小不超过 50 MB，分辨率 480p/720p/1080p
                 "url": "https://ark-project.tos-cn-beijing.volces.com/doc_video/r2v_extend_video1.mp4"
             },
@@ -169,7 +169,6 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 }
 ```
 
-> 返回的 `id` 字段即为任务 ID，用于第二步查询视频生成结果。任务 ID 保存 7 天，请及时查询。
 
 ## 获取结果 示例代码
 

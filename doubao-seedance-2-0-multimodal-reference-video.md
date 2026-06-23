@@ -49,17 +49,17 @@ headers = {
 
 
 # ═══════════════════════════════════════════════════════════════
-# 📁 素材路径（图片/音频支持本地路径 或 公网URL，自动识别）
+# 📁 素材路径（图片/音频支持 本地路径 / 公网URL / 素材ID，自动识别）
 # ═══════════════════════════════════════════════════════════════
 
-# 🖼️ 图片（支持本地路径 或 公网URL）
+# 🖼️ 图片（支持 本地路径 / 公网URL / 素材ID asset://...）
 image1_path = "C:/Users/a1/Pictures/1689320796087949.png"
 image2_path = "C:/Users/a1/Pictures/20230301120626930.jpg"
 
-# 🎵 音频（支持本地路径 或 公网URL）
+# 🎵 音频（支持 本地路径 / 公网URL / 素材ID asset://...）
 audio1_path = "C:/Users/a1/Pictures/3.mp3"
 
-# 🎬 视频（仅支持公网URL，不支持本地上传）
+# 🎬 视频（支持 公网URL / 素材ID，不支持本地上传）
 video1_url = "https://ark-project.tos-cn-beijing.volces.com/doc_video/r2v_tea_video1.mp4"
 
 
@@ -86,7 +86,12 @@ prompt_text = (
 # ╚═══════════════════════════════════════════════════════════════╝
 
 def is_url(path):
+    """判断是否为公网 URL"""
     return path.startswith("http://") or path.startswith("https://")
+
+def is_asset_id(path):
+    """判断是否为素材 ID（格式如 asset://asset-20260401123823-6d4x2）"""
+    return path.startswith("asset://")
 
 def file_to_base64_data_url(file_path, default_mime="application/octet-stream"):
     mime_type, _ = mimetypes.guess_type(file_path)
@@ -97,12 +102,20 @@ def file_to_base64_data_url(file_path, default_mime="application/octet-stream"):
     return f"data:{mime_type};base64,{encoded}"
 
 def resolve_resource(path, default_mime="application/octet-stream"):
+    """
+    智能解析资源路径：
+    - 公网 URL  (http:// 或 https://) → 原样返回
+    - 素材 ID   (asset://...)         → 原样返回
+    - 本地文件路径                     → 转为 base64 data URL
+    """
     if is_url(path):
+        return path
+    elif is_asset_id(path):
         return path
     else:
         return file_to_base64_data_url(path, default_mime=default_mime)
 
-# 智能解析：本地文件自动转 base64，公网URL原样使用
+# 智能解析：本地文件自动转 base64，公网URL / 素材ID 原样使用
 image1_data = resolve_resource(image1_path, default_mime="image/jpeg")
 image2_data = resolve_resource(image2_path, default_mime="image/jpeg")
 audio1_data = resolve_resource(audio1_path, default_mime="audio/mpeg")
@@ -231,7 +244,7 @@ response = requests.post(url, headers=headers, json=payload)
 print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 ```
 
-### 返回示例
+## 返回示例
 
 ```json
 {
@@ -286,7 +299,7 @@ except Exception as e:
     print(f"提取 URL 失败: {e}")
 ```
 
-### 返回示例
+## 返回示例
 
 ```json
 {
