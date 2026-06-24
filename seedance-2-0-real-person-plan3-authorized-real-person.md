@@ -76,7 +76,7 @@ import json
 
 
 url = "https://www.dmxapi.cn/v1/responses"
-api_key = "sk-****************************************"
+api_key = "sk-**********************************"
 headers = {
     "Content-Type": "application/json",
     "Authorization": f"Bearer {api_key}",
@@ -85,6 +85,8 @@ headers = {
 payload = {
     # 【model】(string, 必填) 固定为 volc-visual-validate-create
     "model": "volc-visual-validate-create",
+    # 【input】(必填) 仅为通过 dmxapi 平台入口的通用校验，后端不使用，保持该值即可
+    "input": "validate",
     # 【CallbackURL】(string, 必填) 你的回调网址；真人扫脸完成后浏览器跳回此地址，
     # 并在网址 query 上带回 bytedToken、resultCode（resultCode=10000 表示通过）。
     "CallbackURL": "https://www.dmxapi.cn/callback",
@@ -124,7 +126,7 @@ import requests
 import json
 
 url = "https://www.dmxapi.cn/v1/responses"
-api_key = "sk-*********************************"
+api_key = "sk-********************************"
 
 headers = {
     "Content-Type": "application/json",
@@ -134,8 +136,10 @@ headers = {
 payload = {
     # 【model】(string, 必填) 固定为 volc-visual-validate-result
     "model": "volc-visual-validate-result",
+    # 【input】(必填) 仅为通过 dmxapi 平台入口的通用校验，后端不使用，保持该值即可
+    "input": "validate",
     # 【BytedToken】(string, 必填) 第 1 步扫脸回跳网址里读到的bytedToken，有效期 120 秒，要尽快用
-    "BytedToken": "20260618131...089A",
+    "BytedToken": "2026062................5A72",
     # 【ProjectName】(string, 选填) 项目名为ltyzs，请勿更改
     "ProjectName": "ltyzs",
 }
@@ -170,7 +174,7 @@ import requests
 import json
 
 url = "https://www.dmxapi.cn/v1/responses"
-api_key = "sk-***********************************"
+api_key = "sk-**********************************"
 
 headers = {
     "Content-Type": "application/json",
@@ -180,10 +184,12 @@ headers = {
 payload = {
     # 【model】(string, 必填) 固定为 volc-asset-create
     "model": "volc-asset-create",
+    # 【input】(必填) 仅为通过 dmxapi 平台入口的通用校验，后端不使用，保持该值即可
+    "input": "validate",
     # 【GroupId】(string, 必填) 素材组合 ID（档案号），即第 2 步拿到的 group-...，决定素材塞进哪个档案
-    "GroupId": "group-20260....v6stv",
+    "GroupId": "group-2026....-..xsgv",
     # 【URL】(string, 必填) 图片/视频/音频可访问的公网 URL，系统会去这里下载素材
-    "URL": "https://image.dmxapi.cn/thumbn......cf6c25837.png",
+    "URL": "https://image.dmxa.......................052e6b4b03.png",
     # 【AssetType】(string, 必填) 素材类型，三选一
     # 可选值: "Image"(图片) / "Video"(视频) / "Audio"(音频)
     "AssetType": "Image",
@@ -223,7 +229,7 @@ import json
 import time
 
 url = "https://www.dmxapi.cn/v1/responses"
-api_key = "sk-****************************************"
+api_key = "sk-**********************************"
 
 headers = {
     "Content-Type": "application/json",
@@ -233,8 +239,10 @@ headers = {
 payload = {
     # 【model】(string, 必填) 固定为 volc-asset-get
     "model": "volc-asset-get",
+    # 【input】(必填) 仅为通过 dmxapi 平台入口的通用校验，后端不使用，保持该值即可
+    "input": "validate",
     # 【Id】(string, 必填) 要查询的素材资产 ID，即第 3 步返回的 asset-...
-    "Id": "asset-2026....wsbcl",
+    "Id": "asset........m25",
     # 【ProjectName】项目名为ltyzs，请勿更改
     "ProjectName": "ltyzs",
 }
