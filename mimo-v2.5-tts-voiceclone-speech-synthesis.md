@@ -112,7 +112,7 @@ payload = {
         # ⚠️ MIME 必须与样本真实格式匹配：wav 样本用 audio/wav，mp3 样本用 audio/mpeg
         # MIME 类型支持 "audio/wav" 或 "audio/mpeg"，仅支持 mp3 / wav 样本，
         # Base64 编码后不超过 10 MB
-        "voice": f"data:audio/mpeg;base64,{voice_base64}",
+        "voice": f"data:audio/wav;base64,{voice_base64}",
     },
 
     # 【stream】(boolean, 可选) 是否流式输出，默认 false

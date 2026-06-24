@@ -78,7 +78,7 @@ data = {
             # 该描述用于设计音色，本身不会被朗读
             "role": "user",
             # 【content】(string, 必填) 音色设计描述文本
-            "content": "Give me a young angey female tone."
+            "content": "Give me a young angry female tone."
         },
         {
             # 【role】(string, 必填) 消息角色
