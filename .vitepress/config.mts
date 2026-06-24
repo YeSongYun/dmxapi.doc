@@ -656,6 +656,15 @@ export default defineConfig({
             items: [
               // { text: 'TTS模型Gemini系列', link: '/gemini-2.5-pro-preview-tts' },
               { text: 'TTS模型 MinMax-speech', link: '/minimax-speech' },
+              {
+                text: 'TTS模型 mimo-v2.5-tts',
+                collapsed: true,
+                items: [
+                  { text: '预置音色语音合成', link: '/mimo-v2.5-tts-speech-synthesis' },
+                  { text: '文本设计音色', link: '/mimo-v2.5-tts-voicedesign-speech-synthesis' },
+                  { text: '音色复刻', link: '/mimo-v2.5-tts-voiceclone-speech-synthesis' },
+                ],
+              },
               // { text: 'STT模型 whisper', link: '/opneai-stt' },
               { text: 'TTS模型 mimo-v2-tts', link: '/mimo-v2-tts' },
               { text: 'STT模型 gpt-4o-transcribe', link: '/gpt-4o-transcribe' },
