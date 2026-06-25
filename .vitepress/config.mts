@@ -426,6 +426,14 @@ export default defineConfig({
               },
 
               {
+                text: 'Z-Image',
+                collapsed: true,
+                items: [
+                  { text: '文生图 Z-Image', link: '/z-image-turbo-t2i' },
+                ],
+              },
+
+              {
                 text: 'Recraft 矢量图模型',
                 collapsed: true,
                 items: [
