@@ -139,9 +139,6 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
         {
           "type": "image",
           "text": "https://dashscope-a717.oss-cn-beijing.aliyuncs.com/7d/21/20260625/448165f2/3d071ed2-acf0-9640-9b17-56f6285a86562091883678.png?Expires=1782962396&OSSAccessKeyId=LTAI5tPxpiCM2hjmWrFXrym1&Signature=tbBAgAS32cbB%2F2MaiV8pTdCJBnc%3D"
-        },
-        {
-          "type": "image"
         }
       ]
     }
