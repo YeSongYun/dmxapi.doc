@@ -429,7 +429,7 @@ export default defineConfig({
                 text: 'Z-Image',
                 collapsed: true,
                 items: [
-                  { text: '文生图 Z-Image', link: '/z-image-turbo文生图' },
+                  { text: '文生图 Z-Image', link: '/z-image-turbo-t2i' },
                 ],
               },
 
