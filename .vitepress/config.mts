@@ -600,6 +600,7 @@ export default defineConfig({
                 text: 'Kling 视频模型 ',
                 collapsed: true,
                 items: [
+                  /* 已隐藏：kling-v3-video-generation（保留配置与 .md 文件，删除本块注释即可恢复）
                   {
                     text: 'kling-v3-video-generation',
                     collapsed: true,
@@ -610,6 +611,7 @@ export default defineConfig({
                       { text: '首尾帧生视频', link: '/kling-v3-video-generation-first-last-frame' },
                     ],
                   },
+                  */
                   {
                     text: 'kling-v3',
                     collapsed: true,
