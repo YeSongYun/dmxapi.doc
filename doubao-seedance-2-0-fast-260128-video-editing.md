@@ -50,6 +50,7 @@ prompt_text = "将视频1礼盒中的香水替换成图片1中的面霜，运镜
 image_source = "https://ark-project.tos-cn-beijing.volces.com/doc_image/r2v_edit_pic1.jpg"
 
 # 视频输入：兼容 url 和素材 id（如 asset://...）
+# ⚠️ 建议：传入视频的秒数最好是 15s
 video_source = "https://ark-project.tos-cn-beijing.volces.com/doc_video/r2v_edit_video1.mp4"
 
 # 音频输入（可选）：兼容 base64、url 和素材 id（如 asset://...）
@@ -69,10 +70,11 @@ generate_audio = True
 # "adaptive" 表示根据输入素材或提示词自动选择最合适的宽高比
 ratio = "16:9"
 
-# 【duration】(integer, 可选) 视频时长（秒），默认值 5
-# seedance 2.0 fast 取值范围：[4, 15] 或 -1（由模型自动选择合适时长）
-# 注意：视频时长与计费相关，设置 -1 时请注意可能产生较长视频的费用
-duration = 5
+# 【duration】(integer, 可选) 视频时长（秒），默认值 8
+# seedance 2.0 fast 取值范围：[8, 15]
+# 输出视频的秒数必须大于等于8s
+# 注意：视频时长与计费相关，请谨慎设置
+duration = 8
 
 # 【watermark】(boolean, 可选) 是否在视频中添加水印，默认值 false
 # true：含水印；false：不含水印
@@ -213,6 +215,7 @@ input_list = [
             # 兼容两种来源：URL / asset://素材ID
             # 格式：mp4/mov；分辨率：480p/720p/1080p；时长：[2, 15]s；单个 < 50MB
             # 最多传入 3 个参考视频，所有视频总时长不超过 15s
+            # ⚠️ 建议：传入视频的秒数最好是 15s
             "url": resolve_source(video_source, media_type="video")
         },
         # 【input[].role】(string, 条件必填) 视频用途

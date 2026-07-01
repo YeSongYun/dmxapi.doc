@@ -56,6 +56,7 @@ payload = {
     # 视频延长场景：传入文本描述 + 1~3 段参考视频（role 均为 reference_video）
     # 单段视频要求：格式 mp4/mov，分辨率 480p/720p，时长 [2, 15] s，大小 <= 50 MB
     # 所有参考视频总时长不超过 15 秒
+    # ⚠️ 建议：传入视频的总秒数最好是 15s
     "input": [
         {
             # 【type】(string, 必填) 文本输入类型，固定为 text
@@ -101,9 +102,10 @@ payload = {
     "ratio": "16:9",
 
     # 【duration】(integer, 可选) 视频时长（秒）
-    # 取值范围: [4, 15]
-    # 默认值: 5
-    "duration": 4,
+    # 取值范围: [8, 15]
+    # 输出视频的秒数必须大于等于8s
+    # 默认值: 8
+    "duration": 8,
 
     # 【watermark】(boolean, 可选) 是否添加水印，默认 false
     # true: 含水印 / false: 不含水印

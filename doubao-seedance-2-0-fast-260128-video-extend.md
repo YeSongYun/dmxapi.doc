@@ -70,6 +70,7 @@ payload = {
             "video_url": {
                 
                 # 单个视频要求: mp4/mov 格式，时长 [2,15] s，大小不超过 50 MB，分辨率 480p/720p/1080p
+                # ⚠️ 建议：传入视频的总秒数最好是 15s
                 "url": "https://ark-project.tos-cn-beijing.volces.com/doc_video/r2v_extend_video1.mp4"
             },
             # 【input[].role】(string, 条件必填) 视频用途
@@ -101,9 +102,9 @@ payload = {
     # 可选值: "16:9" / "4:3" / "1:1" / "3:4" / "9:16" / "21:9" / "adaptive" (根据输入自动选择)
     "ratio": "16:9",
 
-    # 【duration】(integer, 可选) 生成视频时长，单位秒，默认值 5
-    # seedance 2.0 & 2.0 fast 支持: [4, 15] 内的整数，或 -1 (由模型自动选择)
-    # 注意: 视频时长影响计费，请谨慎设置
+    # 【duration】(integer, 可选) 生成视频时长，单位秒，默认值 8
+    # seedance 2.0 & 2.0 fast 支持: [8, 15] 内的整数
+    # 输出视频的秒数必须大于等于8s
     "duration": 8,
 
     # 【watermark】(boolean, 可选) 是否在视频中添加水印，默认值 false
