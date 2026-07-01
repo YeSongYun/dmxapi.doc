@@ -1,6 +1,6 @@
 # happyhorse-1.0-t2v 文生视频 API 使用文档
 
-HappyHorse 文生视频 API 基于 happyhorse-1.0-t2v 模型，输入文本提示词即可生成物理真实、运动流畅的视频内容。支持 720P 和 1080P 两种分辨率、5 种宽高比（16:9、9:16、1:1、4:3、3:4），可自定义视频时长（3–15 秒），并支持水印控制与随机种子固定。接口采用两步异步模式：先提交任务获取任务 ID，再通过任务 ID 查询并获取生成视频。
+HappyHorse 文生视频 API 基于 happyhorse-1.0-t2v 模型，输入文本提示词即可生成物理真实、运动流畅的视频内容。支持 720P 和 1080P 两种分辨率、9 种宽高比（16:9、9:16、1:1、4:3、3:4、4:5、5:4、9:21、21:9），可自定义视频时长（3–15 秒），并支持水印控制与随机种子固定。接口采用两步异步模式：先提交任务获取任务 ID，再通过任务 ID 查询并获取生成视频。
 
 ## 模型名称
 
@@ -50,7 +50,7 @@ payload = {
         # 可选值: "720P" / "1080P"（默认值）
         "resolution": "720P",
         # 【ratio】(string, 可选) 指定生成视频的宽高比
-        # 可选值: "16:9"（默认值）/ "9:16" / "1:1" / "4:3" / "3:4"
+        # 可选值: "16:9"（默认值）/ "9:16" / "1:1" / "4:3" / "3:4" / "4:5" / "5:4" / "9:21" / "21:9"
         "ratio": "16:9",
         # 【duration】(integer, 可选) 指定生成视频的时长，单位为秒
         # 取值范围: [3, 15]，默认值为 5
@@ -123,7 +123,10 @@ headers = {
 payload = {
     # 【model】(string, 必填) 查询模型名称，固定为 "happyhorse-get"
     "model": "happyhorse-get",
-    # 【input】(string, 必填) 第一步提交任务后返回的任务 ID
+    # 【input】(string, 必填) 提交任务时返回的 task_id，用于查询任务状态与结果
+    # task_id 有效期为 24 小时，超时后将无法查询（接口返回状态 UNKNOWN）
+    # 任务状态枚举: PENDING(排队中) / RUNNING(处理中) / SUCCEEDED(成功) / FAILED(失败) / CANCELED(已取消) / UNKNOWN(不存在或已过期)
+    # 视频生成通常需要 1~5 分钟，建议每隔约 15 秒轮询一次（重新执行本步骤），直到状态变为 SUCCEEDED；请勿重复创建任务
     "input": "62967e89-6174-4d38-9828-aedd2c5d151f"
 }
 
@@ -141,6 +144,7 @@ try:
     if video_url:
         print("\n视频链接:")
         print(video_url)
+        # 注意：video_url 有效期为 24 小时，请及时下载并转存至本地或永久存储（如 OSS）
     else:
         print("\n未找到 video_url，任务状态:", inner.get("task_status"))
 except (KeyError, IndexError, json.JSONDecodeError) as e:
