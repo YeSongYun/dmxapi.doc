@@ -60,6 +60,7 @@ image2_path = "C:/Users/a1/Pictures/20230301120626930.jpg"
 audio1_path = "C:/Users/a1/Pictures/3.mp3"
 
 # 🎬 视频（支持 公网URL / 素材ID，不支持本地上传）
+# ⚠️ 建议：传入视频的秒数最好是 15s
 video1_url = "https://ark-project.tos-cn-beijing.volces.com/doc_video/r2v_tea_video1.mp4"
 
 
@@ -169,6 +170,7 @@ payload = {
                 # 【url】(string) 视频公网 URL 或素材 ID
                 # 支持格式：mp4/mov，分辨率 480p/720p，帧率 [24, 60] FPS
                 # 单个视频时长 [2, 15]s，最多传入 3 个，总时长不超过 15s，大小不超过 50 MB
+                # ⚠️ 建议：传入视频的秒数最好是 15s
                 "url": video1_url
             },
             # 【role】(string, 条件必填) 视频角色，当前仅支持 reference_video（参考视频）
@@ -204,8 +206,9 @@ payload = {
     "ratio": "16:9",
 
     # 【duration】(integer, 可选) 视频时长（秒）
-    # 取值范围: [4, 15]；默认值: 5
-    "duration": 4,
+    # 取值范围: [8, 15]；默认值: 8
+    # 输出视频的秒数必须大于等于8s
+    "duration": 8,
 
     # 【seed】(integer, 可选) 随机种子，控制生成内容随机性
     # 取值范围: [-1, 4294967295]；-1 表示使用随机数（默认）

@@ -70,6 +70,7 @@ image_inputs = [
 # 视频仅支持两种来源（不支持本地文件 base64 上传）：
 #   1. 网络 URL      ：以 http:// 或 https:// 开头，例如 "https://xxx/a.mp4"
 #   2. 素材 ID       ：以 asset:// 开头，例如 "asset://xxxxxxxx"
+# ⚠️ 建议：传入视频的总秒数最好是 15s
 video_inputs = [
     "https://ark-project.tos-cn-beijing.volces.com/doc_video/r2v_tea_video1.mp4",
     # "asset://your_video_asset_id",   # 素材 ID 示例
@@ -104,7 +105,7 @@ model = "doubao-seedance-2-0-fast-260128"
 generate_audio = True            # 是否生成同步音频，默认 true
 resolution = "720p"              # 视频分辨率: "480p" / "720p" / "1080p"（2.0 fast 不支持 1080p）
 ratio = "16:9"                   # 宽高比: "16:9"/"4:3"/"1:1"/"3:4"/"9:16"/"21:9"/"adaptive"
-duration = 5                     # 视频时长（秒），范围 [4,15] 或 -1（模型自主选择）
+duration = 8                     # 视频时长（秒），范围 [8,15]；输出视频的秒数必须大于等于8s
 seed = -1                        # 随机种子，-1 为随机
 watermark = False                # 是否含水印
 callback_url = "https://www.dmxapi.cn"  # 任务结果回调通知地址
@@ -256,8 +257,9 @@ payload = {
     # adaptive: 根据输入自动选择最合适的宽高比（seedance 2.0 & 2.0 fast 支持）
     "ratio": ratio,
 
-    # 【duration】(integer, 可选) 生成视频时长，仅支持整数，单位：秒，默认值 5
-    # seedance 2.0 & 2.0 fast 取值范围: [4, 15] 或设置为 -1（由模型自主选择合适时长）
+    # 【duration】(integer, 可选) 生成视频时长，仅支持整数，单位：秒，默认值 8
+    # seedance 2.0 & 2.0 fast 取值范围: [8, 15]
+    # 输出视频的秒数必须大于等于8s
     # duration 和 frames 二选一，frames 的优先级高于 duration
     # 注意：视频时长与计费相关，请谨慎设置
     "duration": duration,

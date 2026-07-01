@@ -46,6 +46,7 @@ image_input = "asset://asset-20260401123823-6d4x2"
 #   1. 网络视频 URL    （http:// 或 https:// 开头）
 #   2. 素材库 ID       （asset:// 开头，如 asset://asset-20260224190654-9nbbl）
 # ⚠️ 注意：视频仅支持 URL / 素材 ID，不支持本地路径转 Base64
+# ⚠️ 建议：传入视频的秒数最好是 15s
 video_url = "asset://asset-20260224190654-9nbbl"
 
 # ---------- 📝 提示词 ----------
@@ -166,6 +167,7 @@ payload = {
                 # 视频格式：mp4/mov，分辨率：480p/720p/1080p
                 # 时长：[2, 15] s，最多传入 3 个参考视频，总时长不超过 15s
                 # 单个视频不超过 50 MB，帧率：[24, 60] FPS
+                # ⚠️ 建议：传入视频的秒数最好是 15s
                 "url": resolve_video_url(video_url),
             },
             # 【role】(string, 条件必填) 视频用途
@@ -183,9 +185,10 @@ payload = {
     # Seedance 2.0 默认值: adaptive
     "ratio": "16:9",
     # 【duration】(integer, 可选) 视频时长（秒）
-    # Seedance 2.0 & 2.0 fast 取值范围: [4, 15]
-    # 默认值: 5
-    "duration": 5,
+    # Seedance 2.0 & 2.0 fast 取值范围: [8, 15]
+    # 输出视频的秒数必须大于等于8s
+    # 默认值: 8
+    "duration": 8,
     # 【watermark】(boolean, 可选) 是否添加水印
     # false: 不含水印 / true: 含水印
     # 默认值: false
@@ -246,7 +249,6 @@ payload = {
     # 【model】(string, 必填) 固定值，用于获取视频生成结果
     "model": "seedance-2-0-get",
     # 【input】(string, 必填) 提交任务时返回的任务 ID
-    # 任务 ID 保存 7 天（从 created_at 时间戳起计算），超时后自动清除
     "input": "cgt-20260402221419-2kcc7"
 }
 
