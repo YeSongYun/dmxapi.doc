@@ -1,6 +1,6 @@
 # happyhorse-1.0-i2v 首帧生视频 API 使用文档
 
-HappyHorse 首帧生视频模型以首帧图片为基础，支持通过文本提示词进行引导，生成物理真实、运动流畅的视频。调用采用异步方式，任务通常需要 1–5 分钟完成；支持分辨率档位调节（720P）、时长设置（3–15 秒）、水印控制及随机种子固定，可满足多样化的图生视频应用需求。
+HappyHorse 首帧生视频模型以首帧图片为基础，支持通过文本提示词进行引导，生成物理真实、运动流畅的视频。调用采用异步方式，任务通常需要 1–5 分钟完成；支持分辨率档位调节（720P/1080P）、时长设置（3–15 秒）、水印控制及随机种子固定，可满足多样化的图生视频应用需求。
 
 ## 模型名称
 
@@ -54,7 +54,7 @@ headers = {
 # image_source = "C:/Users/a1/Pictures/1689320796087949.png"
 
 # 【方式二】网络图片 URL (支持 HTTP / HTTPS 协议)
-# 格式: JPEG、JPG、PNG、WEBP；宽高比: 1:2.5～2.5:1
+# 格式: JPEG、JPG、PNG、WEBP；宽高比: 1:2.5～2.5:1；宽高均 ≥ 300px；文件 ≤ 20MB
 image_source = "https://cdn.translate.alibaba.com/r/wanx-demo-1.png"
 
 
@@ -108,7 +108,7 @@ payload = {
                 #   1. 网络图像 URL (支持 HTTP 或 HTTPS 协议)
                 #   2. 本地图像 Base64 Data URL (data:image/png;base64,xxxxxx)
                 # 格式：JPEG、JPG、PNG、WEBP
-                # 宽高比：1:2.5～2.5:1
+                # 宽高比：1:2.5～2.5:1；宽高均 ≥ 300px；文件 ≤ 20MB
                 "url": image_url
             }
         ]
@@ -117,10 +117,10 @@ payload = {
         # 【resolution】(string, 可选) 指定生成的视频分辨率档位，用于控制视频的清晰度（总像素）
         # 模型根据选择的分辨率档位，自动缩放至相近总像素
         # 输出的视频宽高比与输入首帧近似一致
-        # 可选值: "720P"(标准高清)
+        # 可选值: "720P" / "1080P"（默认值）
         "resolution": "720P",
         # 【duration】(integer, 可选) 指定生成视频的时长，单位为秒
-        # 取值范围: [3, 15] 之间的整数
+        # 取值范围: [3, 15] 之间的整数，默认值为 5
         "duration": 5,
         # 【watermark】(boolean, 可选) 是否在生成的视频上添加水印标识
         # 水印位于视频右下角，文案固定为 "Happy Horse"
@@ -207,6 +207,7 @@ payload = {
     # 【input】(string, 必填) 提交任务时返回的 task_id，用于查询任务状态与结果
     # task_id 有效期为 24 小时，超时后将无法查询（接口返回状态 UNKNOWN）
     # 任务状态枚举: PENDING(排队中) / RUNNING(处理中) / SUCCEEDED(成功) / FAILED(失败) / CANCELED(已取消) / UNKNOWN(不存在或已过期)
+    # 视频生成通常需要 1~5 分钟，建议每隔约 15 秒轮询一次（重新执行本步骤），直到状态变为 SUCCEEDED；请勿重复创建任务
     "input": "62967e89-6174-4d38-9828-aedd2c5d151f"
 }
 
@@ -227,6 +228,7 @@ try:
     if video_url:
         print("\n视频链接:")
         print(video_url)
+        # 注意：video_url 有效期为 24 小时，请及时下载并转存至本地或永久存储（如 OSS）
     else:
         print("\n未找到 video_url，任务状态:", inner.get("task_status"))
 except (KeyError, IndexError, json.JSONDecodeError) as e:

@@ -1,6 +1,6 @@
 # happyhorse-1.0-r2v 参考生视频 API 使用文档
 
-HappyHorse-参考生视频模型支持传入多张参考图像，通过文本提示词描述场景，将图像中的主体角色融合生成一段流畅的视频。模型可理解 character1、character2 等参考指代标识，将不同图像中的角色自然融入同一视频场景。视频支持 720P/1080P 分辨率、5 种宽高比（16:9/9:16/3:4/4:3/1:1）、3~15 秒时长，任务通常在 1~5 分钟内完成，采用异步模式提交后通过任务 ID 轮询获取结果。
+HappyHorse-参考生视频模型支持传入多张参考图像，通过文本提示词描述场景，将图像中的主体角色融合生成一段流畅的视频。模型可理解 character1、character2 等参考指代标识，将不同图像中的角色自然融入同一视频场景。视频支持 720P/1080P 分辨率、9 种宽高比（16:9/9:16/3:4/4:3/1:1/4:5/5:4/9:21/21:9）、3~15 秒时长，任务通常在 1~5 分钟内完成，采用异步模式提交后通过任务 ID 轮询获取结果。
 
 ## 模型名称
 
@@ -53,6 +53,7 @@ headers = {
 # 按照数组顺序定义 prompt 中角色引用的顺序:
 #   第 1 个对应 [Image 1], 第 2 个对应 [Image 2], 以此类推
 # 参考图像数量限制: 1~9 张
+# 参考图像要求: 格式 JPEG/JPG/PNG/WEBP; 短边 ≥ 300px; 单张 ≤ 20MB; 支持公网 URL 或 Base64
 #
 # 每个元素既可以是本地文件路径, 也可以是公网 URL 地址, 程序会自动识别:
 #   - 本地路径示例: "C:/Users/15664/Desktop/hh-v2v-girl.jpg"
@@ -130,7 +131,7 @@ payload = {
     "parameters": {
         # 【resolution】(string, 可选) 分辨率档位: "1080P"(默认) / "720P"
         "resolution": "720P",
-        # 【ratio】(string, 可选) 宽高比: "16:9"(默认)/"9:16"/"3:4"/"4:3"/"1:1"
+        # 【ratio】(string, 可选) 宽高比: "16:9"(默认)/"9:16"/"3:4"/"4:3"/"1:1"/"4:5"/"5:4"/"9:21"/"21:9"
         "ratio": "16:9",
         # 【duration】(integer, 可选) 时长(秒), 取值 3~15, 默认 5
         "duration": 3,
@@ -206,9 +207,10 @@ payload = {
     # 【model】(string, 必选) 查询模型名称
     # 固定值: happyhorse-get，用于查询 happyhorse-1.0-r2v 提交的任务结果
     "model": "happyhorse-get",
-    # 【input】(string, 必选) 任务 ID
-    # 填入提交任务时返回的 task_id，task_id 查询有效期为 24 小时
-    # 任务状态流转: PENDING(排队中) -> RUNNING(处理中) -> SUCCEEDED(成功) / FAILED(失败)
+    # 【input】(string, 必选) 提交任务时返回的 task_id，用于查询任务状态与结果
+    # task_id 有效期为 24 小时，超时后将无法查询（接口返回状态 UNKNOWN）
+    # 任务状态枚举: PENDING(排队中) / RUNNING(处理中) / SUCCEEDED(成功) / FAILED(失败) / CANCELED(已取消) / UNKNOWN(不存在或已过期)
+    # 视频生成通常需要 1~5 分钟，建议每隔约 15 秒轮询一次（重新执行本步骤），直到状态变为 SUCCEEDED；请勿重复创建任务
     "input": "62967e89-6174-4d38-9828-aedd2c5d151f"
 }
 
@@ -226,6 +228,7 @@ try:
     if video_url:
         print("\n视频链接:")
         print(video_url)
+        # 注意：video_url 有效期为 24 小时，请及时下载并转存至本地或永久存储（如 OSS）
     else:
         print("\n未找到 video_url，任务状态:", inner.get("task_status"))
 except (KeyError, IndexError, json.JSONDecodeError) as e:

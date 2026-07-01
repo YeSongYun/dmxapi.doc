@@ -109,7 +109,7 @@ payload = {
                 "type": "video",
                 # 【url】(string, 必选) 待编辑视频的公网可访问 URL
                 # 视频要求: 格式 MP4/MOV（建议 H.264 编码），时长 3~60 秒
-                # 分辨率: 长边不超过 2160px，短边不小于 320px，宽高比 1:2.5~2.5:1
+                # 分辨率: 长边不超过 4096px，短边不小于 360px，宽高比 1:2.5~2.5:1
                 # 文件大小不超过 100MB，帧率大于 8fps
                 # 输出时长: 3~15 秒（超过 15 秒的输入自动截取前 15 秒作为有效片段）
                 "url": "https://help-static-aliyun-doc.aliyuncs.com/file-manage-files/zh-CN/20260409/dozxak/Wan_Video_Edit_33_1.mp4"
@@ -120,7 +120,7 @@ payload = {
                 # 【url】(string, 必选) 参考图像地址
                 # 既可以是公网 URL，也可以是本地图片转换后的 Base64 Data URL
                 # 图像要求: 格式 JPEG/JPG/PNG/WEBP，宽高尺寸不小于 300px
-                # 宽高比 1:2.5~2.5:1，文件大小不超过 10MB
+                # 宽高比 1:2.5~2.5:1，文件大小不超过 20MB
                 "url": reference_image_url
             }
         ]
@@ -221,10 +221,10 @@ payload = {
     # 【model】(string, 必选) 查询任务使用的模型名称，固定为 happyhorse-get
     "model": "happyhorse-get",
 
-    # 【input】(string, 必选) 提交任务时返回的 task_id，用于查询任务状态和结果
-    # task_id 查询有效期为 24 小时
-    # 任务状态枚举: PENDING（排队中）/ RUNNING（处理中）/ SUCCEEDED（成功）
-    #              FAILED（失败）/ CANCELED（已取消）/ UNKNOWN（不存在或状态未知）
+    # 【input】(string, 必选) 提交任务时返回的 task_id，用于查询任务状态与结果
+    # task_id 有效期为 24 小时，超时后将无法查询（接口返回状态 UNKNOWN）
+    # 任务状态枚举: PENDING(排队中) / RUNNING(处理中) / SUCCEEDED(成功) / FAILED(失败) / CANCELED(已取消) / UNKNOWN(不存在或已过期)
+    # 视频生成通常需要 1~5 分钟，建议每隔约 15 秒轮询一次（重新执行本步骤），直到状态变为 SUCCEEDED；请勿重复创建任务
     "input": "62967e89-6174-4d38-9828-aedd2c5d151f"
 }
 
@@ -246,6 +246,7 @@ try:
     if video_url:
         print("\n视频链接:")
         print(video_url)
+        # 注意：video_url 有效期为 24 小时，请及时下载并转存至本地或永久存储（如 OSS）
     else:
         print("\n未找到 video_url，任务状态:", inner.get("task_status"))
 except (KeyError, IndexError, json.JSONDecodeError) as e:
