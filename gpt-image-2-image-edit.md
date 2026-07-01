@@ -21,6 +21,7 @@ https://www.dmxapi.cn/v1/images/edits
 
 ```python
 import base64
+import io
 import json
 import os
 from datetime import datetime
@@ -28,14 +29,15 @@ from datetime import datetime
 import requests
 
 # 图片文件配置：官方文档说明可使用一张或多张图片作为参考图
+# 支持 本地文件路径 / 公网 URL，自动识别
 image_paths = [
-    "C:/Users/a1/Desktop/测试保存代码/c1.png",
-    # "input/source_image_2.png",
+    r"C:\Users\a1\Pictures\a7.jpg",
+    
 ]
 
 # API 配置
 url = "https://www.dmxapi.cn/v1/images/edits"
-api_key = "sk-******************************"
+api_key = "sk-**************************************"
 headers = {
     "Authorization": f"Bearer {api_key}",
 }
@@ -45,11 +47,11 @@ payload = {
     # 【model】(string, 必填) 指定要调用的图像模型
     # 当前文档对应官方页面中的 GPT Image 系列模型 gpt-image-2
     # 可选值: "gpt-image-2"(当前示例使用的图片编辑模型)
-    "model": "gpt-image-2-ssvip",
+    "model": "gpt-image-2",
 
     # 【prompt】(string, 必填) 描述希望模型如何编辑输入图片
     # 官方文档说明图片编辑基于文本提示词执行，可整体修改，也可结合 mask 做局部替换
-    "prompt": "给图里加上卡通版的卡皮巴拉",
+    "prompt": "把图里的小猫换成小马",
 
 
     # 【size】(string, 可选) 生成图像的分辨率
@@ -94,12 +96,14 @@ payload = {
     "n": 1,
 }
 
-# 准备图片文件
+# 准备图片文件（支持 本地文件路径 / 公网 URL，自动识别）
 files = []
 for img_path in image_paths:
     try:
-        file_name = os.path.basename(img_path)
-        ext = img_path.lower().rsplit(".", 1)[-1]
+        # 去掉 URL 可能携带的查询参数（如 OSS 的 ?xxx），以便取到干净的文件名与后缀
+        clean_path = img_path.split("?")[0]
+        file_name = os.path.basename(clean_path)
+        ext = clean_path.lower().rsplit(".", 1)[-1]
         mime_map = {
             "png": "image/png",
             "jpg": "image/jpeg",
@@ -112,9 +116,20 @@ for img_path in image_paths:
         # 官方文档说明可使用一张或多张图片作为参考图；若同时提供 mask，mask 会作用在第一张输入图上
         # 在 mask 编辑场景下，原图与 mask 必须具有相同格式和尺寸，且文件大小需小于 50MB
         # mask 还必须包含 alpha 通道；若使用黑白图作为 mask，需要先补充 alpha 通道后再上传
-        files.append(("image", (file_name, open(img_path, "rb"), mime_type)))
+        if img_path.startswith(("http://", "https://")):
+            # 公网 URL：先下载到内存，再作为文件字节上传（open 无法打开 URL）
+            resp = requests.get(img_path, timeout=120)
+            resp.raise_for_status()
+            file_obj = io.BytesIO(resp.content)
+        else:
+            # 本地路径：直接打开文件
+            file_obj = open(img_path, "rb")
+
+        files.append(("image", (file_name, file_obj, mime_type)))
     except FileNotFoundError:
         print(f"文件未找到: {img_path}")
+    except requests.RequestException as e:
+        print(f"图片下载失败: {img_path} -> {e}")
 
 
 def main():
