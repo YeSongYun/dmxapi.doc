@@ -343,17 +343,6 @@ except ValueError as e:
 
 :::
 
-## 注意事项
-
-- 请将代码中的 API 密钥替换为你自己的 DMXAPI 密钥
-- 输入图片列表中最多支持 14 张高保真对象图片
-- 生成的图像会自动保存到 `output` 文件夹（如不存在会自动创建）
-- `response_modalities` 参数可以控制返回内容类型（仅图像或图像+文本）
-- gemini-3.1-flash-lite-image 仅支持 1K 分辨率，不支持 Google 搜索接地工具
-- 官方提示：Lite 模型专为速度和规模设计，不适合处理多个参考输入的复杂场景，重度多图任务建议使用 gemini-3.1-flash-image
-
----
-
 <p align="center">
   <small>© 2026 DMXAPI 多图融合</small>
 </p>

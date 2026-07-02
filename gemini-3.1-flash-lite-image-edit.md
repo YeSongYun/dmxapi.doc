@@ -106,7 +106,6 @@ response = client.models.generate_content(
             image_size="1K",
         ),
 
-        # 注意：gemini-3.1-flash-lite-image 不支持 Google 搜索接地工具（tools）
     )
 )
 
@@ -265,8 +264,6 @@ payload = {
             "imageSize": "1K"
         }
     }
-
-    # 注意：gemini-3.1-flash-lite-image 不支持 Google 搜索接地工具（tools）
 }
 
 # 完整的 API 端点
@@ -335,15 +332,6 @@ except ValueError as e:
 ```
 
 :::
-
-## 注意事项
-
-- 请将代码中的 API 密钥替换为你自己的 DMXAPI 密钥
-- 确保 `INPUT_IMAGE_PATH` 指向的图片文件存在
-- gemini-3.1-flash-lite-image 仅支持 1K 分辨率，支持 1:1、3:2、2:3、3:4、4:3、4:5、5:4、9:16、16:9、21:9 共 10 种宽高比
-- gemini-3.1-flash-lite-image 不支持 Google 搜索接地工具
-
----
 
 <p align="center">
   <small>© 2026 DMXAPI - Gemini 图像编辑 API 文档</small>

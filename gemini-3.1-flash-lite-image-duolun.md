@@ -461,17 +461,6 @@ print("=" * 60)
 
 :::
 
-## 注意事项
-
-- 请将代码中的 API 密钥替换为你自己的 DMXAPI 密钥
-- 第一轮生成的图片 base64 数据和签名会保存到 `base64_data` 文件夹，供后续多轮对话使用
-- 多轮对话时需传入前一轮的图片数据（`inline_data`）和签名（`thoughtSignature`）
-- `responseModalities` 设置为 `["TEXT", "IMAGE"]` 可同时获取文字描述和图片
-- gemini-3.1-flash-lite-image 仅支持 1K 分辨率，不支持 Google 搜索接地工具
-- 官方提示：Lite 模型不适合多轮连续编辑，重度多轮场景建议使用 gemini-3.1-flash-image
-
----
-
 <p align="center">
   <small>© 2026 DMXAPI gemini多轮图片修改</small>
 </p>
