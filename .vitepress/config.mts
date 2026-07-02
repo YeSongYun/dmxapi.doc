@@ -293,6 +293,17 @@ export default defineConfig({
                 },
 
                   {
+                    text: 'gemini-3.1-flash-lite-image',
+                    collapsed: true,
+                    items: [
+                      { text: '文生图', link: '/gemini-3.1-flash-lite-image' },
+                      { text: '图片编辑', link: '/gemini-3.1-flash-lite-image-edit' },
+                      { text: '多图融合', link: '/gemini-3.1-flash-lite-image-images' },
+                      { text: '多轮对话改图', link: '/gemini-3.1-flash-lite-image-duolun' },
+                    ],
+                  },
+
+                  {
                 text: 'gemini-3-pro-image',
                 collapsed: true,
                 items: [
