@@ -1,13 +1,6 @@
 # Gemini 3.1 Flash Lite Image 文生图（Nano Banana 2 Lite）
 通过 Gemini 3.1 Flash Lite Image 模型快速生成图像，速度最快、成本最低，适合大批量、低延迟的图片生成任务。
 
-:::tip 推荐模型：gemini-3.1-flash-lite-image
-**Gemini 3.1 Flash Lite Image** 是速度最快、成本最低的 Gemini 图片模型，专为速度和规模而设计：
-- **极致速度**：速度和成本是主要运营限制因素时的首选
-- **1K 分辨率**：仅支持 1K 分辨率
-- **10 种宽高比**：支持 1:1、3:2、2:3、3:4、4:3、4:5、5:4、9:16、16:9、21:9
-- **多参考图**：最多支持 14 张高保真对象图片
-:::
 
 
 ## 接口地址
@@ -110,7 +103,6 @@ response = client.models.generate_content(
             image_size="1K",
         ),
 
-        # 注意：gemini-3.1-flash-lite-image 不支持 Google 搜索接地工具（tools）
     )
 )
 
@@ -219,8 +211,6 @@ data = {
             # "imageSize": "1K",
         }
     }
-
-    # 注意：gemini-3.1-flash-lite-image 不支持 Google 搜索接地工具（tools）
 }
 
 # ============================================================================
@@ -288,17 +278,7 @@ else:
 [成功] 图片已保存: gemini-native-image.png
 ```
 
-:::
-## 注意事项
 
-- 请将代码中的 API 密钥替换为你自己的 DMXAPI 密钥
-- 生成的图像会自动保存到 `output` 文件夹（如不存在会自动创建）
-- `response_modalities` 参数可以控制返回内容类型（仅图像或图像+文本）
-- 为获得最佳性能，请使用以下语言：英语、阿拉伯语（埃及）、德语（德国）、西班牙语（墨西哥）、法语（法国）、印地语（印度）、印度尼西亚语（印度尼西亚）、意大利语（意大利）、日语（日本）、韩语（韩国）、葡萄牙语（巴西）、俄语（俄罗斯）、乌克兰语（乌克兰）、越南语（越南）、中文（中国）。
-- gemini-3.1-flash-lite-image 仅支持 1K 分辨率，支持 1:1、3:2、2:3、3:4、4:3、4:5、5:4、9:16、16:9、21:9 共 10 种宽高比。
-- gemini-3.1-flash-lite-image 不支持 Google 搜索接地工具。
-
----
 
 <p align="center">
   <small>© 2026 DMXAPI Gemini模型</small>
