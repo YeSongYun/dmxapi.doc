@@ -22,7 +22,7 @@
 | `low` | 减少思考，优先速度 |
 | `medium` | 思考适中，简单问题可跳过 |
 | `high` | 标准思考深度（默认值） |
-| `xhigh` | 更深思考（Opus 4.7 起及 Sonnet 5 支持，编程 / Agent 场景推荐） |
+| `xhigh` | 更深思考（Opus 4.7 起支持，`claude-sonnet-4-6` 不支持｜编程 / Agent 场景推荐） |
 | `max` | 最大思考深度（思考更长更细，速度更慢） |
 
 ## 🔌 API 接口
@@ -40,7 +40,6 @@
 开启后，模型会先进行思考（链式推理），再给出最终答案。
 
 ```python
-import json
 import requests
 
 # 配置 API 密钥
