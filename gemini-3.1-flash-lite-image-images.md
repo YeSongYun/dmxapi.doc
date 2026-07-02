@@ -341,7 +341,7 @@ except ValueError as e:
 图片已保存到: output/fused_image_20260702_105603.png
 ```
 
-
+:::
 
 <p align="center">
   <small>© 2026 DMXAPI 多图融合</small>

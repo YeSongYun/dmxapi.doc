@@ -278,7 +278,7 @@ else:
 [成功] 图片已保存: gemini-native-image.png
 ```
 
-
+:::
 
 <p align="center">
   <small>© 2026 DMXAPI Gemini模型</small>

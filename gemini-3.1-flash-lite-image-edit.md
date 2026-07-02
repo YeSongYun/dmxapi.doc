@@ -264,7 +264,6 @@ payload = {
             "imageSize": "1K"
         }
     }
-）
 }
 
 # 完整的 API 端点
@@ -332,7 +331,7 @@ except ValueError as e:
 图片已保存到: output/gemini-edited-image_20260702_104518.png
 ```
 
-
+:::
 
 <p align="center">
   <small>© 2026 DMXAPI - Gemini 图像编辑 API 文档</small>
