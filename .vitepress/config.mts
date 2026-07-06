@@ -933,6 +933,7 @@ export default defineConfig({
 
           // { text: 'Claude code(推荐)', link: '/claude-code' },
           { text: 'Claude code(推荐)', link: '/claude-code-new' },
+          { text: 'cc switch配置claude code', link: '/cc_switch_to_claude_code' },
           { text: 'cc switch余额查询', link: '/cc-switch-balance-query' },
           { text: 'cc switch配置claude code桌面端', link: '/cc_switch_to_claude_code_desktop' },
           { text: 'cc switch配置codex', link: '/cc_switch' },
