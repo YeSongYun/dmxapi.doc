@@ -650,10 +650,25 @@ export default defineConfig({
                 text: '阿里 快乐马视频模型',
                 collapsed: true,
                 items: [
-                  { text: '文生视频', link: '/happyhorse-1.0-t2v-text-to-video' },
-                  { text: '首帧生视频', link: '/happyhorse-1.0-i2v-image-to-video' },
-                  { text: '参考生视频', link: '/happyhorse-1.0-r2v-reference-to-video' },
-                  { text: '视频编辑', link: '/happyhorse-1.0-video-edit-video-editing' },
+                  {
+                    text: 'happyhorse-1.0',
+                    collapsed: true,
+                    items: [
+                      { text: '文生视频', link: '/happyhorse-1.0-t2v-text-to-video' },
+                      { text: '首帧生视频', link: '/happyhorse-1.0-i2v-image-to-video' },
+                      { text: '参考生视频', link: '/happyhorse-1.0-r2v-reference-to-video' },
+                      { text: '视频编辑', link: '/happyhorse-1.0-video-edit-video-editing' },
+                    ],
+                  },
+                  {
+                    text: 'happyhorse-1.1',
+                    collapsed: true,
+                    items: [
+                      { text: '文生视频', link: '/happyhorse-1.1-t2v-text-to-video' },
+                      { text: '首帧生视频', link: '/happyhorse-1.1-i2v-image-to-video' },
+                      { text: '参考生视频', link: '/happyhorse-1.1-r2v-reference-to-video' },
+                    ],
+                  },
                 ],
               },
 
