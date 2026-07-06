@@ -185,21 +185,12 @@ def main() -> None:
     # 填写相对于脚本所在目录的路径，例如 'img\\ruanzhu.png'
     # 可以根据实际需要修改这个列表
     image_files = [
-        'img/Zcode1.png',
-        'img/Zcode2.png',
-        'img/Zcode3.png',
-        'img/Zcode4.png',
-        'img/Zcode5.png',
-        'img/Zcode6.png',
-        'img/Zcode7.png',
-        'img/Zcode8.png',
-        'img/Zcode9.png',
-        'img/Zcode10.png',
-        'img/Zcode11.png',
-        'img/Zcode12.png',
-        'img/Zcode13.png',
-        'img/Zcode14.png',
-        'img/Zcode15.png',
+        'img/claude-code-cc-swtich1.png',
+        'img/claude-code-cc-swtich2.png',
+        'img/claude-code-cc-swtich3.png',
+        'img/claude-code-cc-swtich4.png',
+        'img/claude-code-cc-swtich5.png',
+        'img/claude-code-cc-swtich6.png',
     ]
     
     # 第三步：验证水印文件存在性
