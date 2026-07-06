@@ -52,8 +52,8 @@ CC-Switch 是一款面向开发者的多供应商配置切换工具，可在 Cla
 - ① **API Key**：填入您的 DMXAPI 令牌
 - ② 展开 **「高级选项」**：**API 格式**选择 **Anthropic Messages (原生)**，**认证字段**保持 **ANTHROPIC_AUTH_TOKEN（默认）**
 - ③ 在 **「模型映射」** 区配置您要使用的模型：
-
-
+  - 点击右上角的 **「获取模型列表」**，测试模型列表是否能正常加载
+  - 为 **Sonnet / Opus / Fable / Haiku** 各档位填写要使用的模型，如截图中的 `claude-sonnet-5-cc`、`claude-opus-4-8-cc`、`claude-fable-5-cc`、`claude-haiku-4-5-20251001-cc`
 - ④ 确认无误后点击右下角的 **「添加」** 保存
 
 ::: tip 提示
