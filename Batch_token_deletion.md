@@ -32,8 +32,8 @@
 ```python
 import requests
 
-SYSTEM_TOKEN = "tnxV0gYVkWS+fPqUbcG1odShz2x2TEY="  # 系统令牌
-USER_ID = "56511"  # 当前用户 ID
+SYSTEM_TOKEN = "YOUR_SYSTEM_TOKEN"  # 系统令牌
+USER_ID = "YOUR_USER_ID"  # 当前用户 ID
 
 headers = {
     "Authorization": f"Bearer {SYSTEM_TOKEN}",
@@ -62,8 +62,8 @@ ID: 88129  名称: 测试使用
 ```python
 import requests
 
-SYSTEM_TOKEN = "tnxV0gYVkWS+fPqUbcG1odShz2x2TEY=" # 系统令牌
-USER_ID = "56511" # 当前用户 ID（不要有多余空格）
+SYSTEM_TOKEN = "YOUR_SYSTEM_TOKEN" # 系统令牌
+USER_ID = "YOUR_USER_ID" # 当前用户 ID（不要有多余空格）
 
 headers = {
     "Authorization": f"Bearer {SYSTEM_TOKEN}",

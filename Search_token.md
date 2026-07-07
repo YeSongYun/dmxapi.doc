@@ -81,7 +81,8 @@ else:
         print(f"  状态：{'正常' if d['status'] == 1 else '已禁用'}")
         print("-" * 40)
         print(f"  已用额度：{d['used_quota'] / 500000:.4f} 元")
-        print(f"  剩余额度：{'无限额度' if d['unlimited_quota'] else f'{d['remain_quota'] / 500000:.4f} 元'}")
+        remain_quota_str = "无限额度" if d['unlimited_quota'] else f"{d['remain_quota'] / 500000:.4f} 元"
+        print(f"  剩余额度：{remain_quota_str}")
         print(f"  剩余次数：无限次数")  # 该接口无次数限制概念，固定显示
         print("-" * 40)
         print(f"  分组：{d['group']}")

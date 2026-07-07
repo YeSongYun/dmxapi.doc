@@ -16,8 +16,8 @@ from datetime import datetime
 # ===== 只需修改这里 =====
 
 # 认证信息
-SYSTEM_TOKEN = "FbGVZeO1gHOaJO2jrWT7mRHCbasU"  # 系统令牌，获取路径：登录DMXAPI → 工作台 → 个人设置 → 更多选项 → 系统令牌
-USER_ID = "19903"                 # 用户 ID，获取路径：登录DMXAPI → 工作台 → 个人设置
+SYSTEM_TOKEN = "YOUR_SYSTEM_TOKEN"  # 系统令牌，获取路径：登录DMXAPI → 工作台 → 个人设置 → 更多选项 → 系统令牌
+USER_ID = "YOUR_USER_ID"  # 用户 ID，获取路径：登录DMXAPI → 工作台 → 个人设置
 
 # 时间范围
 # 可选值："today"（今天）、"yesterday"（昨天）、"week"（最近7天）、"month"（最近30天）、"custom"（自定义）
@@ -51,7 +51,7 @@ def get_log_detail(start_timestamp: int, end_timestamp: int, page: int = 1,
     headers = {
         "Accept": "application/json",
         "Authorization": f"{SYSTEM_TOKEN}",
-        "Rix-Api-User": USER_ID,
+        "Dmx-Api-User": USER_ID,
     }
 
     params = {
