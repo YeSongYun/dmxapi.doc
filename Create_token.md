@@ -6,8 +6,8 @@
 
 | 参数 | 说明 |
 | --- | --- |
-| `SYSTEM_TOKEN` | 系统令牌，获取路径： 登录DMXAPI → 工作台 → 个人设置 → 更多选项 → 系统令牌 |
-| `USER_ID` | 当前用户 ID，获取路径： 登录DMXAPI → 工作台 → 个人设置 |
+| `SYSTEM_TOKEN` | 系统令牌，获取路径： 登录DMXAPI → 个人设置 → 安全 → 访问令牌 |
+| `USER_ID` | 当前用户 ID，获取路径： 登录DMXAPI → 个人设置 → 个人资料 |
 
 ## 接口说明
 
@@ -37,23 +37,23 @@ import requests
 import json
 from datetime import datetime
 
-SYSTEM_TOKEN = "你的系统令牌"  # 系统令牌
-USER_ID = "你的用户id"  # 当前用户 ID
+SYSTEM_TOKEN = "YOUR_SYSTEM_TOKEN"  # 系统令牌
+USER_ID = "YOUR_USER_ID"  # 当前用户 ID
 
 headers = {
     "Authorization": f"Bearer {SYSTEM_TOKEN}",
-    "Rix-Api-User": USER_ID,
+    "Dmx-Api-User": USER_ID,
     "Content-Type": "application/json"
 }
 
 # ===== 只需修改这里 =====
-name = "我的自定义令牌"           # 令牌名称（必填）
-quota = "无限"                   # 额度：填 "无限" 或金额（元），例如 1、0.5
+name = "测试令牌"           # 令牌名称（必填）
+quota = "5"                   # 额度：填 "无限" 或金额（元），例如 1、0.5
 count = "无限"                   # 次数：填 "无限" 或具体次数，例如 100
 expired_time = "永不过期"         # 过期时间：填 "永不过期" 或日期，例如 "2026-12-31 23:59:59"
 group = "default"                # 令牌分组，目前仅支持 default
-model_limits_enabled = False     # 是否启用模型限制，设为 True 时需配合 model_limits 使用
-model_limits = ""                # 允许使用的模型，多个用逗号分隔，例如 "gpt-4o,claude-sonnet-4-20250514"
+model_limits_enabled = True     # 是否启用模型限制，设为 True 时需配合 model_limits 使用
+model_limits = "deepseek-v4-pro-guan"                # 允许使用的模型，多个用逗号分隔，例如 "gpt-4o,claude-sonnet-4-20250514"
 allow_ips = ""                   # IP 白名单，例如 "192.168.1.1,10.0.0.1"，为空表示不限制
 exclude_ips = ""                 # IP 黑名单，例如 "172.16.0.1,172.16.0.2"，为空表示不限制
 # ========================
@@ -81,7 +81,8 @@ print("响应:", json.dumps(resp.json(), ensure_ascii=False, indent=2))
 ## 返回示例
 
 ```json
-{
+状态码: 200
+响应: {
   "message": "",
   "success": true
 }

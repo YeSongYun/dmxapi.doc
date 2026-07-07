@@ -68,14 +68,14 @@ export default defineConfig({
         items: [
           { text: '系统令牌&用户ID', link: '/security_token_ID' },
           { text: '余额查询', link: '/yuer' },
-          {
-            text: '余额不足预警',
-            collapsed: true,
-            items: [
-              { text: '飞书通知配置', link: '/warn_feishu' },
-              { text: '企业微信通知配置', link: '/warn_qw' },
-            ],
-          },
+          // {
+          //   text: '余额不足预警',
+          //   collapsed: true,
+          //   items: [
+          //     { text: '飞书通知配置', link: '/warn_feishu' },
+          //     { text: '企业微信通知配置', link: '/warn_qw' },
+          //   ],
+          // },
           { text: '模型列表', link: '/model-list' },
           { text: '模型统计', link: '/Model-statistics' },
           {
