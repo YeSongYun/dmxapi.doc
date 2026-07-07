@@ -32,12 +32,12 @@
 ```python
 import requests
 
-SYSTEM_TOKEN = "你的系统令牌"  # 系统令牌
-USER_ID = "你的用户id"  # 当前用户 ID
+SYSTEM_TOKEN = "tnxV0gYVkWS+fPqUbcG1odShz2x2TEY="  # 系统令牌
+USER_ID = "56511"  # 当前用户 ID
 
 headers = {
     "Authorization": f"Bearer {SYSTEM_TOKEN}",
-    "Rix-Api-User": USER_ID,
+    "Dmx-Api-User": USER_ID,
     "Accept": "application/json"
 }
 
@@ -51,11 +51,8 @@ for token in items:
 ### 返回示例
 
 ```json
-ID: 51278  名称: 4
-ID: 51277  名称: 3
-ID: 51276  名称: 2
-ID: 51107  名称: 1
-ID: 22017  名称: Hukeer initial token
+ID: 93103  名称: 我的新名称
+ID: 88129  名称: 测试使用
 ```
 
 ## 二、批量删除指定令牌
@@ -65,20 +62,24 @@ ID: 22017  名称: Hukeer initial token
 ```python
 import requests
 
-SYSTEM_TOKEN = "你的系统令牌" # 系统令牌
-USER_ID = "你的用户id" # 当前用户 ID
+SYSTEM_TOKEN = "tnxV0gYVkWS+fPqUbcG1odShz2x2TEY=" # 系统令牌
+USER_ID = "56511" # 当前用户 ID（不要有多余空格）
 
 headers = {
     "Authorization": f"Bearer {SYSTEM_TOKEN}",
-    "Rix-Api-User": USER_ID,
+    "Dmx-Api-User": USER_ID,
     "Content-Type": "application/json"
 }
 
-ids_to_delete = [51278, 51277]  # 改成你要删除的令牌 ID
+ids_to_delete = [93103]  # 改成你要删除的令牌 ID
 
 # 先查名称，方便打印删除结果
 resp = requests.get("https://www.dmxapi.cn/api/token/", headers=headers)
-items = resp.json()["data"]["items"]
+resp.raise_for_status()
+payload = resp.json()
+if not payload.get("success", True) or "data" not in payload:
+    raise SystemExit(f"查询令牌失败: {payload.get('message') or payload}")
+items = payload["data"]["items"]
 name_map = {t["id"]: t["name"] for t in items}
 
 # 批量删除
@@ -88,18 +89,17 @@ resp = requests.post(
     json={"ids": ids_to_delete}
 )
 
-if resp.status_code == 200:
+if resp.status_code == 200 and resp.json().get("success", False):
     for token_id in ids_to_delete:
         print(f"已删除 ID: {token_id}  名称: {name_map.get(token_id, '未知')}")
 else:
-    print(f"失败: {resp.status_code}")
+    print(f"失败: {resp.status_code} - {resp.text}")
 ```
 
 ### 返回示例
 
 ```json
-已删除 ID: 51278  名称: 4
-已删除 ID: 51277  名称: 3
+已删除 ID: 93103  名称: 我的新名称
 ```
 
 

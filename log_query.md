@@ -44,11 +44,11 @@ URL = "https://www.dmxapi.cn/api/log/self/stat"
 # ------------------------------------------------------------------------------
 # SYSTEM_TOKEN: 系统令牌，用于 API 认证
 #               获取方式: 登录 dmxapi.cn -> 个人设置 -> API 令牌
-SYSTEM_TOKEN = "你的系统令牌"  # 替换为你的系统令牌
+SYSTEM_TOKEN = "YOUR_SYSTEM_TOKEN"  # 替换为你的系统令牌
 
 # USER_ID: 用户唯一标识
 #          获取方式: 登录 dmxapi.cn -> 个人设置 -> 用户 ID
-USER_ID = "**********"  # 替换为你的用户 ID
+USER_ID = "YOUR_USER_ID"  # 替换为你的用户 ID
 
 # ------------------------------------------------------------------------------
 # 时间范围配置
@@ -59,7 +59,7 @@ USER_ID = "**********"  # 替换为你的用户 ID
 #   "week"       - 查询最近7天的数据
 #   "month"      - 查询最近30天的数据
 #   "custom"     - 自定义时间范围（需要设置下方的 CUSTOM_START 和 CUSTOM_END）
-QUERY_MODE = "today"
+QUERY_MODE = "month"
 
 # 自定义时间范围（仅当 QUERY_MODE = "custom" 时生效）
 # 格式: "YYYY-MM-DD" 或 "YYYY-MM-DD HH:MM:SS"
@@ -107,7 +107,7 @@ def get_stat_data(start_timestamp: int, end_timestamp: int, stat_type: int = 0,
     headers = {
         "Accept": "application/json",              # 期望返回 JSON 格式
         "Authorization": f"{SYSTEM_TOKEN}", # Token 认证
-        "Rix-Api-User": USER_ID,                   # 用户标识头
+        "Dmx-Api-User": USER_ID,                   # 用户标识头
     }
 
     # -------------------------------------------------------------------------
@@ -294,18 +294,19 @@ if __name__ == "__main__":
     # -------------------------------------------------------------------------
     data = get_stat_data(start_timestamp, end_timestamp)
     print_stat(data, start_time, end_time)
-
-
 ```
 ## 返回示例
 ```json
+查询模式: month
+查询时间范围: 2026-06-08 00:00:00 至 2026-07-07 12:09:17
+
 ==================================================
               API 总消耗统计
 ==================================================
-查询时间: 2025-12-09 00:00 至 2025-12-09 23:59
+查询时间: 2026-06-08 00:00 至 2026-07-07 12:09
 --------------------------------------------------
-  总消耗额度: 0.0997
-  原始值: 49853
+  总消耗额度: 3772.8467
+  原始值: 1886423362
 --------------------------------------------------
   每分钟请求数 (RPM): 0
   每分钟Token数 (TPM): 0

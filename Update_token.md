@@ -6,8 +6,8 @@
 
 | 参数 | 说明 |
 | --- | --- |
-| `SYSTEM_TOKEN` | 系统令牌，获取路径： 登录DMXAPI → 工作台 → 个人设置 → 更多选项 → 系统令牌 |
-| `USER_ID` | 当前用户 ID，获取路径： 登录DMXAPI → 工作台 → 个人设置 |
+| `SYSTEM_TOKEN` | 系统令牌，获取路径： 登录DMXAPI → 个人设置 → 安全 → 访问令牌 |
+| `USER_ID` | 当前用户 ID，获取路径： 登录DMXAPI → 个人设置 → 个人资料 |
 
 ## 接口说明
 
@@ -17,7 +17,13 @@
 - 请求地址：`https://www.dmxapi.cn/api/token/`
 - 用途：获取当前账号下全部令牌，找到要更新的令牌 ID
 
-### 2. 更新令牌
+### 2. 查询单个令牌
+
+- 请求方式：`GET`
+- 请求地址：`https://www.dmxapi.cn/api/token/{token_id}`
+- 用途：按令牌 ID 查询单条令牌的当前完整数据（更新前先拉取，用于合并字段避免误覆盖）
+
+### 3. 更新令牌
 
 - 请求方式：`PUT`
 - 请求地址：`https://www.dmxapi.cn/api/token/`
@@ -34,7 +40,6 @@
 | --- | --- |
 | `name` | 令牌名称 |
 | `quota` | 额度：填 `"无限"` 或金额（单位：元），例如 `1` 表示 1 元 |
-| `count` | 次数：填 `"无限"` 或具体次数，例如 `100` |
 | `expired_time` | 过期时间：填 `"永不过期"` 或日期，例如 `"2026-12-31 23:59:59"` |
 | `group` | 令牌分组，目前仅支持 `"default"` |
 | `model_limits_enabled` | 是否启用模型限制，`True` 或 `False` |
@@ -47,12 +52,12 @@
 ```python
 import requests
 
-SYSTEM_TOKEN = "你的系统令牌"  # 系统令牌
-USER_ID = "你的用户id"  # 当前用户 ID
+SYSTEM_TOKEN = "YOUR_SYSTEM_TOKEN"  # 系统令牌
+USER_ID = "YOUR_USER_ID"  # 当前用户 ID
 
 headers = {
     "Authorization": f"Bearer {SYSTEM_TOKEN}",
-    "Rix-Api-User": USER_ID,
+    "Dmx-Api-User": USER_ID,
     "Accept": "application/json"
 }
 
@@ -66,10 +71,8 @@ for token in items:
 ### 返回示例
 
 ```text
-ID: 51399  名称: 已改名的令牌
-ID: 51372  名称: test1
-ID: 51371  名称: test2
-ID: 22017  名称: Hukeer initial token
+ID: 93103  名称: 测试令牌
+ID: 88129  名称: 测试使用
 ```
 
 ## 二、根据令牌 ID 更新指定令牌
@@ -81,20 +84,19 @@ import requests
 import json
 from datetime import datetime
 
-SYSTEM_TOKEN = "你的系统令牌"  # 系统令牌
-USER_ID = "你的用户id"  # 当前用户 ID
+SYSTEM_TOKEN = "YOUR_SYSTEM_TOKEN"  # 系统令牌
+USER_ID = "YOUR_USER_ID"  # 当前用户 ID
 
 headers = {
     "Authorization": f"Bearer {SYSTEM_TOKEN}",
-    "Rix-Api-User": USER_ID,
+    "Dmx-Api-User": USER_ID,
     "Content-Type": "application/json"
 }
 
 # ===== 只需修改这里 =====
-token_id = 51399                     # 要更新的令牌 ID（从第一步查询结果中获取）
+token_id = 93103                     # 要更新的令牌 ID（从第一步查询结果中获取）
 name = "我的新名称"                   # 令牌名称
 quota = "无限"                       # 额度：填 "无限" 或金额（元），例如 1、0.5
-count = "无限"                       # 次数：填 "无限" 或具体次数，例如 100
 expired_time = "永不过期"             # 过期时间：填 "永不过期" 或日期，例如 "2026-12-31 23:59:59"
 group = "default"                    # 令牌分组，目前仅支持 default
 model_limits_enabled = False         # 是否启用模型限制，设为 True 时需配合 model_limits 使用
@@ -113,8 +115,6 @@ current = resp.json()["data"]
 current["name"] = name
 current["unlimited_quota"] = (quota == "无限")
 current["remain_quota"] = current["remain_quota"] if quota == "无限" else int(float(quota) * 500000)
-current["unlimited_count"] = (count == "无限")
-current["remain_count"] = current["remain_count"] if count == "无限" else int(count)
 current["expired_time"] = -1 if expired_time == "永不过期" else int(datetime.strptime(expired_time, "%Y-%m-%d %H:%M:%S").timestamp())
 current["group"] = group
 current["model_limits_enabled"] = model_limits_enabled
@@ -131,18 +131,26 @@ print("响应:", json.dumps(resp.json(), ensure_ascii=False, indent=2))
 ### 返回示例
 
 ```json
-{
+状态码: 200
+响应: {
   "data": {
-    "id": 51399,
-    "name": "我的新名称",
+    "id": 93103,
+    "user_id": 10000,
+    "key": "sk-**********",
     "status": 1,
-    "remain_quota": 0,
-    "unlimited_quota": true,
-    "remain_count": 0,
-    "unlimited_count": true,
+    "name": "我的新名称",
+    "created_time": 1783398902,
+    "accessed_time": 1783398902,
     "expired_time": -1,
+    "remain_quota": 2500000,
+    "unlimited_quota": true,
     "model_limits_enabled": false,
-    "model_limits": ""
+    "model_limits": "",
+    "allow_ips": "",
+    "used_quota": 0,
+    "group": "default",
+    "cross_group_retry": false,
+    "DeletedAt": null
   },
   "message": "",
   "success": true

@@ -6,8 +6,8 @@
 
 | 参数 | 说明 |
 | --- | --- |
-| `SYSTEM_TOKEN` | 系统令牌，获取路径： 登录DMXAPI → 工作台 → 个人设置 → 更多选项 → 系统令牌 |
-| `USER_ID` | 当前用户 ID，获取路径： 登录DMXAPI → 工作台 → 个人设置 |
+| `SYSTEM_TOKEN` | 系统令牌，获取路径： 登录DMXAPI → 个人设置 → 安全 → 访问令牌 |
+| `USER_ID` | 当前用户 ID，获取路径： 登录DMXAPI → 个人设置 → 个人资料 |
 
 ## 接口说明
 
@@ -21,18 +21,29 @@
 import requests
 import time
 from datetime import datetime
-SYSTEM_TOKEN = "****************"  # 系统令牌
-USER_ID = "******"  # 当前用户 ID
+SYSTEM_TOKEN = "YOUR_SYSTEM_TOKEN"  # 系统令牌
+USER_ID = "YOUR_USER_ID"  # 当前用户 ID
 headers = {
     "Authorization": f"Bearer {SYSTEM_TOKEN}",
-    "Rix-Api-User": USER_ID,
+    "Dmx-Api-User": USER_ID,
     "Accept": "application/json"
 }
+
+QUOTA_PER_YUAN = 500000  # 额度换算：500000 额度 = 1 元（DMXAPI/new-api 默认单位；若与平台账单不符请调整此值）
 
 def fmt_time(ts):
     if ts == -1:
         return "永不过期"
     return datetime.fromtimestamp(ts).strftime("%Y-%m-%d %H:%M:%S")
+
+def fmt_money(quota):
+    return f"¥{quota / QUOTA_PER_YUAN:.2f}"
+
+def fmt_remain(token):
+    if token['unlimited_quota']:
+        return "无限制"
+    q = token.get('remain_quota', 0)
+    return f"{q}（{fmt_money(q)}）"
 
 def fmt_bool(v):
     return "是" if v else "否"
@@ -66,70 +77,47 @@ for i, token in enumerate(items, 1):
     print(f"  Key       : sk-{token['key']}")
     print(f"  状态      : {fmt_status(token['status'])}")
     print(f"  分组      : {token['group']}")
-    print(f"  已用额度  : {token['used_quota']}")
-    print(f"  剩余额度  : {'无限制' if token['unlimited_quota'] else token['remain_quota']}")
-    print(f"  剩余次数  : {'无限制' if token['unlimited_count'] else token['remain_count']}")
+    print(f"  已用额度  : {token['used_quota']}（{fmt_money(token['used_quota'])}）")
+    print(f"  剩余额度  : {fmt_remain(token)}")
+    print(f"  剩余次数  : {'无限制' if token.get('unlimited_count') else token.get('remain_count', '—')}")
     print(f"  创建时间  : {fmt_time(token['created_time'])}")
     print(f"  最后访问  : {fmt_time(token['accessed_time'])}")
     print(f"  过期时间  : {fmt_time(token['expired_time'])}")
     print(f"  模型限制  : {fmt_bool(token['model_limits_enabled'])}")
-    print(f"  限速      : {fmt_bool(token['rate_limits_enabled'])}")
-    print(f"  IP白名单  : {token['allow_ips'] or '无'}")
-    print(f"  IP黑名单  : {token['exclude_ips'] or '无'}")
+    print(f"  限速      : {fmt_bool(token.get('rate_limits_enabled'))}")
+    print(f"  IP白名单  : {token.get('allow_ips') or '无'}")
+    print(f"  IP黑名单  : {token.get('exclude_ips') or '无'}")
     print()
 ```
 
 ## 返回示例
 
 ```text
-第1页：获取10条，共15条
-第2页：获取5条，共15条
+第1页：获取1条，共1条
 ==================================================
-  令牌 1：我的令牌A
+  令牌 1：测试使用
 ==================================================
-  ID        : 10001
-  Key       : sk-****************************
+  ID        : 88129
+  Key       : sk-**********
   状态      : ✅ 启用
   分组      : default
-  已用额度  : 0
+  已用额度  : 93941920（¥187.88）
   剩余额度  : 无限制
-  剩余次数  : 无限制
-  创建时间  : 2026-01-01 10:00:00
-  最后访问  : 2026-01-01 10:00:00
+  剩余次数  : —
+  创建时间  : 2026-06-17 14:55:58
+  最后访问  : 2026-07-07 10:41:22
   过期时间  : 永不过期
   模型限制  : 否
   限速      : 否
   IP白名单  : 无
   IP黑名单  : 无
-
-==================================================
-  令牌 2：我的令牌B
-==================================================
-  ID        : 10002
-  Key       : sk-****************************
-  状态      : ✅ 启用
-  分组      : default
-  已用额度  : 0
-  剩余额度  : 无限制
-  剩余次数  : 无限制
-  创建时间  : 2026-01-01 10:00:00
-  最后访问  : 2026-01-01 10:00:00
-  过期时间  : 永不过期
-  模型限制  : 否
-  限速      : 否
-  IP白名单  : 无
-  IP黑名单  : 无
-.
-.
-.
-
 ```
 
 ## 使用说明
 
 1. 将 `SYSTEM_TOKEN` 替换为你自己的系统令牌。
 2. 将 `USER_ID` 替换为实际用户 ID。
-3. 执行脚本后即可查看当前账号下所有令牌的 ID 和名称。
+3. 执行脚本后即可查看当前账号下所有令牌的完整详情（ID、Key、状态、额度、过期时间、IP 限制等）。
 
 ## 注意事项
 

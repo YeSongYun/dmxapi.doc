@@ -14,12 +14,12 @@ import requests
 
 # 1. 配置请求参数
 url = "https://www.dmxapi.cn/api/user/self"
-system_token = "your_system_token"  # 替换为你的系统令牌
+system_token = "YOUR_SYSTEM_TOKEN"  # 替换为你的系统令牌
 
 headers = {
     "Accept": "application/json",
     "Authorization": f"{system_token}",  # 认证头	
-    "Rix-Api-User": "你的用户ID",  # 刚改为你的用户ID，在 个人设置 中获得
+    "Dmx-Api-User": "YOUR_USER_ID",  # 替换为你的用户ID，在 个人设置 中获得
 
 }
 
