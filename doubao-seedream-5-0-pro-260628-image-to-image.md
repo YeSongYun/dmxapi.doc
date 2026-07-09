@@ -82,6 +82,12 @@ payload = {
     # 可选值: "png" / "jpeg"
     "output_format": "png",
 
+    # 【response_format】(string, 可选) 指定生成图像的返回格式，默认值 url
+    # 可选值:
+    #   - "url": 返回图片下载链接，链接在图片生成后 24 小时内有效，请及时下载图片
+    #   - "b64_json": 以 Base64 编码字符串的 JSON 格式返回图像数据
+    "response_format": "url",
+
     # 【watermark】(boolean, 可选) 是否在生成的图片中添加水印，默认值 true
     # 可选值: true(在图片右下角添加"AI生成"字样的水印标识) / false(不添加水印)
     "watermark": False
