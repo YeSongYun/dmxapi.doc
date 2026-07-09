@@ -248,6 +248,15 @@ export default defineConfig({
                 collapsed: true,
                 items: [
                   {
+                    text: 'doubao-seedream-5-0-pro-260628',
+                    collapsed: true,
+                    items: [
+                      { text: '文生图', link: '/doubao-seedream-5-0-pro-260628-text-to-image' },
+                      { text: '图生图', link: '/doubao-seedream-5-0-pro-260628-image-to-image' },
+                      { text: '多图融合', link: '/doubao-seedream-5-0-pro-260628-multi-image-fusion' },
+                    ],
+                  },
+                  {
                     text: 'doubao-seedream-5.0-lite',
                     collapsed: true,
                     items: [
