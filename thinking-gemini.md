@@ -145,8 +145,7 @@ for part in response.candidates[0].content.parts:
 3. `gemini-2.5-pro` 无法关闭思考：`thinking_budget: 0` 仅对 Flash / Flash-Lite 生效，Pro 最低 128；`-thinking` 后缀对 pro 型号也只是展示思考过程
 4. `thinking_level` 与 `thinking_budget` 不能在同一请求中同时使用，否则返回 400 错误
 5. `include_thoughts=True` 返回的是**思考摘要**（带 `thought: true` 标记的 part），并非原始思考全文
-6. Gemini 3 系列在函数调用场景必须原样回传思考签名(`thoughtSignature`)，缺失会报 400 错误；使用官方 SDK 和标准聊天记录时签名会自动处理，详见 [Gemini 3 开发者使用指南](https://doc.dmxapi.cn/gemini-3.html)
-7. `minimal` 档并不保证思考完全关闭，对复杂任务模型仍可能进行简单思考
+6. `minimal` 档并不保证思考完全关闭，对复杂任务模型仍可能进行简单思考
 
 ---
 
