@@ -950,6 +950,7 @@ export default defineConfig({
           { text: 'cc switch余额查询', link: '/cc-switch-balance-query' },
           { text: 'cc switch配置claude code桌面端', link: '/cc_switch_to_claude_code_desktop' },
           { text: 'cc switch配置codex', link: '/cc_switch' },
+          { text: 'cc switch配置codex桌面端', link: '/cc_switch_to_codex_desktop' },
           // { text: 'cc switch配置claude code', link: '/cc_switch_to_claude code' },
           { text: 'Qwen3 coder', link: '/qwen-coder' },
           { text: 'Openai Codex', link: '/codex' },
