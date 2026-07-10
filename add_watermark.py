@@ -185,12 +185,18 @@ def main() -> None:
     # 填写相对于脚本所在目录的路径，例如 'img\\ruanzhu.png'
     # 可以根据实际需要修改这个列表
     image_files = [
-        'img/claude-code-cc-swtich1.png',
-        'img/claude-code-cc-swtich2.png',
-        'img/claude-code-cc-swtich3.png',
-        'img/claude-code-cc-swtich4.png',
-        'img/claude-code-cc-swtich5.png',
-        'img/claude-code-cc-swtich6.png',
+        'img/Codex-Desktop-CC-Switch1.png',
+        'img/Codex-Desktop-CC-Switch2.png',
+        'img/Codex-Desktop-CC-Switch3.png',
+        'img/Codex-Desktop-CC-Switch4.png',
+        'img/Codex-Desktop-CC-Switch5.png',
+        'img/Codex-Desktop-CC-Switch6.png',
+        'img/Codex-Desktop-CC-Switch7.png',
+        'img/Codex-Desktop-CC-Switch8.png',
+        'img/Codex-Desktop-CC-Switch9.png',
+        'img/Codex-Desktop-CC-Switch10.png',
+        'img/Codex-Desktop-CC-Switch11.png',
+        'img/Codex-Desktop-CC-Switch12.png',
     ]
     
     # 第三步：验证水印文件存在性
