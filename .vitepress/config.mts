@@ -248,6 +248,15 @@ export default defineConfig({
                 collapsed: true,
                 items: [
                   {
+                    text: 'doubao-seedream-5-0-pro-260628',
+                    collapsed: true,
+                    items: [
+                      { text: '文生图', link: '/doubao-seedream-5-0-pro-260628-text-to-image' },
+                      { text: '图生图', link: '/doubao-seedream-5-0-pro-260628-image-to-image' },
+                      { text: '多图融合', link: '/doubao-seedream-5-0-pro-260628-multi-image-fusion' },
+                    ],
+                  },
+                  {
                     text: 'doubao-seedream-5.0-lite',
                     collapsed: true,
                     items: [
@@ -957,6 +966,7 @@ export default defineConfig({
           { text: 'Openai Codex', link: '/codex' },
           { text: 'opencode', link: '/opencode' },
           { text: 'ZCode', link: '/zcode' },
+          { text: 'Codex++', link: '/codex-plus-plus' },
           { text: 'Cherry Studio', link: '/cherry-studio' },
           { text: 'Cherry Studio调用gpt-5.2-pro', link: '/cherry-studio-gpt-5.2-pro' },
           { text: 'Cherry Studio调用 Perplexity Sonar 系列搜索模型', link: '/cherry_perplexity' },
