@@ -505,13 +505,43 @@ export default defineConfig({
                   },
                 ],
               },
+              // {
+              //   text: 'MiniMax 海螺视频 Hailuo ',
+              //   collapsed: true,
+              //   items: [
+              //     { text: '文生视频', link: '/hailuo-txt2video' },
+              //     { text: '图生视频', link: '/hailuo-img2video' },
+              //     { text: '首尾帧生成视频', link: '/hailuo-task' }
+              //   ],
+              // },
               {
-                text: 'MiniMax 海螺视频 Hailuo ',
+                text: 'MiniMax 海螺视频 Hailuo',
                 collapsed: true,
                 items: [
-                  { text: '文生视频', link: '/hailuo-txt2video' },
-                  { text: '图生视频', link: '/hailuo-img2video' },
-                  { text: '首尾帧生成视频', link: '/hailuo-task' }
+                  {
+                    text: 'MiniMax-Hailuo-02',
+                    collapsed: true,
+                    items: [
+                      { text: '文生视频', link: '/MiniMax-Hailuo-02-text-to-video' },
+                      { text: '图生视频', link: '/MiniMax-Hailuo-02-i2v' },
+                      { text: '首尾帧生成视频', link: '/MiniMax-Hailuo-02-fl2v' },
+                    ],
+                  },
+                  {
+                    text: 'MiniMax-Hailuo-2.3',
+                    collapsed: true,
+                    items: [
+                      { text: '文生视频', link: '/MiniMax-Hailuo-2.3-text-to-video' },
+                      { text: '图生视频', link: '/MiniMax-Hailuo-2.3-i2v' },
+                    ],
+                  },
+                  {
+                    text: 'MiniMax-Hailuo-2.3-Fast',
+                    collapsed: true,
+                    items: [
+                      { text: '图生视频', link: '/MiniMax-Hailuo-2.3-Fast-i2v' },
+                    ],
+                  },
                 ],
               },
 
