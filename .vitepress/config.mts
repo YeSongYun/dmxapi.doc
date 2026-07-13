@@ -112,9 +112,9 @@ export default defineConfig({
             items: [
               { text: '快速开始', link: '/kaishi' },
               { text: '注册教程', link: '/ZC' },
-              { text: '重置密码教程', link: '/forget-password' },
-              { text: '充值教程', link: '/CZ' },
               { text: '如何新建令牌Key', link: '/lingpai' },
+              { text: '充值教程', link: '/CZ' },
+              { text: '重置密码教程', link: '/forget-password' },
               { text: '获得 Base url', link: '/baseurl' },
               { text: '支持官方SDK', link: '/sdk' },
              
