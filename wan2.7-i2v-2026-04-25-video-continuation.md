@@ -85,17 +85,15 @@ payload = {
             {
                 # 【media[].type】(string, 必填) 媒体素材类型，此处为 "last_frame"(尾帧)
                 "type": "last_frame",
-                # 【media[].url】(string, 必填) 视频文件的 URL，模型将基于该视频内容进行续写生成
-                # 续写时长的上限由 duration 参数控制
-                # (例如: 当 duration=15 时，输入视频 3 秒，则模型续写生成 12 秒，
-                #  最终输出视频总时长 15 秒，按 15 秒计费)
-                # 视频限制:
-                #   - 格式: png、jpg、jpeg
-                #   - 分辨率: 宽和高的范围为 [240, 4096] 像素
+                # 【media[].url】(string, 必填) 首帧图像 URL 或 Base64 编码数据
+                # 图像限制:
+                #   - 格式: JPEG、JPG、PNG（不支持透明通道）、BMP、WEBP
+                #   - 分辨率: 宽和高的范围为 [240, 8000] 像素
                 #   - 宽高比: 1:8 ~ 8:1
-                #   - 文件大小: 不超过 100MB
-                # 支持公网 URL (HTTP/HTTPS)
-                "url": "https://example.com/last_frame.jpg"
+                #   - 文件大小: 不超过 20MB
+                # 支持公网 URL (HTTP/HTTPS)、OSS 临时 URL 或 Base64 编码
+                # (数据格式 data:{MIME_type};base64,{base64_data})
+                "url": "https://wanx.alicdn.com/material/20250318/first_frame.png"
             }
         ]
     },
