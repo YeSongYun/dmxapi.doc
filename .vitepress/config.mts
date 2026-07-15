@@ -685,6 +685,38 @@ export default defineConfig({
                 collapsed: true,
                 items: [
               {
+                text: 'wan2.7',
+                collapsed: true,
+                items: [
+                  { text: '文生视频', link: '/wan2.7-t2v-2026-06-12-text-to-video' },
+                  {
+                    text: '图生视频',
+                    collapsed: true,
+                    items: [
+                      { text: '首帧生视频', link: '/wan2.7-i2v-2026-04-25-first-frame-to-video' },
+                      { text: '首尾帧生视频', link: '/wan2.7-i2v-2026-04-25-first-last-frame-to-video' },
+                      { text: '视频续写', link: '/wan2.7-i2v-2026-04-25-video-continuation' },
+                    ],
+                  },
+                  {
+                    text: '参考生视频',
+                    collapsed: true,
+                    items: [
+                      { text: '单图参考(多宫格图像)', link: '/wan2.7-r2v-2026-06-12-single-image-storyboard-to-video' },
+                      { text: '多主体参考(图像+视频+音色)', link: '/wan2.7-r2v-2026-06-12-multi-subject-reference-to-video' },
+                    ],
+                  },
+                  {
+                    text: '视频编辑',
+                    collapsed: true,
+                    items: [
+                      { text: '纯指令编辑(修改视频风格)', link: '/wan2.7-videoedit-instruction-video-editing' },
+                      { text: '指令+参考图编辑(局部替换)', link: '/wan2.7-videoedit-instruction-reference-image-editing' },
+                    ],
+                  },
+                ],
+              },
+              {
                 text: 'wan2.6',
                 collapsed: true,
                 items: [
