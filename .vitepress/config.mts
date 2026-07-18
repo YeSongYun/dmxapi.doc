@@ -457,6 +457,7 @@ export default defineConfig({
             text: '🎥视频模型 video',
             collapsed: true,
             items: [
+              /* 豆包视频模型（已隐藏）
               {
                 text: '豆包视频模型 ',
                 collapsed: true,
@@ -505,6 +506,7 @@ export default defineConfig({
                   },
                 ],
               },
+              */
               // {
               //   text: 'MiniMax 海螺视频 Hailuo ',
               //   collapsed: true,
