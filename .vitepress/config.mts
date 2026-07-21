@@ -1051,6 +1051,7 @@ export default defineConfig({
           { text: 'Trae', link: '/Trae' },
           // { text: 'Claude-Desktop', link: '/claude_code_desktop' },
           { text: 'pi_agent', link: '/pi_agent' },
+          { text: 'omp', link: '/omp' },
           { text: 'kilo_code', link: '/kilo_code' },
           { text: 'hermes', link: '/hermes_agent' },
           { text: 'magic_resume', link: '/magic_resume' },
