@@ -192,6 +192,7 @@ export default defineConfig({
               { text: '文本对话（流式输出）', link: '/gemini-chat-stream' },
               { text: 'PDF分析', link: '/gemini-pdf' },
               { text: '视频分析（本地）', link: '/gemini-video'},
+              { text: '视频分析（网络）', link: '/gemini-video1'},
               { text: '音频分析（本地）', link: '/gemini-stt'},
               { text: '图片分析（本地）', link: '/gemini-image' },
               { text: '图片分析（网络）', link: '/gemini-image1' },
