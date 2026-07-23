@@ -1,10 +1,10 @@
-# doubao-seedance-2-0-260128 文生视频 API 使用文档
+# AICC-Doubao-Seedance-2.0 文生视频 API 使用文档
 
-基于字节跳动 Seedance 2.0 模型的 AI 文生视频接口，可通过文本提示词生成高质量写实风格视频。支持最高 4k 分辨率，视频时长最长 15 秒，支持 7 种宽高比（含 adaptive 自适应模式），并可同步生成匹配的人声、音效及背景音乐。采用异步任务模式，提交任务后通过任务 ID 直接查询获取视频结果。
+基于豆包 Seedance 2.0 模型的 AI 文生视频接口，可通过文本提示词生成高质量写实风格视频。支持最高 1080p 分辨率，视频时长 4～15 秒，支持 7 种宽高比（含 adaptive 自适应模式），并可同步生成匹配的人声、音效及背景音乐。采用异步任务模式，提交任务后通过任务 ID 直接查询获取视频结果。
 
 ## 🎬 模型名称
 
-- `doubao-seedance-2-0-260128`
+- `AICC-Doubao-Seedance-2.0`
 
 ## 🔗 接口地址
 
@@ -40,10 +40,10 @@ headers = {
 
 payload = {
     # 【model】(string, 必填) 调用的模型 ID
-    "model": "doubao-seedance-2-0-260128",
+    "model": "AICC-Doubao-Seedance-2.0",
 
     # 【input】(object[], 必填) 输入给模型的内容，文生视频只需提供文本
-    # 也支持与图片（type: "image_url"）、视频（type: "video"）等组合输入
+    # 也支持与图片（type: "image_url"）、视频（type: "video_url"）等组合输入
     "input": [
         {
             "type": "text",
@@ -51,16 +51,16 @@ payload = {
         }
     ],
 
-    # 【ratio】(string, 可选) 生成视频的宽高比，Seedance 2.0 默认 adaptive
+    # 【ratio】(string, 可选) 生成视频的宽高比，默认 adaptive
     # 可选值: "16:9"(横屏) / "4:3" / "1:1"(方形) / "3:4" / "9:16"(竖屏) / "21:9"(超宽) / "adaptive"(根据提示词智能选择)
     "ratio": "16:9",
 
-    # 【resolution】(string, 可选) 视频分辨率，Seedance 2.0 默认 720p
-    # 可选值: "480p" / "720p"/ "1080p" / "4k"
+    # 【resolution】(string, 可选) 视频分辨率，默认 720p
+    # 可选值: "480p" / "720p"/ "1080p"
     "resolution": "480p",
 
     # 【duration】(integer, 可选) 视频时长（秒），默认值 5
-    # Seedance 2.0 取值范围: [4, 15] 
+    # 取值范围: [4, 15]，仅支持范围内整数（不支持 -1 智能时长）
     "duration": 4,
 
     # 【generate_audio】(boolean, 可选) 是否生成与画面同步的音频，默认 true
@@ -69,7 +69,7 @@ payload = {
     "generate_audio": True,
 
     # 【seed】(integer, 可选) 随机种子，默认 -1（使用随机种子）
-    # 取值范围: [-1, 2^32-1]，固定相同 seed 值可复现类似结果，但不保证完全一致
+    # 注意：Seedance 2.0 系列暂不支持指定 seed，传入后会被上游忽略
     "seed": -1,
 
     # 【watermark】(boolean, 可选) 生成视频是否包含水印，默认 false
@@ -98,24 +98,26 @@ response = requests.post(url, headers=headers, json=payload)
 print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 ```
 
-### 返回示例
+## 返回示例
 
 ```json
 {
-  "id": "cgt-20260402220852-nq4wx",
+  "id": "cgt-20260721165804-z5qjx",
   "usage": {
-    "total_tokens": 50000,
+    "total_tokens": 18480,
     "input_tokens": 0,
     "input_tokens_details": {
       "cached_tokens": 0
     },
-    "output_tokens": 50000,
+    "output_tokens": 18480,
     "output_tokens_details": {
       "reasoning_tokens": 0
     }
   }
 }
 ```
+
+> 返回的 `id` 为视频生成任务 ID，保存期限为 7 天（从创建时间戳开始计算）。
 
 ## 📥 获取结果 示例代码
 
@@ -124,7 +126,7 @@ import requests
 import json
 
 url = "https://www.dmxapi.cn/v1/responses"
-api_key = "sk-******************************************"
+api_key = "sk-*************************************"
 
 headers = {
     "Content-Type": "application/json",
@@ -132,13 +134,22 @@ headers = {
 }
 
 payload = {
-    "model": "seedance-2-0-get",
-    "input": "cgt-20260403171827-s64n7"
+    # 【model】(string, 必填) 获取结果专用模型标识，固定为 AICC-Doubao-Seedance-2.0-get
+    "model": "AICC-Doubao-Seedance-2.0-get",
+    # 【input】(string, 必填) 提交任务时返回的任务 ID（id 字段的值）
+    # 任务 ID 仅保存 7 天，超时后自动清除
+    "input": "cgt-2026****************nsn"
 }
 
 response = requests.post(url, headers=headers, json=payload)
 result = response.json()
-print(json.dumps(result, indent=2, ensure_ascii=False))
+
+display_result = result
+try:
+    display_result = json.loads(result["output"][0]["content"][0]["text"])
+except Exception:
+    pass
+print(json.dumps(display_result, indent=2, ensure_ascii=False))
 
 # 提取 video_url
 try:
@@ -154,14 +165,14 @@ except Exception as e:
 
 ```json
 {
-  "request_id": "cgt-20260403171827-s64n7",
+  "request_id": "cgt-20260721184314-9wrsf",
   "output": [
     {
       "type": "message",
       "content": [
         {
           "type": "output_text",
-          "text": "{\"content\":{\"video_url\":\"https://ark-acg-cn-beijing.tos-cn-beijing.volces.com/doubao-seedance-2-0/02177520799968800000000000000000000ffffac14d8d3a26bee.mp4?X-Tos-Algorithm=TOS4-HMAC-SHA256\\u0026X-Tos-Credential=AKLTYWJkZTExNjA1ZDUyNDc3YzhjNTM5OGIyNjBhNDcyOTQ%2F20260403%2Fcn-beijing%2Ftos%2Frequest\\u0026X-Tos-Date=20260403T092312Z\\u0026X-Tos-Expires=86400\\u0026X-Tos-Signature=bb8d118946ac5480113f9146ae733131fb22614e5b2970c89c52a89575868415\\u0026X-Tos-SignedHeaders=host\"},\"id\":\"cgt-20260403171827-s64n7\",\"model\":\"doubao-seedance-2-0-260128\",\"status\":\"succeeded\"}"
+          "text": "{\"content\":{\"video_url\":\"https://ark-acg-cn-beijing.tos-cn-beijing.volces.com/doubao-seedance-2-0/02178463059431000000000000000000000ffffac15e1d87c9b67.mp4?X-Tos-Algorithm=TOS4-HMAC-SHA256\\u0026X-Tos-Credential=...\\u0026X-Tos-Date=20260721T104528Z\\u0026X-Tos-Expires=86400\\u0026X-Tos-Signature=...\\u0026X-Tos-SignedHeaders=host\"},\"id\":\"cgt-20260721184314-9wrsf\",\"model\":\"doubao-seedance-2-0-260128\",\"status\":\"succeeded\"}"
         }
       ]
     }
@@ -179,9 +190,11 @@ except Exception as e:
   }
 }
 
-视频链接: https://ark-acg-cn-beijing.tos-cn-beijing.volces.com/doubao-seedance-2-0/02177520799968800000000000000000000ffffac14d8d3a26bee.mp4?X-Tos-Algorithm=TOS4-HMAC-SHA256&X-Tos-Credential=AKLTYWJkZTExNjA1ZDUyNDc3YzhjNTM5OGIyNjBhNDcyOTQ%2F20260403%2Fcn-beijing%2Ftos%2Frequest&X-Tos-Date=20260403T092312Z&X-Tos-Expires=86400&X-Tos-Signature=bb8d118946ac5480113f9146ae733131fb22614e5b2970c89c52a89575868415&X-Tos-SignedHeaders=host
+视频链接: https://ark-acg-cn-beijing.tos-cn-beijing.volces.com/doubao-seedance-2-0/02178463059431000000000000000000000ffffac15e1d87c9b67.mp4?...（有效期 24 小时的临时下载链接）
 ```
 
+> **说明**：视频链接有效期为 24 小时，请及时下载保存。若 `status` 为 `running` 或 `queued`，可稍后重新调用获取接口查询。返回内容中的 `model` 字段为上游模型版本标识。若提交任务时设置了 `return_last_frame: true`，成功返回的 `content` 中还会包含 `last_frame_url`（尾帧图 URL，24 小时有效）。
+
 <p align="center">
-  <small>© 2026 DMXAPI doubao-seedance-2-0-260128 文生视频</small>
+  <small>© 2026 DMXAPI AICC-Doubao-Seedance-2.0 文生视频</small>
 </p>

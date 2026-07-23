@@ -1,10 +1,10 @@
-# doubao-seedance-2-0-260128 首尾帧生视频 API 使用文档
+# AICC-Doubao-Seedance-2.0 首尾帧生视频 API 使用文档
 
-基于 doubao-seedance-2-0-260128 模型的 AI 视频生成接口，支持输入首帧图片 + 尾帧图片 + 文本提示词生成目标视频。模型根据首尾两帧图像自动补全中间动态画面，支持自动音频生成，可选 480p / 720p /1080p / 4k 分辨率，宽高比支持 16:9、9:16、adaptive 等 7 种规格，视频时长范围 4~15 秒（可设为 -1 由模型自动决定）。采用异步任务模式，提交后通过单次查询获取结果视频 URL。
+基于豆包 Seedance 2.0 模型的 AI 视频生成接口，支持输入首帧图片 + 尾帧图片 + 文本提示词生成目标视频。模型根据首尾两帧图像自动补全中间动态画面，支持自动音频生成，可选 480p / 720p / 1080p 分辨率，宽高比支持 16:9、9:16、adaptive 等 7 种规格，视频时长范围 4~15 秒。采用异步任务模式，提交后通过单次查询获取结果视频 URL。
 
 ## 🎬 模型名称
 
-- `doubao-seedance-2-0-260128`
+- `AICC-Doubao-Seedance-2.0`
 
 ## 🌐 接口地址
 
@@ -33,7 +33,6 @@ import os
 # 🔑 API 连接信息
 # ═══════════════════════════════════════════════════════════════
 
-# 🌐 DMXAPI 服务端点地址
 url = "https://www.dmxapi.cn/v1/responses"
 
 # 🔐 DMXAPI 密钥 (请替换为您自己的密钥)
@@ -49,12 +48,11 @@ api_key = "sk-***************************************************"
 upload_mode = "base64"
 
 # ---------- 方式1: 本地图片路径 (upload_mode = "base64" 时生效) ----------
-# 请替换为你自己的本地图片路径
 first_frame_path = r"C:\Users\a1\Pictures\1689320796087949.png"   # 首帧图片路径
 last_frame_path  = r"C:\Users\a1\Pictures\20230301120626930.jpg"   # 尾帧图片路径
 
 # ---------- 方式2: 图片公网 URL (upload_mode = "url" 时生效) ----------
-# 格式要求: jpeg/png/webp/bmp/tiff/gif，宽高比 (0.4, 2.5)，单张 < 30 MB
+# 格式要求: jpeg/png/webp/bmp/tiff/gif/heic/heif，宽高比 (0.4, 2.5)，单张 < 30 MB
 first_frame_url = "https://img.shetu66.com/2023/07/14/1689320796087949.png"
 last_frame_url  = "https://img.sucaijishi.com/uploadfile/2023/0301/20230301120626930.png?imageMogr2/format/jpg/blur/1x0/quality/60"
 
@@ -63,7 +61,7 @@ last_frame_url  = "https://img.sucaijishi.com/uploadfile/2023/0301/2023030112062
 # ═══════════════════════════════════════════════════════════════
 
 # 【model】(string, 必填) 模型 ID
-model = "doubao-seedance-2-0-260128"
+model = "AICC-Doubao-Seedance-2.0"
 
 # 【text】(string, 必填) 文本提示词，描述视频动作和镜头
 # 建议中文不超过 500 字，英文不超过 1000 词
@@ -75,7 +73,7 @@ prompt_text = "图1中小狗跳到图二小狗身上，对着镜头说\"茄子\"
 generate_audio = True
 
 # 【resolution】(string, 可选) 视频分辨率，默认 720p
-# 可选值: "480p" / "720p" / "1080p" / "4k"
+# 可选值: "480p" / "720p" / "1080p"
 resolution = "720p"
 
 # 【ratio】(string, 可选) 视频宽高比，默认 adaptive
@@ -84,11 +82,11 @@ resolution = "720p"
 ratio = "adaptive"
 
 # 【duration】(integer, 可选) 视频时长（秒），默认 5
-# Seedance 2.0 支持范围: [4, 15]
+# 取值范围: [4, 15]，仅支持范围内整数（不支持 -1 智能时长）
 duration = 5
 
-# 【seed】(integer, 可选) 随机种子，默认 -1（使用随机数）
-# 取值范围: [-1, 2^32-1]，相同 seed 在相同请求下生成结果相似（不保证完全一致）
+# 【seed】(integer, 可选) 随机种子，默认 -1
+# 注意：Seedance 2.0 系列暂不支持指定 seed，传入后会被上游忽略
 seed = -1
 
 # 【watermark】(boolean, 可选) 是否添加水印，默认 false
@@ -107,7 +105,7 @@ return_last_frame = False
 # 取值范围: [3600, 259200]，超时后任务自动终止并标记为 expired
 execution_expires_after = 172800
 
-# 【tools】(array, 可选) 工具配置，仅 Seedance 2.0 支持
+# 【tools】(array, 可选) 工具配置
 # web_search: 启用联网搜索，模型自主判断是否搜索互联网内容，提升时效性但会增加时延
 # 设为 True 启用，False 禁用
 enable_web_search = True
@@ -128,28 +126,20 @@ def image_to_base64(image_path):
     :param image_path: 本地图片路径
     :return: 格式为 data:image/<格式>;base64,<编码> 的字符串
     """
-    # 获取图片扩展名并转为小写（去掉开头的点）
     ext = os.path.splitext(image_path)[1].lower().lstrip(".")
-
-    # 处理常见的格式别名，统一为标准 MIME 类型
-    # 官方支持格式: jpeg/png/webp/bmp/tiff/gif
     ext_map = {
         "jpg": "jpeg",
         "tif": "tiff",
     }
     ext = ext_map.get(ext, ext)
-
-    # 读取图片二进制内容并编码为 Base64
     with open(image_path, "rb") as f:
         base64_str = base64.b64encode(f.read()).decode("utf-8")
-
-    # 拼接成符合官方要求的 Data URL 格式
     return f"data:image/{ext};base64,{base64_str}"
+
 # ═══════════════════════════════════════════════════════════════
 # 🔄 根据上传方式获取图片 URL
 # ═══════════════════════════════════════════════════════════════
 if upload_mode == "base64":
-    # 方式1: 将本地图片转换为 Base64 Data URL
     print(f"📂 使用本地图片 Base64 编码上传")
     print(f"   首帧: {first_frame_path}")
     print(f"   尾帧: {last_frame_path}")
@@ -157,7 +147,6 @@ if upload_mode == "base64":
     last_frame_image_url = image_to_base64(last_frame_path)
 
 elif upload_mode == "url":
-    # 方式2: 直接使用公网 URL
     print(f"🌐 使用图片公网 URL 直接传入")
     print(f"   首帧: {first_frame_url}")
     print(f"   尾帧: {last_frame_url}")
@@ -172,8 +161,8 @@ else:
 # ═══════════════════════════════════════════════════════════════
 
 headers = {
-    "Content-Type": "application/json",      # 指定请求体为 JSON 格式
-    "Authorization": f"{api_key}",           # token 认证方式
+    "Content-Type": "application/json",
+    "Authorization": f"{api_key}",
 }
 # ═══════════════════════════════════════════════════════════════
 # 📦 构建请求体
@@ -194,8 +183,8 @@ payload = {
                 # 【url】(string, 必填) 图片公网 URL、Base64 编码或素材 ID
                 "url": first_frame_image_url
             },
-            # 【role】(string, 必填) 首尾帧场景必填
-            # first_frame: 首帧图片（以首帧宽高比为准，尾帧会自动裁剪适配）
+            # 【role】(string, 必填) 首尾帧场景两张图片的 role 均必填
+            # first_frame: 首帧图片（以首帧宽高比为准，尾帧会自动裁剪适配；两张图片可以相同）
             "role": "first_frame"
         },
         {
@@ -227,7 +216,6 @@ if enable_web_search:
 print("\n🚀 正在发送请求...")
 response = requests.post(url, headers=headers, json=payload)
 
-# 格式化输出 JSON 响应
 print("\n📨 响应结果:")
 print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 ```
@@ -236,7 +224,7 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 
 ```json
 {
-  "id": "cgt-20260402221125-9lb5p",
+  "id": "cgt-20260721165804-z5qjx",
   "usage": {
     "total_tokens": 50000,
     "input_tokens": 0,
@@ -260,7 +248,7 @@ import requests
 import json
 
 url = "https://www.dmxapi.cn/v1/responses"
-api_key = "sk-******************************************"
+api_key = "sk-*************************************"
 
 headers = {
     "Content-Type": "application/json",
@@ -268,15 +256,22 @@ headers = {
 }
 
 payload = {
-    # 【model】(string, 必填) 固定值，用于查询 Seedance 视频生成结果
-    "model": "seedance-2-0-get",
-    # 【input】(string, 必填) 提交任务时返回的任务 ID
-    "input": "cgt-20260403171827-s64n7"
+    # 【model】(string, 必填) 获取结果专用模型标识，固定为 AICC-Doubao-Seedance-2.0-get
+    "model": "AICC-Doubao-Seedance-2.0-get",
+    # 【input】(string, 必填) 提交任务时返回的任务 ID（id 字段的值）
+    # 任务 ID 仅保存 7 天，超时后自动清除
+    "input": "cgt-2026****************nsn"
 }
 
 response = requests.post(url, headers=headers, json=payload)
 result = response.json()
-print(json.dumps(result, indent=2, ensure_ascii=False))
+
+display_result = result
+try:
+    display_result = json.loads(result["output"][0]["content"][0]["text"])
+except Exception:
+    pass
+print(json.dumps(display_result, indent=2, ensure_ascii=False))
 
 # 提取 video_url
 try:
@@ -292,14 +287,14 @@ except Exception as e:
 
 ```json
 {
-  "request_id": "cgt-20260403171827-s64n7",
+  "request_id": "cgt-20260721184314-9wrsf",
   "output": [
     {
       "type": "message",
       "content": [
         {
           "type": "output_text",
-          "text": "{\"content\":{\"video_url\":\"https://ark-acg-cn-beijing.tos-cn-beijing.volces.com/doubao-seedance-2-0/02177520799968800000000000000000000ffffac14d8d3a26bee.mp4?...\"},\"id\":\"cgt-20260403171827-s64n7\",\"model\":\"doubao-seedance-2-0-260128\",\"status\":\"succeeded\"}"
+          "text": "{\"content\":{\"video_url\":\"https://ark-acg-cn-beijing.tos-cn-beijing.volces.com/doubao-seedance-2-0/02178463059431000000000000000000000ffffac15e1d87c9b67.mp4?...\"},\"id\":\"cgt-20260721184314-9wrsf\",\"model\":\"doubao-seedance-2-0-260128\",\"status\":\"succeeded\"}"
         }
       ]
     }
@@ -317,10 +312,12 @@ except Exception as e:
   }
 }
 
-视频链接: https://ark-acg-cn-beijing.tos-cn-beijing.volces.com/doubao-seedance-2-0/02177520799968800000000000000000000ffffac14d8d3a26bee.mp4?...
+视频链接: https://ark-acg-cn-beijing.tos-cn-beijing.volces.com/doubao-seedance-2-0/02178463059431000000000000000000000ffffac15e1d87c9b67.mp4?...（有效期 24 小时的临时下载链接）
 ```
+
+> **说明**：视频链接有效期为 24 小时，请及时下载保存。若 `status` 为 `running` 或 `queued`，可稍后重新调用获取接口查询。若提交任务时设置了 `return_last_frame: true`，成功返回的 `content` 中还会包含 `last_frame_url`（尾帧图 URL，24 小时有效）。
 
 
 <p align="center">
-  <small>© 2026 DMXAPI doubao-seedance-2-0-260128 首尾帧生视频</small>
+  <small>© 2026 DMXAPI AICC-Doubao-Seedance-2.0 首尾帧生视频</small>
 </p>

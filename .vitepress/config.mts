@@ -469,20 +469,46 @@ export default defineConfig({
             text: '🎥视频模型 video',
             collapsed: true,
             items: [
-              /* 豆包视频模型（已隐藏）
+              // {
+              //   text: '豆包视频模型',
+              //   collapsed: true,
+              //   items: [
+              //     {
+              //       text: 'AICC-Doubao-Seedance-2.0',
+              //       collapsed: true,
+              //       items: [
+              //         { text: '文生视频', link: '/aicc-doubao-seedance-2-0-text-to-video' },
+              //         { text: '首帧生视频', link: '/aicc-doubao-seedance-2-0-first-frame-to-video' },
+              //         { text: '首尾帧生视频', link: '/aicc-doubao-seedance-2-0-first-last-frame-video' },
+              //         { text: '视频编辑', link: '/aicc-doubao-seedance-2-0-video-edit' },
+              //         { text: '视频延长', link: '/aicc-doubao-seedance-2-0-video-extend' },
+              //         { text: '多模态参考生视频', link: '/aicc-doubao-seedance-2-0-multimodal-reference-video' },
+              //       ],
+              //     },
+              //     {
+              //       text: 'AICC-Doubao-Seedance-2.0 真人方案',
+              //       collapsed: true,
+              //       items: [
+              //         { text: '方案一 · 信任产物', link: '/aicc-doubao-seedance-2-0-real-person-plan1-trusted-output' },
+              //         { text: '方案二 · 预置虚拟人像', link: '/aicc-doubao-seedance-2-0-real-person-plan2-preset-portrait' },
+              //         { text: '方案三 · 授权真人', link: '/aicc-doubao-seedance-2-0-real-person-plan3-authorized-real-person' },
+              //       ],
+              //     },
+              //   ],
+              // },
               {
                 text: '豆包视频模型 ',
                 collapsed: true,
                 items: [
-                  {
-                    text: 'seedance 1.5',
-                    collapsed: true,
-                    items: [
-                      { text: '文生视频', link: '/doubao-seedance-1-5-pro-responses01' },
-                      { text: '图生视频', link: '/doubao-seedance-1-5-pro-responses02' },
-                      { text: '首尾帧生成视频', link: '/doubao-seedance-1-5-pro-responses03' },
-                    ],
-                  },
+                  // {
+                  //   text: 'seedance 1.5',
+                  //   collapsed: true,
+                  //   items: [
+                  //     { text: '文生视频', link: '/doubao-seedance-1-5-pro-responses01' },
+                  //     { text: '图生视频', link: '/doubao-seedance-1-5-pro-responses02' },
+                  //     { text: '首尾帧生成视频', link: '/doubao-seedance-1-5-pro-responses03' },
+                  //   ],
+                  // },
                   {
                     text: 'seedance 2.0',
                     collapsed: true,
@@ -495,18 +521,18 @@ export default defineConfig({
                       { text: '多模态参考生视频', link: '/doubao-seedance-2-0-multimodal-reference-video' }
                     ],
                   },
-                  {
-                    text: 'seedance 2.0-fast',
-                    collapsed: true,
-                    items: [
-                      { text: '文生视频', link: '/doubao-seedance-2-0-fast-text-to-video' },
-                      { text: '首帧生视频', link: '/doubao-seedance-2-0-fast-260128-first-frame-to-video' },
-                      { text: '首尾帧生视频', link: '/doubao-seedance-2-0-fast-260128-first-last-frame' },
-                      { text: '视频编辑', link: '/doubao-seedance-2-0-fast-260128-video-editing' },
-                      { text: '视频延长', link: '/doubao-seedance-2-0-fast-260128-video-extend' },
-                      { text: '多模态参考生视频', link: '/doubao-seedance-2-0-fast-260128-video' }
-                    ],
-                  },
+                  // {
+                  //   text: 'seedance 2.0-fast',
+                  //   collapsed: true,
+                  //   items: [
+                  //     { text: '文生视频', link: '/doubao-seedance-2-0-fast-text-to-video' },
+                  //     { text: '首帧生视频', link: '/doubao-seedance-2-0-fast-260128-first-frame-to-video' },
+                  //     { text: '首尾帧生视频', link: '/doubao-seedance-2-0-fast-260128-first-last-frame' },
+                  //     { text: '视频编辑', link: '/doubao-seedance-2-0-fast-260128-video-editing' },
+                  //     { text: '视频延长', link: '/doubao-seedance-2-0-fast-260128-video-extend' },
+                  //     { text: '多模态参考生视频', link: '/doubao-seedance-2-0-fast-260128-video' }
+                  //   ],
+                  // },
                   {
                     text: 'seedance 2.0 真人方案',
                     collapsed: true,
@@ -518,7 +544,6 @@ export default defineConfig({
                   },
                 ],
               },
-              */
               // {
               //   text: 'MiniMax 海螺视频 Hailuo ',
               //   collapsed: true,
