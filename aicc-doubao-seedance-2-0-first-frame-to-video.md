@@ -1,10 +1,10 @@
-# doubao-seedance-2-0-260128 首帧生视频 API 使用文档
+# AICC-Doubao-Seedance-2.0 首帧生视频 API 使用文档
 
-基于字节跳动 Seedance 2.0 模型的首帧生视频接口，支持将一张图片作为首帧，结合文本提示词生成 4～15 秒的 AI 视频。视频支持 480p/720p/1080p/4k 分辨率、多种宽高比（包括自适应），可选联网搜索增强、同步音频生成及尾帧图像返回功能。采用异步任务模式，通过 DMXAPI 封装的"提交任务 → 直接获取"两步流程完成视频生成。
+基于豆包 Seedance 2.0 模型的首帧生视频接口，支持将一张图片作为首帧，结合文本提示词生成 4～15 秒的 AI 视频。视频支持 480p/720p/1080p 分辨率、多种宽高比（包括自适应），可选联网搜索增强、同步音频生成及尾帧图像返回功能。采用异步任务模式，通过 DMXAPI 封装的"提交任务 → 直接获取"两步流程完成视频生成。
 
 ## 🎬 模型名称
 
-- `doubao-seedance-2-0-260128`
+- `AICC-Doubao-Seedance-2.0`
 
 ## 🔗 接口地址
 
@@ -31,7 +31,6 @@ import os
 # 🔑 步骤1: 配置 API 连接信息
 # ═══════════════════════════════════════════════════════════════
 
-# 🌐 DMXAPI 服务端点地址
 url = "https://www.dmxapi.cn/v1/responses"
 
 # 🔐 DMXAPI 密钥 (请替换为您自己的密钥)
@@ -88,7 +87,7 @@ def resolve_image_url(source):
 
 payload = {
     # 【model】(string, 必填) 调用的模型 ID
-    "model": "doubao-seedance-2-0-260128",
+    "model": "AICC-Doubao-Seedance-2.0",
 
     # 【input】(array, 必填) 输入内容数组，支持文本 + 图片组合
     # 首帧生视频：传入 1 个文本对象 + 1 个图片对象，图片 role 设为 first_frame
@@ -103,12 +102,12 @@ payload = {
             # 【type】(string, 必填) 内容类型，图片固定为 "image_url"
             "type": "image_url",
             "image_url": {
-                # 【url】(string, 必填) 首帧图片地址，支持公网 URL 或 Base64 编码
-                # 图片格式：jpeg、png、webp、bmp、tiff、gif
+                # 【url】(string, 必填) 首帧图片地址，支持公网 URL、Base64 编码或素材 ID（asset://）
+                # 图片格式：jpeg、png、webp、bmp、tiff、gif、heic、heif
                 # 宽高比要求：(0.4, 2.5)，宽高长度：(300, 6000) px，大小不超过 30 MB
                 "url": resolve_image_url(image_source)
             },
-            # 【role】(string, 条件必填) 图片用途：首帧生视频固定填 "first_frame"
+            # 【role】(string, 条件必填) 图片用途：首帧生视频固定填 "first_frame"（推荐显式填写，也可省略）
             "role": "first_frame"
         },
     ],
@@ -116,11 +115,11 @@ payload = {
     # 【generate_audio】(boolean, 可选) 是否生成同步音频（人声、音效、背景音乐）
     # true：生成有声视频（建议将对话内容置于双引号内以优化效果）
     # false：生成无声视频
-    # 默认值：true，仅 Seedance 2.0 支持
+    # 默认值：true
     "generate_audio": True,
 
     # 【resolution】(string, 可选) 视频分辨率
-    # 可选值："480p" / "720p"/ "1080p" / "4k"
+    # 可选值："480p" / "720p"/ "1080p"
     # 默认值："720p"
     "resolution": "720p",
 
@@ -131,14 +130,12 @@ payload = {
     "ratio": "adaptive",
 
     # 【duration】(integer, 可选) 视频时长（秒）
-    # 取值范围：[4, 15]
+    # 取值范围：[4, 15]，仅支持范围内整数（不支持 -1 智能时长）
     # 默认值：5
     "duration": 4,
 
-    # 【seed】(integer, 可选) 随机种子，控制生成结果的随机性
-    # 取值范围：[-1, 2^32-1]，-1 表示使用随机数
-    # 相同 seed 值生成结果相近但不保证完全一致
-    # 默认值：-1
+    # 【seed】(integer, 可选) 随机种子，默认 -1
+    # 注意：Seedance 2.0 系列暂不支持指定 seed，传入后会被上游忽略
     "seed": -1,
 
     # 【watermark】(boolean, 可选) 是否在生成视频中添加水印
@@ -148,7 +145,7 @@ payload = {
     "watermark": False,
 
     # 【callback_url】(string, 可选) 任务状态变更回调地址
-    # 状态变更时方舟将向此地址推送 POST 请求
+    # 状态变更时平台将向此地址推送 POST 请求
     # 回调状态：queued（排队中）/ running（运行中）/ succeeded（成功）/ failed（失败）/ expired（超时）
     "callback_url": "https://www.dmxapi.cn",
 
@@ -163,7 +160,7 @@ payload = {
     # 默认值：172800（48 小时）
     "execution_expires_after": 172800,
 
-    # 【tools】(array, 可选) 工具配置，仅 Seedance 2.0 支持
+    # 【tools】(array, 可选) 工具配置
     # {"type": "web_search"}：开启联网搜索，模型根据提示词自主判断是否搜索互联网内容
     "tools": [{"type": "web_search"}]
 }
@@ -181,7 +178,7 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 
 ```json
 {
-  "id": "cgt-20260603165348-mcqlc",
+  "id": "cgt-20260721165804-z5qjx",
   "usage": {
     "total_tokens": 40000,
     "input_tokens": 0,
@@ -196,6 +193,7 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 }
 ```
 
+> 返回的 `id` 为视频生成任务 ID，保存期限为 7 天（从创建时间戳开始计算）。
 
 ## 📥 获取结果 示例代码
 
@@ -204,7 +202,7 @@ import requests
 import json
 
 url = "https://www.dmxapi.cn/v1/responses"
-api_key = "sk-******************************************"
+api_key = "sk-*************************************"
 
 headers = {
     "Content-Type": "application/json",
@@ -212,13 +210,22 @@ headers = {
 }
 
 payload = {
-    "model": "seedance-2-0-get",
-    "input": "cgt-20260403150532-lvbsj"
+    # 【model】(string, 必填) 获取结果专用模型标识，固定为 AICC-Doubao-Seedance-2.0-get
+    "model": "AICC-Doubao-Seedance-2.0-get",
+    # 【input】(string, 必填) 提交任务时返回的任务 ID（id 字段的值）
+    # 任务 ID 仅保存 7 天，超时后自动清除
+    "input": "cgt-2026****************nsn"
 }
 
 response = requests.post(url, headers=headers, json=payload)
 result = response.json()
-print(json.dumps(result, indent=2, ensure_ascii=False))
+
+display_result = result
+try:
+    display_result = json.loads(result["output"][0]["content"][0]["text"])
+except Exception:
+    pass
+print(json.dumps(display_result, indent=2, ensure_ascii=False))
 
 # 提取 video_url
 try:
@@ -234,14 +241,14 @@ except Exception as e:
 
 ```json
 {
-  "request_id": "cgt-20260403150532-lvbsj",
+  "request_id": "cgt-20260721184314-9wrsf",
   "output": [
     {
       "type": "message",
       "content": [
         {
           "type": "output_text",
-          "text": "{\"content\":{\"video_url\":\"https://ark-acg-cn-beijing.tos-cn-beijing.volces.com/doubao-seedance-2-0/02177520001006000000000000000000000ffffac181cba4c76c3.mp4?X-Tos-Algorithm=TOS4-HMAC-SHA256\\u0026X-Tos-Credential=AKLTYWJkZTExNjA1ZDUyNDc3YzhjNTM5OGIyNjBhNDcyOTQ%2F20260403%2Fcn-beijing%2Ftos%2Frequest\\u0026X-Tos-Date=20260403T070939Z\\u0026X-Tos-Expires=86400\\u0026X-Tos-Signature=b5e95645d33723917482057752dcf8343674e26644f4073e499d25d64d888425\\u0026X-Tos-SignedHeaders=host\"},\"id\":\"cgt-20260403150532-lvbsj\",\"model\":\"doubao-seedance-2-0-260128\",\"status\":\"succeeded\"}"
+          "text": "{\"content\":{\"video_url\":\"https://ark-acg-cn-beijing.tos-cn-beijing.volces.com/doubao-seedance-2-0/02178463059431000000000000000000000ffffac15e1d87c9b67.mp4?X-Tos-Algorithm=TOS4-HMAC-SHA256\\u0026X-Tos-Credential=...\\u0026X-Tos-Date=20260721T104528Z\\u0026X-Tos-Expires=86400\\u0026X-Tos-Signature=...\\u0026X-Tos-SignedHeaders=host\"},\"id\":\"cgt-20260721184314-9wrsf\",\"model\":\"doubao-seedance-2-0-260128\",\"status\":\"succeeded\"}"
         }
       ]
     }
@@ -259,9 +266,11 @@ except Exception as e:
   }
 }
 
-视频链接: https://ark-acg-cn-beijing.tos-cn-beijing.volces.com/doubao-seedance-2-0/02177520001006000000000000000000000ffffac181cba4c76c3.mp4?X-Tos-Algorithm=TOS4-HMAC-SHA256&X-Tos-Credential=AKLTYWJkZTExNjA1ZDUyNDc3YzhjNTM5OGIyNjBhNDcyOTQ%2F20260403%2Fcn-beijing%2Ftos%2Frequest&X-Tos-Date=20260403T070939Z&X-Tos-Expires=86400&X-Tos-Signature=b5e95645d33723917482057752dcf8343674e26644f4073e499d25d64d888425&X-Tos-SignedHeaders=host
+视频链接: https://ark-acg-cn-beijing.tos-cn-beijing.volces.com/doubao-seedance-2-0/02178463059431000000000000000000000ffffac15e1d87c9b67.mp4?...（有效期 24 小时的临时下载链接）
 ```
 
+> **说明**：视频链接有效期为 24 小时，请及时下载保存。若 `status` 为 `running` 或 `queued`，可稍后重新调用获取接口查询。若提交任务时设置了 `return_last_frame: true`，成功返回的 `content` 中还会包含 `last_frame_url`（尾帧图 URL，24 小时有效）。
+
 <p align="center">
-  <small>© 2026 DMXAPI doubao-seedance-2-0-260128 首帧生视频</small>
+  <small>© 2026 DMXAPI AICC-Doubao-Seedance-2.0 首帧生视频</small>
 </p>
