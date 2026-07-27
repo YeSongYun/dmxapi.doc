@@ -7,7 +7,6 @@
 - 方法：`POST`
 - 地址：`https://www.dmxapi.cn/api/token/`
 - 认证：`SYSTEM_TOKEN` + `USER_ID`
-- Content-Type：`application/json`
 
 ## HTTP JSON 参数
 
@@ -57,36 +56,36 @@ rate_limits_content = ""  # 超出限流时返回的提示语
 quantity = 1  # 要创建的令牌数量
 
 # 下面无需修改
-QUOTA_PER_CNY = 500_000  # 额度换算比例：500000 原始额度 = 1 CNY
-BASE_URL = "https://www.dmxapi.cn"  # 平台管理接口地址
+QUOTA_PER_CNY = 500_000
+BASE_URL = "https://www.dmxapi.cn"
 expired_time = -1 if expired_time == -1 else int(time.time() + expired_time * 86400)
 headers = {
-    "Authorization": f"Bearer {SYSTEM_TOKEN}",  # 使用系统访问令牌认证
-    "Dmx-Api-User": str(USER_ID),  # 指定请求所属的用户 ID
-    "Content-Type": "application/json",  # 请求体使用 JSON 格式
+    "Authorization": f"Bearer {SYSTEM_TOKEN}",
+    "Dmx-Api-User": str(USER_ID),
+}
+
+payload = {
+    "expired_time": expired_time,
+    "remain_quota": int(remain_quota * QUOTA_PER_CNY),
+    "unlimited_quota": unlimited_quota,
+    "model_limits_enabled": model_limits_enabled,
+    "model_limits": model_limits,
+    "allow_ips": allow_ips,
+    "group": "default",
+    "rate_limits_enabled": rate_limits_enabled,
+    "rate_limits_time": rate_limits_time,
+    "rate_limits_count": rate_limits_count,
+    "rate_limits_content": rate_limits_content,
 }
 
 for index in range(quantity):
     created_name = name if quantity == 1 else f"{name}-{secrets.token_hex(2)}"
-    payload = {
-        "name": created_name,
-        "expired_time": expired_time,
-        "remain_quota": int(remain_quota * QUOTA_PER_CNY),  # 将 CNY 金额换算为接口原始额度
-        "unlimited_quota": unlimited_quota,
-        "model_limits_enabled": model_limits_enabled,
-        "model_limits": model_limits,
-        "allow_ips": allow_ips,
-        "group": "default",  # 当前只有 default 分组，无需用户设置
-        "rate_limits_enabled": rate_limits_enabled,
-        "rate_limits_time": rate_limits_time,
-        "rate_limits_count": rate_limits_count,
-        "rate_limits_content": rate_limits_content,
-    }
+    payload["name"] = created_name
     response = requests.post(
         f"{BASE_URL}/api/token/",
         headers=headers,
         json=payload,
-        timeout=30,  # 单次请求最多等待 30 秒
+        timeout=30,
     )
     response.raise_for_status()
     result = response.json()
@@ -102,24 +101,6 @@ for index in range(quantity):
 ```
 
 当前已验证的创建响应只返回成功状态，不包含完整 API Key。创建后可通过平台的完整 Key 专用读取接口获取；使用时应只在可信设备上临时查看，避免写入日志或截图。普通令牌列表和搜索接口只返回脱敏 Key。
-
-## 字段联动
-
-- `unlimited_quota=true`：令牌不受额度限制，`remain_quota` 不决定可用余额。
-- `unlimited_quota=false`：`remain_quota` 决定令牌额度；示例中的数字 `1` 表示 `1 CNY`。
-- `expired_time`：填写 `-1` 表示永不过期，填写正整数表示多少天后过期。
-- `group`：当前固定为 `default`，用户无需设置。
-- `model_limits_enabled=true`：`model_limits` 必须包含允许的模型 ID。
-- `model_limits_enabled=false`：将 `model_limits` 设为空字符串。
-- `allow_ips`：使用换行分隔，支持单 IP 和 CIDR；留空表示不限制。
-- `rate_limits_enabled=true`：应同时配置 `rate_limits_time`、`rate_limits_count` 和可选提示语。
-- 后台界面说明成功和失败请求都会计入窗口次数，并标注提示语留空时使用默认文案；本文未用高频模型请求压测这两项运行时行为。
-
-## 下一步
-
-- [获取所有令牌](/Get_all_tokens)
-- [搜索令牌](/Search_token)
-- [更新令牌](/Update_token)
 
 <p align="center">
   <small>© 2026 DMXAPI 创建令牌</small>
