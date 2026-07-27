@@ -81,7 +81,7 @@ payload = {
     # Image API 默认格式为 png，也支持 jpeg 
     # 使用 jpeg 通常比 png 更快；若选择 jpeg ，可再配合 output_compression 调整压缩率
     # 可选值: "png"(默认) / "jpeg"(延迟更低) /"webp"(更高压缩率)
-    "output_format": "jpeg",
+    "output_format": "png",
 
     # 【quality】(string, 可选) 控制渲染质量
     # 官方提供 low / medium / high / auto 四档，其中 low 适合快速草稿、缩略图和快速迭代
