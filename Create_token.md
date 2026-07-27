@@ -6,7 +6,7 @@
 
 - 方法：`POST`
 - 地址：`https://www.dmxapi.cn/api/token/`
-- 认证：`SYSTEM_TOKEN` + `USER_ID`
+- 认证：`SYSTEM_TOKEN` + `USER_ID`，详见 [系统令牌与用户 ID](security_token_ID.md)
 
 ## HTTP JSON 参数
 
@@ -45,7 +45,7 @@ USER_ID = "请在这里填写用户 ID"  # 与系统访问令牌同账号的用�
 name = "DMXAPI创建测试"  # 令牌名称
 expired_time = -1  # 填 -1 表示永不过期；填正整数表示多少天后过期
 unlimited_quota = True  # True 表示不限制令牌额度
-remain_quota = 1  # 额度金额，单位 CNY；False 时生效
+remain_quota = 1  # 额度金额，单位 CNY；unlimited_quota=False 时生效，无限额度时忽略
 model_limits_enabled = False  # 是否启用模型限制
 model_limits = ""  # 允许的模型 ID，用英文逗号分隔
 allow_ips = ""  # IP 白名单；换行分隔，留空表示不限制
@@ -92,12 +92,16 @@ for index in range(quantity):
     if not result.get("success"):
         raise RuntimeError(result.get("message") or "创建令牌失败")
     print(f"[{index + 1}/{quantity}] 创建成功：{created_name}")
+    print(f"服务器响应：{response.text}")
 ```
 
-## 成功响应
+## 控制台输出
 
-```json
+以下内容由脚本打印；服务器响应会原样显示接口返回的 JSON，具体字段以实际返回为准。
+
+```text
 [1/1] 创建成功：DMXAPI创建测试
+服务器响应：<接口实际返回的 JSON>
 ```
 
 当前已验证的创建响应只返回成功状态，不包含完整 API Key。创建后可通过平台的完整 Key 专用读取接口获取；使用时应只在可信设备上临时查看，避免写入日志或截图。普通令牌列表和搜索接口只返回脱敏 Key。

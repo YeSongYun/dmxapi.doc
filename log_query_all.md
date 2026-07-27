@@ -8,6 +8,11 @@
 ```
 https://www.dmxapi.cn/api/log/self  
 ```
+
+::: warning 日志接口认证格式
+`Authorization` 直接填写 `SYSTEM_TOKEN`，不带 `Bearer` 前缀；这与令牌管理接口不同。
+:::
+
 ## 代码示例
 ```python
 import requests

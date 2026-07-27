@@ -1,4 +1,4 @@
-# DMXAPI 令牌余额查询
+# 查询令牌余额
 
 填写 DMXAPI API Key、系统访问令牌和用户 ID。脚本会一次读取最多 999 个令牌并查找匹配项，只显示令牌名称、状态、已用额度、剩余额度和过期时间。
 
@@ -10,6 +10,7 @@
 
 - 方法：`GET`
 - 地址：`https://www.dmxapi.cn/api/token/`
+- 认证：`SYSTEM_TOKEN` + `USER_ID`，详见 [系统令牌与用户 ID](security_token_ID.md)
 - 查询参数：固定使用 `page=1`、`page_size=999`
 
 ## 需要填写的三个参数
@@ -85,5 +86,5 @@ print(
 ```
 
 <p align="center">
-  <small>© 2026 DMXAPI 令牌余额查询</small>
+  <small>© 2026 DMXAPI 查询令牌余额</small>
 </p>

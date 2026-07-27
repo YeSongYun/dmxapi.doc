@@ -10,6 +10,8 @@
 更新成功后，脚本会在终端直接输出完整 API Key。请只在可信的本地设备运行，不要截图、分享或写入日志。
 :::
 
+认证：`SYSTEM_TOKEN` + `USER_ID`，详见 [系统令牌与用户 ID](security_token_ID.md)。
+
 ## 更新参数
 
 `token_id` 只用于指定要更新的令牌，不属于令牌配置。其余参数与创建令牌完全一致：
@@ -100,7 +102,7 @@ token_id = 12345  # 填写第一步查询到的令牌 ID
 name = "DMXAPI更新测试"  # 令牌名称
 expired_time = -1  # 填 -1 表示永不过期；填正整数表示多少天后过期
 unlimited_quota = True  # True 表示不限制令牌额度
-remain_quota = 1  # 额度金额，单位 CNY；False 时生效
+remain_quota = 1  # 额度金额，单位 CNY；unlimited_quota=False 时生效，无限额度时忽略
 model_limits_enabled = False  # 是否启用模型限制
 model_limits = ""  # 允许的模型 ID，用英文逗号分隔
 allow_ips = ""  # IP 白名单；换行分隔，留空表示不限制

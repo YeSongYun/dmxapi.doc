@@ -94,7 +94,7 @@ export default defineConfig({
                   { text: '获取所有令牌', link: '/Get_all_tokens' },
                   { text: '搜索令牌', link: '/Search_token' },
                   { text: '更新令牌', link: '/Update_token' },
-                  { text: '令牌余额', link: '/key-yuer' },
+                  { text: '查询令牌余额', link: '/key-yuer' },
                   { text: '批量删除令牌', link: '/Batch_token_deletion' },
                 ],
           },

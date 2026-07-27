@@ -8,7 +8,7 @@
 
 ## 接口
 
-以下接口都使用 `SYSTEM_TOKEN` + `USER_ID` 认证。
+认证：`SYSTEM_TOKEN` + `USER_ID`，详见 [系统令牌与用户 ID](security_token_ID.md)。
 
 
 ## 一、查询要删除的令牌 ID

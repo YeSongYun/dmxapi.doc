@@ -6,7 +6,7 @@
 
 - 方法：`GET`
 - 地址：`https://www.dmxapi.cn/api/token/`
-- 认证：`SYSTEM_TOKEN` + `USER_ID`
+- 认证：`SYSTEM_TOKEN` + `USER_ID`，详见 [系统令牌与用户 ID](security_token_ID.md)
 - 参数：固定使用 `page=1`、`page_size=999`
 
 列表接口返回脱敏后的 `key`，本页直接使用该值展示。

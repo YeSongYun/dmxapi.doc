@@ -13,7 +13,7 @@
 - `GET https://www.dmxapi.cn/api/token/`：固定使用 `page=1`、`page_size=999`
 - `POST https://www.dmxapi.cn/api/token/{token_id}/key`：读取单个令牌的完整 Key
 
-两个接口都使用 `SYSTEM_TOKEN` + `USER_ID` 认证。搜索内容只用于本地筛选。
+认证：`SYSTEM_TOKEN` + `USER_ID`，详见 [系统令牌与用户 ID](security_token_ID.md)。搜索内容只用于本地筛选。
 
 ## 两种查询方式
 
