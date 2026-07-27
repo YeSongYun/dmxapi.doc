@@ -1,116 +1,90 @@
-# DMXAPI 令牌余额查询接口
+# 查询令牌余额
 
-## 接口地址
-`GET https://www.dmxapi.cn/api/token/search`
+填写 DMXAPI API Key、系统访问令牌和用户 ID。脚本会一次读取最多 999 个令牌并查找匹配项，只显示令牌名称、状态、已用额度、剩余额度和过期时间。
 
-## 准备需要查询的令牌
-获取路径： 登录DMXAPI → 工作台 → 令牌 → 复制目标令牌贴到下面代码里
+::: warning 凭据需要属于同一账号
+完整 API Key 只在本地转换为脱敏形式，不会作为查询参数发送。
+:::
 
-## 示例代码
+## 接口
+
+- 方法：`GET`
+- 地址：`https://www.dmxapi.cn/api/token/`
+- 认证：`SYSTEM_TOKEN` + `USER_ID`，详见 [系统令牌与用户 ID](security_token_ID.md)
+- 查询参数：固定使用 `page=1`、`page_size=999`
+
+## 需要填写的三个参数
+
+| 参数 | 用途 | 获取位置 |
+| --- | --- | --- |
+| `API_KEY` | 要查询余额的 DMXAPI 调用令牌 | 工作台 → API 令牌 |
+| `SYSTEM_TOKEN` | 调用平台管理接口 | 个人设置 → 安全 → 访问令牌 |
+| `USER_ID` | 指定系统令牌所属用户 | 个人设置 → 个人资料 |
+
+## Python 示例
+
 ```python
-import requests
 from datetime import datetime
+import requests
 
-# ----------- 1. 请求参数（自行替换 ↓）-----------
-API_KEY = "sk-YOUR_API_KEY"  # 要查询的 DMXAPI 令牌
-SYSTEM_TOKEN = "YOUR_SYSTEM_TOKEN"  # 系统令牌（按 key 查询令牌详情需要管理员权限）
-USER_ID = "YOUR_USER_ID"  # 你的用户ID，在 个人设置 中获得
+# 只需修改这里
+API_KEY = "sk-请在这里填写 DMXAPI 令牌"  # 要查询余额的模型调用令牌
+SYSTEM_TOKEN = "请在这里填写系统访问令牌"  # 管理接口使用的系统访问令牌
+USER_ID = "请在这里填写用户 ID"  # 三项凭据需属于同一账号
+
+# 下面无需修改
 BASE_URL = "https://www.dmxapi.cn"
-# ------------------------------------------------
-
+QUOTA_PER_CNY = 500_000
 headers = {
     "Authorization": f"Bearer {SYSTEM_TOKEN}",
-    "Dmx-Api-User": USER_ID,
-    "Accept": "application/json",
+    "Dmx-Api-User": str(USER_ID),
 }
 
-# ----------- 2. 按 key 定位令牌 -----------
-# 接口不支持按 key 直接查询，因此遍历令牌列表，用「前4位 + 后4位」匹配脱敏后的 key
-raw_key = API_KEY[3:] if API_KEY.startswith("sk-") else API_KEY
-# 接口只返回脱敏后的 key（前4位 + 10个星号 + 后4位），无法拿到完整 key，
-# 因此把完整 key 转成同样的脱敏格式后做精确匹配
-masked_key = f"{raw_key[:4]}{'*' * 10}{raw_key[-4:]}"
+def time_text(value):
+    return "永不过期" if value == -1 else (
+        datetime.fromtimestamp(value).astimezone().strftime("%Y-%m-%d %H:%M:%S %z")
+        if value else "无记录"
+    )
 
-token = None
-page = 1
-while token is None:
-    data = requests.get(
-        f"{BASE_URL}/api/token/search",
-        headers=headers,
-        params={"page": page, "page_size": 100},
-    ).json()["data"]
-    for item in data["items"]:
-        if item["key"] == masked_key:
-            token = item
-            break
-    if not data["items"] or len(data["items"]) < data["page_size"]:
-        break
-    page += 1
-
+key = API_KEY.removeprefix("sk-")
+target_key = f"{key[:4]}{'*' * 10}{key[-4:]}"
+items = requests.get(
+    f"{BASE_URL}/api/token/",
+    headers=headers,
+    params={"page": 1, "page_size": 999},
+    timeout=30,
+).json()["data"]["items"]
+token = next(
+    (item for item in items if item.get("key", "").removeprefix("sk-") == target_key),
+    None,
+)
 if token is None:
-    print("未找到该令牌，请检查 API_KEY 是否正确")
-    exit()
+    raise SystemExit("未找到该 API Key，请检查三项凭据是否属于同一账号")
+remain_quota_text = (
+    "无限额度"
+    if token.get("unlimited_quota")
+    else f"{token.get('remain_quota', 0) / QUOTA_PER_CNY:.4f} CNY"
+)
 
-d = token
-
-
-# ----------- 3. 格式化输出 -----------
-def fmt_quota(q, unlimited):
-    return "无限额度" if unlimited else f"{q / 500000:.4f} 元"
-
-
-def fmt_time(ts):
-    if ts == -1:
-        return "永不过期"
-    if ts == 0:
-        return "未设置"
-    return datetime.fromtimestamp(ts).strftime("%Y-%m-%d %H:%M:%S")
-
-
-print("=" * 40)
-print(f"  令牌名称：{d['name']}")
-print(f"  所属用户ID：{d['user_id']}")
-print(f"  状态：{'正常' if d['status'] == 1 else '已禁用'}")
-print("-" * 40)
-print(f"  已用额度：{d['used_quota'] / 500000:.4f} 元")
-print(f"  剩余额度：{fmt_quota(d['remain_quota'], d['unlimited_quota'])}")
-print(f"  剩余次数：无限次数")  # 该接口无次数限制概念，固定显示
-print("-" * 40)
-print(f"  分组：{d['group']}")
-print(f"  创建时间：{fmt_time(d['created_time'])}")
-print(f"  最后访问：{fmt_time(d['accessed_time'])}")
-print(f"  过期时间：{fmt_time(d['expired_time'])}")
-print("-" * 40)
-print(f"  模型限制：{d['model_limits'] if d['model_limits_enabled'] else '未启用'}")
-print(f"  IP白名单：{d['allow_ips'] or '无'}")
-print(f"  IP黑名单：无")  # 该接口无 IP 黑名单字段，固定显示
-print("=" * 40)
-
+print(
+    f"令牌名称：{token.get('name', '')}\n"
+    f"状态：{'启用' if token.get('status') == 1 else '禁用'}\n"
+    f"已用额度：{token.get('used_quota', 0) / QUOTA_PER_CNY:.4f} CNY\n"
+    f"剩余额度：{remain_quota_text}\n"
+    f"过期时间：{time_text(token.get('expired_time'))}"
+)
 ```
 
-## 返回示例
-```text
-========================================
-  令牌名称：测试使用
-  所属用户ID：10000
-  状态：正常
-----------------------------------------
-  已用额度：187.8838 元
-  剩余额度：无限额度
-  剩余次数：无限次数
-----------------------------------------
-  分组：default
-  创建时间：2026-06-17 14:55:58
-  最后访问：2026-07-07 10:41:22
-  过期时间：永不过期
-----------------------------------------
-  模型限制：未启用
-  IP白名单：无
-  IP黑名单：无
-========================================
+## 输出示例
 
+```text
+令牌名称：project-a
+状态：启用
+已用额度：0.1250 CNY
+剩余额度：1.0000 CNY
+过期时间：永不过期
 ```
 
 <p align="center">
-  <small>© 2026 DMXAPI DMXAPI 令...</small>
+  <small>© 2026 DMXAPI 查询令牌余额</small>
 </p>

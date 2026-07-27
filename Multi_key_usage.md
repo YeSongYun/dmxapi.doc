@@ -34,7 +34,7 @@
   - `https://www.dmxapi.cn/api/token/`
   - `https://www.dmxapi.cn/api/log/self/stat`
   - `https://www.dmxapi.cn/api/log/self`
-- 认证头：`Authorization: Bearer {SYSTEM_TOKEN}` + `Rix-Api-User: {USER_ID}`
+- 认证头：`Authorization: Bearer {SYSTEM_TOKEN}` + `Dmx-Api-User: {USER_ID}`
 - 用途：组合查询多 Key 的累计/分时段用量、剩余额度与最近调用记录
 
 ## 主要参数说明
@@ -98,7 +98,7 @@ TXT_FILENAME = "多Key用量明细报告.txt"
 BASE_URL = "https://www.dmxapi.cn"
 HEADERS = {
     "Authorization": f"Bearer {SYSTEM_TOKEN}",
-    "Rix-Api-User": USER_ID,
+    "Dmx-Api-User": USER_ID,
     "Accept": "application/json",
 }
 

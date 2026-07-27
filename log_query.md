@@ -9,6 +9,10 @@
 https://www.dmxapi.cn/api/log/self/stat
 ```
 
+::: warning 日志接口认证格式
+`Authorization` 直接填写 `SYSTEM_TOKEN`，不带 `Bearer` 前缀；这与令牌管理接口不同。
+:::
+
 ## 代码示例
 ```python
 """
@@ -36,43 +40,44 @@ from datetime import datetime
 #                               配置信息区域
 # ==============================================================================
 
-# API 接口地址 - 个人统计数据查询端点
-URL = "https://www.dmxapi.cn/api/log/self/stat"
+# API 平台根地址
+BASE_URL = "https://www.dmxapi.cn"
+QUOTA_PER_CNY = 500_000
 
 # ------------------------------------------------------------------------------
 # 认证信息配置 (请替换为你自己的信息)
 # ------------------------------------------------------------------------------
-# SYSTEM_TOKEN: 系统令牌，用于 API 认证
-#               获取方式: 登录 dmxapi.cn -> 个人设置 -> API 令牌
+# SYSTEM_TOKEN: 系统访问令牌，用于平台管理接口认证
+#               获取方式: 登录 dmxapi.cn -> 个人设置 -> 安全 -> 访问令牌
 SYSTEM_TOKEN = "YOUR_SYSTEM_TOKEN"  # 替换为你的系统令牌
 
 # USER_ID: 用户唯一标识
-#          获取方式: 登录 dmxapi.cn -> 个人设置 -> 用户 ID
+#          获取方式: 登录 dmxapi.cn -> 个人设置 -> 个人资料
 USER_ID = "YOUR_USER_ID"  # 替换为你的用户 ID
 
 # ------------------------------------------------------------------------------
 # 时间范围配置
 # ------------------------------------------------------------------------------
-# QUERY_MODE: 查询模式选择
+# query_mode: 查询模式选择
 #   "today"      - 查询今天的数据
 #   "yesterday"  - 查询昨天的数据
 #   "week"       - 查询最近7天的数据
 #   "month"      - 查询最近30天的数据
-#   "custom"     - 自定义时间范围（需要设置下方的 CUSTOM_START 和 CUSTOM_END）
-QUERY_MODE = "month"
+#   "custom"     - 自定义时间范围（需要设置下方的 start_time_text 和 end_time_text）
+query_mode = "month"
 
-# 自定义时间范围（仅当 QUERY_MODE = "custom" 时生效）
+# 自定义时间范围（仅当 query_mode = "custom" 时生效）
 # 格式: "YYYY-MM-DD" 或 "YYYY-MM-DD HH:MM:SS"
-CUSTOM_START = "2025-01-01 00:00:00"
-CUSTOM_END = "2025-01-01 23:59:59"
+start_time_text = "2025-01-01 00:00:00"
+end_time_text = "2025-01-01 23:59:59"
 
 
 # ==============================================================================
 #                               核心功能函数
 # ==============================================================================
 
-def get_stat_data(start_timestamp: int, end_timestamp: int, stat_type: int = 0,
-                  token_name: str = "", token_group: str = "", model_name: str = ""):
+def get_stat_data(start_timestamp: int, end_timestamp: int, log_type: int = 0,
+                  name: str = "", group: str = "", model_name: str = ""):
     """
     获取 API 总消耗统计数据
 
@@ -83,9 +88,9 @@ def get_stat_data(start_timestamp: int, end_timestamp: int, stat_type: int = 0,
                                例如: 1702080000 表示 2023-12-09 00:00:00
         end_timestamp (int):   查询结束时间的 Unix 时间戳 (秒)
                                例如: 1702166399 表示 2023-12-09 23:59:59
-        stat_type (int):       统计类型，默认为 0 (全部统计)
-        token_name (str):      按令牌名称筛选 (空字符串表示不筛选)
-        token_group (str):     按令牌分组筛选 (空字符串表示不筛选)
+        log_type (int):        日志类型，默认为 0 (全部统计)
+        name (str):            按令牌名称筛选 (空字符串表示不筛选)
+        group (str):           按令牌分组筛选 (空字符串表示不筛选)
         model_name (str):      按模型名称筛选 (空字符串表示不筛选)
 
     Returns:
@@ -114,9 +119,9 @@ def get_stat_data(start_timestamp: int, end_timestamp: int, stat_type: int = 0,
     # 构建查询参数
     # -------------------------------------------------------------------------
     params = {
-        "type": stat_type,                    # 统计类型
-        "token_name": token_name,             # 令牌名称筛选
-        "token_group": token_group,           # 令牌分组筛选
+        "type": log_type,                     # 日志类型
+        "token_name": name,                   # 令牌名称筛选
+        "token_group": group,                 # 令牌分组筛选
         "model_name": model_name,             # 模型名称筛选
         "start_timestamp": start_timestamp,   # 开始时间戳
         "end_timestamp": end_timestamp        # 结束时间戳
@@ -125,7 +130,7 @@ def get_stat_data(start_timestamp: int, end_timestamp: int, stat_type: int = 0,
     # -------------------------------------------------------------------------
     # 发送 GET 请求
     # -------------------------------------------------------------------------
-    response = requests.get(URL, headers=headers, params=params)
+    response = requests.get(f"{BASE_URL}/api/log/self/stat", headers=headers, params=params)
 
     # 检查 HTTP 状态码
     if response.status_code != 200:
@@ -145,7 +150,7 @@ def get_stat_data(start_timestamp: int, end_timestamp: int, stat_type: int = 0,
     return result.get("data", {})
 
 
-def print_stat(data: dict, start_time: datetime, end_time: datetime):
+def print_stat(data: dict, start_datetime: datetime, end_datetime: datetime):
     """
     格式化输出统计数据
 
@@ -154,8 +159,8 @@ def print_stat(data: dict, start_time: datetime, end_time: datetime):
     Args:
         data (dict):           API 返回的统计数据字典
                                必须包含: quota, rpm, tpm, mpm 字段
-        start_time (datetime): 查询开始时间
-        end_time (datetime):   查询结束时间
+        start_datetime (datetime): 查询开始时间
+        end_datetime (datetime):   查询结束时间
 
     Returns:
         None: 直接输出到控制台
@@ -180,7 +185,7 @@ def print_stat(data: dict, start_time: datetime, end_time: datetime):
     print("=" * 50)
     print("              API 总消耗统计")
     print("=" * 50)
-    print(f"查询时间: {start_time.strftime('%Y-%m-%d %H:%M')} 至 {end_time.strftime('%Y-%m-%d %H:%M')}")
+    print(f"查询时间: {start_datetime.strftime('%Y-%m-%d %H:%M')} 至 {end_datetime.strftime('%Y-%m-%d %H:%M')}")
     print("-" * 50)
 
     # -------------------------------------------------------------------------
@@ -195,12 +200,12 @@ def print_stat(data: dict, start_time: datetime, end_time: datetime):
     # 提取并转换数据
     # -------------------------------------------------------------------------
     quota = data.get("quota", 0)           # 原始额度值
-    actual_quota = quota / 500000          # 转换为实际额度
+    total_consumed_quota_cny = quota / QUOTA_PER_CNY  # 转换为总消耗（CNY）
 
     # -------------------------------------------------------------------------
     # 输出统计结果
     # -------------------------------------------------------------------------
-    print(f"  总消耗额度: {actual_quota:.4f}")
+    print(f"  总消耗额度: {total_consumed_quota_cny:.4f}")
     print(f"  原始值: {quota}")
     print("-" * 50)
     print(f"  每分钟请求数 (RPM): {data.get('rpm', 0)}")
@@ -209,12 +214,12 @@ def print_stat(data: dict, start_time: datetime, end_time: datetime):
     print("=" * 50)
 
 
-def get_time_range(mode: str) -> tuple:
+def get_time_range(query_mode: str) -> tuple:
     """
     根据查询模式获取时间范围
 
     Args:
-        mode (str): 查询模式
+        query_mode (str): 查询模式
                     - "today": 今天
                     - "yesterday": 昨天
                     - "week": 最近7天
@@ -222,46 +227,51 @@ def get_time_range(mode: str) -> tuple:
                     - "custom": 自定义时间范围
 
     Returns:
-        tuple: (start_timestamp, end_timestamp, start_time, end_time)
+        tuple: (start_timestamp, end_timestamp, start_datetime, end_datetime)
     """
     from datetime import timedelta
 
     now = datetime.now()
     today = now.replace(hour=0, minute=0, second=0, microsecond=0)
 
-    if mode == "today":
-        start_time = today
-        end_time = today.replace(hour=23, minute=59, second=59)
-    elif mode == "yesterday":
-        start_time = today - timedelta(days=1)
-        end_time = start_time.replace(hour=23, minute=59, second=59)
-    elif mode == "week":
-        start_time = today - timedelta(days=6)
-        end_time = now
-    elif mode == "month":
-        start_time = today - timedelta(days=29)
-        end_time = now
-    elif mode == "custom":
+    if query_mode == "today":
+        start_datetime = today
+        end_datetime = today.replace(hour=23, minute=59, second=59)
+    elif query_mode == "yesterday":
+        start_datetime = today - timedelta(days=1)
+        end_datetime = start_datetime.replace(hour=23, minute=59, second=59)
+    elif query_mode == "week":
+        start_datetime = today - timedelta(days=6)
+        end_datetime = now
+    elif query_mode == "month":
+        start_datetime = today - timedelta(days=29)
+        end_datetime = now
+    elif query_mode == "custom":
         try:
-            if len(CUSTOM_START) == 10:
-                start_time = datetime.strptime(CUSTOM_START, "%Y-%m-%d")
+            if len(start_time_text) == 10:
+                start_datetime = datetime.strptime(start_time_text, "%Y-%m-%d")
             else:
-                start_time = datetime.strptime(CUSTOM_START, "%Y-%m-%d %H:%M:%S")
+                start_datetime = datetime.strptime(start_time_text, "%Y-%m-%d %H:%M:%S")
 
-            if len(CUSTOM_END) == 10:
-                end_time = datetime.strptime(CUSTOM_END, "%Y-%m-%d").replace(hour=23, minute=59, second=59)
+            if len(end_time_text) == 10:
+                end_datetime = datetime.strptime(end_time_text, "%Y-%m-%d").replace(hour=23, minute=59, second=59)
             else:
-                end_time = datetime.strptime(CUSTOM_END, "%Y-%m-%d %H:%M:%S")
+                end_datetime = datetime.strptime(end_time_text, "%Y-%m-%d %H:%M:%S")
         except ValueError as e:
             print(f"时间格式错误: {e}")
             print("请使用格式: YYYY-MM-DD 或 YYYY-MM-DD HH:MM:SS")
             exit(1)
     else:
-        print(f"未知的查询模式: {mode}")
+        print(f"未知的查询模式: {query_mode}")
         print("支持的模式: today, yesterday, week, month, custom")
         exit(1)
 
-    return int(start_time.timestamp()), int(end_time.timestamp()), start_time, end_time
+    return (
+        int(start_datetime.timestamp()),
+        int(end_datetime.timestamp()),
+        start_datetime,
+        end_datetime,
+    )
 
 
 # ==============================================================================
@@ -280,23 +290,23 @@ if __name__ == "__main__":
     # -------------------------------------------------------------------------
     # Step 1: 根据配置获取时间范围
     # -------------------------------------------------------------------------
-    start_timestamp, end_timestamp, start_time, end_time = get_time_range(QUERY_MODE)
+    start_timestamp, end_timestamp, start_datetime, end_datetime = get_time_range(query_mode)
 
     # -------------------------------------------------------------------------
     # Step 2: 显示查询信息
     # -------------------------------------------------------------------------
-    print(f"查询模式: {QUERY_MODE}")
-    print(f"查询时间范围: {start_time.strftime('%Y-%m-%d %H:%M:%S')} 至 {end_time.strftime('%Y-%m-%d %H:%M:%S')}")
+    print(f"查询模式: {query_mode}")
+    print(f"查询时间范围: {start_datetime.strftime('%Y-%m-%d %H:%M:%S')} 至 {end_datetime.strftime('%Y-%m-%d %H:%M:%S')}")
     print()
 
     # -------------------------------------------------------------------------
     # Step 3: 调用 API 获取数据并输出
     # -------------------------------------------------------------------------
     data = get_stat_data(start_timestamp, end_timestamp)
-    print_stat(data, start_time, end_time)
+    print_stat(data, start_datetime, end_datetime)
 ```
 ## 返回示例
-```json
+```text
 查询模式: month
 查询时间范围: 2026-06-08 00:00:00 至 2026-07-07 12:09:17
 

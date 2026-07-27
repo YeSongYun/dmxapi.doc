@@ -40,7 +40,9 @@
 | 额度 (CNY) | 令牌可用额度，人民币计费；打开「无限配额」开关则不受额度限制 |
 | 模型限制 | 高级设置项。填入的是您要使用的模型，不填入的模型不能使用；留空表示允许所有模型 |
 | IP 白名单 | 高级设置项。每行一个 IP，支持 CIDR 表达式，留空表示无限制；IP 可能被伪造，请配合 nginx、cdn 等网关使用 |
-| 令牌限流 | 高级设置项。开启后可设置时间窗口（秒）内的最大请求次数，成功和失败请求都计入；超限提示语可选，留空使用默认文案 |
+| 令牌限流 | 高级设置项。后台界面说明：开启后可设置时间窗口（秒）内的最大请求次数，成功和失败请求都计入；超限提示语可选，留空使用默认文案，最多 1024 字节 |
+
+后台“数量”属于批量创建动作，不是单个令牌的调用次数额度。
 
 ## 常见问题
 
@@ -50,32 +52,39 @@
 
 ### 为什么 API 调用失败？
 
-请确认 Base URL 设置为 `https://www.dmxapi.cn`。
+使用 OpenAI Python SDK 时，请确认 Base URL 设置为 `https://www.dmxapi.cn/v1`。
 
-- com 站请设置为 `https://www.dmxapi.com`
-- ssvip 站请设置为 `https://ssvip.dmxapi.com`
+- com 站请设置为 `https://www.dmxapi.com/v1`
+- ssvip 站请设置为 `https://ssvip.dmxapi.com/v1`
 
-### 能否用 `.env` 存储 API Key？
+### 如何在 Python 中直接填写 API Key？
 
 ```python
-# 示例 Python 代码
-import os
 from openai import OpenAI
 
-# 从环境变量读取配置
+# 填写用于调用模型、以 sk- 开头的 DMXAPI API Key
+API_KEY = "sk-请在这里填写 DMXAPI 令牌"  # 不是平台管理用的系统访问令牌
+
 client = OpenAI(
-    api_key=os.getenv("DMX_API_KEY"),  # 从 .env 读取的 API Key
-    base_url="https://www.dmxapi.cn"   # 设置正确的 Base URL
+    api_key=API_KEY,  # 模型接口的身份凭据
+    base_url="https://www.dmxapi.cn/v1",  # DMXAPI 的 OpenAI 兼容接口地址
 )
+models = client.models.list()  # 获取当前 API Key 可以访问的模型列表
+print(f"成功获取 {len(models.data)} 个模型")
 ```
+
+直接填写适合在可信本机快速学习。不要把真实 API Key 截图、分享、提交到 Git 仓库或写入网页前端；生产环境和团队共享代码应改用真正的环境变量或密钥管理服务。
 
 ### 有并发限制吗？
 
-DMXAPI 不会硬性限制。所有模型账号由全体用户共享，高峰时段可能出现 429 或 500 错误。
+需要区分两类情况：
+
+- **用户配置的单令牌限流**：后台界面说明，开启“令牌限流”后，超过所设时间窗口内的最大请求次数会触发限制；
+- **平台或上游拥塞**：即使未开启单令牌限流，高峰时段也可能因共享模型资源出现 429 或 500 错误。
 
 ### 令牌支持哪些模型？
 
-支持使用模型广场中所有的模型。
+关闭“模型限制”时，可使用平台当前向该账号开放的模型；开启模型限制后，只能使用允许列表中的模型。
 
 模型广场地址：[https://www.dmxapi.cn/rmb](https://www.dmxapi.cn/rmb)
 

@@ -1,123 +1,120 @@
 # 批量删除令牌
 
-本文档演示如何先查询当前账号下已有的令牌，再按令牌 ID 批量删除指定令牌。
+先查询当前账号的令牌 ID 和名称，再使用令牌 ID 一次删除一个或多个 API Key。
 
-## 认证参数说明
+::: danger 删除后不可恢复
+请求体必须填写令牌 ID，不是令牌名称或 API Key。请在执行批量删除前仔细核对查询结果。
+:::
 
-在下面两个示例里，你都需要先准备这两个参数：
+## 接口
 
-| 参数 | 说明 |
-| --- | --- |
-| `SYSTEM_TOKEN` | 系统令牌，获取路径： 登录DMXAPI → 工作台 → 个人设置 → 更多选项 → 系统令牌 |
-| `USER_ID` | 当前用户 ID，获取路径： 登录DMXAPI → 工作台 → 个人设置 |
-
-
-## 接口说明
-
-### 1. 查询令牌列表
-
-- 请求方式：`GET`
-- 请求地址：`https://www.dmxapi.cn/api/token/`
-- 用途：获取当前账号下全部令牌的 `id` 和 `name`
-
-### 2. 批量删除令牌
-
-- 请求方式：`POST`
-- 请求地址：`https://www.dmxapi.cn/api/token/batch`
-- 用途：按令牌 ID 批量删除多个令牌
+认证：`SYSTEM_TOKEN` + `USER_ID`，详见 [系统令牌与用户 ID](security_token_ID.md)。
 
 
-## 一、查询当前有哪些令牌
+## 一、查询要删除的令牌 ID
+
+安装依赖：
+
+```powershell
+pip install requests
+```
+
+填写系统访问令牌和用户 ID 后运行：
 
 ```python
 import requests
 
-SYSTEM_TOKEN = "YOUR_SYSTEM_TOKEN"  # 系统令牌
-USER_ID = "YOUR_USER_ID"  # 当前用户 ID
+# 只需修改这里
+SYSTEM_TOKEN = "请在这里填写系统访问令牌"  # 管理接口使用的系统访问令牌
+USER_ID = "请在这里填写用户 ID"  # 与系统访问令牌同账号的用户 ID
 
+# 下面无需修改
+BASE_URL = "https://www.dmxapi.cn"
 headers = {
     "Authorization": f"Bearer {SYSTEM_TOKEN}",
-    "Dmx-Api-User": USER_ID,
-    "Accept": "application/json"
+    "Dmx-Api-User": str(USER_ID),
 }
 
-resp = requests.get("https://www.dmxapi.cn/api/token/", headers=headers)
-items = resp.json()["data"]["items"]
-
-for token in items:
-    print(f"ID: {token['id']}  名称: {token['name']}")
-```
-
-### 返回示例
-
-```json
-ID: 93103  名称: 我的新名称
-ID: 88129  名称: 测试使用
-```
-
-## 二、批量删除指定令牌
-
-先查询令牌列表，确认要删除的令牌 ID，再将这些 ID 放进 `ids_to_delete` 数组中提交删除。
-
-```python
-import requests
-
-SYSTEM_TOKEN = "YOUR_SYSTEM_TOKEN" # 系统令牌
-USER_ID = "YOUR_USER_ID" # 当前用户 ID（不要有多余空格）
-
-headers = {
-    "Authorization": f"Bearer {SYSTEM_TOKEN}",
-    "Dmx-Api-User": USER_ID,
-    "Content-Type": "application/json"
-}
-
-ids_to_delete = [93103]  # 改成你要删除的令牌 ID
-
-# 先查名称，方便打印删除结果
-resp = requests.get("https://www.dmxapi.cn/api/token/", headers=headers)
-resp.raise_for_status()
-payload = resp.json()
-if not payload.get("success", True) or "data" not in payload:
-    raise SystemExit(f"查询令牌失败: {payload.get('message') or payload}")
-items = payload["data"]["items"]
-name_map = {t["id"]: t["name"] for t in items}
-
-# 批量删除
-resp = requests.post(
-    "https://www.dmxapi.cn/api/token/batch",
+items = requests.get(
+    f"{BASE_URL}/api/token/",
     headers=headers,
-    json={"ids": ids_to_delete}
+    params={"page": 1, "page_size": 999},
+    timeout=30,
+).json()["data"]["items"]
+print(f"找到 {len(items)} 个令牌")
+for token in items:
+    print(f"ID：{token['id']}  令牌名称：{token.get('name', '')}")
+```
+
+### 查询 ID 输出示例
+
+```text
+找到 2 个令牌
+ID：12345  令牌名称：project-a
+ID：12346  令牌名称：project-b
+```
+
+把要删除的一个或多个数字 ID 填入下一步的 `token_ids`。
+
+## 二、根据 ID 批量删除令牌
+
+脚本会在删除前读取当前令牌清单并保存 ID 与名称的对应关系。确认 `token_ids` 无误后再运行。
+
+```python
+import requests
+
+# 只需修改这里
+SYSTEM_TOKEN = "请在这里填写系统访问令牌"  # 管理接口使用的系统访问令牌
+USER_ID = "请在这里填写用户 ID"  # 与系统访问令牌同账号的用户 ID
+token_ids = [12345, 12346]  # 第一步查询到的令牌 ID，不是名称或 Key
+
+# 下面无需修改
+BASE_URL = "https://www.dmxapi.cn"
+headers = {
+    "Authorization": f"Bearer {SYSTEM_TOKEN}",
+    "Dmx-Api-User": str(USER_ID),
+}
+if not token_ids:
+    raise SystemExit("请至少填写一个要删除的令牌 ID")
+token_ids = list(dict.fromkeys(token_ids))
+
+items = requests.get(
+    f"{BASE_URL}/api/token/",
+    headers=headers,
+    params={"page": 1, "page_size": 999},
+    timeout=30,
+).json()["data"]["items"]
+name_map = {
+    token["id"]: token.get("name", "")
+    for token in items
+    if token["id"] in token_ids
+}
+missing_ids = [token_id for token_id in token_ids if token_id not in name_map]
+if missing_ids:
+    raise SystemExit(f"未找到这些令牌 ID，已取消删除：{missing_ids}")
+response = requests.post(
+    f"{BASE_URL}/api/token/batch",
+    headers=headers,
+    json={"ids": token_ids},
+    timeout=30,
 )
+response.raise_for_status()
+result = response.json()
+if not result.get("success"):
+    raise RuntimeError(result.get("message") or "批量删除失败")
 
-if resp.status_code == 200 and resp.json().get("success", False):
-    for token_id in ids_to_delete:
-        print(f"已删除 ID: {token_id}  名称: {name_map.get(token_id, '未知')}")
-else:
-    print(f"失败: {resp.status_code} - {resp.text}")
+print(f"删除成功，共删除 {result['data']} 个令牌")
+for token_id in token_ids:
+    print(f"已删除 ID：{token_id}  令牌名称：{name_map[token_id]}")
 ```
 
-### 返回示例
+## 删除结果输出示例
 
-```json
-已删除 ID: 93103  名称: 我的新名称
+```text
+删除成功，共删除 2 个令牌
+已删除 ID：12345  令牌名称：project-a
+已删除 ID：12346  令牌名称：project-b
 ```
-
-
-
-
-
-## 使用说明
-
-1. 将 `SYSTEM_TOKEN` 替换为你自己的系统令牌。
-2. 将 `USER_ID` 替换为实际用户 ID。
-3. 先执行查询脚本，确认需要删除的令牌 ID。
-4. 再执行批量删除脚本，删除目标令牌。
-
-## 注意事项
-
-- 批量删除前建议先查询一次，避免误删。
-- `ids_to_delete` 中填写的是令牌 ID，不是令牌名称。
-- 如果返回状态码不是 `200`，说明删除失败，需要进一步检查请求参数或权限。
 
 <p align="center">
   <small>© 2026 DMXAPI 批量删除令牌</small>

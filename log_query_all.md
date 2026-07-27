@@ -8,6 +8,11 @@
 ```
 https://www.dmxapi.cn/api/log/self  
 ```
+
+::: warning 日志接口认证格式
+`Authorization` 直接填写 `SYSTEM_TOKEN`，不带 `Bearer` 前缀；这与令牌管理接口不同。
+:::
+
 ## 代码示例
 ```python
 import requests
@@ -16,36 +21,37 @@ from datetime import datetime
 # ===== 只需修改这里 =====
 
 # 认证信息
-SYSTEM_TOKEN = "YOUR_SYSTEM_TOKEN"  # 系统令牌，获取路径：登录DMXAPI → 工作台 → 个人设置 → 更多选项 → 系统令牌
-USER_ID = "YOUR_USER_ID"  # 用户 ID，获取路径：登录DMXAPI → 工作台 → 个人设置
+SYSTEM_TOKEN = "YOUR_SYSTEM_TOKEN"  # 系统访问令牌：个人设置 → 安全 → 访问令牌
+USER_ID = "YOUR_USER_ID"  # 用户 ID：个人设置 → 个人资料
 
 # 时间范围
 # 可选值："today"（今天）、"yesterday"（昨天）、"week"（最近7天）、"month"（最近30天）、"custom"（自定义）
-QUERY_MODE = "today"
+query_mode = "today"
 
-# 自定义时间范围（仅当 QUERY_MODE = "custom" 时生效）
+# 自定义时间范围（仅当 query_mode = "custom" 时生效）
 # 格式："YYYY-MM-DD" 或 "YYYY-MM-DD HH:MM:SS"
-CUSTOM_START = "2025-01-01 00:00:00"
-CUSTOM_END = "2025-01-01 23:59:59"
+start_time_text = "2025-01-01 00:00:00"
+end_time_text = "2025-01-01 23:59:59"
 
 # 每页显示条数
-PAGE_SIZE = 50
+page_size = 50
 
 # 筛选条件（留空表示不筛选，查询全部）
-TOKEN_NAME = ""      # 按令牌名称筛选，例如 "我的令牌A"
-MODEL_NAME = ""      # 按模型名称筛选，例如 "gpt-5.4"、"claude-sonnet-4-20250514"
-IP_FILTER = ""       # 按 IP 地址筛选，例如 "192.168.1.1"
+name = ""        # 按令牌名称筛选，例如 "我的令牌A"
+model_name = ""  # 按模型名称筛选，例如 "gpt-5.4"、"claude-sonnet-4-20250514"
+ip = ""          # 按 IP 地址筛选，例如 "192.168.1.1"
 
 # ========================
 
 # 以下为自动处理逻辑，无需修改
-URL = "https://www.dmxapi.cn/api/log/self"
+BASE_URL = "https://www.dmxapi.cn"
+QUOTA_PER_CNY = 500_000
 
 
 def get_log_detail(start_timestamp: int, end_timestamp: int, page: int = 1,
-                   page_size: int = PAGE_SIZE, log_type: int = 0,
-                   token_name: str = TOKEN_NAME, token_group: str = "",
-                   model_name: str = MODEL_NAME, ip: str = IP_FILTER,
+                   page_size: int = page_size, log_type: int = 0,
+                   name: str = name, group: str = "",
+                   model_name: str = model_name, ip: str = ip,
                    response_id: str = "", request_id: str = ""):
     """获取消耗明细日志数据"""
     headers = {
@@ -58,8 +64,8 @@ def get_log_detail(start_timestamp: int, end_timestamp: int, page: int = 1,
         "p": page,
         "page_size": page_size,
         "type": log_type,
-        "token_name": token_name,
-        "token_group": token_group,
+        "token_name": name,
+        "token_group": group,
         "model_name": model_name,
         "start_timestamp": start_timestamp,
         "end_timestamp": end_timestamp,
@@ -68,7 +74,7 @@ def get_log_detail(start_timestamp: int, end_timestamp: int, page: int = 1,
         "request_id": request_id
     }
 
-    response = requests.get(URL, headers=headers, params=params)
+    response = requests.get(f"{BASE_URL}/api/log/self", headers=headers, params=params)
 
     if response.status_code != 200:
         print(f"请求失败: {response.status_code}")
@@ -128,10 +134,10 @@ def print_log_detail(data: dict):
 
     items = data.get("items", [])
     page = data.get("page", 1)
-    page_size = data.get("page_size", PAGE_SIZE)
+    returned_page_size = data.get("page_size", page_size)
     total = data.get("total", 0)
 
-    print(f"分页信息: 第 {page} 页 | 每页 {page_size} 条 | 共 {total} 条记录")
+    print(f"分页信息: 第 {page} 页 | 每页 {returned_page_size} 条 | 共 {total} 条记录")
     print("-" * 120)
 
     if not items:
@@ -142,15 +148,16 @@ def print_log_detail(data: dict):
     print("-" * 120)
 
     for idx, item in enumerate(items, 1):
-        model = item.get('model_name', 'N/A')[:23]
-        quota = item.get('quota', 0) / 500000
+        model_name = item.get('model_name', 'N/A')[:23]
+        quota = item.get('quota', 0)
+        consumed_quota_cny = quota / QUOTA_PER_CNY
         prompt_tokens = item.get('prompt_tokens', 0)
         completion_tokens = item.get('completion_tokens', 0)
         use_time = item.get('use_time', 0)
         created_at = item.get('created_at', 0)
-        time_str = datetime.fromtimestamp(created_at).strftime('%Y-%m-%d %H:%M:%S') if created_at else 'N/A'
+        created_time_text = datetime.fromtimestamp(created_at).strftime('%Y-%m-%d %H:%M:%S') if created_at else 'N/A'
 
-        print(f"{idx:>4}  {model:<25} {quota:>10.6f} {prompt_tokens:>10} {completion_tokens:>10} {use_time:>8} {time_str:<20}")
+        print(f"{idx:>4}  {model_name:<25} {consumed_quota_cny:>10.6f} {prompt_tokens:>10} {completion_tokens:>10} {use_time:>8} {created_time_text:<20}")
 
 
 def analyze_logs(items: list) -> dict:
@@ -169,35 +176,42 @@ def analyze_logs(items: list) -> dict:
     total_completion_tokens = 0
 
     for item in items:
-        model = item.get('model_name', 'unknown')
-        quota = item.get('quota', 0) / 500000
+        model_name = item.get('model_name', 'unknown')
+        quota = item.get('quota', 0)
+        consumed_quota_cny = quota / QUOTA_PER_CNY
         prompt_tokens = item.get('prompt_tokens', 0)
         completion_tokens = item.get('completion_tokens', 0)
 
         total_prompt_tokens += prompt_tokens
         total_completion_tokens += completion_tokens
 
-        if model not in model_stats:
-            model_stats[model] = {
-                'total_quota': 0,
+        if model_name not in model_stats:
+            model_stats[model_name] = {
+                'total_consumed_quota_cny': 0,
                 'count': 0,
                 'prompt_tokens': 0,
                 'completion_tokens': 0
             }
 
-        model_stats[model]['total_quota'] += quota
-        model_stats[model]['count'] += 1
-        model_stats[model]['prompt_tokens'] += prompt_tokens
-        model_stats[model]['completion_tokens'] += completion_tokens
+        model_stats[model_name]['total_consumed_quota_cny'] += consumed_quota_cny
+        model_stats[model_name]['count'] += 1
+        model_stats[model_name]['prompt_tokens'] += prompt_tokens
+        model_stats[model_name]['completion_tokens'] += completion_tokens
 
     # 计算总消耗
-    total_consumption = sum(stats['total_quota'] for stats in model_stats.values())
+    total_consumed_quota_cny = sum(
+        stats['total_consumed_quota_cny'] for stats in model_stats.values()
+    )
 
     # 按消耗排序
-    sorted_models = sorted(model_stats.items(), key=lambda x: x[1]['total_quota'], reverse=True)
+    sorted_models = sorted(
+        model_stats.items(),
+        key=lambda x: x[1]['total_consumed_quota_cny'],
+        reverse=True,
+    )
 
     return {
-        'total_consumption': total_consumption,
+        'total_consumed_quota_cny': total_consumed_quota_cny,
         'model_count': len(model_stats),
         'request_count': len(items),
         'total_prompt_tokens': total_prompt_tokens,
@@ -206,15 +220,15 @@ def analyze_logs(items: list) -> dict:
     }
 
 
-def save_analysis_report(analysis: dict, items: list, start_time: datetime, end_time: datetime, filepath: str = "消耗细化报告.txt"):
+def save_analysis_report(analysis: dict, items: list, start_datetime: datetime, end_datetime: datetime, filepath: str = "消耗细化报告.txt"):
     """
     保存分析报告到文件
 
     Args:
         analysis: 分析结果
         items: 原始数据
-        start_time: 开始时间
-        end_time: 结束时间
+        start_datetime: 开始时间
+        end_datetime: 结束时间
         filepath: 保存路径
     """
     import os
@@ -229,12 +243,12 @@ def save_analysis_report(analysis: dict, items: list, start_time: datetime, end_
         f.write("=" * 70 + "\n\n")
 
         f.write(f"报告生成时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
-        f.write(f"查询时间范围: {start_time.strftime('%Y-%m-%d %H:%M')} 至 {end_time.strftime('%Y-%m-%d %H:%M')}\n\n")
+        f.write(f"查询时间范围: {start_datetime.strftime('%Y-%m-%d %H:%M')} 至 {end_datetime.strftime('%Y-%m-%d %H:%M')}\n\n")
 
         f.write("-" * 70 + "\n")
         f.write("【总体统计】\n")
         f.write("-" * 70 + "\n")
-        f.write(f"  总消耗额度: {analysis.get('total_consumption', 0):.4f}\n")
+        f.write(f"  总消耗额度: {analysis.get('total_consumed_quota_cny', 0):.4f}\n")
         f.write(f"  使用模型数: {analysis.get('model_count', 0)}\n")
         f.write(f"  请求总次数: {analysis.get('request_count', 0)}\n")
         f.write(f"  总输入Token: {analysis.get('total_prompt_tokens', 0):,}\n")
@@ -245,14 +259,20 @@ def save_analysis_report(analysis: dict, items: list, start_time: datetime, end_
         f.write("-" * 70 + "\n")
 
         model_stats = analysis.get('model_stats', {})
-        for i, (model, stats) in enumerate(model_stats.items(), 1):
-            percentage = (stats['total_quota'] / analysis['total_consumption'] * 100) if analysis['total_consumption'] > 0 else 0
-            f.write(f"\n  {i}. {model}\n")
-            f.write(f"     消耗额度: {stats['total_quota']:.4f} ({percentage:.1f}%)\n")
+        for i, (model_name, stats) in enumerate(model_stats.items(), 1):
+            percentage = (
+                stats['total_consumed_quota_cny']
+                / analysis['total_consumed_quota_cny']
+                * 100
+                if analysis['total_consumed_quota_cny'] > 0
+                else 0
+            )
+            f.write(f"\n  {i}. {model_name}\n")
+            f.write(f"     消耗额度: {stats['total_consumed_quota_cny']:.4f} ({percentage:.1f}%)\n")
             f.write(f"     请求次数: {stats['count']}\n")
             f.write(f"     输入Token: {stats['prompt_tokens']:,}\n")
             f.write(f"     输出Token: {stats['completion_tokens']:,}\n")
-            f.write(f"     平均每次: {stats['total_quota'] / stats['count']:.6f}\n")
+            f.write(f"     平均每次: {stats['total_consumed_quota_cny'] / stats['count']:.6f}\n")
 
         f.write("\n" + "-" * 70 + "\n")
         f.write("【详细记录】\n")
@@ -261,77 +281,83 @@ def save_analysis_report(analysis: dict, items: list, start_time: datetime, end_
         f.write("-" * 70 + "\n")
 
         for i, item in enumerate(items, 1):
-            model = item.get('model_name', 'N/A')[:23]
-            quota = item.get('quota', 0) / 500000
-            prompt = item.get('prompt_tokens', 0)
-            completion = item.get('completion_tokens', 0)
+            model_name = item.get('model_name', 'N/A')[:23]
+            quota = item.get('quota', 0)
+            consumed_quota_cny = quota / QUOTA_PER_CNY
+            prompt_tokens = item.get('prompt_tokens', 0)
+            completion_tokens = item.get('completion_tokens', 0)
             created_at = item.get('created_at', 0)
-            time_str = datetime.fromtimestamp(created_at).strftime('%Y-%m-%d %H:%M:%S') if created_at else 'N/A'
-            f.write(f"{i:>4}  {model:<25} {quota:>10.6f} {prompt:>8} {completion:>8} {time_str:<20}\n")
+            created_time_text = datetime.fromtimestamp(created_at).strftime('%Y-%m-%d %H:%M:%S') if created_at else 'N/A'
+            f.write(f"{i:>4}  {model_name:<25} {consumed_quota_cny:>10.6f} {prompt_tokens:>8} {completion_tokens:>8} {created_time_text:<20}\n")
 
         f.write("\n" + "=" * 70 + "\n")
 
     print(f"\n分析报告已保存至: {full_path}")
 
 
-def get_time_range(mode: str) -> tuple:
+def get_time_range(query_mode: str) -> tuple:
     """
     根据查询模式获取时间范围
 
     Args:
-        mode: 查询模式 ("today", "yesterday", "week", "month", "custom")
+        query_mode: 查询模式 ("today", "yesterday", "week", "month", "custom")
 
     Returns:
-        tuple: (start_timestamp, end_timestamp, start_time, end_time)
+        tuple: (start_timestamp, end_timestamp, start_datetime, end_datetime)
     """
     from datetime import timedelta
 
     now = datetime.now()
     today = now.replace(hour=0, minute=0, second=0, microsecond=0)
 
-    if mode == "today":
-        start_time = today
-        end_time = today.replace(hour=23, minute=59, second=59)
-    elif mode == "yesterday":
-        start_time = today - timedelta(days=1)
-        end_time = start_time.replace(hour=23, minute=59, second=59)
-    elif mode == "week":
-        start_time = today - timedelta(days=6)
-        end_time = now
-    elif mode == "month":
-        start_time = today - timedelta(days=29)
-        end_time = now
-    elif mode == "custom":
+    if query_mode == "today":
+        start_datetime = today
+        end_datetime = today.replace(hour=23, minute=59, second=59)
+    elif query_mode == "yesterday":
+        start_datetime = today - timedelta(days=1)
+        end_datetime = start_datetime.replace(hour=23, minute=59, second=59)
+    elif query_mode == "week":
+        start_datetime = today - timedelta(days=6)
+        end_datetime = now
+    elif query_mode == "month":
+        start_datetime = today - timedelta(days=29)
+        end_datetime = now
+    elif query_mode == "custom":
         try:
-            if len(CUSTOM_START) == 10:
-                start_time = datetime.strptime(CUSTOM_START, "%Y-%m-%d")
+            if len(start_time_text) == 10:
+                start_datetime = datetime.strptime(start_time_text, "%Y-%m-%d")
             else:
-                start_time = datetime.strptime(CUSTOM_START, "%Y-%m-%d %H:%M:%S")
+                start_datetime = datetime.strptime(start_time_text, "%Y-%m-%d %H:%M:%S")
 
-            if len(CUSTOM_END) == 10:
-                end_time = datetime.strptime(CUSTOM_END, "%Y-%m-%d").replace(hour=23, minute=59, second=59)
+            if len(end_time_text) == 10:
+                end_datetime = datetime.strptime(end_time_text, "%Y-%m-%d").replace(hour=23, minute=59, second=59)
             else:
-                end_time = datetime.strptime(CUSTOM_END, "%Y-%m-%d %H:%M:%S")
+                end_datetime = datetime.strptime(end_time_text, "%Y-%m-%d %H:%M:%S")
         except ValueError as e:
             print(f"时间格式错误: {e}")
             print("请使用格式: YYYY-MM-DD 或 YYYY-MM-DD HH:MM:SS")
             exit(1)
     else:
-        print(f"未知的查询模式: {mode}")
+        print(f"未知的查询模式: {query_mode}")
         print("支持的模式: today, yesterday, week, month, custom")
         exit(1)
 
-    return int(start_time.timestamp()), int(end_time.timestamp()), start_time, end_time
+    return (
+        int(start_datetime.timestamp()),
+        int(end_datetime.timestamp()),
+        start_datetime,
+        end_datetime,
+    )
 
 
 if __name__ == "__main__":
     import time
 
     # 根据配置获取时间范围
-    start_timestamp, end_timestamp, start_time, end_time = get_time_range(QUERY_MODE)
+    start_timestamp, end_timestamp, start_datetime, end_datetime = get_time_range(query_mode)
 
-    print(f"查询模式: {QUERY_MODE}")
-    print(f"查询时间范围: {start_time.strftime('%Y-%m-%d %H:%M:%S')} 至 {end_time.strftime('%Y-%m-%d %H:%M:%S')}")
+    print(f"查询模式: {query_mode}")
+    print(f"查询时间范围: {start_datetime.strftime('%Y-%m-%d %H:%M:%S')} 至 {end_datetime.strftime('%Y-%m-%d %H:%M:%S')}")
     print()
 
     # 获取第一页数据预览
@@ -349,7 +375,7 @@ if __name__ == "__main__":
             analysis = analyze_logs(all_items)
 
             print(f"\n【快速统计】")
-            print(f"  总消耗: {analysis['total_consumption']:.4f} 元")
+            print(f"  总消耗: {analysis['total_consumed_quota_cny']:.4f} 元")
             print(f"  模型数: {analysis['model_count']}")
             print(f"  请求数: {analysis['request_count']}")
             print(f"  总输入Token: {analysis['total_prompt_tokens']:,}")
@@ -358,16 +384,22 @@ if __name__ == "__main__":
             # 各模型消耗排行
             print(f"\n【各模型消耗排行】")
             model_stats = analysis.get('model_stats', {})
-            for i, (model, stats) in enumerate(model_stats.items(), 1):
-                percentage = (stats['total_quota'] / analysis['total_consumption'] * 100) if analysis['total_consumption'] > 0 else 0
-                print(f"  {i}. {model}")
-                print(f"     消耗: {stats['total_quota']:.4f} 元 ({percentage:.1f}%) | 请求: {stats['count']} 次 | 输入: {stats['prompt_tokens']:,} | 输出: {stats['completion_tokens']:,}")
+            for i, (model_name, stats) in enumerate(model_stats.items(), 1):
+                percentage = (
+                    stats['total_consumed_quota_cny']
+                    / analysis['total_consumed_quota_cny']
+                    * 100
+                    if analysis['total_consumed_quota_cny'] > 0
+                    else 0
+                )
+                print(f"  {i}. {model_name}")
+                print(f"     消耗: {stats['total_consumed_quota_cny']:.4f} 元 ({percentage:.1f}%) | 请求: {stats['count']} 次 | 输入: {stats['prompt_tokens']:,} | 输出: {stats['completion_tokens']:,}")
 
             # 保存到文件
-            save_analysis_report(analysis, all_items, start_time, end_time)
+            save_analysis_report(analysis, all_items, start_datetime, end_datetime)
 ```
 ## 返回示例
-```json
+```text
 查询模式: today
 查询时间范围: 2026-07-07 00:00:00 至 2026-07-07 23:59:59
 
