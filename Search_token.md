@@ -1,136 +1,325 @@
 # 搜索令牌
 
-本文档演示如何通过关键词搜索令牌，快速找到目标令牌的详细信息。
+按后台令牌列表中的“名称”或完整 API Key 查找令牌，并显示完整 API Key、状态、额度和时间信息。名称查询搜索的是**令牌名称**，不是模型名称或模型 ID。
 
-## 认证参数说明
+::: danger 本示例会显示完整 API Key
+脚本会在终端直接输出完整 API Key。请只在可信的本地设备运行，不要截图、分享或写入日志。
+:::
 
-| 参数 | 说明 |
-| --- | --- |
-| `SYSTEM_TOKEN` | 系统令牌，获取路径： 登录DMXAPI → 个人设置 → 安全 → 访问令牌 |
-| `USER_ID` | 当前用户 ID，获取路径： 登录DMXAPI → 个人设置 → 个人资料 |
+## 接口
 
-## 接口说明
+第一步，分页读取当前账号的全部令牌：
 
-- 请求方式：`GET`
-- 请求地址：`https://www.dmxapi.cn/api/token/search`
-- 用途：按关键词搜索令牌，返回名称匹配的令牌列表
+- 方法：`GET`
+- 地址：`https://www.dmxapi.cn/api/token/`
+- 查询参数：`page`、`page_size`
 
-### 脚本过滤参数
+第二步，批量读取匹配令牌的完整 Key：
 
-| 参数 | 类型 | 必填 | 说明 |
-| --- | --- | --- | --- |
-| `keyword` | string | 否 | 搜索关键词，**在脚本本地按令牌名称模糊匹配**（并非发送给接口的参数）。留空则返回全部令牌 |
+- 方法：`POST`
+- 地址：`https://www.dmxapi.cn/api/token/batch/keys`
+- JSON 字段：`ids`，每批最多 `100` 个令牌 ID
+- 完整 Key：位于响应的 `data.keys` 中
 
-> 后端 `/api/token/search` 接口本身只接受分页参数（`page`、`page_size`），不支持按名称模糊查询。脚本的做法是先拉取全部令牌，再在本地用 `keyword` 做名称子串过滤。
+两个接口都使用 `SYSTEM_TOKEN` + `USER_ID` 认证。`keyword` 和 `API_KEY` 只用于脚本本地筛选，不会作为管理接口的认证信息。
 
-## 代码示例
+## 两种查询方式
 
-```python
-import requests
+下面两个标签页是相互独立的完整代码，选择其中一个复制运行：
+
+- **按令牌名称查询**：填写 `SYSTEM_TOKEN`、`USER_ID` 和 `keyword`。
+- **按完整 API Key 查询**：填写 `SYSTEM_TOKEN`、`USER_ID` 和 `API_KEY`。
+
+## Python 示例
+
+安装依赖：
+
+```powershell
+pip install requests
+```
+
+选择下面一个标签页，修改代码顶部的三个参数后运行。
+
+::: code-group
+
+```python [按令牌名称查询]
 from datetime import datetime
 
-# ===== 只需修改这里 =====
-SYSTEM_TOKEN = "YOUR_SYSTEM_TOKEN"  # 系统令牌
-USER_ID = "YOUR_USER_ID"  # 当前用户 ID
-keyword = "测试"           # 搜索关键词，按令牌名称模糊匹配，留空则返回全部令牌
-# ========================
+import requests
 
-# 以下为自动处理逻辑，无需修改
+# 只需修改这里
+SYSTEM_TOKEN = "请在这里填写系统访问令牌"  # 管理接口使用的系统访问令牌
+USER_ID = "请在这里填写用户 ID"  # 与系统访问令牌同账号的用户 ID
+keyword = "DMXAPI创建测试"  # 填写完整令牌名称或名称中的一部分
+
+# 下面无需修改
+BASE_URL = "https://www.dmxapi.cn"  # 平台管理接口地址
+page_size = 100  # 每页读取的令牌数量
+QUOTA_PER_CNY = 500_000  # 额度换算比例：500000 原始额度 = 1 CNY
 headers = {
-    "Authorization": f"Bearer {SYSTEM_TOKEN}",
-    "Dmx-Api-User": USER_ID,
-    "Accept": "application/json"
+    "Authorization": f"Bearer {SYSTEM_TOKEN}",  # 使用系统访问令牌认证
+    "Dmx-Api-User": str(USER_ID),  # 指定请求所属的用户 ID
 }
 
-# 后端 keyword 是精确匹配，做不到模糊查询，
-# 因此拉取全部令牌后在本地按名称子串过滤
-all_tokens = []
-page = 1
+keyword = keyword.strip()
+if not keyword:
+    raise ValueError("请填写令牌名称关键词")
+
+
+# 统一取得接口返回的 data。
+def response_data(response):
+    response.raise_for_status()
+    result = response.json()
+    if not result.get("success"):
+        raise RuntimeError(result.get("message") or "接口调用失败")
+    return result["data"]
+
+
+# 把 Unix 秒时间戳转换为本地时间。
+def time_text(value):
+    if value == -1:
+        return "永不过期"
+    if not value:
+        return "无记录"
+    return datetime.fromtimestamp(value).astimezone().strftime("%Y-%m-%d %H:%M:%S %z")
+
+
+# 分页读取当前账号的全部令牌。
+tokens, page = [], 1
 while True:
-    data = requests.get(
-        "https://www.dmxapi.cn/api/token/search",
+    data = response_data(requests.get(
+        f"{BASE_URL}/api/token/",
         headers=headers,
-        params={"page": page, "page_size": 100},
-    ).json()["data"]
-    all_tokens += data["items"]
-    if not data["items"] or len(data["items"]) < data["page_size"]:
+        params={"page": page, "page_size": page_size},
+        timeout=30,  # 单次请求最多等待 30 秒
+    ))
+    items = data["items"]
+    tokens.extend(items)
+    if not items or len(tokens) >= data["total"]:
         break
     page += 1
 
-if keyword:
-    tokens = [t for t in all_tokens if keyword in t["name"]]
-else:
-    tokens = all_tokens
+# 在本地按令牌名称查找，支持名称子串且不区分英文字母大小写。
+tokens = [
+    token for token in tokens
+    if keyword.lower() in str(token.get("name") or "").lower()
+]
 
-def fmt_time(ts):
-    if ts == -1:
-        return "永不过期"
-    if ts == 0:
-        return "未设置"
-    return datetime.fromtimestamp(ts).strftime("%Y-%m-%d %H:%M:%S")
+# 每批最多读取 100 个完整 Key。
+token_ids = [token["id"] for token in tokens]
+full_keys = {}
+for start in range(0, len(token_ids), 100):
+    keys = response_data(requests.post(
+        f"{BASE_URL}/api/token/batch/keys",
+        headers=headers,
+        json={"ids": token_ids[start:start + 100]},
+        timeout=30,  # 单次请求最多等待 30 秒
+    ))["keys"]
+    full_keys.update(keys)
 
-
-if not tokens:
-    print("未找到匹配的令牌")
-else:
-    print(f"共找到 {len(tokens)} 个令牌：")
-    for d in tokens:
-        print("=" * 40)
-        print(f"  令牌名称：{d['name']}")
-        print(f"  所属用户ID：{d['user_id']}")
-        print(f"  状态：{'正常' if d['status'] == 1 else '已禁用'}")
-        print("-" * 40)
-        print(f"  已用额度：{d['used_quota'] / 500000:.4f} 元")
-        remain_quota_str = "无限额度" if d['unlimited_quota'] else f"{d['remain_quota'] / 500000:.4f} 元"
-        print(f"  剩余额度：{remain_quota_str}")
-        print(f"  剩余次数：无限次数")  # 该接口无次数限制概念，固定显示
-        print("-" * 40)
-        print(f"  分组：{d['group']}")
-        print(f"  创建时间：{fmt_time(d['created_time'])}")
-        print(f"  最后访问：{fmt_time(d['accessed_time'])}")
-        print(f"  过期时间：{fmt_time(d['expired_time'])}")
-        print("-" * 40)
-        print(f"  模型限制：{d['model_limits'] if d['model_limits_enabled'] else '未启用'}")
-        print(f"  IP白名单：{d['allow_ips'] or '无'}")
-        print(f"  IP黑名单：无")  # 该接口无 IP 黑名单字段，固定显示
-        print("=" * 40)
+print(f"找到 {len(tokens)} 个令牌")
+for token in tokens:
+    api_key = full_keys[str(token["id"])]  # 完整 Key 响应使用字符串 ID
+    api_key = api_key if api_key.startswith("sk-") else f"sk-{api_key}"
+    remain_quota_text = (
+        "无限额度"
+        if token.get("unlimited_quota")
+        else f"{token.get('remain_quota', 0) / QUOTA_PER_CNY:.4f} CNY"
+    )
+    model_limits_text = (
+        str(token.get("model_limits") or "").strip()
+        if token.get("model_limits_enabled")
+        else ""
+    ) or "无限制"
+    allow_ips_text = "、".join(
+        item.strip()
+        for item in str(token.get("allow_ips") or "").splitlines()
+        if item.strip()
+    ) or "无限制"
+    print(
+        f"令牌名称：{token.get('name', '')}\n"
+        f"所属用户 ID：{USER_ID}\n"
+        f"状态：{'已启用' if token.get('status') == 1 else '已禁用'}\n"
+        f"API 密钥：{api_key}\n"
+        f"剩余额度：{remain_quota_text}\n"
+        f"消耗额度：{token.get('used_quota', 0) / QUOTA_PER_CNY:.4f} CNY\n"
+        f"模型限制：{model_limits_text}\n"
+        f"IP 限制：{allow_ips_text}\n"
+        f"创建时间：{time_text(token.get('created_time'))}\n"
+        f"最后使用时间：{time_text(token.get('accessed_time'))}\n"
+        f"过期时间：{time_text(token.get('expired_time'))}\n"
+        "----------------------------------------"
+    )
 ```
 
-### 返回示例
+```python [按完整 API Key 查询]
+from datetime import datetime
+
+import requests
+
+# 只需修改这里
+SYSTEM_TOKEN = "请在这里填写系统访问令牌"  # 管理接口使用的系统访问令牌
+USER_ID = "请在这里填写用户 ID"  # 与系统访问令牌同账号的用户 ID
+API_KEY = "sk-请在这里填写完整 API Key"  # 必须包含 sk- 前缀，不能使用脱敏 Key
+
+# 下面无需修改
+BASE_URL = "https://www.dmxapi.cn"  # 平台管理接口地址
+page_size = 100  # 每页读取的令牌数量
+QUOTA_PER_CNY = 500_000  # 额度换算比例：500000 原始额度 = 1 CNY
+headers = {
+    "Authorization": f"Bearer {SYSTEM_TOKEN}",  # 使用系统访问令牌认证
+    "Dmx-Api-User": str(USER_ID),  # 指定请求所属的用户 ID
+}
+
+API_KEY = API_KEY.strip()
+if not API_KEY.startswith("sk-") or "*" in API_KEY:
+    raise ValueError("请输入包含 sk- 前缀且未经脱敏的完整 API Key")
+
+
+# 统一取得接口返回的 data。
+def response_data(response):
+    response.raise_for_status()
+    result = response.json()
+    if not result.get("success"):
+        raise RuntimeError(result.get("message") or "接口调用失败")
+    return result["data"]
+
+
+# 把 Unix 秒时间戳转换为本地时间。
+def time_text(value):
+    if value == -1:
+        return "永不过期"
+    if not value:
+        return "无记录"
+    return datetime.fromtimestamp(value).astimezone().strftime("%Y-%m-%d %H:%M:%S %z")
+
+
+# 分页读取当前账号的全部令牌。
+tokens, page = [], 1
+while True:
+    data = response_data(requests.get(
+        f"{BASE_URL}/api/token/",
+        headers=headers,
+        params={"page": page, "page_size": page_size},
+        timeout=30,  # 单次请求最多等待 30 秒
+    ))
+    items = data["items"]
+    tokens.extend(items)
+    if not items or len(tokens) >= data["total"]:
+        break
+    page += 1
+
+# 每批最多读取 100 个完整 Key。
+token_ids = [token["id"] for token in tokens]
+full_keys = {}
+for start in range(0, len(token_ids), 100):
+    keys = response_data(requests.post(
+        f"{BASE_URL}/api/token/batch/keys",
+        headers=headers,
+        json={"ids": token_ids[start:start + 100]},
+        timeout=30,  # 单次请求最多等待 30 秒
+    ))["keys"]
+    full_keys.update(keys)
+
+
+# 完整 Key 缺少 sk- 前缀时自动补上。
+def api_key_of(token):
+    value = full_keys[str(token["id"])]
+    return value if value.startswith("sk-") else f"sk-{value}"
+
+
+# 使用区分大小写的完整值精确匹配。
+tokens = [token for token in tokens if api_key_of(token) == API_KEY]
+
+print(f"找到 {len(tokens)} 个令牌")
+for token in tokens:
+    api_key = api_key_of(token)
+    remain_quota_text = (
+        "无限额度"
+        if token.get("unlimited_quota")
+        else f"{token.get('remain_quota', 0) / QUOTA_PER_CNY:.4f} CNY"
+    )
+    model_limits_text = (
+        str(token.get("model_limits") or "").strip()
+        if token.get("model_limits_enabled")
+        else ""
+    ) or "无限制"
+    allow_ips_text = "、".join(
+        item.strip()
+        for item in str(token.get("allow_ips") or "").splitlines()
+        if item.strip()
+    ) or "无限制"
+    print(
+        f"令牌名称：{token.get('name', '')}\n"
+        f"所属用户 ID：{USER_ID}\n"
+        f"状态：{'已启用' if token.get('status') == 1 else '已禁用'}\n"
+        f"API 密钥：{api_key}\n"
+        f"剩余额度：{remain_quota_text}\n"
+        f"消耗额度：{token.get('used_quota', 0) / QUOTA_PER_CNY:.4f} CNY\n"
+        f"模型限制：{model_limits_text}\n"
+        f"IP 限制：{allow_ips_text}\n"
+        f"创建时间：{time_text(token.get('created_time'))}\n"
+        f"最后使用时间：{time_text(token.get('accessed_time'))}\n"
+        f"过期时间：{time_text(token.get('expired_time'))}\n"
+        "----------------------------------------"
+    )
+```
+
+:::
+
+## 输出示例
 
 ```text
-共找到 1 个令牌：
-========================================
-  令牌名称：测试使用
-  所属用户ID：10000
-  状态：正常
+找到 2 个令牌
+令牌名称：DMXAPI创建测试
+所属用户 ID：12345
+状态：已启用
+API 密钥：<此处会显示第一个完整 API Key>
+剩余额度：无限额度
+消耗额度：0.0000 CNY
+模型限制：无限制
+IP 限制：无限制
+创建时间：2026-07-27 10:00:00 +0800
+最后使用时间：2026-07-27 10:15:00 +0800
+过期时间：永不过期
 ----------------------------------------
-  已用额度：187.8838 元
-  剩余额度：无限额度
-  剩余次数：无限次数
+令牌名称：DMXAPI创建测试
+所属用户 ID：12345
+状态：已禁用
+API 密钥：<此处会显示第二个完整 API Key>
+剩余额度：1.0000 CNY
+消耗额度：1.0000 CNY
+模型限制：gpt-5.5,claude-sonnet-4-20250514
+IP 限制：203.0.113.10、198.51.100.0/24
+创建时间：2026-07-27 10:05:00 +0800
+最后使用时间：无记录
+过期时间：2026-08-26 10:05:00 +0800
 ----------------------------------------
-  分组：default
-  创建时间：2026-06-17 14:55:58
-  最后访问：2026-07-07 10:41:22
-  过期时间：永不过期
-----------------------------------------
-  模型限制：未启用
-  IP白名单：无
-  IP黑名单：无
-========================================
 ```
 
-## 使用说明
+脚本会先显示匹配数量，再完整输出每个令牌的信息；不同令牌之间使用 `----------------------------------------` 分隔。
 
-1. 将 `SYSTEM_TOKEN` 替换为你自己的系统令牌。
-2. 将 `USER_ID` 替换为实际用户 ID。
-3. 修改 `keyword` 为你要搜索的关键词，留空则返回全部令牌。
+## 完整 Key 响应结构
 
-## 注意事项
+```json
+{
+  "data": {
+    "keys": {
+      "12345": "<完整 API Key>"
+    }
+  },
+  "message": "",
+  "success": true
+}
+```
 
-- 搜索按令牌**名称**进行模糊匹配，不支持按 Key 或 ID 搜索。
-- 不传 `keyword` 时返回全部令牌，与「获取所有令牌」接口效果类似。
-- 接口返回的 `data` 是一个对象，包含 `items`（令牌数组）、`page_size`、`total` 等字段，结构与「获取所有令牌」一致；脚本从 `data["items"]` 取出令牌列表后再做本地过滤。
+## 找不到令牌时
+
+1. 确认 `SYSTEM_TOKEN` 和 `USER_ID` 属于同一账号；
+2. 名称查询时，确认填写的是令牌名称，而不是模型名称或模型 ID；
+3. API Key 查询时，必须填写包含 `sk-` 前缀的完整 Key，不能使用带 `*` 的脱敏 Key；
+4. 完整 API Key 区分大小写，必须与令牌实际 Key 完全一致；
+5. 确认令牌未被删除。
 
 <p align="center">
   <small>© 2026 DMXAPI 搜索令牌</small>

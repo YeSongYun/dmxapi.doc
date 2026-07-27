@@ -10,20 +10,19 @@
 import requests
 
 # ----------- 1. 请求参数（自行替换 ↓） -----------
-url = "https://www.dmxapi.cn/v1/models"
-api_token = (
-    "sk-YOUR_API_KEY"  # 替换为你的 API令牌，注意不是系统令牌
-)
+API_KEY = "sk-请在这里填写 DMXAPI 令牌"  # 模型调用令牌，不是系统访问令牌
+USER_ID = "请在这里填写用户 ID"  # 与 API Key 属于同一账号
+BASE_URL = "https://www.dmxapi.cn"  # 平台根地址
 
 headers = {
-    "Authorization": f"{api_token}",
+    "Authorization": API_KEY,
     "Accept": "application/json",
-    "Dmx-Api-User": "YOUR_USER_ID",  # 填上你的用户ID序号，在个人设置页面获取。
+    "Dmx-Api-User": USER_ID,
 }
 
 # ----------- 2. 发送请求 -----------
-resp = requests.get(url, headers=headers, timeout=10)
-print("请求成功，响应内容：", resp.text)
+response = requests.get(f"{BASE_URL}/v1/models", headers=headers, timeout=10)
+print("请求成功，响应内容：", response.text)
 
 
 ```

@@ -1,168 +1,279 @@
 # 更新令牌
 
-本文档演示如何先查询当前账号下已有的令牌，再根据令牌 ID 更新指定令牌的信息。
+根据令牌 ID 更新 API Key 的名称、额度、过期时间、模型/IP 限制和令牌限流配置。
 
-## 认证参数说明
-
-| 参数 | 说明 |
-| --- | --- |
-| `SYSTEM_TOKEN` | 系统令牌，获取路径： 登录DMXAPI → 个人设置 → 安全 → 访问令牌 |
-| `USER_ID` | 当前用户 ID，获取路径： 登录DMXAPI → 个人设置 → 个人资料 |
-
-## 接口说明
-
-### 1. 查询令牌列表
-
-- 请求方式：`GET`
-- 请求地址：`https://www.dmxapi.cn/api/token/`
-- 用途：获取当前账号下全部令牌，找到要更新的令牌 ID
-
-### 2. 查询单个令牌
-
-- 请求方式：`GET`
-- 请求地址：`https://www.dmxapi.cn/api/token/{token_id}`
-- 用途：按令牌 ID 查询单条令牌的当前完整数据（更新前先拉取，用于合并字段避免误覆盖）
-
-### 3. 更新令牌
-
-- 请求方式：`PUT`
-- 请求地址：`https://www.dmxapi.cn/api/token/`
-- Content-Type：`application/json`
-- 用途：根据令牌 ID 更新指定令牌的信息
-
-::: warning 注意
-此接口为**全量更新**，未传的字段会被重置为默认值。代码示例中已自动处理：先查询当前令牌数据，再合并你的修改，避免误覆盖。
+::: danger 更新接口为全量更新
+`PUT /api/token/` 会重置未提交的可写字段。必须先查询当前令牌，再用字段白名单构造完整请求。不要只发送 `id` 和要修改的单个字段。
 :::
 
-## 可修改参数说明
+::: danger 本示例会显示完整 API Key
+更新成功后，脚本会在终端直接输出完整 API Key。请只在可信的本地设备运行，不要截图、分享或写入日志。
+:::
 
-| 参数 | 说明 |
-| --- | --- |
-| `name` | 令牌名称 |
-| `quota` | 额度：填 `"无限"` 或金额（单位：元），例如 `1` 表示 1 元 |
-| `expired_time` | 过期时间：填 `"永不过期"` 或日期，例如 `"2026-12-31 23:59:59"` |
-| `group` | 令牌分组，目前仅支持 `"default"` |
-| `model_limits_enabled` | 是否启用模型限制，`True` 或 `False` |
-| `model_limits` | 允许使用的模型，多个用逗号分隔，例如 `"gpt-4o,claude-sonnet-4-20250514"` |
-| `allow_ips` | IP 白名单，多个用逗号分隔，例如 `"192.168.1.1,10.0.0.1"`，为空表示不限制 |
-| `exclude_ips` | IP 黑名单，多个用逗号分隔，例如 `"172.16.0.1,172.16.0.2"`，为空表示不限制 |
+## 接口
 
-## 一、查询当前有哪些令牌
+以下接口都使用 `SYSTEM_TOKEN` + `USER_ID` 认证。
+
+### 查询令牌列表
+
+- 方法：`GET`
+- 地址：`https://www.dmxapi.cn/api/token/`
+- 查询参数：`page`、`page_size`
+- 用途：先取得要更新的令牌 ID
+
+### 查询单个令牌
+
+- 方法：`GET`
+- 地址：`https://www.dmxapi.cn/api/token/{token_id}`
+
+### 更新令牌
+
+- 方法：`PUT`
+- 地址：`https://www.dmxapi.cn/api/token/`
+- Content-Type：`application/json`
+
+### 读取更新后的完整 Key
+
+- 方法：`POST`
+- 地址：`https://www.dmxapi.cn/api/token/{token_id}/key`
+- 完整 Key：位于响应的 `data.key` 中
+
+## 更新参数
+
+`token_id` 只用于指定要更新的令牌，不属于令牌配置。其余参数与创建令牌完全一致：
+
+| 字段 | 类型 | 发送建议 | 说明 |
+| --- | --- | --- | --- |
+| `name` | string | 本示例显式提供 | 令牌名称；建议非空 |
+| `expired_time` | integer | 本示例填写 `-1` 或正整数天数 | 接口接收 Unix 秒时间戳；本示例会将正整数天数自动转换为时间戳，`-1` 表示永不过期 |
+| `remain_quota` | integer | `unlimited_quota=false` 时填写金额 | 接口接收原始额度；本示例按 CNY 输入并自动换算，填写 `1` 表示 `1 CNY` |
+| `unlimited_quota` | boolean | 建议显式提供 | 是否无限额度；为 `true` 时通常将 `remain_quota` 设为 `0` |
+| `model_limits_enabled` | boolean | 建议显式提供 | 是否启用模型限制 |
+| `model_limits` | string | 建议显式提供 | 允许模型的英文逗号分隔字符串；关闭限制时传空字符串 |
+| `allow_ips` | string | 建议显式提供 | 每行一个 IP/CIDR；空字符串表示不限制 |
+| `group` | string | 固定发送 | 当前只有 `default` 分组，用户无需设置 |
+| `rate_limits_enabled` | boolean | 建议显式提供 | 是否启用单令牌限流 |
+| `rate_limits_time` | integer | 建议显式提供 | 时间窗口，单位为秒 |
+| `rate_limits_count` | integer | 建议显式提供 | 窗口内最大请求次数 |
+| `rate_limits_content` | string | 可选 | 超限提示语；后台 UI 标注留空时使用默认提示，最多 1024 字节 |
+
+脚本会自动保留当前的 `status` 和 `cross_group_retry`，无需额外设置。
+
+## 一、查询要更新的令牌 ID
+
+先列出当前账号下的令牌，从结果中找到要更新的 `token_id`。
+
+安装依赖：
+
+```powershell
+pip install requests
+```
 
 ```python
 import requests
 
-SYSTEM_TOKEN = "YOUR_SYSTEM_TOKEN"  # 系统令牌
-USER_ID = "YOUR_USER_ID"  # 当前用户 ID
+# 只需修改这里
+SYSTEM_TOKEN = "请在这里填写系统访问令牌"  # 管理接口使用的系统访问令牌
+USER_ID = "请在这里填写用户 ID"  # 与系统访问令牌同账号的用户 ID
 
+# 下面无需修改
+BASE_URL = "https://www.dmxapi.cn"  # 平台管理接口地址
 headers = {
-    "Authorization": f"Bearer {SYSTEM_TOKEN}",
-    "Dmx-Api-User": USER_ID,
-    "Accept": "application/json"
+    "Authorization": f"Bearer {SYSTEM_TOKEN}",  # 使用系统访问令牌认证
+    "Dmx-Api-User": str(USER_ID),  # 指定请求所属的用户 ID
 }
 
-resp = requests.get("https://www.dmxapi.cn/api/token/", headers=headers)
-items = resp.json()["data"]["items"]
+response = requests.get(
+    f"{BASE_URL}/api/token/",
+    headers=headers,
+    params={"page": 1, "page_size": 100},
+    timeout=30,
+)
+response.raise_for_status()
+result = response.json()
+if not result.get("success"):
+    raise RuntimeError(result.get("message") or "查询令牌失败")
 
+items = result["data"]["items"]
+print(f"找到 {len(items)} 个令牌")
 for token in items:
-    print(f"ID: {token['id']}  名称: {token['name']}")
+    print(f"ID：{token['id']}  令牌名称：{token.get('name', '')}")
 ```
 
-### 返回示例
+### 查询 ID 输出示例
 
 ```text
-ID: 93103  名称: 测试令牌
-ID: 88129  名称: 测试使用
+找到 2 个令牌
+ID：12345  令牌名称：DMXAPI创建测试
+ID：12346  令牌名称：DMXAPI创建测试-2
 ```
 
-## 二、根据令牌 ID 更新指定令牌
+把目标令牌前面的数字 ID 填入下一步的 `token_id`。
 
-先查询令牌列表，确认要更新的令牌 ID，再将 ID 填入下方脚本，修改你需要变更的参数。
+## 二、根据 ID 更新令牌
+
+填写上一步查到的 `token_id`，再像创建令牌一样修改参数后运行。除 `token_id` 外，参数名称、顺序和含义与创建令牌完全一致。
 
 ```python
-import requests
-import json
+import time
 from datetime import datetime
 
-SYSTEM_TOKEN = "YOUR_SYSTEM_TOKEN"  # 系统令牌
-USER_ID = "YOUR_USER_ID"  # 当前用户 ID
+import requests
 
+# 只需修改这里
+SYSTEM_TOKEN = "请在这里填写系统访问令牌"  # 管理接口使用的系统访问令牌
+USER_ID = "请在这里填写用户 ID"  # 与系统访问令牌同账号的用户 ID
+token_id = 12345  # 填写第一步查询到的令牌 ID
+
+name = "DMXAPI更新测试"  # 令牌名称
+expired_time = -1  # 填 -1 表示永不过期；填正整数表示多少天后过期
+unlimited_quota = True  # True 表示不限制令牌额度
+remain_quota = 1  # 额度金额，单位 CNY；False 时生效
+model_limits_enabled = False  # 是否启用模型限制
+model_limits = ""  # 允许的模型 ID，用英文逗号分隔
+allow_ips = ""  # IP 白名单；换行分隔，留空表示不限制
+rate_limits_enabled = True  # 是否启用单令牌限流
+rate_limits_time = 60  # 限流时间窗口，单位为秒
+rate_limits_count = 60  # 每个窗口允许的最大请求数
+rate_limits_content = ""  # 超出限流时返回的提示语
+
+# 下面无需修改
+QUOTA_PER_CNY = 500_000  # 额度换算比例：500000 原始额度 = 1 CNY
+BASE_URL = "https://www.dmxapi.cn"  # 平台管理接口地址
+expired_time = -1 if expired_time == -1 else int(time.time() + expired_time * 86400)
 headers = {
-    "Authorization": f"Bearer {SYSTEM_TOKEN}",
-    "Dmx-Api-User": USER_ID,
-    "Content-Type": "application/json"
+    "Authorization": f"Bearer {SYSTEM_TOKEN}",  # 使用系统访问令牌认证
+    "Dmx-Api-User": str(USER_ID),  # 指定请求所属的用户 ID
+    "Content-Type": "application/json",  # 请求体使用 JSON 格式
 }
 
-# ===== 只需修改这里 =====
-token_id = 93103                     # 要更新的令牌 ID（从第一步查询结果中获取）
-name = "我的新名称"                   # 令牌名称
-quota = "无限"                       # 额度：填 "无限" 或金额（元），例如 1、0.5
-expired_time = "永不过期"             # 过期时间：填 "永不过期" 或日期，例如 "2026-12-31 23:59:59"
-group = "default"                    # 令牌分组，目前仅支持 default
-model_limits_enabled = False         # 是否启用模型限制，设为 True 时需配合 model_limits 使用
-model_limits = ""                    # 允许使用的模型，多个用逗号分隔，例如 "gpt-4o,claude-sonnet-4-20250514"
-allow_ips = ""                       # IP 白名单，例如 "192.168.1.1,10.0.0.1"，为空表示不限制
-exclude_ips = ""                     # IP 黑名单，例如 "172.16.0.1,172.16.0.2"，为空表示不限制
-# ========================
 
-# 以下为自动处理逻辑，无需修改
+# 统一取得接口返回的 data。
+def response_data(response, error_message):
+    response.raise_for_status()
+    result = response.json()
+    if not result.get("success"):
+        raise RuntimeError(result.get("message") or error_message)
+    return result["data"]
 
-# 先查询当前令牌数据，防止全量更新覆盖未修改的字段
-resp = requests.get(f"https://www.dmxapi.cn/api/token/{token_id}", headers=headers)
-current = resp.json()["data"]
 
-# 合并修改
-current["name"] = name
-current["unlimited_quota"] = (quota == "无限")
-current["remain_quota"] = current["remain_quota"] if quota == "无限" else int(float(quota) * 500000)
-current["expired_time"] = -1 if expired_time == "永不过期" else int(datetime.strptime(expired_time, "%Y-%m-%d %H:%M:%S").timestamp())
-current["group"] = group
-current["model_limits_enabled"] = model_limits_enabled
-current["model_limits"] = model_limits
-current["allow_ips"] = allow_ips
-current["exclude_ips"] = exclude_ips
+# 把 Unix 秒时间戳转换为本地时间。
+def time_text(value):
+    if value == -1:
+        return "永不过期"
+    if not value:
+        return "无记录"
+    return datetime.fromtimestamp(value).astimezone().strftime("%Y-%m-%d %H:%M:%S %z")
 
-# 提交更新
-resp = requests.put("https://www.dmxapi.cn/api/token/", headers=headers, json=current)
-print("状态码:", resp.status_code)
-print("响应:", json.dumps(resp.json(), ensure_ascii=False, indent=2))
-```
 
-### 返回示例
+# 查询更新接口必须保留的当前状态。
+current = response_data(requests.get(
+    f"{BASE_URL}/api/token/{token_id}",
+    headers=headers,
+    timeout=30,
+), "查询令牌失败")
 
-```json
-状态码: 200
-响应: {
-  "data": {
-    "id": 93103,
-    "user_id": 10000,
-    "key": "sk-**********",
-    "status": 1,
-    "name": "我的新名称",
-    "created_time": 1783398902,
-    "accessed_time": 1783398902,
-    "expired_time": -1,
-    "remain_quota": 2500000,
-    "unlimited_quota": true,
-    "model_limits_enabled": false,
-    "model_limits": "",
-    "allow_ips": "",
-    "used_quota": 0,
-    "group": "default",
-    "cross_group_retry": false,
-    "DeletedAt": null
-  },
-  "message": "",
-  "success": true
+payload = {
+    "id": token_id,
+    "name": name,
+    "expired_time": expired_time,
+    "remain_quota": int(remain_quota * QUOTA_PER_CNY),  # 将 CNY 金额换算为接口原始额度
+    "unlimited_quota": unlimited_quota,
+    "model_limits_enabled": model_limits_enabled,
+    "model_limits": model_limits,
+    "allow_ips": allow_ips,
+    "group": "default",  # 当前只有 default 分组，无需用户设置
+    "rate_limits_enabled": rate_limits_enabled,
+    "rate_limits_time": rate_limits_time,
+    "rate_limits_count": rate_limits_count,
+    "rate_limits_content": rate_limits_content,
+    "cross_group_retry": current.get("cross_group_retry", False),
+    "status": current["status"],
 }
+updated = response_data(requests.put(
+    f"{BASE_URL}/api/token/",
+    headers=headers,
+    json=payload,
+    timeout=30,
+), "更新令牌失败")
+
+# 读取完整 Key，以与搜索令牌相同的格式展示更新结果。
+api_key = response_data(requests.post(
+    f"{BASE_URL}/api/token/{token_id}/key",
+    headers=headers,
+    timeout=30,
+), "读取完整 API Key 失败")["key"]
+api_key = api_key if api_key.startswith("sk-") else f"sk-{api_key}"
+
+remain_quota_text = (
+    "无限额度"
+    if updated.get("unlimited_quota")
+    else f"{updated.get('remain_quota', 0) / QUOTA_PER_CNY:.4f} CNY"
+)
+model_limits_text = (
+    str(updated.get("model_limits") or "").strip()
+    if updated.get("model_limits_enabled")
+    else ""
+) or "无限制"
+allow_ips_text = "、".join(
+    item.strip()
+    for item in str(updated.get("allow_ips") or "").splitlines()
+    if item.strip()
+) or "无限制"
+
+print(
+    "更新成功\n"
+    f"令牌名称：{updated.get('name', '')}\n"
+    f"所属用户 ID：{USER_ID}\n"
+    f"状态：{'已启用' if updated.get('status') == 1 else '已禁用'}\n"
+    f"API 密钥：{api_key}\n"
+    f"剩余额度：{remain_quota_text}\n"
+    f"消耗额度：{updated.get('used_quota', 0) / QUOTA_PER_CNY:.4f} CNY\n"
+    f"模型限制：{model_limits_text}\n"
+    f"IP 限制：{allow_ips_text}\n"
+    f"创建时间：{time_text(updated.get('created_time'))}\n"
+    f"最后使用时间：{time_text(updated.get('accessed_time'))}\n"
+    f"过期时间：{time_text(updated.get('expired_time'))}\n"
+    "----------------------------------------"
+)
 ```
 
-## 注意事项
+## 更新结果输出示例
 
-- 先执行第一步查询令牌列表，确认要更新的令牌 ID。
-- 此接口为**全量更新**，第二步代码会自动查询该令牌的当前数据并合并你的修改，避免未修改的字段被重置。
-- 额度填 `"无限"` 会保持无限额度；填数字则为对应人民币金额，例如 `1` 表示 1 元。
-- 更新成功后响应中会返回更新后的完整令牌数据。
+```text
+更新成功
+令牌名称：DMXAPI更新测试
+所属用户 ID：12345
+状态：已启用
+API 密钥：<此处会显示完整 API Key>
+剩余额度：5.0000 CNY
+消耗额度：1.0000 CNY
+模型限制：无限制
+IP 限制：无限制
+创建时间：2026-07-27 10:00:00 +0800
+最后使用时间：2026-07-27 10:15:00 +0800
+过期时间：永不过期
+----------------------------------------
+```
+
+展示字段和顺序与[搜索令牌](/Search_token)保持一致。
+
+## 重要说明
+
+- 更新前必须按 ID 查询当前数据；不要用名称猜测目标。
+- `unlimited_quota=true` 时，建议同时把 `remain_quota` 设为 `0`；切换为 `false` 时，应同时填写需要的 `remain_quota`。
+- `model_limits_enabled=true` 时，`model_limits` 必须包含允许的模型 ID；关闭限制时应把 `model_limits` 设为空字符串。
+- `rate_limits_enabled=true` 时，应同时确认 `rate_limits_time`、`rate_limits_count` 和可选的 `rate_limits_content`。
+- 后台 UI 说明成功和失败请求都会计入所配置的限流窗口次数；本文未通过高频模型请求压测该运行时行为。
+- 后台 UI 标注超限提示语留空时使用默认文案；自定义内容最多 1024 字节。
+- `allow_ips` 使用换行分隔，支持 CIDR。
+- 若只想切换启用状态，请先确认平台是否提供专用的状态更新入口；不要用缺字段的普通 PUT 请求代替。
+
+## 下一步
+
+- [搜索令牌](/Search_token)
+- [令牌余额](/key-yuer)
+- [批量删除令牌](/Batch_token_deletion)
 
 <p align="center">
   <small>© 2026 DMXAPI 更新令牌</small>

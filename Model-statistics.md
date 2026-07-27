@@ -5,7 +5,7 @@
 `https://www.dmxapi.cn/api/data/self`
 
 :::tip 注意
-系统令牌在工作台->个人设置->更多选项->生成系统访问令牌获取  
+系统访问令牌在个人设置 → 安全 → 访问令牌中获取。
 :::
 
 ## 示例代码
@@ -22,8 +22,8 @@ DMXAPI 模型用量查询工具
     1. 将 SYSTEM_TOKEN 替换为你的系统令牌
     2. 将 USER_ID 替换为你的用户 ID（在个人设置中获取）
     3. 设置查询时间范围（可选）:
-       - START_TIME: 开始时间，格式 "2025-12-09 11:00"，留空则默认今天零点
-       - END_TIME: 结束时间，格式 "2025-12-09 15:00"，留空则默认当前时间
+       - start_time_text: 开始时间，格式 "2025-12-09 11:00"，留空则默认今天零点
+       - end_time_text: 结束时间，格式 "2025-12-09 15:00"，留空则默认当前时间
     4. 运行脚本: python test.py
 
 ================================================================================
@@ -36,8 +36,9 @@ from datetime import datetime
 # 配置信息
 # ============================================================================
 
-# API 接口地址
-URL = "https://www.dmxapi.cn/api/data/self"
+# API 平台根地址
+BASE_URL = "https://www.dmxapi.cn"
+QUOTA_PER_CNY = 500_000
 
 # 认证信息 - 请替换为你自己的信息
 SYSTEM_TOKEN = "YOUR_SYSTEM_TOKEN"  # 系统令牌，用于身份验证
@@ -48,31 +49,31 @@ USER_ID = "YOUR_USER_ID"                                  # 用户 ID，在「�
 # ----------------------------------------------------------------------------
 # 格式: "YYYY-MM-DD HH:MM"，例如 "2025-12-09 11:00"
 # 留空 "" 则使用默认值:
-#   - START_TIME 为空: 默认为今天 00:00
-#   - END_TIME 为空: 默认为当前时间
+#   - start_time_text 为空: 默认为今天 00:00
+#   - end_time_text 为空: 默认为当前时间
 # ----------------------------------------------------------------------------
-START_TIME = "2026-05-09 11:00"  # 开始时间，例如: "2025-12-09 11:00"
-END_TIME = "2026-06-08 11:00"    # 结束时间，例如: "2025-12-09 15:00"
+start_time_text = "2026-05-09 11:00"  # 开始时间，例如: "2025-12-09 11:00"
+end_time_text = "2026-06-08 11:00"    # 结束时间，例如: "2025-12-09 15:00"
 
 
 # ============================================================================
 # 核心函数
 # ============================================================================
 
-def parse_time(time_str: str) -> int:
+def parse_time(time_text: str) -> int:
     """
     将时间字符串解析为时间戳
 
     Args:
-        time_str (str): 时间字符串，格式 "YYYY-MM-DD HH:MM"
+        time_text (str): 时间字符串，格式 "YYYY-MM-DD HH:MM"
 
     Returns:
         int: Unix 时间戳（秒级）
     """
-    return int(datetime.strptime(time_str, "%Y-%m-%d %H:%M").timestamp())
+    return int(datetime.strptime(time_text, "%Y-%m-%d %H:%M").timestamp())
 
 
-def get_model_usage(start_timestamp: int, end_timestamp: int, default_time: str = "day"):
+def get_model_usage(start_timestamp: int, end_timestamp: int, time_granularity: str = "day"):
     """
     获取模型消耗分布数据
 
@@ -81,15 +82,15 @@ def get_model_usage(start_timestamp: int, end_timestamp: int, default_time: str 
     Args:
         start_timestamp (int): 查询开始时间戳（秒级）
         end_timestamp (int): 查询结束时间戳（秒级）
-        default_time (str): 时间粒度，可选值:
-                            - "day": 按天统计（默认）
-                            - "hour": 按小时统计
+        time_granularity (str): 时间粒度，可选值:
+                                - "day": 按天统计（默认）
+                                - "hour": 按小时统计
 
     Returns:
         list: 包含模型使用数据的字典列表，每个字典包含:
               - model_name: 模型名称
               - quota: 消耗额度
-              - date: 格式化后的日期时间
+              - created_time_text: 格式化后的日期时间
     """
     # 构建请求头
     headers = {
@@ -102,11 +103,11 @@ def get_model_usage(start_timestamp: int, end_timestamp: int, default_time: str 
     params = {
         "start_timestamp": start_timestamp,
         "end_timestamp": end_timestamp,
-        "default_time": default_time
+        "default_time": time_granularity
     }
 
     # 发送 GET 请求
-    response = requests.get(URL, headers=headers, params=params)
+    response = requests.get(f"{BASE_URL}/api/data/self", headers=headers, params=params)
 
     # 检查 HTTP 状态码
     if response.status_code != 200:
@@ -127,7 +128,7 @@ def get_model_usage(start_timestamp: int, end_timestamp: int, default_time: str 
         data.append({
             "model_name": item.get("model_name"),          # 模型名称
             "quota": item.get("quota"),                    # 消耗额度（原始值）
-            "date": datetime.fromtimestamp(               # 格式化时间戳
+            "created_time_text": datetime.fromtimestamp(  # 格式化时间戳
                 item.get("created_at")
             ).strftime("%Y-%m-%d %H:%M")
         })
@@ -175,7 +176,7 @@ def print_usage(data: list):
     """
     格式化输出模型使用数据
 
-    以表格形式打印查询结果，额度值会除以 500000 转换为美元单位。
+    以表格形式打印查询结果，额度值会按 QUOTA_PER_CNY 转换为 CNY。
 
     Args:
         data (list): get_model_usage() 返回的数据列表
@@ -199,9 +200,9 @@ def print_usage(data: list):
     # 打印数据行（额度除以 500000 转换单位）
     for item in data:
         model_name = pad_to_width(item['model_name'], col_model)
-        quota = f"{item['quota'] / 500000:>12.4f}"
-        date = pad_to_width(item['date'], col_date)
-        print(f"{model_name} {quota} {date}")
+        consumed_quota_cny = f"{item['quota'] / QUOTA_PER_CNY:>12.4f}"
+        created_time_text = pad_to_width(item['created_time_text'], col_date)
+        print(f"{model_name} {consumed_quota_cny} {created_time_text}")
 
 
 # ============================================================================
@@ -215,16 +216,16 @@ if __name__ == "__main__":
     # 设置查询时间范围
     # ------------------------------------------------------------------------
 
-    # 解析开始时间：如果配置了 START_TIME 则使用，否则默认今天零点
-    if START_TIME:
-        start_timestamp = parse_time(START_TIME)
+    # 解析开始时间：如果配置了 start_time_text 则使用，否则默认今天零点
+    if start_time_text:
+        start_timestamp = parse_time(start_time_text)
     else:
-        today = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
-        start_timestamp = int(today.timestamp())
+        start_datetime = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
+        start_timestamp = int(start_datetime.timestamp())
 
-    # 解析结束时间：如果配置了 END_TIME 则使用，否则默认当前时间
-    if END_TIME:
-        end_timestamp = parse_time(END_TIME)
+    # 解析结束时间：如果配置了 end_time_text 则使用，否则默认当前时间
+    if end_time_text:
+        end_timestamp = parse_time(end_time_text)
     else:
         end_timestamp = int(time.time())
 
@@ -243,7 +244,7 @@ if __name__ == "__main__":
 
 ```
 ## 返回示例
-```json
+```text
 查询时间范围: 2026-05-09 11:00:00 至 2026-06-08 11:00:00
 
 模型名称                                         额度 日期              
