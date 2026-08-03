@@ -836,7 +836,8 @@ export default defineConfig({
                 text: 'MiniMax-music',
                 collapsed: true,
                 items: [
-                  { text: 'music-2.0', link: '/music-2.0' },
+                  { text: 'music-3.0', link: '/music-3.0-text-to-music' },
+                  { text: 'music-2.6', link: '/music-2.6-music-generation' },
                   {
                     text: 'music-2.5',
                     collapsed: true,
@@ -846,7 +847,7 @@ export default defineConfig({
 
                     ],
                   },
-                  { text: 'music-2.6', link: '/music-2.6-music-generation' },
+                  { text: 'music-2.0', link: '/music-2.0' },
                   {
                     text: '歌词生成',
                     collapsed: true,
