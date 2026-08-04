@@ -581,6 +581,15 @@ export default defineConfig({
                       { text: '图生视频', link: '/MiniMax-Hailuo-2.3-Fast-i2v' },
                     ],
                   },
+                  {
+                    text: 'MiniMax-H3',
+                    collapsed: true,
+                    items: [
+                      { text: '文生视频', link: '/MiniMax-H3-text-to-video' },
+                      { text: '图生视频', link: '/MiniMax-H3-image-to-video' },
+                      { text: '多模态参考生视频', link: '/MiniMax-H3-multimodal-reference-to-video' },
+                    ],
+                  },
                 ],
               },
 
