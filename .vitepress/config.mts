@@ -586,7 +586,7 @@ export default defineConfig({
                     collapsed: true,
                     items: [
                       {
-                        text: 'MiniMax-H3',
+                        text: '视频生成',
                         collapsed: true,
                         items: [
                           { text: '文生视频', link: '/MiniMax-H3-text-to-video' },
@@ -595,7 +595,7 @@ export default defineConfig({
                         ],
                       },
                       {
-                        text: 'MiniMax-H3-video_regeneration',
+                        text: '视频再生成',
                         collapsed: true,
                         items: [
                           { text: '文生视频', link: '/MiniMax-H3-video_regeneration-text-to-video' },

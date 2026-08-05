@@ -74,6 +74,9 @@ payload = {
     # 多模态参考生视频场景的再生成:
     #   text + 原参考视频(role="reference_video") + 原参考音频(role="reference_audio")
     #        + base_video
+    # 下方示例为"参考视频 + 参考音频"组合。若生成 768P 源视频时还用了参考图片，
+    # 需照原样补上对应的 image_url 项(role="reference_image"，≤ 9 张)；
+    # 反之当时未用到的参考类型也不要额外添加——input 需与生成时完全一致
     # base_video 必须符合以下 MiniMax-H3 768P 输出规格
     # (本接口不支持任意视频的通用再生成):
     #   音轨:            需包含音轨，不支持无音轨视频
@@ -255,7 +258,7 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 ```json
 {
   "task_id": "427475822334429",
-  "输入视频秒数": 10.499999999,
+  "输出视频秒数": 10.499999999,
   "usage": {
     "total_tokens": 31500,
     "input_tokens": 0,
@@ -271,6 +274,8 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 ```
 
 返回中的 `task_id` 即任务 ID，用于后续查询任务状态与结果。**该 ID 仅在本次提交的响应中返回一次，请务必妥善保存**，丢失后无法找回本次任务。
+
+`输出视频秒数` 为本次再生成的视频时长（秒），由源视频总帧数按 24 fps 换算得出，因此通常为小数（如 252 帧 ÷ 24 = 10.5）。该值是本次任务的计费依据，与 `usage.output_tokens` 对应；查询接口返回的 `duration` 是取整后的秒数，两者口径不同，解析时请勿混用。
 
 ## 获取生成视频 示例代码
 
