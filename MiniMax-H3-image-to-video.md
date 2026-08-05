@@ -1,6 +1,6 @@
 # MiniMax-H3 图生视频 API 使用文档
 
-MiniMax-H3 视频生成 V2 接口，通过多模态 `content` 数组输入（文本 / 图片 / 视频 / 音频）驱动，2K 直出。图生视频场景在必填文本提示词之外附加图片项，通过 `role` 指定用途：`first_frame` 首帧、`last_frame` 尾帧，或两者成对构成首尾帧生成；首帧与尾帧各限 1 张，图片支持 JPG、JPEG、PNG、WEBP、HEIC、HEIF 六种格式，单文件 ≤ 30 MB、宽高 [256, 5760] px、长宽比 [0.4, 2.5]。图生视频场景下宽高比由输入图片决定，`ratio` 恒为 `adaptive`。接口以异步任务方式工作：提交后返回任务 ID，再用查询模型换取最终视频地址。
+MiniMax-H3 视频生成 V2 接口，通过多模态 `input` 数组输入（文本 / 图片 / 视频 / 音频）驱动，2K 直出。图生视频场景在必填文本提示词之外附加图片项，通过 `role` 指定用途：`first_frame` 首帧、`last_frame` 尾帧，或两者成对构成首尾帧生成；首帧与尾帧各限 1 张，图片支持 JPG、JPEG、PNG、WEBP、HEIC、HEIF 六种格式，单文件 ≤ 30 MB、宽高 [256, 5760] px、长宽比 [0.4, 2.5]。图生视频场景下宽高比由输入图片决定，`ratio` 恒为 `adaptive`。接口以异步任务方式工作：提交后返回任务 ID，再用查询模型换取最终视频地址。
 
 ## 接口地址
 
@@ -73,7 +73,7 @@ payload = {
     # 不能再出现 reference_image / reference_video / reference_audio
     # 图片限制: 格式 JPG、JPEG、PNG、WEBP、HEIC、HEIF；单文件 ≤ 30 MB；
     #   宽高范围 [256, 5760] px；长宽比(宽/高) [0.4, 2.5]；
-    #   数量 首帧 ≤ 1、尾帧 ≤ 1、参考图 ≤ 9
+    #   数量 首帧 ≤ 1、尾帧 ≤ 1
     "input": [
         {
             # 【type】(enum<string>, 必填) 输入内容的类型
@@ -135,6 +135,8 @@ payload = {
 _MIME_MAP = {
     ".bmp": "image/bmp",
     ".gif": "image/gif",
+    ".heic": "image/heic",
+    ".heif": "image/heif",
     ".jpeg": "image/jpeg",
     ".jpg": "image/jpeg",
     ".png": "image/png",
@@ -184,7 +186,7 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 
 ```json
 {
-  "task_id": "427083908907468",
+  "task_id": "427025706299794",
   "usage": {
     "total_tokens": 40000,
     "input_tokens": 0,
@@ -268,10 +270,10 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
     "resolution": "2K",
     "duration": 5,
     "usage": {
-      "total_seconds": 11,
-      "input_seconds": 6,
+      "total_seconds": 5,
+      "input_seconds": 0,
       "output_seconds": 5,
-      "input_image_count": 0
+      "input_image_count": 1
     },
     "ratio": "adaptive",
     "task_type": "generation"

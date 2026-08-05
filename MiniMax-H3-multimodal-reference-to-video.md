@@ -1,6 +1,6 @@
 # MiniMax-H3 多模态参考生视频 API 使用文档
 
-MiniMax-H3 视频生成 V2 接口，通过多模态 `content` 数组输入（文本 / 图片 / 视频 / 音频）驱动，2K 直出。多模态参考生视频场景在必填文本提示词之外，可同时附加参考图片（`reference_image`，≤ 9 张）、参考视频（`reference_video`，≤ 3 个、单段 [2, 15] 秒且总时长 ≤ 15 秒）与参考音频（`reference_audio`，≤ 3 个、WAV/MP3、单文件 ≤ 15 MB），让模型综合形象、动态与音色进行生成。该场景与图生视频的首尾帧模式互斥，`ratio` 可选、默认 `adaptive`。接口以异步任务方式工作：提交后返回任务 ID，再用查询模型换取最终视频地址。
+MiniMax-H3 视频生成 V2 接口，通过多模态 `input` 数组输入（文本 / 图片 / 视频 / 音频）驱动，2K 直出。多模态参考生视频场景在必填文本提示词之外，可同时附加参考图片（`reference_image`，≤ 9 张）、参考视频（`reference_video`，≤ 3 个、单段 [2, 15] 秒且总时长 ≤ 15 秒）与参考音频（`reference_audio`，≤ 3 个、WAV/MP3、单文件 ≤ 15 MB），让模型综合形象、动态与音色进行生成。该场景与图生视频的首尾帧模式互斥，`ratio` 可选、默认 `adaptive`。接口以异步任务方式工作：提交后返回任务 ID，再用查询模型换取最终视频地址。
 
 ## 接口地址
 
@@ -248,7 +248,7 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 
 ```json
 {
-  "task_id": "427122264158653",
+  "task_id": "427060638503352",
   "usage": {
     "total_tokens": 88334,
     "input_tokens": 0,
@@ -335,7 +335,7 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
       "total_seconds": 11,
       "input_seconds": 6,
       "output_seconds": 5,
-      "input_image_count": 0
+      "input_image_count": 1
     },
     "ratio": "adaptive",
     "task_type": "generation"
