@@ -585,9 +585,24 @@ export default defineConfig({
                     text: 'MiniMax-H3',
                     collapsed: true,
                     items: [
-                      { text: '文生视频', link: '/MiniMax-H3-text-to-video' },
-                      { text: '图生视频', link: '/MiniMax-H3-image-to-video' },
-                      { text: '多模态参考生视频', link: '/MiniMax-H3-multimodal-reference-to-video' },
+                      {
+                        text: 'MiniMax-H3',
+                        collapsed: true,
+                        items: [
+                          { text: '文生视频', link: '/MiniMax-H3-text-to-video' },
+                          { text: '图生视频', link: '/MiniMax-H3-image-to-video' },
+                          { text: '多模态参考生视频', link: '/MiniMax-H3-multimodal-reference-to-video' },
+                        ],
+                      },
+                      {
+                        text: 'MiniMax-H3-video_regeneration',
+                        collapsed: true,
+                        items: [
+                          { text: '文生视频', link: '/MiniMax-H3-video_regeneration-text-to-video' },
+                          { text: '图生视频', link: '/MiniMax-H3-video_regeneration-image-to-video' },
+                          { text: '多模态参考生视频', link: '/MiniMax-H3-video_regeneration-multimodal-reference-to-video' },
+                        ],
+                      },
                     ],
                   },
                 ],
