@@ -598,9 +598,9 @@ export default defineConfig({
                         text: '视频再生成',
                         collapsed: true,
                         items: [
-                          { text: '文生视频', link: '/MiniMax-H3-video_regeneration-text-to-video' },
-                          { text: '图生视频', link: '/MiniMax-H3-video_regeneration-image-to-video' },
-                          { text: '多模态参考生视频', link: '/MiniMax-H3-video_regeneration-multimodal-reference-to-video' },
+                          { text: '文生视频', link: '/MiniMax-H3-video-regeneration-text-to-video' },
+                          { text: '图生视频', link: '/MiniMax-H3-video-regeneration-image-to-video' },
+                          { text: '多模态参考生视频', link: '/MiniMax-H3-video-regeneration-multimodal-reference-to-video' },
                         ],
                       },
                     ],

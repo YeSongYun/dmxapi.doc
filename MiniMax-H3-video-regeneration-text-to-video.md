@@ -1,6 +1,6 @@
-# MiniMax-H3 视频再生成-多模态参考生视频 API 使用文档
+# MiniMax-H3 视频再生成-文生视频 API 使用文档
 
-MiniMax-H3 视频再生成接口，把符合 MiniMax-H3 768P 输出规格的源视频再生成为 2K 视频。多模态参考生视频场景的再生成需在 `input` 数组中原样提交生成 768P 源视频时实际送入模型的全部输入（最终 prompt、参考视频 `reference_video`、参考音频 `reference_audio` 等，单个 `text` 最多 40000 个字符），并附加一个 `role` 为 `base_video` 的源视频项，该项必须且只能有一个；参考图片、视频和音频都必须与生成时一致，任何输入不一致都可能无法达到预期的再生成效果。源视频须包含音轨、帧率 24 fps、宽高均能被 32 整除、面积 ≤ 768 × 1344（1,032,192 像素）、总帧数 107~362 帧（每档递增 17 帧，约 4~15 秒）；本接口不支持任意视频的通用处理。目标分辨率 `resolution` 当前仅支持 `2K`。接口以异步任务方式工作：提交后返回任务 ID，再用查询模型换取最终视频地址。
+MiniMax-H3 视频再生成接口，把符合 MiniMax-H3 768P 输出规格的源视频再生成为 2K 视频。文生视频场景的再生成需在 `input` 数组中原样提交生成 768P 源视频时实际送入模型的全部输入（此处即那一条最终 prompt，单个 `text` 最多 40000 个字符），并附加一个 `role` 为 `base_video` 的源视频项，该项必须且只能有一个。源视频须包含音轨、帧率 24 fps、宽高均能被 32 整除、面积 ≤ 768 × 1344（1,032,192 像素）、总帧数 107~362 帧（每档递增 17 帧，约 4~15 秒）；本接口不支持任意视频的通用处理。目标分辨率 `resolution` 当前仅支持 `2K`。接口以异步任务方式工作：提交后返回任务 ID，再用查询模型换取最终视频地址。
 
 ## 接口地址
 
@@ -23,7 +23,7 @@ MiniMax-H3 视频再生成接口，把符合 MiniMax-H3 768P 输出规格的源�
 
 - `MiniMax-H3-video_regeneration`
 
-## 视频再生成-多模态参考生视频示例代码
+## 视频再生成-文生视频示例代码
 
 ```python
 import base64
@@ -71,12 +71,7 @@ payload = {
     #      任何输入不一致，都可能无法达到预期的再生成效果
     #   2. 一个 768P 源视频项，type="video_url" 且 role="base_video"；
     #      该项必须且只能有一个
-    # 多模态参考生视频场景的再生成:
-    #   text + 原参考视频(role="reference_video") + 原参考音频(role="reference_audio")
-    #        + base_video
-    # 下方示例为"参考视频 + 参考音频"组合。若生成 768P 源视频时还用了参考图片，
-    # 需照原样补上对应的 image_url 项(role="reference_image"，≤ 9 张)；
-    # 反之当时未用到的参考类型也不要额外添加——input 需与生成时完全一致
+    # 文生视频场景的再生成: 一个 text 元素 + 一个 base_video 元素
     # base_video 必须符合以下 MiniMax-H3 768P 输出规格
     # (本接口不支持任意视频的通用再生成):
     #   音轨:            需包含音轨，不支持无音轨视频
@@ -85,14 +80,6 @@ payload = {
     #   面积(宽 × 高):   ≤ 768 × 1344(1,032,192 像素)
     #   总帧数:          107-362 帧，每档递增 17 帧(约 4-15 秒)
     # 输入媒体限制: 请求体总大小 ≤ 64 MB，大文件请用公网 URL，勿用 Base64
-    #   参考图片 / 视频 / 音频的格式、单文件大小等限制同创建视频生成任务接口:
-    #   图片: 格式 JPG、JPEG、PNG、WEBP、HEIC、HEIF；单文件 ≤ 30 MB；
-    #         宽高范围 [256, 5760] px；长宽比(宽/高) [0.4, 2.5]；参考图 ≤ 9 张
-    #   视频: 容器 MP4(.mp4)、MOV(.mov)；编码 视频 H.264/AVC、H.265/HEVC，音频 AAC、MP3；
-    #         单文件 ≤ 50 MB；个数 ≤ 3；单段时长 [2, 15] s 且总时长 ≤ 15 s；
-    #         宽高范围 [256, 5760] px；长宽比(宽/高) [0.4, 2.5]；帧率 [23.976, 60]
-    #   音频: 格式 WAV、MP3；单文件 ≤ 15 MB；个数 ≤ 3；
-    #         单段时长 [2, 15] s 且总时长 ≤ 15 s
     "input": [
         {
             # 【type】(enum<string>, 必填) 输入内容的类型
@@ -103,14 +90,13 @@ payload = {
             # 必须使用生成 768P 源视频时实际送入模型的最终 prompt，
             # 不可使用 H3-Context-IR 处理前的原始 prompt
             # 按字符数计算长度，单个 text 最多 40000 个字符
-            "text": "角色说话：Follow the wind, live free. Leave worries behind, enjoy the moment，音色参考音频1"
+            "text": "史诗级太空歌剧院线预告：女舰长独自站在巨大观景窗前，最后一支舰队正在集结并跃迁离去，强光爆闪、舰桥震动，她被留在原地。"
         },
         {
             # 【type】(enum<string>, 必填) 输入内容的类型，此处为视频
             "type": "video_url",
 
             # 【video_url】(object) 当 type="video_url" 时的视频对象
-            # 此处为参考视频，仅多模态参考场景
             "video_url": {
                 # 【video_url.url】(string, 必填) 视频地址，支持:
                 #   - 公网 URL
@@ -118,42 +104,6 @@ payload = {
                 #   - data:video/mp4;base64,<Base64> data URI
                 # 注意请求体总大小 ≤ 64 MB、Base64 会放大约 33%，
                 # 大视频请用公网 URL 或 mm_file://
-                "url": "https://your-cdn.example.com/h3-r2va-reference-video.mp4"
-            },
-
-            # 【role】(enum<string>, 条件必填) 此处标注为参考视频
-            # 必须与生成 768P 源视频时使用的参考视频一致
-            "role": "reference_video"
-        },
-        {
-            # 【type】(enum<string>, 必填) 输入内容的类型，此处为音频
-            "type": "audio_url",
-
-            # 【audio_url】(object) 当 type="audio_url" 时的音频对象
-            # 此处为参考音频，仅多模态参考场景
-            "audio_url": {
-                # 【audio_url.url】(string, 必填) 音频地址，支持:
-                #   - 公网 URL
-                #   - mm_file://{file_id}(引用平台已有文件的 file_id)
-                #   - data:audio/<格式>;base64,<Base64> data URI(<格式> 小写)
-                "url": "https://your-cdn.example.com/h3-r2va-reference-audio.mp3"
-            },
-
-            # 【role】(enum<string>, 条件必填) 此处标注为参考音频
-            # 参考音频不可单独输入，且必须与生成 768P 源视频时使用的参考音频一致
-            "role": "reference_audio"
-        },
-        {
-            # 【type】(enum<string>, 必填) 输入内容的类型，此处为视频
-            "type": "video_url",
-
-            # 【video_url】(object) 当 type="video_url" 时的视频对象
-            # 此处为 768P 源视频
-            "video_url": {
-                # 【video_url.url】(string, 必填) 视频地址，支持:
-                #   - 公网 URL
-                #   - mm_file://{file_id}(引用平台已有文件的 file_id)
-                #   - data:video/mp4;base64,<Base64> data URI
                 "url": "https://your-cdn.example.com/h3-768p-source-video.mp4"
             },
 
@@ -161,9 +111,6 @@ payload = {
             # 可用值:
             #   - "base_video"      视频再生成源视频(仅视频再生成接口使用)；
             #                       源视频项必须显式设置该 role，input 中必须且只能有 1 个
-            #   - "reference_image" 参考图片(多模态参考生视频)
-            #   - "reference_video" 参考视频(多模态参考生视频)
-            #   - "reference_audio" 参考音频(多模态参考生视频，不可单独输入)
             "role": "base_video"
         }
     ],
@@ -183,26 +130,12 @@ payload = {
 # - 公网 URL (http/https): 原样传入
 # - 本地文件路径: 自动读取并转为 data:{格式};base64,{base64_data}
 # 注意: data URI 里的 {格式} 取文件扩展名，不是标准 MIME 类型。
-#   例如 .mp3 要写 audio/mp3(而非标准 MIME 的 audio/mpeg)、
-#   .m4a 写 audio/m4a(而非 audio/mp4)、.mov 写 video/mov(而非 video/quicktime)，
+#   例如 .mov 要写 video/mov(而非标准 MIME 的 video/quicktime)、
+#   .avi 写 video/avi(而非 video/x-msvideo)、
+#   .mkv 写 video/mkv(而非 video/x-matroska)，
 #   否则服务端报 "MiniMax-H3 media data URI is invalid"。
-#   图片这几种扩展名与标准 MIME 恰好一致，.jpg/.jpeg 统一写 image/jpeg。
 
 _MIME_MAP = {
-    ".bmp": "image/bmp",
-    ".gif": "image/gif",
-    ".heic": "image/heic",
-    ".heif": "image/heif",
-    ".jpeg": "image/jpeg",
-    ".jpg": "image/jpeg",
-    ".png": "image/png",
-    ".webp": "image/webp",
-    ".aac": "audio/aac",
-    ".flac": "audio/flac",
-    ".m4a": "audio/m4a",
-    ".mp3": "audio/mp3",
-    ".ogg": "audio/ogg",
-    ".wav": "audio/wav",
     ".avi": "video/avi",
     ".mkv": "video/mkv",
     ".mov": "video/mov",
@@ -232,7 +165,7 @@ def resolve_media(path_or_url: str) -> str:
     raise ValueError(f"无法识别的输入（不是公网 URL，本地文件也不存在）: {path_or_url}")
 
 
-# 遍历 input，把图片/视频/音频里的本地路径统一转成 data URI
+# 遍历 input，把视频里的本地路径统一转成 data URI
 # （按 type 取对象，不写死下标，增删输入项时不会错位）
 for _item in payload["input"]:
     _key = _item.get("type")
@@ -257,15 +190,15 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 
 ```json
 {
-  "task_id": "427475822334429",
-  "输出视频秒数": 10.499999999,
+  "task_id": "427453262668145",
+  "输出视频秒数": 4.458333333,
   "usage": {
-    "total_tokens": 31500,
+    "total_tokens": 13375,
     "input_tokens": 0,
     "input_tokens_details": {
       "cached_tokens": 0
     },
-    "output_tokens": 31500,
+    "output_tokens": 13375,
     "output_tokens_details": {
       "reasoning_tokens": 0
     }
@@ -274,8 +207,6 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 ```
 
 返回中的 `task_id` 即任务 ID，用于后续查询任务状态与结果。**该 ID 仅在本次提交的响应中返回一次，请务必妥善保存**，丢失后无法找回本次任务。
-
-`输出视频秒数` 为本次再生成的视频时长（秒），由源视频总帧数按 24 fps 换算得出，因此通常为小数（如 252 帧 ÷ 24 = 10.5）。该值是本次任务的计费依据，与 `usage.output_tokens` 对应；查询接口返回的 `duration` 是取整后的秒数，两者口径不同，解析时请勿混用。
 
 ## 获取生成视频 示例代码
 
@@ -310,7 +241,7 @@ headers = {
 payload = {
 
     "model": "MiniMax-H3-get",
-    "input": "427475822334429"
+    "input": "427453262668145"
 
 }
 
@@ -333,11 +264,11 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 ```json
 {
   "task": {
-    "id": "427475822334429",
+    "id": "427453262668145",
     "model": "MiniMax-H3",
     "status": "succeeded",
-    "created_at": 1785823325,
-    "updated_at": 1785823440,
+    "created_at": 1785823202,
+    "updated_at": 1785823286,
     "content": {
       "url": "https://your-cdn.example.com/h3-regenerated-2k-output.mp4"
     },
@@ -370,5 +301,5 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 任务状态 `status` 取值：`queued`（排队中）、`running`（运行中）、`succeeded`（成功）、`failed`（失败）、`cancelled`（已取消）。状态为 `succeeded` 时，`task.content.url` 即为生成视频的下载地址。再生成任务的 `task_type` 为 `regeneration`。
 
 <p align="center">
-  <small>© 2026 DMXAPI MiniMax-H3 视频再生成-多模态参考生视频</small>
+  <small>© 2026 DMXAPI MiniMax-H3 视频再生成-文生视频</small>
 </p>

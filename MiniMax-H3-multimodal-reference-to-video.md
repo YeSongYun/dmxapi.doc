@@ -249,13 +249,14 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 ```json
 {
   "task_id": "427060638503352",
+  "输入视频秒数": 6.041666666,
   "usage": {
-    "total_tokens": 88334,
+    "total_tokens": 50209,
     "input_tokens": 0,
     "input_tokens_details": {
       "cached_tokens": 0
     },
-    "output_tokens": 88334,
+    "output_tokens": 50209,
     "output_tokens_details": {
       "reasoning_tokens": 0
     }
