@@ -1,13 +1,13 @@
 # 获取所有令牌
 
-一次获取当前账号下最多 999 个 API Key 令牌，包括状态、额度、时间、模型/IP 限制和令牌限流配置。
+获取当前账号下API Key 令牌信息，包括状态、额度、时间、模型/IP 限制和令牌限流配置。
 
 ## 接口
 
 - 方法：`GET`
 - 地址：`https://www.dmxapi.cn/api/token/`
 - 认证：`SYSTEM_TOKEN` + `USER_ID`，详见 [系统令牌与用户 ID](security_token_ID.md)
-- 参数：固定使用 `page=1`、`page_size=999`
+- 参数：`page`（页码）、`page_size`（每页条数，最大 100）
 
 列表接口返回脱敏后的 `key`，本页直接使用该值展示。
 
@@ -33,11 +33,14 @@ pip install requests
 ```python
 from datetime import datetime
 import requests
+import time
 
 # 只需修改这里
 SYSTEM_TOKEN = "请在这里填写系统访问令牌"  # 管理接口使用的系统访问令牌
 USER_ID = "请在这里填写用户 ID"  # 与系统访问令牌同账号的用户 ID
-MASK_KEYS = True  # True 显示脱敏 Key；False 显示完整 Key
+MASK_KEYS = False  # True 显示脱敏 Key；False 显示完整 Key
+PAGE = 1  # 要查看的页码
+PAGE_SIZE =10   # 每页显示条数
 
 # 下面无需修改
 BASE_URL = "https://www.dmxapi.cn"
@@ -53,18 +56,25 @@ def time_text(value):
         if value else "无记录"
     )
 
-tokens = requests.get(
+all_tokens = requests.get(
     f"{BASE_URL}/api/token/",
     headers=headers,
-    params={"page": 1, "page_size": 999},
+    params={"page": 1, "page_size": -1},
     timeout=30,
 ).json()["data"]["items"]
 
-print(f"共获取 {len(tokens)} 个令牌")
-for token in tokens:
+start = (PAGE - 1) * PAGE_SIZE
+end = start + PAGE_SIZE
+tokens = all_tokens[start:end] if start < len(all_tokens) else []
+
+print(f"共获取 {len(all_tokens)} 个令牌，显示第 {PAGE} 页（共 {PAGE_SIZE} 条）")
+for i, token in enumerate(tokens):
     token_id_text = str(token["id"])
     api_key = token["key"]
     if not MASK_KEYS:
+        # 限流控制：每 10 秒最多 10 次，这里每获取一次等 1 秒
+        if i > 0:
+            time.sleep(1)
         api_key = requests.post(
             f"{BASE_URL}/api/token/{token['id']}/key", headers=headers, timeout=30
         ).json()["data"]["key"]
@@ -104,24 +114,27 @@ for token in tokens:
 ## 输出示例
 
 ```text
-共获取 1 个令牌
-令牌 ID：12345
-令牌名称：DMXAPI创建测试
+共获取 102 个令牌，显示第 102 页（共 1 条）
+令牌 ID：94280
+令牌名称：DMXAPI
 所属用户 ID：12345
 状态：已启用
-API 密钥：sk-abcd**********wxyz
-剩余额度：1.0000 CNY
-消耗额度：0.1250 CNY
-模型限制：gpt-5.5,claude-sonnet-4-20250514
-IP 限制：203.0.113.10、198.51.100.0/24
-令牌限流：60 秒内最多 60 次
-创建时间：2026-07-24 10:00:00 +0800
-最后使用时间：2026-07-24 10:05:00 +0800
-过期时间：2026-08-24 10:00:00 +0800
+API 密钥：sk-4Exb**********iVaU
+剩余额度：无限额度
+消耗额度：0.2658 CNY
+模型限制：无限制
+IP 限制：无限制
+令牌限流：无限制
+创建时间：2026-07-13 19:03:26 +0800
+最后使用时间：2026-07-18 16:19:20 +0800
+过期时间：永不过期
+----------------------------------------
 ----------------------------------------
 ```
 
-`MASK_KEYS=True` 时显示列表接口返回的脱敏 Key；改为 `False` 后，只有“API 密钥”一行会显示完整值，并且每个令牌会增加一次单令牌 Key 请求。
+`MASK_KEYS=True` 时显示列表接口返回的脱敏 Key；改为 `False` 后，只有”API 密钥”一行会显示完整值，并且每个令牌会增加一次单令牌 Key 请求（每两个请求间隔 1 秒以控制限流）。
+
+`PAGE` 和 `PAGE_SIZE` 控制分页，请求直接按参数分页获取，不会全量拉取后再本地截取。
 
 <p align="center">
   <small>© 2026 DMXAPI 获取所有令牌</small>
