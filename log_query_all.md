@@ -1,6 +1,6 @@
 # 消耗细化查询
 
-获取当前账号指定时间范围内的 API 消费日志，包括令牌、模型、Token、人民币消耗、耗时和请求 ID。请求发送到 DMXAPI 代理平台的管理接口；脚本通过一次请求获取全部匹配记录，并生成包含汇总表和逐条详情的 TXT 报告。
+获取当前账号指定时间范围内的 API 消费日志，包括令牌、模型、Token、人民币消耗、耗时和请求 ID。请求发送到 DMXAPI 代理平台的管理接口；脚本固仅查用户消费日志并以一次性获取时间范围内的全部记录，不做分页截断，再生成包含汇总表和逐条详情的 TXT 报告。
 
 ## 总消耗查询内容在DMXAPI的位置
 
@@ -12,8 +12,8 @@
 |------|---------|-----|
 | 查询当前用户的消耗明细 | GET | `https://www.dmxapi.cn/api/log/self` |
 
-:::warning 访问凭证安全
-请使用个人访问令牌调用接口，不要在公开代码、截图、日志或客户端输出中暴露真实令牌。本文以连续星号表示已脱敏令牌，运行代码前必须替换为自己的令牌。
+:::warning 认证格式
+本接口通过 `Authorization: Bearer {SYSTEM_TOKEN}` 认证,`SYSTEM_TOKEN` 的获取方式详见 [系统令牌与用户 ID](security_token_ID.md)。请不要在公开代码、截图、日志或客户端输出中暴露真实令牌，运行代码前必须替换为自己的令牌。
 :::
 
 ## 代码示例
@@ -21,15 +21,15 @@
 |------|------|------|
 | `today` | 今天 `00:00:00` | 今天 `23:59:59` |
 | `yesterday` | 昨天 `00:00:00` | 昨天 `23:59:59` |
-| `week` | 6 天前 `00:00:00` | 今天 `23:59:59` |
-| `month` | 29 天前 `00:00:00` | 今天 `23:59:59` |
+| `week` | 最近 7 天（含今天）起 `00:00:00` | 今天 `23:59:59` |
+| `month` | 最近 30 天（含今天）起 `00:00:00` | 今天 `23:59:59` |
 | `custom` | `CUSTOM_START_TIME` | `CUSTOM_END_TIME` |
 
 ### 请求代码
 
 安装依赖：
 
-```powershell
+```bash
 pip install requests
 ```
 
@@ -40,10 +40,10 @@ import requests
 
 
 # 只需修改这里
-ACCESS_TOKEN = "***********************************************"  # 当前账号的个人访问令牌
+ACCESS_TOKEN = "***********************************************"  # 系统令牌 SYSTEM_TOKEN（需配合 Bearer 前缀使用）
 QUERY_MODE = "month"  # 默认最近 30 天；也可选 today、yesterday、week、custom
-CUSTOM_START_TIME = "2026-08-03 00:00:00"  # custom 模式的开始时间
-CUSTOM_END_TIME = "2026-08-03 23:59:59"  # custom 模式的结束时间
+CUSTOM_START_TIME = "2025-01-01 00:00:00"  # custom 模式的开始时间
+CUSTOM_END_TIME = "2025-01-01 23:59:59"  # custom 模式的结束时间
 QUOTA_PER_CNY = 500_000  # 多少原始额度等于 1 元；如站点配置不同，请同步修改
 MODEL_NAME = ""  # 模型名称；留空表示不筛选，含 % 时支持通配匹配
 TOKEN_NAME = ""  # 令牌名称；留空表示不筛选
@@ -106,8 +106,8 @@ def fetch_all_logs(
     }
     params = {
         "p": 1,
-        "page_size": -1,
-        "type": 2,
+        "page_size": -1,  # -1 表示单次返回时间范围内的全部记录，不做分页截断
+        "type": 2,  # 日志类型：2 = 只查用户消费日志；若要查充值/管理类日志需改用其他 type
         "start_timestamp": start_timestamp,
         "end_timestamp": end_timestamp,
     }
