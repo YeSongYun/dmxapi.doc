@@ -542,6 +542,13 @@ export default defineConfig({
                       { text: '方案三 · 授权真人', link: '/seedance-2-0-real-person-plan3-authorized-real-person' },
                     ],
                   },
+                  {
+                    text: 'seedance 2.0 私域虚拟人像素材方案',
+                    collapsed: true,
+                    items: [
+                      { text: '方案指南', link: '/seedance-create-virtual-human-asset-group' },
+                    ],
+                  },
                 ],
               },
               // {
