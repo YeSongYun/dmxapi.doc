@@ -16,7 +16,7 @@
 - **授权真人**：必须由本人授权并完成真人扫脸，使用 `volc-visual-validate-create` 和 `volc-visual-validate-result` 获取真人 `GroupId`。
 - 虚拟人物不得与任何自然人的肖像或形象雷同。请勿使用本流程给自然人照片创建 `AIGC` 素材组。
 
-两条流程拿到素材组 ID 后，才共同使用 `volc-asset-create`、`volc-asset-get` 和 `asset://`。
+
 :::
 
 :::warning 重要：请保存好 GroupId、Asset Id 和 ProjectName
@@ -164,7 +164,6 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 - 一个素材组可以存放同一个虚拟人物的多份图片、视频或音频素材。
 - `ProjectName` 必须保持为 `shuyuan`，后续上传、查询和生成都要处于同一项目。
 
----
 
 ## 步骤二：上传虚拟人素材（volc-asset-create）
 
@@ -261,7 +260,7 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 - 上传成功仅代表已经创建异步处理任务，不代表素材已经可用于 Seedance。
 - 下一步使用这里返回的素材 `Id` 调用 `volc-asset-get`。
 
----
+
 
 ## 步骤三：查询素材状态（volc-asset-get）
 
@@ -352,203 +351,16 @@ while True:
 
 ### 说明
 
-- 只有 `Status=Active` 的素材才能进入下一步。
+- 只有 `Status=Active` 的素材才能使用。
 - 返回的 `URL` 可能是临时下载地址，不要把它当作长期素材标识保存。
 - 生成视频时使用的是素材 `Id`，不是这里返回的 `URL`。
 - 正确写法为 `asset://asset-20260811101530-fghij`。
 
----
-
-## 步骤四：使用虚拟人素材生成视频（Seedance 2.0）
-
-素材状态变为 `Active` 后，在 Seedance 2.0 请求的 `input` 数组中添加参考素材，并把素材 `Id` 拼成：
-
-```text
-asset://<素材 Id>
-```
-
-例如，步骤二返回：
-
-```text
-asset-20260811101530-fghij
-```
-
-生成时填写：
-
-```text
-asset://asset-20260811101530-fghij
-```
-
-提示词中不要直接写 Asset ID，应按照素材在 `input` 中的顺序，使用“图片1”“视频1”或“音频1”指代。
-
-### 不同素材类型的写法
-
-| 素材类型 | `type` | URL 字段 | `role` |
-|---|---|---|---|
-| 图片 | `image_url` | `image_url.url` | `reference_image` |
-| 视频 | `video_url` | `video_url.url` | `reference_video` |
-| 音频 | `audio_url` | `audio_url.url` | `reference_audio` |
-
-### 提交生成任务示例代码
-
-下面以一张已入库的虚拟人图片为例：
-
-```python
-import json
-import requests
-
-
-url = "https://www.dmxapi.cn/v1/responses"
-api_key = "sk-**********************************"
-
-headers = {
-    "Content-Type": "application/json",
-    "Authorization": f"Bearer {api_key}",
-}
-
-# 填写步骤二返回、且步骤三已经确认 Status=Active 的素材 Id
-asset_id = "asset-20260811101530-fghij"
-asset_uri = f"asset://{asset_id}"
-
-payload = {
-    # 【model】(string, 必填) Seedance 2.0 模型名称
-    "model": "doubao-seedance-2-0-260128",
-
-    # 【input】(array, 必填) 文本提示词和参考素材
-    "input": [
-        {
-            "type": "text",
-            "text": (
-                "图片1中的虚拟主播站在明亮的科技展厅中，面向镜头自然介绍产品。"
-                "镜头从中景缓慢推进到近景，人物形象、服装和发型保持一致，"
-                "中文台词：大家好，欢迎来到今天的新品发布会。"
-            ),
-        },
-        {
-            "type": "image_url",
-            "image_url": {
-                "url": asset_uri,
-            },
-            "role": "reference_image",
-        },
-    ],
-
-    # 【generate_audio】是否生成声音
-    "generate_audio": True,
-
-    # 【resolution】视频分辨率
-    "resolution": "720p",
-
-    # 【ratio】视频宽高比
-    "ratio": "9:16",
-
-    # 【duration】生成时长，单位为秒
-    "duration": 8,
-
-    # 【watermark】是否添加水印
-    "watermark": False,
-}
-
-response = requests.post(
-    url,
-    headers=headers,
-    json=payload,
-    timeout=60,
-)
-
-print(response.status_code)
-print(json.dumps(response.json(), indent=2, ensure_ascii=False))
-```
-
-## 提交返回示例
-
-```json
-{
-  "id": "cgt-20260811113000-klmno",
-  "usage": {
-    "total_tokens": 60850,
-    "input_tokens": 0,
-    "output_tokens": 60850
-  }
-}
-```
-
-返回的 `id` 是 Seedance 生成任务 ID。生成是异步的，需要使用下面的查询接口获取最终视频。
-
-### 获取生成结果示例代码
-
-```python
-import json
-import requests
-
-
-url = "https://www.dmxapi.cn/v1/responses"
-api_key = "sk-**********************************"
-
-headers = {
-    "Content-Type": "application/json",
-    "Authorization": f"Bearer {api_key}",
-}
-
-payload = {
-    # 【model】(string, 必填) Seedance 2.0 查询结果专用模型名
-    "model": "seedance-2-0-get",
-
-    # 【input】(string, 必填) 填写提交生成任务时返回的 id
-    "input": "cgt-20260811113000-klmno",
-}
-
-response = requests.post(
-    url,
-    headers=headers,
-    json=payload,
-    # 查询接口会在服务端轮询任务，最长可能等待约 1 小时
-    timeout=3660,
-)
-result = response.json()
-
-print(response.status_code)
-print(json.dumps(result, indent=2, ensure_ascii=False))
-
-# 任务成功时，从返回结果中提取视频地址
-try:
-    output_text = result["output"][0]["content"][0]["text"]
-    output_data = json.loads(output_text)
-    video_url = output_data["content"]["video_url"]
-    print(f"视频链接：{video_url}")
-except (KeyError, IndexError, TypeError, json.JSONDecodeError):
-    print("返回结果中没有找到视频地址，请检查完整返回内容。")
-```
-
-## 获取结果返回示例
-
-```json
-{
-  "request_id": "cgt-20260811113000-klmno",
-  "output": [
-    {
-      "type": "message",
-      "content": [
-        {
-          "type": "output_text",
-          "text": "{\"content\":{\"video_url\":\"https://example.com/generated-video.mp4\"},\"id\":\"cgt-20260811113000-klmno\",\"model\":\"doubao-seedance-2-0-260128\",\"status\":\"succeeded\"}"
-        }
-      ]
-    }
-  ]
-}
-```
-
-### 说明
-
-- 本步骤没有修改 Seedance 的任何生成逻辑，只是把普通参考素材 URL 换成了 `asset://<素材 Id>`。
-- 参考素材必须已经通过步骤三确认 `Status=Active`。
-- 图片、视频、音频在同类素材中的顺序，决定提示词里的“图片1”“视频1”“音频1”。
-- 请勿在提示词正文里直接使用 Asset ID 指代人物。
 
 
 
-## 使用限制与合规要求
+
+### 使用限制与合规要求
 
 - 本流程创建的是私域**虚拟人像**素材组，当前 `GroupType` 仅支持 `AIGC`。
 - 虚拟人物不得与任何自然人肖像或形象雷同；真人必须使用已授权真人扫脸流程。
@@ -557,7 +369,7 @@ except (KeyError, IndexError, TypeError, json.JSONDecodeError):
 - 只有 `volc-asset-get` 返回 `Status=Active` 的素材才能用于 Seedance 推理。
 - `volc-asset-create` 只接收公网 URL，不接收本地文件路径或 Base64。
 
-## 常见问题
+### 常见问题
 
 ### 返回的是 Id，为什么下一步参数叫 GroupId？
 
