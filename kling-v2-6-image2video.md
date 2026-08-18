@@ -379,5 +379,5 @@ https://v1-fdl.kechuangai.com/ksc2/d-CsDyB6823hG3qnUACoYjdhG9G12sC6UkF_nLqvs-5yE
 ---
 
 <p align="center">
-  <small>© 2025 DMXAPI kling-v2-6-image2video </small>
+  <small>© 2026 DMXAPI kling-v2-6-image2video </small>
 </p>

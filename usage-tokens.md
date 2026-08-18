@@ -113,5 +113,5 @@
 ---
 
 <p align="center">
-  <small>© 2025 DMXAPI Tokens计算</small>
+  <small>© 2026 DMXAPI Tokens计算</small>
 </p>

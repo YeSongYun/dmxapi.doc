@@ -63,5 +63,5 @@ print(response.json())  # 返回的向量数据
 > 注意：请妥善保管API密钥，不要泄露给他人。
 
 <p align="center">
-  <small>© 2025 DMXAPI 向量嵌入</small>
+  <small>© 2026 DMXAPI 向量嵌入</small>
 </p>

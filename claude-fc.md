@@ -202,5 +202,5 @@ if __name__ == "__main__":
 ---
 
 <p align="center">
-  <small>© 2025 DMXAPI Claude函数调用</small>
+  <small>© 2026 DMXAPI Claude函数调用</small>
 </p>

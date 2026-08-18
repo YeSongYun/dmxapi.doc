@@ -344,5 +344,5 @@ print(f"Response:\n{json.dumps(response.json(), indent=2, ensure_ascii=False)}")
 ---
 
 <p align="center">
-  <small>© 2025 DMXAPI 海螺视频</small>
+  <small>© 2026 DMXAPI 海螺视频</small>
 </p>

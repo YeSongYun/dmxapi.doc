@@ -327,5 +327,5 @@ codex
 ![image.png](https://api.apifox.com/api/v1/projects/5443236/resources/575125/image-preview)
 
 <p align="center">
-  <small>© 2025 DMXAPI Openai C...</small>
+  <small>© 2026 DMXAPI Openai Codex 安装与配置教程</small>
 </p>

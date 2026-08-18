@@ -649,5 +649,5 @@ https://help.aliyun.com/zh/model-studio/role-play
 
 
 <p align="center">
-  <small>© 2025 DMXAPI qwen-plus-character 角色扮演</small>
+  <small>© 2026 DMXAPI qwen-plus-character 角色扮演</small>
 </p>

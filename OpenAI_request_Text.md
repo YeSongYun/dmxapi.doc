@@ -344,5 +344,5 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 ---
 
 <p align="center">
-  <small>© 2025 DMXAPI OpenAI 新接口</small>
+  <small>© 2026 DMXAPI OpenAI 新接口</small>
 </p>

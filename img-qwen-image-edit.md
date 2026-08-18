@@ -87,5 +87,5 @@ print("响应数据:", response_data)  # 打印完整的响应数据以便调试
 ```
 
 <p align="center">
-  <small>© 2025 DMXAPI 千问图片编辑 q...</small>
+  <small>© 2026 DMXAPI 千问图片编辑 qwen-image-edit 接口API文档</small>
 </p>

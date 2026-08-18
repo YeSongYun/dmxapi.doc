@@ -34,5 +34,5 @@
 没有第七步啦，可以愉快的使用模型聊天了嗷！
 
 <p align="center">
-  <small>© 2026 DMXAPI Cherry S...</small>
+  <small>© 2026 DMXAPI Cherry Studio如何调用gpt-5.2-pro</small>
 </p>

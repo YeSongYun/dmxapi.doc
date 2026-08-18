@@ -144,5 +144,5 @@ for chunk in response.iter_content(chunk_size=None):
 - 确保网络连接稳定以获得最佳的流式体验
 
 <p align="center">
-  <small>© 2025 DMXAPI OpenAI Stream</small>
+  <small>© 2026 DMXAPI OpenAI Stream</small>
 </p>

@@ -113,5 +113,5 @@ except Exception as e:
 ---
 
 <p align="center">
-  <small>© 2025 DMXAPI OpenAI TTS</small>
+  <small>© 2026 DMXAPI OpenAI TTS</small>
 </p>

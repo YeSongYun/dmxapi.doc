@@ -264,5 +264,5 @@ else:
 ---
 
 <p align="center">
-  <small>© 2025 DMXAPI doubao-seedance-1-5-pro-responses 文生视频</small>
+  <small>© 2026 DMXAPI doubao-seedance-1-5-pro-responses 文生视频</small>
 </p>

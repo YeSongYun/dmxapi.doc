@@ -23,5 +23,5 @@
 通过 DMXAPI，开发者可以专注于AI应用的创新与开发，而无需为复杂的基础设施集成而烦恼。我们让AI开发变得更简单、更高效。
 
 <p align="center">
-  <small>© 2025 DMXAPI DMXAPI -...</small>
+  <small>© 2026 DMXAPI - 一个key用全球大模型</small>
 </p>

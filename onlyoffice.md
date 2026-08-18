@@ -20,5 +20,5 @@ ONLYOFFICE 是一个功能强大的办公套件，提供了文档编辑、电子
 >然后就可以在ONLYOFFICE中使用dmxapi为您提供的ai服务啦！
 
 <p align="center">
-  <small>© 2025 DMXAPI ONLYOFFI...</small>
+  <small>© 2026 DMXAPI ONLYOFFICE使用教程</small>
 </p>

@@ -85,5 +85,5 @@ This is a details block.
 Check out the documentation for the [full list of markdown extensions](https://vitepress.dev/guide/markdown).
 
 <p align="center">
-  <small>© 2025 DMXAPI Markdown...</small>
+  <small>© 2026 DMXAPI Markdown Extension Examples</small>
 </p>

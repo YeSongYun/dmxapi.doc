@@ -237,5 +237,5 @@ except Exception as e:
 ---
 
 <p align="center">
-  <small>© 2025 DMXAPI nano-banana-2-01 文生图</small>
+  <small>© 2026 DMXAPI nano-banana-2-01 文生图</small>
 </p>

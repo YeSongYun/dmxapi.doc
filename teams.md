@@ -19,5 +19,5 @@
 2024年1月，我们开始专注于API聚合业务，整合各类API资源。经过半年的精心准备和开发，2024年7月DMXAPI正式上线，标志着我们在API服务领域的全新起航。
 
 <p align="center">
-  <small>© 2025 DMXAPI 团队介绍</small>
+  <small>© 2026 DMXAPI 团队介绍</small>
 </p>

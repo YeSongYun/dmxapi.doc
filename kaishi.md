@@ -137,5 +137,5 @@ API将返回JSON格式的对话结果：
 ---
 
 <p align="center">
-  <small>© 2025 DMXAPI 快速开始</small>
+  <small>© 2026 DMXAPI 快速开始</small>
 </p>

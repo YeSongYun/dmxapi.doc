@@ -217,5 +217,5 @@ if __name__ == "__main__":
 
 
 <p align="center">
-  <small>© 2025 DMXAPI OpenAI Json</small>
+  <small>© 2026 DMXAPI OpenAI Json</small>
 </p>

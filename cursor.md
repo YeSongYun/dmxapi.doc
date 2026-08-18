@@ -105,5 +105,5 @@ url只能用下面图片中提体现的，不要修改，如果出下一下错�
 ### 2.key配置错误返回错误码
 ![cursor](img/12-31-2.jpg)
 <p align="center">
-  <small>© 2025 DMXAPI Cursor配置</small>
+  <small>© 2026 DMXAPI Cursor配置</small>
 </p>

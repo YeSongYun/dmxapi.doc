@@ -30,6 +30,26 @@ DeepSeek 思考功能通过两个维度控制：**思考开关**和**思考强�
 >
 > (3) 出于兼容考虑，`low`、`medium` 会映射为 `high`，`xhigh` 会映射为 `max`
 
+### 另一种思考开关写法：`enable_thinking`
+
+除上表的 `thinking.type` 外，DMXAPI 上的 DeepSeek 系列还接受顶层布尔参数 `enable_thinking`（对齐百炼 / DashScope 风格），二者指向同一能力：
+
+| 写法 | 开启思考 | 关闭思考 |
+|------|---------|---------|
+| `thinking: {"type": "enabled/disabled"}` | 可靠生效 | 可靠生效（推荐） |
+| `enable_thinking: true/false` | 可靠生效 | 仅 `deepseek-v4-flash` 生效，`deepseek-v4-pro` 上被忽略 |
+
+> 开启思考时两种写法等效；**关闭思考建议统一使用 `thinking: {"type": "disabled"}`**。请勿同时传入两者。基于 `enable_thinking` 的完整示例代码（含流式、token 用量解析）见 [DeepSeek 推理开关](/thinking-deepseek)。
+
+### 各模型默认思考状态
+
+| 模型 | 默认状态 |
+|------|---------|
+| `deepseek-v4-pro` | 默认思考，不传参数即输出 `reasoning_content` |
+| `deepseek-v4-flash` | 默认不思考，需显式开启 |
+
+> 两个模型默认行为相反，请始终显式传入思考开关，不要依赖默认值。
+
 ---
 
 ## CURL示例
@@ -69,4 +89,4 @@ curl https://www.dmxapi.cn/v1/chat/completions \
 
 ---
 
-© 2025 DMXAPI DeepSeek thinking
+© 2026 DMXAPI DeepSeek thinking

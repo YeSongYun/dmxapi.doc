@@ -32,5 +32,5 @@
 设置基本和文生图插件类似，参加设置即可。
 
 <p align="center">
-  <small>© 2025 DMXAPI 扣子插件(coz...</small>
+  <small>© 2026 DMXAPI 扣子插件(coze插件)配置指南</small>
 </p>

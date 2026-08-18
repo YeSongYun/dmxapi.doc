@@ -351,5 +351,5 @@ else:
 ---
 
 <p align="center">
-  <small>© 2025 DMXAPI suno音乐模型</small>
+  <small>© 2026 DMXAPI suno音乐模型</small>
 </p> 

@@ -393,5 +393,5 @@ The **very first sentence** announces this theme ...
 ---
 
 <p align="center">
-  <small>© 2025 DMXAPI 提示词缓存</small>
+  <small>© 2026 DMXAPI 提示词缓存</small>
 </p>

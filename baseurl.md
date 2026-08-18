@@ -89,5 +89,5 @@ Base URL 配置通常有三种格式，可以根据应用要求选择：
 ---
 
 <p align="center">
-  <small>© 2025 DMXAPI Base url</small>
+  <small>© 2026 DMXAPI Base url</small>
 </p>

@@ -24,5 +24,5 @@ OpenAI 提供了强大的图像生成和编辑能力,支持文生图、图片编
 ---
 
 <p align="center">
-  <small>© 2025 DMXAPI OpenAI 绘图模型</small>
+  <small>© 2026 DMXAPI OpenAI 绘图模型</small>
 </p>

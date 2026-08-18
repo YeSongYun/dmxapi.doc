@@ -445,5 +445,5 @@ Python 内置库（无需额外安装）：
 ---
 
 <p align="center">
-  <small>© 2025 DMXAPI Openai 本地图片分析</small>
+  <small>© 2026 DMXAPI Openai 本地图片分析</small>
 </p>

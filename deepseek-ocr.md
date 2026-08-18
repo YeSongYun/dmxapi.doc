@@ -179,5 +179,5 @@ off
 ---
 
 <p align="center">
-  © 2025 DMXAPI · DeepSeek-OCR
+  © 2026 DMXAPI · DeepSeek-OCR
 </p>

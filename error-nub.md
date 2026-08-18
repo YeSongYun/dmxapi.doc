@@ -45,5 +45,5 @@
 ---
 
 <p align="center">
-  <small>© 2025 DMXAPI 错误代码</small>
+  <small>© 2026 DMXAPI 错误代码</small>
 </p>

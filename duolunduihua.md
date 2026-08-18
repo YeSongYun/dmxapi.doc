@@ -238,5 +238,5 @@ role - model: 明天是2025年12月27日。
 ---
 
 <p align="center">
-  <small>© 2025 DMXAPI Gemini  多轮对话</small>
+  <small>© 2026 DMXAPI Gemini  多轮对话</small>
 </p>

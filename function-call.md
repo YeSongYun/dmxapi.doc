@@ -138,5 +138,5 @@ print(json.dumps(response_data, indent=2, ensure_ascii=False))
 ---
 
 <p align="center">
-  <small>© 2025 DMXAPI OpenAI 函数调用</small>
+  <small>© 2026 DMXAPI OpenAI 函数调用</small>
 </p>

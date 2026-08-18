@@ -38,5 +38,5 @@
 
 ---
 <p align="center">
-  <small>© 2025 DMXAPI nano-banana-2在cherry中的配置</small>
+  <small>© 2026 DMXAPI nano-banana-2在cherry中的配置</small>
 </p>

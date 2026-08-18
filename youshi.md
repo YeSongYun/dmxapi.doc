@@ -55,5 +55,5 @@ DMXAPI 愿与您及您的企业共同成长。在迈向AI时代的征程中，�
 
 
 <p align="center">
-  <small>© 2025 DMXAPI</small>
+  <small>© 2026 DMXAPI</small>
 </p>

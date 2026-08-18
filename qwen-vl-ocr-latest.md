@@ -118,5 +118,5 @@ https://help.aliyun.com/zh/model-studio/qwen-vl-ocr#ea4e1d92dbry2
 ---
 
 <p align="center">
-  <small>© 2025 DMXAPI qwen-vl-ocr-latest 文字提取模型 </small>
+  <small>© 2026 DMXAPI qwen-vl-ocr-latest 文字提取模型 </small>
 </p>

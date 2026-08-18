@@ -80,5 +80,5 @@ qwen
 Qwen Code 的 BaseUrl 需要带上 /v1；而 Claude Code 设置 Base url  是不需要的。
 
 <p align="center">
-  <small>© 2025 DMXAPI Qwen Cod...</small>
+  <small>© 2026 DMXAPI Qwen Coder 安装配置教程</small>
 </p>

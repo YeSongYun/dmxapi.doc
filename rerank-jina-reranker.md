@@ -110,5 +110,5 @@ if __name__ == "__main__":
 3. 对长文档建议先做分块处理
 
 <p align="center">
-  <small>© 2025 DMXAPI 重排序</small>
+  <small>© 2026 DMXAPI 重排序</small>
 </p>

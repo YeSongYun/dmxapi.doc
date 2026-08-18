@@ -23,5 +23,5 @@ https://dmxapi.com/DMXAPI-Banner.png
 ![客服微信](img/2ma.png)
 
 <p align="center">
-  <small>© 2025 DMXAPI DMXAPI L...</small>
+  <small>© 2026 DMXAPI LOGO 下载</small>
 </p>

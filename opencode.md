@@ -111,5 +111,5 @@ https://cnb.cool/dmxapi/opencode_dmxapi
 
 ---
 <p align="center">
-  <small>© 2025 DMXAPI opencode的安装及配置</small>
+  <small>© 2026 DMXAPI opencode的安装及配置</small>
 </p>

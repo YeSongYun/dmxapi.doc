@@ -76,5 +76,5 @@ DMXAPI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxx
 ---
 
 <p align="center">
-  <small>© 2025 DMXAPI 快速开始</small>
+  <small>© 2026 DMXAPI 快速开始</small>
 </p>

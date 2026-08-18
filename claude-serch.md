@@ -125,5 +125,5 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 
 
 <p align="center">
-  <small>© 2025 DMXAPI  claude 联网搜索</small>
+  <small>© 2026 DMXAPI  claude 联网搜索</small>
 </p>

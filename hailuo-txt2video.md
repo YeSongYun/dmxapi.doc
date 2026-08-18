@@ -332,5 +332,5 @@ Response:
 ---
 
 <p align="center">
-  <small>© 2025 DMXAPI 海螺视频 - 文生视频 API 服务</small>
+  <small>© 2026 DMXAPI 海螺视频 - 文生视频 API 服务</small>
 </p>

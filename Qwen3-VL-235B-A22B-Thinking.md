@@ -434,5 +434,5 @@ except KeyError as e:
 ---
 
 <p align="center">
-  <small>© 2025 DMXAPI Openai 网络图片分析</small>
+  <small>© 2026 DMXAPI qwen3-vl-235b-a22b-thinking 网络视频分析 API 文档</small>
 </p>

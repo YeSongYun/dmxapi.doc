@@ -44,11 +44,11 @@ https://dmxapi.com/yinsi.html
 通过网站页脚联系方式咨询。
 
 *更新日期：2025-01-01*
-*© 2025 DMXAPI 版权所有*
+*© 2026 DMXAPI 版权所有*
 
 # 更详细请查看（具体以该网页为准）
 https://dmxapi.com/yinsi.html
 
 <p align="center">
-  <small>© 2025 DMXAPI 隐私与数据保护政策</small>
+  <small>© 2026 DMXAPI 隐私与数据保护政策</small>
 </p>

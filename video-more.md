@@ -7,5 +7,5 @@
 需要多模态模型，请联系在线客服，谢谢。
 
 <p align="center">
-  <small>© 2025 DMXAPI 更多视频模型，正...</small>
+  <small>© 2026 DMXAPI 更多视频模型，正在赶来...</small>
 </p>

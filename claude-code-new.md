@@ -291,5 +291,5 @@ curl -fsSL https://cnb.cool/dmxapi/dmxapi_claude_code/-/git/raw/main/install.cmd
 ---
 
 <p align="center">
-  <small>© 2026 DMXAPI Cladue Code</small>
+  <small>© 2026 DMXAPI Claude Code 配置教程文档</small>
 </p>

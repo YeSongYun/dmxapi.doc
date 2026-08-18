@@ -130,5 +130,5 @@ API 响应结果：
 ---
 
 <p align="center">
-  <small>© 2025 DMXAPI API请求格式</small>
+  <small>© 2026 DMXAPI API请求格式</small>
 </p>

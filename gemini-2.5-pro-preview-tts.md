@@ -422,5 +422,5 @@ TTS 模型会自动检测输入语言。它们支持以下 24 种语言：
 ---
 
 <p align="center">
-  <small>© 2025 DMXAPI gemini-2.5-pro-preview-tts 语音生成</small>
+  <small>© 2026 DMXAPI gemini-2.5-pro-preview-tts 语音生成</small>
 </p>

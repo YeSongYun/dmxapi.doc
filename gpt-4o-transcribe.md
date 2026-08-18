@@ -72,5 +72,5 @@ print(q_voice_to_text("C:\\kywpy\\jay.mp3"))  # 替换为实际的音频文件�
 4. 调用频率限制请参考DMXAPI官方文档
 
 <p align="center">
-  <small>© 2025 DMXAPI GPT语音</small>
+  <small>© 2026 DMXAPI GPT语音</small>
 </p>

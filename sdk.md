@@ -47,5 +47,5 @@ print(response.choices[0].message.content)
 ---
 
 <p align="center">
-  <small>© 2025 DMXAPI  SDK</small>
+  <small>© 2026 DMXAPI  SDK</small>
 </p>

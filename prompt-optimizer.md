@@ -71,5 +71,5 @@
 ![Prompt Optimizer](./img/prompt_opt15.png)
 
 <p align="center">
-  <small>© 2026 DMXAPI 我们的AI探索之路</small>
+  <small>© 2026 DMXAPI Prompt Optimizer配置教程</small>
 </p>

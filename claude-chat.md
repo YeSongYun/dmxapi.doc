@@ -379,5 +379,5 @@ Response:
 - **温度控制** - 调整生成结果的随机性
 
 <p align="center">
-  <small>© 2025 DMXAPI Claude对话</small>
+  <small>© 2026 DMXAPI Claude对话</small>
 </p>

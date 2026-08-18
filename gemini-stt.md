@@ -104,5 +104,5 @@ DMX API 一个 key，使用全球大模型。
 ---
 
 <p align="center">
-  <small>© 2025 DMXAPI Gemini STT</small>
+  <small>© 2026 DMXAPI Gemini STT</small>
 </p>

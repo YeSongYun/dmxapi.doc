@@ -226,5 +226,5 @@ https://help.aliyun.com/zh/model-studio/qwen-deep-research-api
 ---
 
 <p align="center">
-  <small>© 2025 DMXAPI qwen-deep-research 深入研究模型</small>
+  <small>© 2026 DMXAPI qwen-deep-research 深入研究模型</small>
 </p>

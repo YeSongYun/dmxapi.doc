@@ -28,5 +28,5 @@ chatwise 中配置dmxapi的教程。
 ---
 
 <p align="center">
-  <small>© 2025 DMXAPI chatwise配置教程</small>
+  <small>© 2026 DMXAPI chatwise配置教程</small>
 </p>
