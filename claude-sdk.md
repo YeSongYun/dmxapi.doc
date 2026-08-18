@@ -180,5 +180,5 @@ The user said "你好" which means "Hello" in Chinese. I'll respond in Chinese.
 ---
 
 <p align="center">
-  <small>© 2025 DMXAPI Claude SDK</small>
+  <small>© 2026 DMXAPI Claude SDK</small>
 </p>

@@ -160,5 +160,5 @@ result_text = parse_sse_response(response)
 ---
 
 <p align="center">
-  <small>© 2025 DMXAPI Gemini 流式输出</small>
+  <small>© 2026 DMXAPI Gemini 流式输出</small>
 </p>

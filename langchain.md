@@ -312,5 +312,5 @@ except Exception as e:
 ```
 
 <p align="center">
-  <small>© 2025 DMXAPI LangChain</small>
+  <small>© 2026 DMXAPI LangChain</small>
 </p>

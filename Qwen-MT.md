@@ -556,5 +556,5 @@ https://help.aliyun.com/zh/model-studio/machine-translation
 
 
 <p align="center">
-  <small>© 2025 DMXAPI Qwen-MT系列翻译模型</small>
+  <small>© 2026 DMXAPI Qwen-MT系列翻译模型</small>
 </p>

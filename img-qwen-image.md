@@ -69,5 +69,5 @@ for i, r in enumerate(results, 1):
 
 
 <p align="center">
-  <small>© 2025 DMXAPI 阿里 qwen-...</small>
+  <small>© 2026 DMXAPI 阿里 qwen-image 文生图 API接口文档</small>
 </p>

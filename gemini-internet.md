@@ -120,6 +120,6 @@ print(response.text)
 
 ---
 <p align="center">
-  <small>© 2025 DMXAPI 联网搜索</small>
+  <small>© 2026 DMXAPI 联网搜索</small>
 </p>
 

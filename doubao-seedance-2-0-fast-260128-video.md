@@ -406,5 +406,5 @@ except Exception as e:
 
 
 <p align="center">
-  <small>© 2026 DMXAPI doubao-seedance-2-0-fast-260128 文生视频</small>
+  <small>© 2026 DMXAPI doubao-seedance-2-0-fast-260128 多模态参考生视频 API 使用文档</small>
 </p>

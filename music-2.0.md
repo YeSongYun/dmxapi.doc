@@ -498,5 +498,5 @@ print("📌 提示: 如果生成失败，请检查 API密钥、网络连接、DM
 ---
 
 <p align="center">
-  <small>© 2025 DMXAPI music-2.0 音乐模型</small>
+  <small>© 2026 DMXAPI music-2.0 音乐模型</small>
 </p>

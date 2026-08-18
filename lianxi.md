@@ -32,5 +32,5 @@ Email：kyw@R-P-A.com
 ---
 
 <p align="center">
-  <small>© 2025 DMXAPI 联系我们</small>
+  <small>© 2026 DMXAPI 联系我们</small>
 </p>

@@ -74,5 +74,5 @@
 ---
 
 <p align="center">
-  <small>© 2025 DMXAPI 价格说明</small>
+  <small>© 2026 DMXAPI 价格说明</small>
 </p>

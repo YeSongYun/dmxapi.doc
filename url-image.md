@@ -157,5 +157,5 @@ if __name__ == "__main__":
 ---
 
 <p align="center">
-  <small>© 2025 DMXAPI Openai 网络图片分析</small>
+  <small>© 2026 DMXAPI Openai 网络图片分析</small>
 </p>

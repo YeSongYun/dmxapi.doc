@@ -21,5 +21,5 @@
 ---
 
 <p align="center">
-  <small>© 2025 DMXAPI vidu 价格</small>
+  <small>© 2026 DMXAPI vidu 价格</small>
 </p>

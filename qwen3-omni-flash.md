@@ -1132,5 +1132,5 @@ https://help.aliyun.com/zh/model-studio/qwen-omni
 ```
 
 <p align="center">
-  <small>© 2025 DMXAPI qwen3-omni-flash 全模态模型</small>
+  <small>© 2026 DMXAPI qwen3-omni-flash 全模态模型</small>
 </p>

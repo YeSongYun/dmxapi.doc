@@ -345,5 +345,5 @@ print("=" * 60)
 ---
 
 <p align="center">
-  <small>© 2025 DMXAPI viduq2-ctv</small>
+  <small>© 2026 DMXAPI viduq2-ctv</small>
 </p>

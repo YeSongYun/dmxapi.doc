@@ -238,5 +238,5 @@ print(json.dumps(response.json(), indent=4, ensure_ascii=False))
 ---
 
 <p align="center">
-  <small>© 2025 DMXAPI - Baidu 文生图 API 文档</small>
+  <small>© 2026 DMXAPI - Baidu 文生图 API 文档</small>
 </p>

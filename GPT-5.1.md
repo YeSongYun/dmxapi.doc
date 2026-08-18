@@ -272,5 +272,5 @@ print(json.dumps(response.model_dump(), indent=2, ensure_ascii=False))
 ---
 
 <p align="center">
-  <small>© 2025 DMXAPI GPT-5.1</small>
+  <small>© 2026 DMXAPI GPT-5.1</small>
 </p>

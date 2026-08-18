@@ -14,5 +14,5 @@ N8N 是一款开源的工作流自动化工具，旨在帮助用户通过连接�
 ![n8n](img/n8n-setup.png)
 
 <p align="center">
-  <small>© 2025 DMXAPI N8N配置</small>
+  <small>© 2026 DMXAPI N8N配置</small>
 </p>

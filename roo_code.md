@@ -52,5 +52,5 @@
 
 
 <p align="center">
-  <small>© 2025 DMXAPI Dify接入</small>
+  <small>© 2026 DMXAPI VSCode ROO CODE 配置方法</small>
 </p>

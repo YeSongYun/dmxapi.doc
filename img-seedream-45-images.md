@@ -234,5 +234,5 @@ print(f"响应内容:\n{json.dumps(response.json(), indent=2, ensure_ascii=False
 ---
 
 <div align="center">
-  <p><small>© 2025 DMXAPI · 豆包即梦4.5多图融合接口</small></p>
+  <p><small>© 2026 DMXAPI · 豆包即梦4.5多图融合接口</small></p>
 </div>

@@ -309,5 +309,5 @@ curl --location 'https://www.dmxapi.cn/v1/chat/completions' \
 
 
 <p align="center">
-  <small>© 2025 DMXAPI WiseDiag 医疗大模型</small>
+  <small>© 2026 DMXAPI WiseDiag 医疗大模型</small>
 </p>

@@ -403,5 +403,5 @@ https://help.aliyun.com/zh/model-studio/gui-automation
 
 
 <p align="center">
-  <small>© 2025 DMXAPI GUI-Plus 界面交互模型</small>
+  <small>© 2026 DMXAPI GUI-Plus 界面交互模型</small>
 </p>

@@ -89,4 +89,4 @@ curl https://www.dmxapi.cn/v1/chat/completions \
 
 ---
 
-© 2025 DMXAPI DeepSeek thinking
+© 2026 DMXAPI DeepSeek thinking

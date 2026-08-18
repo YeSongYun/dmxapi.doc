@@ -262,5 +262,5 @@ else:
 ---
 
 <p align="center">
-  <small>© 2025 DMXAPI GPT图片</small>
+  <small>© 2026 DMXAPI GPT图片</small>
 </p>

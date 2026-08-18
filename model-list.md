@@ -28,5 +28,5 @@ print("请求成功，响应内容：", response.text)
 ```
 
 <p align="center">
-  <small>© 2025 DMXAPI DMXAPI 模...</small>
+  <small>© 2026 DMXAPI 模型信息接口</small>
 </p>

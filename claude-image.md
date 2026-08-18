@@ -349,5 +349,5 @@ else:
 ---
 
 <p align="center">
-  <small>© 2025 DMXAPI Claude图片分析</small>
+  <small>© 2026 DMXAPI Claude图片分析</small>
 </p>

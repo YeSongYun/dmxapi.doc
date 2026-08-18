@@ -114,5 +114,5 @@ if __name__ == "__main__":
 ```
 
 <p align="center">
-  <small>© 2025 DMXAPI 重排序</small>
+  <small>© 2026 DMXAPI 重排序</small>
 </p>

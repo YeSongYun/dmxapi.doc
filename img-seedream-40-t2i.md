@@ -252,5 +252,5 @@ print(f"响应内容:\n{json.dumps(response.json(), indent=2, ensure_ascii=False
 ---
 
 <p align="center">
-  <small>© 2025 DMXAPI · 火山豆包即梦4.0文生图服务</small><br>
+  <small>© 2026 DMXAPI · 火山豆包即梦4.0文生图服务</small><br>
 </p>

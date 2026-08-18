@@ -269,5 +269,5 @@ https://dashscope-result-sh.oss-accelerate.aliyuncs.com/1d/69/20260211/ca49cc2b/
 
 
 <p align="center">
-  <small>© 2026 DMXAPI wan2.6-t2v</small>
+  <small>© 2026 DMXAPI wan2.6 参考生视频文档</small>
 </p>

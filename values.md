@@ -34,5 +34,5 @@
 用系统替代管理：每个岗位都有自己的数据大屏，根据数据大屏的指导进行操作。
 
 <p align="center">
-  <small>© 2025 DMXAPI 团队介绍</small>
+  <small>© 2026 DMXAPI 团队介绍</small>
 </p>

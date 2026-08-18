@@ -256,5 +256,5 @@ https://docs.textin.com/xparse/overview
 ---
 
 <p align="center">
-  <small>© 2025 DMXAPI PDF分析</small>
+  <small>© 2026 DMXAPI PDF分析</small>
 </p>

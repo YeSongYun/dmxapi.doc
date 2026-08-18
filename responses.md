@@ -57,5 +57,5 @@ OpenAI 在 **2025 年 3 月 11 日**推出了全新的 **Responses API**，定�
 
 ---
 <p align="center">
-  <small>© 2025 DMXAPI responses</small>
+  <small>© 2026 DMXAPI responses</small>
 </p>

@@ -163,5 +163,5 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 - 确保网络连接稳定以获得最佳的流式体验
 
 <p align="center">
-  <small>© 2025 DMXAPI somark 文档解析</small>
+  <small>© 2026 DMXAPI somark 文档解析</small>
 </p>

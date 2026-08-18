@@ -310,5 +310,5 @@ https://v4-fdl.kechuangai.com/ksc2/kdDWtKH8kEZgms9USQDhhBiDebstrRGHrI8frWDTxRbLW
 ---
 
 <p align="center">
-  <small>© 2025 DMXAPI kling-v2-6-text2video </small>
+  <small>© 2026 DMXAPI kling-v2-6-text2video </small>
 </p>

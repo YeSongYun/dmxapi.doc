@@ -49,5 +49,5 @@ const { site, theme, page, frontmatter } = useData()
 Check out the documentation for the [full list of runtime APIs](https://vitepress.dev/reference/runtime-api#usedata).
 
 <p align="center">
-  <small>© 2025 DMXAPI Runtime ...</small>
+  <small>© 2026 DMXAPI Runtime API Examples</small>
 </p>

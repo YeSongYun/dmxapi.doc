@@ -210,5 +210,5 @@ else:
 ---
 
 <p align="center">
-  <small>© 2025 DMXAPI OpenAI STT</small>
+  <small>© 2026 DMXAPI OpenAI STT</small>
 </p>

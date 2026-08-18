@@ -348,6 +348,6 @@ https://help.aliyun.com/zh/model-studio/qwen3-omni-captioner
 
 <p align="center">
 
-  <small>© 2025 DMXAPI qwen3-omni-30b-a3b-captioner音频理解 </small>
+  <small>© 2026 DMXAPI qwen3-omni-30b-a3b-captioner音频理解 </small>
 
 </p>

@@ -38,5 +38,5 @@ features:
 ---
 
 <p align="center">
-  <small>© 2025 DMXAPI 文档首页</small>
+  <small>© 2026 DMXAPI 文档首页</small>
 </p>

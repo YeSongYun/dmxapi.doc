@@ -17,5 +17,5 @@
 ![cline](img/cline_04.png)
 
 <p align="center">
-  <small>© 2025 DMXAPI VSCode C...</small>
+  <small>© 2026 DMXAPI VSCode CLine 插件 客户端配置方法</small>
 </p>

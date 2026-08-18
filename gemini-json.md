@@ -115,5 +115,5 @@ print(response.text)  # 打印返回结果
 ---
 
 <p align="center">
-  <small>© 2025 DMXAPI Gemini json</small>
+  <small>© 2026 DMXAPI Gemini json</small>
 </p>

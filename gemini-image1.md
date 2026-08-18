@@ -320,5 +320,5 @@ print(response.text)
 ---
 
 <p align="center">
-  <small>© 2025 DMXAPI Gemini网络图片分析</small>
+  <small>© 2026 DMXAPI Gemini网络图片分析</small>
 </p>

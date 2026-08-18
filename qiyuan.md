@@ -48,5 +48,5 @@
 联系方法：直接找在线客服加微信。
 
 <p align="center">
-  <small>© 2025 DMXAPI 我们的AI探索之路</small>
+  <small>© 2026 DMXAPI 我们的AI探索之路</small>
 </p>

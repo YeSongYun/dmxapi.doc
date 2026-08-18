@@ -243,5 +243,5 @@ if __name__ == "__main__":
 ---
 
 <p align="center">
-  <small>© 2025 DMXAPI Gemini 视频</small>
+  <small>© 2026 DMXAPI Gemini 视频</small>
 </p>

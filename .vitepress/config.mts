@@ -32,7 +32,7 @@ export default defineConfig({
 
     footer: {
       message: '一个 <span class="key-gradient">Key</span> 用全球大模型',
-      copyright: 'Copyright © 2025 DMXAPI 版权所有'
+      copyright: 'Copyright © 2026 DMXAPI 版权所有'
     },
 
     //顶部菜单

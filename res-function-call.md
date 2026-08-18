@@ -298,5 +298,5 @@ else:
 ---
 
 <p align="center">
-  <small>© 2025 DMXAPI 函数调用</small>
+  <small>© 2026 DMXAPI 函数调用</small>
 </p>

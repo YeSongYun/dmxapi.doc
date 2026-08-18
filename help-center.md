@@ -18,5 +18,5 @@ http://qa.dmxapi.cn
 <img src="/img/hzy_image.jpg" alt="客服微信" width="240" />
 
 <p align="center">
-  <small>© 2025 DMXAPI 帮助中心</small>
+  <small>© 2026 DMXAPI 帮助中心</small>
 </p>
