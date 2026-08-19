@@ -8,11 +8,6 @@
 
 ## 接口
 
-脚本先一次读取最多 999 个令牌，再读取匹配令牌的完整 Key：
-
-- `GET https://www.dmxapi.cn/api/token/`：固定使用 `page=1`、`page_size=999`
-- `POST https://www.dmxapi.cn/api/token/{token_id}/key`：读取单个令牌的完整 Key
-
 认证：`SYSTEM_TOKEN` + `USER_ID`，详见 [系统令牌与用户 ID](security_token_ID.md)。搜索内容只用于本地筛选。
 
 ## 两种查询方式
@@ -21,12 +16,6 @@
 - 按完整 API Key 查询：`search_type = "key"`，`search_value` 填包含 `sk-` 前缀的完整 Key。
 
 ## Python 示例
-
-安装依赖：
-
-```powershell
-pip install requests
-```
 
 ```python
 from datetime import datetime

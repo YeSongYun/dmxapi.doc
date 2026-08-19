@@ -2,46 +2,15 @@
 
 根据令牌 ID 更新 API Key 的名称、额度、过期时间、模型/IP 限制和令牌限流配置。
 
-::: danger 更新接口为全量更新
-`PUT /api/token/` 会重置未提交的可写字段。必须先查询当前令牌，再用字段白名单构造完整请求。不要只发送 `id` 和要修改的单个字段。
-:::
-
 ::: danger 本示例会显示完整 API Key
 更新成功后，脚本会在终端直接输出完整 API Key。请只在可信的本地设备运行，不要截图、分享或写入日志。
 :::
 
 认证：`SYSTEM_TOKEN` + `USER_ID`，详见 [系统令牌与用户 ID](security_token_ID.md)。
 
-## 更新参数
-
-`token_id` 只用于指定要更新的令牌，不属于令牌配置。其余参数与创建令牌完全一致：
-
-| 字段 | 类型 | 发送建议 | 说明 |
-| --- | --- | --- | --- |
-| `name` | string | 本示例显式提供 | 令牌名称；建议非空 |
-| `expired_time` | integer | 本示例填写 `-1` 或正整数天数 | 接口接收 Unix 秒时间戳；本示例会将正整数天数自动转换为时间戳，`-1` 表示永不过期 |
-| `remain_quota` | integer | `unlimited_quota=false` 时填写金额 | 接口接收原始额度；本示例按 CNY 输入并自动换算，填写 `1` 表示 `1 CNY` |
-| `unlimited_quota` | boolean | 建议显式提供 | 是否无限额度；为 `true` 时通常将 `remain_quota` 设为 `0` |
-| `model_limits_enabled` | boolean | 建议显式提供 | 是否启用模型限制 |
-| `model_limits` | string | 建议显式提供 | 允许模型的英文逗号分隔字符串；关闭限制时传空字符串 |
-| `allow_ips` | string | 建议显式提供 | 每行一个 IP/CIDR；空字符串表示不限制 |
-| `group` | string | 固定发送 | 当前只有 `default` 分组，用户无需设置 |
-| `rate_limits_enabled` | boolean | 建议显式提供 | 是否启用单令牌限流 |
-| `rate_limits_time` | integer | 建议显式提供 | 时间窗口，单位为秒 |
-| `rate_limits_count` | integer | 建议显式提供 | 窗口内最大请求次数 |
-| `rate_limits_content` | string | 可选 | 超限提示语；后台 UI 标注留空时使用默认提示，最多 1024 字节 |
-
-脚本会自动保留当前的 `status` 和 `cross_group_retry`，无需额外设置。
-
 ## 一、查询要更新的令牌 ID
 
 先列出当前账号下的令牌，从结果中找到要更新的 `token_id`。
-
-安装依赖：
-
-```powershell
-pip install requests
-```
 
 ```python
 import requests

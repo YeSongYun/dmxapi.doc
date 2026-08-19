@@ -13,12 +13,6 @@
 
 ## 一、查询要删除的令牌 ID
 
-安装依赖：
-
-```powershell
-pip install requests
-```
-
 填写系统访问令牌和用户 ID 后运行：
 
 ```python

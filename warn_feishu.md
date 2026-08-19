@@ -5,7 +5,7 @@
 
 ## 一、在 DMXAPI 后台进入订阅管理
 
-登录 [DMXAPI](https://www.dmxapi.cn/) 后，依次进入 **个人设置 → 订阅管理**：
+登录 [DMXAPI](https://www.dmxapi.cn/) 后，依次进入 **个人资料 → 订阅管理**：
 
 1. **订阅事件**：选择 `余额不足预警`
 2. **通知方式**：选择 `飞书`
@@ -95,7 +95,7 @@ https://open.feishu.cn/open-apis/bot/v2/hook/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx
 
 ## 九、回到 DMXAPI 后台填写参数
 
-返回 DMXAPI 的 **个人设置 → 订阅管理** 页面，按下图依次填写并操作：
+返回 DMXAPI 的 **个人资料 → 订阅管理** 页面，按下图依次填写并操作：
 
 1. **Webhook URL**：粘贴上一步复制的飞书 Webhook 地址。
 2. **加签密钥**：若飞书机器人未启用签名校验则留空；若启用了，填入对应密钥。

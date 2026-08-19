@@ -1,17 +1,8 @@
 # 获取所有令牌
 
-获取当前账号下API Key 令牌信息，包括状态、额度、时间、模型/IP 限制和令牌限流配置。
+获取当前账号下API Key 令牌信息，包括状态、API 密钥、剩余额度、消耗额度、模型限制IP限制、令牌限流、创建时间、最后使用时间、过期时间的令牌信息。
 
 ## 接口
-
-- 方法：`GET`
-- 地址：`https://www.dmxapi.cn/api/token/`
-- 认证：`SYSTEM_TOKEN` + `USER_ID`，详见 [系统令牌与用户 ID](security_token_ID.md)
-- 参数：`page`（页码）、`page_size`（每页条数，最大 100）
-
-列表接口返回脱敏后的 `key`，本页直接使用该值展示。
-
-不脱敏时，脚本会逐个读取完整 Key：
 
 - 方法：`POST`
 - 地址：`https://www.dmxapi.cn/api/token/{token_id}/key`
@@ -23,12 +14,6 @@
 
 
 ## Python 示例
-
-安装依赖：
-
-```powershell
-pip install requests
-```
 
 ```python
 from datetime import datetime

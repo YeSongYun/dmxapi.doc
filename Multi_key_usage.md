@@ -6,8 +6,8 @@
 
 | 参数 | 说明 |
 |------|------|
-| `SYSTEM_TOKEN` | 系统令牌，获取路径：登录 DMXAPI → 工作台 → 个人设置 → 更多选项 → 系统令牌 |
-| `USER_ID` | 当前用户 ID，获取路径：登录 DMXAPI → 工作台 → 个人设置 |
+| `SYSTEM_TOKEN` | 系统令牌，获取路径：登录 DMXAPI → 工作台 → 个人资料 → 更多选项 → 系统令牌 |
+| `USER_ID` | 当前用户 ID，获取路径：登录 DMXAPI → 工作台 → 个人资料 |
 
 :::warning
 请妥善保管您的系统令牌！SYSTEM_TOKEN 拥有账户管理权限，严禁泄露给他人或提交到公开仓库。
@@ -63,11 +63,11 @@ from datetime import datetime, timedelta
 # ===== 只需修改这里 =====
 
 # 【SYSTEM_TOKEN】(string, 必填) 系统令牌
-# 获取路径：登录 DMXAPI → 工作台 → 个人设置 → 更多选项 → 系统令牌
+# 获取路径：登录 DMXAPI → 工作台 → 个人资料 → 更多选项 → 系统令牌
 SYSTEM_TOKEN = "你的系统令牌"
 
 # 【USER_ID】(string, 必填) 当前用户 ID
-# 获取路径：登录 DMXAPI → 工作台 → 个人设置
+# 获取路径：登录 DMXAPI → 工作台 → 个人资料
 USER_ID = "你的用户id"
 
 # 【KEY_NAME_FILTER】(string, 可选) 令牌名称过滤关键字
