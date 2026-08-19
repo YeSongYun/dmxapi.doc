@@ -26,3 +26,6 @@ __pycache__/
 
 # Playwright 临时文件
 .playwright-mcp/
+
+# 本地 MCP 配置
+.mcp.json

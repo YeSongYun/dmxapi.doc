@@ -6,14 +6,15 @@
 脚本会在终端直接输出完整 API Key。请只在可信的本地设备运行，不要截图、分享或写入日志。
 :::
 
-## 接口
+## 📌 接口地址
 
-脚本先一次读取最多 999 个令牌，再读取匹配令牌的完整 Key：
+```
+GET   https://www.dmxapi.cn/api/token/
+POST  https://www.dmxapi.cn/api/token/{token_id}/key
+```
 
-- `GET https://www.dmxapi.cn/api/token/`：固定使用 `page=1`、`page_size=999`
-- `POST https://www.dmxapi.cn/api/token/{token_id}/key`：读取单个令牌的完整 Key
-
-认证：`SYSTEM_TOKEN` + `USER_ID`，详见 [系统令牌与用户 ID](security_token_ID.md)。搜索内容只用于本地筛选。
+- 认证：`SYSTEM_TOKEN` + `USER_ID`，详见 [系统令牌与用户 ID](security_token_ID.md)
+- 搜索内容只用于本地筛选
 
 ## 两种查询方式
 
@@ -21,12 +22,6 @@
 - 按完整 API Key 查询：`search_type = "key"`，`search_value` 填包含 `sk-` 前缀的完整 Key。
 
 ## Python 示例
-
-安装依赖：
-
-```powershell
-pip install requests
-```
 
 ```python
 from datetime import datetime
@@ -40,7 +35,6 @@ search_value = "DMXAPI创建测试"
 
 # 下面无需修改
 BASE_URL = "https://www.dmxapi.cn"
-QUOTA_PER_CNY = 500_000
 headers = {
     "Authorization": f"Bearer {SYSTEM_TOKEN}",
     "Dmx-Api-User": str(USER_ID),
@@ -96,7 +90,7 @@ for token, api_key in tokens:
     remain_quota_text = (
         "无限额度"
         if token.get("unlimited_quota")
-        else f"{token.get('remain_quota', 0) / QUOTA_PER_CNY:.4f} CNY"
+        else f"{token.get('remain_quota', 0) / 500000:.4f} CNY"  # 500000 原始额度 = 1 元
     )
     model_limits_text = (str(token.get("model_limits") or "").strip() if token.get("model_limits_enabled") else "") or "无限制"
     allow_ips_text = "、".join(
@@ -108,7 +102,7 @@ for token, api_key in tokens:
         f"状态：{'已启用' if token.get('status') == 1 else '已禁用'}\n"
         f"API 密钥：{api_key}\n"
         f"剩余额度：{remain_quota_text}\n"
-        f"消耗额度：{token.get('used_quota', 0) / QUOTA_PER_CNY:.4f} CNY\n"
+        f"消耗额度：{token.get('used_quota', 0) / 500000:.4f} CNY\n"
         f"模型限制：{model_limits_text}\n"
         f"IP 限制：{allow_ips_text}\n"
         f"创建时间：{time_text(token.get('created_time'))}\n"

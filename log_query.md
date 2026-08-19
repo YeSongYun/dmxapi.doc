@@ -4,7 +4,8 @@
 
 ![log_query](img/log_query_01.png)
 
-## 接口地址
+## 📌 接口地址
+
 ```
 https://www.dmxapi.cn/api/log/self/stat
 ```
@@ -42,17 +43,16 @@ from datetime import datetime
 
 # API 平台根地址
 BASE_URL = "https://www.dmxapi.cn"
-QUOTA_PER_CNY = 500_000
 
 # ------------------------------------------------------------------------------
 # 认证信息配置 (请替换为你自己的信息)
 # ------------------------------------------------------------------------------
 # SYSTEM_TOKEN: 系统访问令牌，用于平台管理接口认证
-#               获取方式: 登录 dmxapi.cn -> 个人设置 -> 安全 -> 访问令牌
+#               获取方式: 登录 dmxapi.cn -> 个人资料 -> 安全 -> 访问令牌
 SYSTEM_TOKEN = "YOUR_SYSTEM_TOKEN"  # 替换为你的系统令牌
 
 # USER_ID: 用户唯一标识
-#          获取方式: 登录 dmxapi.cn -> 个人设置 -> 个人资料
+#          获取方式: 登录 dmxapi.cn -> 个人资料
 USER_ID = "YOUR_USER_ID"  # 替换为你的用户 ID
 
 # ------------------------------------------------------------------------------
@@ -200,7 +200,7 @@ def print_stat(data: dict, start_datetime: datetime, end_datetime: datetime):
     # 提取并转换数据
     # -------------------------------------------------------------------------
     quota = data.get("quota", 0)           # 原始额度值
-    total_consumed_quota_cny = quota / QUOTA_PER_CNY  # 转换为总消耗（CNY）
+    total_consumed_quota_cny = quota / 500000  # 转换为总消耗（CNY），500000 原始额度 = 1 元
 
     # -------------------------------------------------------------------------
     # 输出统计结果

@@ -1,8 +1,13 @@
-# DMXAPI 模型信息接口
+# DMXAPI 模型列表查询接口
+获取模型列表。
+## 📌 接口地址
 
-## 接口地址
-`GET https://www.dmxapi.cn/v1/models`  
-获取模型列表及倍率信息。
+```
+https://www.dmxapi.cn/v1/models
+```
+
+- 请求方式：`GET`
+
 
 ## 请求示例
 ```python
@@ -11,13 +16,11 @@ import requests
 
 # ----------- 1. 请求参数（自行替换 ↓） -----------
 API_KEY = "sk-请在这里填写 DMXAPI 令牌"  # 模型调用令牌，不是系统访问令牌
-USER_ID = "请在这里填写用户 ID"  # 与 API Key 属于同一账号
 BASE_URL = "https://www.dmxapi.cn"  # 平台根地址
 
 headers = {
     "Authorization": API_KEY,
     "Accept": "application/json",
-    "Dmx-Api-User": USER_ID,
 }
 
 # ----------- 2. 发送请求 -----------

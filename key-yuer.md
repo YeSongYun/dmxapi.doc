@@ -1,25 +1,19 @@
 # 查询令牌余额
 
-填写 DMXAPI API Key、系统访问令牌和用户 ID。脚本会一次读取最多 999 个令牌并查找匹配项，只显示令牌名称、状态、已用额度、剩余额度和过期时间。
+填写 DMXAPI API Key、系统访问令牌和用户 ID。脚本会读取令牌并查找匹配项，只显示令牌名称、状态、已用额度、剩余额度。
 
 ::: warning 凭据需要属于同一账号
 完整 API Key 只在本地转换为脱敏形式，不会作为查询参数发送。
 :::
 
-## 接口
+## 📌 接口地址
 
-- 方法：`GET`
-- 地址：`https://www.dmxapi.cn/api/token/`
+```
+https://www.dmxapi.cn/api/token/
+```
+
+- 请求方式：`GET`
 - 认证：`SYSTEM_TOKEN` + `USER_ID`，详见 [系统令牌与用户 ID](security_token_ID.md)
-- 查询参数：固定使用 `page=1`、`page_size=999`
-
-## 需要填写的三个参数
-
-| 参数 | 用途 | 获取位置 |
-| --- | --- | --- |
-| `API_KEY` | 要查询余额的 DMXAPI 调用令牌 | 工作台 → API 令牌 |
-| `SYSTEM_TOKEN` | 调用平台管理接口 | 个人设置 → 安全 → 访问令牌 |
-| `USER_ID` | 指定系统令牌所属用户 | 个人设置 → 个人资料 |
 
 ## Python 示例
 
@@ -34,7 +28,6 @@ USER_ID = "请在这里填写用户 ID"  # 三项凭据需属于同一账号
 
 # 下面无需修改
 BASE_URL = "https://www.dmxapi.cn"
-QUOTA_PER_CNY = 500_000
 headers = {
     "Authorization": f"Bearer {SYSTEM_TOKEN}",
     "Dmx-Api-User": str(USER_ID),
@@ -63,13 +56,13 @@ if token is None:
 remain_quota_text = (
     "无限额度"
     if token.get("unlimited_quota")
-    else f"{token.get('remain_quota', 0) / QUOTA_PER_CNY:.4f} CNY"
+    else f"{token.get('remain_quota', 0) / 500000:.4f} CNY"  # 500000 原始额度 = 1 元
 )
 
 print(
     f"令牌名称：{token.get('name', '')}\n"
     f"状态：{'启用' if token.get('status') == 1 else '禁用'}\n"
-    f"已用额度：{token.get('used_quota', 0) / QUOTA_PER_CNY:.4f} CNY\n"
+    f"已用额度：{token.get('used_quota', 0) / 500000:.4f} CNY\n"
     f"剩余额度：{remain_quota_text}\n"
     f"过期时间：{time_text(token.get('expired_time'))}"
 )

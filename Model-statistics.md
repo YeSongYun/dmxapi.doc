@@ -1,11 +1,14 @@
 # 模型周期消耗统计
 使用该接口将返回当天(或自定义时间周期)的模型用量统计
 
-## 请求地址
-`https://www.dmxapi.cn/api/data/self`
+## 📌 接口地址
+
+```
+https://www.dmxapi.cn/api/data/self
+```
 
 :::tip 注意
-系统访问令牌在个人设置 → 安全 → 访问令牌中获取。
+系统访问令牌在个人资料 → 安全 → 访问令牌中获取。
 :::
 
 ## 示例代码
@@ -20,7 +23,7 @@ DMXAPI 模型用量查询工具
 
 使用方法:
     1. 将 SYSTEM_TOKEN 替换为你的系统令牌
-    2. 将 USER_ID 替换为你的用户 ID（在个人设置中获取）
+    2. 将 USER_ID 替换为你的用户 ID（在个人资料中获取）
     3. 设置查询时间范围（可选）:
        - start_time_text: 开始时间，格式 "2025-12-09 11:00"，留空则默认今天零点
        - end_time_text: 结束时间，格式 "2025-12-09 15:00"，留空则默认当前时间
@@ -38,11 +41,10 @@ from datetime import datetime
 
 # API 平台根地址
 BASE_URL = "https://www.dmxapi.cn"
-QUOTA_PER_CNY = 500_000
 
 # 认证信息 - 请替换为你自己的信息
 SYSTEM_TOKEN = "YOUR_SYSTEM_TOKEN"  # 系统令牌，用于身份验证
-USER_ID = "YOUR_USER_ID"                                  # 用户 ID，在「个人设置」中获取
+USER_ID = "YOUR_USER_ID"                                  # 用户 ID，在「个人资料」中获取
 
 # ----------------------------------------------------------------------------
 # 查询时间范围配置（可选）
@@ -176,7 +178,7 @@ def print_usage(data: list):
     """
     格式化输出模型使用数据
 
-    以表格形式打印查询结果，额度值会按 QUOTA_PER_CNY 转换为 CNY。
+    以表格形式打印查询结果，额度值会按 500000 原始额度 = 1 元 转换为 CNY。
 
     Args:
         data (list): get_model_usage() 返回的数据列表
@@ -200,7 +202,7 @@ def print_usage(data: list):
     # 打印数据行（额度除以 500000 转换单位）
     for item in data:
         model_name = pad_to_width(item['model_name'], col_model)
-        consumed_quota_cny = f"{item['quota'] / QUOTA_PER_CNY:>12.4f}"
+        consumed_quota_cny = f"{item['quota'] / 500000:>12.4f}"  # 500000 原始额度 = 1 元
         created_time_text = pad_to_width(item['created_time_text'], col_date)
         print(f"{model_name} {consumed_quota_cny} {created_time_text}")
 

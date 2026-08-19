@@ -6,8 +6,8 @@
 
 | 参数 | 说明 |
 |------|------|
-| `SYSTEM_TOKEN` | 系统令牌，获取路径：登录 DMXAPI → 工作台 → 个人设置 → 更多选项 → 系统令牌 |
-| `USER_ID` | 当前用户 ID，获取路径：登录 DMXAPI → 工作台 → 个人设置 |
+| `SYSTEM_TOKEN` | 系统令牌，获取路径：登录 DMXAPI → 工作台 → 个人资料 → 更多选项 → 系统令牌 |
+| `USER_ID` | 当前用户 ID，获取路径：登录 DMXAPI → 工作台 → 个人资料 |
 
 :::warning
 请妥善保管您的系统令牌！SYSTEM_TOKEN 拥有账户管理权限，严禁泄露给他人或提交到公开仓库。
@@ -27,13 +27,15 @@
 所有"按 Key 筛选"都通过 `token_name`（令牌名称）字段进行，不是 Key 本身。**强烈建议分发 Key 时给每个 Key 取有意义的名字**（例如 `客户A`、`项目X-生产`、`员工-张三`），这样统计自然按业务分组。
 :::
 
-## 接口说明
+## 📌 接口地址
 
-- 请求方式：`GET`
-- 请求地址（依次调用）：
-  - `https://www.dmxapi.cn/api/token/`
-  - `https://www.dmxapi.cn/api/log/self/stat`
-  - `https://www.dmxapi.cn/api/log/self`
+```
+https://www.dmxapi.cn/api/token/
+https://www.dmxapi.cn/api/log/self/stat
+https://www.dmxapi.cn/api/log/self
+```
+
+- 请求方式：`GET`（依次调用上述三个接口）
 - 认证头：`Authorization: Bearer {SYSTEM_TOKEN}` + `Dmx-Api-User: {USER_ID}`
 - 用途：组合查询多 Key 的累计/分时段用量、剩余额度与最近调用记录
 
@@ -63,11 +65,11 @@ from datetime import datetime, timedelta
 # ===== 只需修改这里 =====
 
 # 【SYSTEM_TOKEN】(string, 必填) 系统令牌
-# 获取路径：登录 DMXAPI → 工作台 → 个人设置 → 更多选项 → 系统令牌
+# 获取路径：登录 DMXAPI → 工作台 → 个人资料 → 更多选项 → 系统令牌
 SYSTEM_TOKEN = "你的系统令牌"
 
 # 【USER_ID】(string, 必填) 当前用户 ID
-# 获取路径：登录 DMXAPI → 工作台 → 个人设置
+# 获取路径：登录 DMXAPI → 工作台 → 个人资料
 USER_ID = "你的用户id"
 
 # 【KEY_NAME_FILTER】(string, 可选) 令牌名称过滤关键字

@@ -1,21 +1,16 @@
 # 获取所有令牌
 
-获取当前账号下API Key 令牌信息，包括状态、额度、时间、模型/IP 限制和令牌限流配置。
+获取当前账号下API Key 令牌信息，包括状态、API 密钥、剩余额度、消耗额度、模型限制IP限制、令牌限流、创建时间、最后使用时间、过期时间的令牌信息。
 
-## 接口
+## 📌 接口地址
 
-- 方法：`GET`
-- 地址：`https://www.dmxapi.cn/api/token/`
+```
+GET   https://www.dmxapi.cn/api/token/
+POST  https://www.dmxapi.cn/api/token/{token_id}/key
+```
+
 - 认证：`SYSTEM_TOKEN` + `USER_ID`，详见 [系统令牌与用户 ID](security_token_ID.md)
-- 参数：`page`（页码）、`page_size`（每页条数，最大 100）
-
-列表接口返回脱敏后的 `key`，本页直接使用该值展示。
-
-不脱敏时，脚本会逐个读取完整 Key：
-
-- 方法：`POST`
-- 地址：`https://www.dmxapi.cn/api/token/{token_id}/key`
-- 完整 Key：响应中的 `data.key`
+- 完整 Key：`POST` 响应中的 `data.key`
 
 ::: danger 完整 Key 会直接显示在终端
 将 `MASK_KEYS` 改为 `False` 后，请只在可信终端运行，不要截图、分享或记录输出。
@@ -23,12 +18,6 @@
 
 
 ## Python 示例
-
-安装依赖：
-
-```powershell
-pip install requests
-```
 
 ```python
 from datetime import datetime
@@ -44,7 +33,6 @@ PAGE_SIZE =10   # 每页显示条数
 
 # 下面无需修改
 BASE_URL = "https://www.dmxapi.cn"
-QUOTA_PER_CNY = 500_000
 headers = {
     "Authorization": f"Bearer {SYSTEM_TOKEN}",
     "Dmx-Api-User": str(USER_ID),
@@ -82,7 +70,7 @@ for i, token in enumerate(tokens):
     remain_quota_text = (
         "无限额度"
         if token.get("unlimited_quota")
-        else f"{token.get('remain_quota', 0) / QUOTA_PER_CNY:.4f} CNY"
+        else f"{token.get('remain_quota', 0) / 500000:.4f} CNY"  # 500000 原始额度 = 1 元
     )
     model_limits_text = (str(token.get("model_limits") or "").strip() if token.get("model_limits_enabled") else "") or "无限制"
     allow_ips_text = "、".join(
@@ -100,7 +88,7 @@ for i, token in enumerate(tokens):
         f"状态：{'已启用' if token.get('status') == 1 else '已禁用'}\n"
         f"API 密钥：{api_key}\n"
         f"剩余额度：{remain_quota_text}\n"
-        f"消耗额度：{token.get('used_quota', 0) / QUOTA_PER_CNY:.4f} CNY\n"
+        f"消耗额度：{token.get('used_quota', 0) / 500000:.4f} CNY\n"
         f"模型限制：{model_limits_text}\n"
         f"IP 限制：{allow_ips_text}\n"
         f"令牌限流：{rate_limits_text}\n"
