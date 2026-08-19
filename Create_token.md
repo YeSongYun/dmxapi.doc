@@ -56,7 +56,6 @@ rate_limits_content = ""  # 超出限流时返回的提示语
 quantity = 1  # 要创建的令牌数量
 
 # 下面无需修改
-QUOTA_PER_CNY = 500_000
 BASE_URL = "https://www.dmxapi.cn"
 expired_time = -1 if expired_time == -1 else int(time.time() + expired_time * 86400)
 headers = {
@@ -66,7 +65,7 @@ headers = {
 
 payload = {
     "expired_time": expired_time,
-    "remain_quota": int(remain_quota * QUOTA_PER_CNY),
+    "remain_quota": int(remain_quota * 500000),  # 1 元 = 500000 原始额度
     "unlimited_quota": unlimited_quota,
     "model_limits_enabled": model_limits_enabled,
     "model_limits": model_limits,

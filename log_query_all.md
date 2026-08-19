@@ -44,7 +44,6 @@ ACCESS_TOKEN = "***********************************************"  # 系统令牌
 QUERY_MODE = "month"  # 默认最近 30 天；也可选 today、yesterday、week、custom
 CUSTOM_START_TIME = "2025-01-01 00:00:00"  # custom 模式的开始时间
 CUSTOM_END_TIME = "2025-01-01 23:59:59"  # custom 模式的结束时间
-QUOTA_PER_CNY = 500_000  # 多少原始额度等于 1 元；如站点配置不同，请同步修改
 MODEL_NAME = ""  # 模型名称；留空表示不筛选，含 % 时支持通配匹配
 TOKEN_NAME = ""  # 令牌名称；留空表示不筛选
 REQUEST_ID = ""  # DMXAPI 请求 ID；留空表示不筛选
@@ -132,9 +131,6 @@ def fetch_all_logs(
     return result["data"]
 
 
-if QUOTA_PER_CNY <= 0:
-    raise ValueError("QUOTA_PER_CNY 必须大于 0")
-
 start_time, end_time = get_time_range()
 print("正在单次获取指定时间范围内的全部日志...")
 data = fetch_all_logs(
@@ -143,7 +139,7 @@ data = fetch_all_logs(
 )
 logs = data.get("items", [])
 total = data.get("total", len(logs))
-total_cny = sum(item.get("quota", 0) for item in logs) / QUOTA_PER_CNY
+total_cny = sum(item.get("quota", 0) for item in logs) / 500000  # 500000 原始额度 = 1 元
 print(f"已获取 {len(logs)} 条日志")
 
 separator = "-" * 120
@@ -173,7 +169,7 @@ def build_summary(report_logs: list[dict], matched_total: int) -> str:
         model_name = str(item.get("model_name", ""))[:28]
         prompt_tokens = item.get("prompt_tokens", 0)
         completion_tokens = item.get("completion_tokens", 0)
-        quota_cny = item.get("quota", 0) / QUOTA_PER_CNY
+        quota_cny = item.get("quota", 0) / 500000  # 500000 原始额度 = 1 元
         summary_lines.append(
             f"{index:>4}  {model_name:<30} {quota_cny:>12.6f} "
             f"{prompt_tokens:>12} {completion_tokens:>12} "
@@ -194,7 +190,7 @@ def build_details(report_logs: list[dict]) -> str:
         )
         prompt_tokens = item.get("prompt_tokens", 0)
         completion_tokens = item.get("completion_tokens", 0)
-        quota_cny = item.get("quota", 0) / QUOTA_PER_CNY
+        quota_cny = item.get("quota", 0) / 500000  # 500000 原始额度 = 1 元
         detail_lines.extend(
             [
                 f"序号：{index}",

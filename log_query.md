@@ -42,7 +42,6 @@ from datetime import datetime
 
 # API 平台根地址
 BASE_URL = "https://www.dmxapi.cn"
-QUOTA_PER_CNY = 500_000
 
 # ------------------------------------------------------------------------------
 # 认证信息配置 (请替换为你自己的信息)
@@ -200,7 +199,7 @@ def print_stat(data: dict, start_datetime: datetime, end_datetime: datetime):
     # 提取并转换数据
     # -------------------------------------------------------------------------
     quota = data.get("quota", 0)           # 原始额度值
-    total_consumed_quota_cny = quota / QUOTA_PER_CNY  # 转换为总消耗（CNY）
+    total_consumed_quota_cny = quota / 500000  # 转换为总消耗（CNY），500000 原始额度 = 1 元
 
     # -------------------------------------------------------------------------
     # 输出统计结果

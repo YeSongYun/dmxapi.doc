@@ -34,7 +34,6 @@ USER_ID = "请在这里填写用户 ID"  # 三项凭据需属于同一账号
 
 # 下面无需修改
 BASE_URL = "https://www.dmxapi.cn"
-QUOTA_PER_CNY = 500_000
 headers = {
     "Authorization": f"Bearer {SYSTEM_TOKEN}",
     "Dmx-Api-User": str(USER_ID),
@@ -63,13 +62,13 @@ if token is None:
 remain_quota_text = (
     "无限额度"
     if token.get("unlimited_quota")
-    else f"{token.get('remain_quota', 0) / QUOTA_PER_CNY:.4f} CNY"
+    else f"{token.get('remain_quota', 0) / 500000:.4f} CNY"  # 500000 原始额度 = 1 元
 )
 
 print(
     f"令牌名称：{token.get('name', '')}\n"
     f"状态：{'启用' if token.get('status') == 1 else '禁用'}\n"
-    f"已用额度：{token.get('used_quota', 0) / QUOTA_PER_CNY:.4f} CNY\n"
+    f"已用额度：{token.get('used_quota', 0) / 500000:.4f} CNY\n"
     f"剩余额度：{remain_quota_text}\n"
     f"过期时间：{time_text(token.get('expired_time'))}"
 )

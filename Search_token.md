@@ -40,7 +40,6 @@ search_value = "DMXAPI创建测试"
 
 # 下面无需修改
 BASE_URL = "https://www.dmxapi.cn"
-QUOTA_PER_CNY = 500_000
 headers = {
     "Authorization": f"Bearer {SYSTEM_TOKEN}",
     "Dmx-Api-User": str(USER_ID),
@@ -96,7 +95,7 @@ for token, api_key in tokens:
     remain_quota_text = (
         "无限额度"
         if token.get("unlimited_quota")
-        else f"{token.get('remain_quota', 0) / QUOTA_PER_CNY:.4f} CNY"
+        else f"{token.get('remain_quota', 0) / 500000:.4f} CNY"  # 500000 原始额度 = 1 元
     )
     model_limits_text = (str(token.get("model_limits") or "").strip() if token.get("model_limits_enabled") else "") or "无限制"
     allow_ips_text = "、".join(
@@ -108,7 +107,7 @@ for token, api_key in tokens:
         f"状态：{'已启用' if token.get('status') == 1 else '已禁用'}\n"
         f"API 密钥：{api_key}\n"
         f"剩余额度：{remain_quota_text}\n"
-        f"消耗额度：{token.get('used_quota', 0) / QUOTA_PER_CNY:.4f} CNY\n"
+        f"消耗额度：{token.get('used_quota', 0) / 500000:.4f} CNY\n"
         f"模型限制：{model_limits_text}\n"
         f"IP 限制：{allow_ips_text}\n"
         f"创建时间：{time_text(token.get('created_time'))}\n"

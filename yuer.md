@@ -18,7 +18,6 @@ import requests
 SYSTEM_TOKEN = "请在这里填写系统访问令牌"  # 调用平台管理接口的凭据
 USER_ID = "请在这里填写用户 ID"  # 要查询余额的用户 ID
 BASE_URL = "https://www.dmxapi.cn"  # 平台根地址
-QUOTA_PER_CNY = 500_000  # 500000 原始额度等于 1 CNY
 
 headers = {
     "Authorization": f"Bearer {SYSTEM_TOKEN}",  # Bearer 后携带系统访问令牌
@@ -37,7 +36,7 @@ if not result.get("success"):
 
 quota = result["data"]["quota"]  # 账户原始额度；500000 等于 1 CNY
 print(f"账户额度: {quota:,}")
-print(f"人民币余额: ￥{quota / QUOTA_PER_CNY:.6f}")
+print(f"人民币余额: ￥{quota / 500000:.6f}")  # 500000 原始额度 = 1 元
 ```
 
 ## 响应说明

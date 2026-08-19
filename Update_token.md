@@ -112,7 +112,6 @@ rate_limits_count = 60  # 每个窗口允许的最大请求数
 rate_limits_content = ""  # 超出限流时返回的提示语
 
 # 下面无需修改
-QUOTA_PER_CNY = 500_000
 BASE_URL = "https://www.dmxapi.cn"
 expired_time = -1 if expired_time == -1 else int(time.time() + expired_time * 86400)
 headers = {
@@ -140,7 +139,7 @@ payload = {
     "id": token_id,
     "name": name,
     "expired_time": expired_time,
-    "remain_quota": int(remain_quota * QUOTA_PER_CNY),
+    "remain_quota": int(remain_quota * 500000),  # 1 元 = 500000 原始额度
     "unlimited_quota": unlimited_quota,
     "model_limits_enabled": model_limits_enabled,
     "model_limits": model_limits,
@@ -177,7 +176,7 @@ api_key = api_key if api_key.startswith("sk-") else f"sk-{api_key}"
 remain_quota_text = (
     "无限额度"
     if updated.get("unlimited_quota")
-    else f"{updated.get('remain_quota', 0) / QUOTA_PER_CNY:.4f} CNY"
+    else f"{updated.get('remain_quota', 0) / 500000:.4f} CNY"  # 500000 原始额度 = 1 元
 )
 model_limits_text = (
     str(updated.get("model_limits") or "").strip()
@@ -197,7 +196,7 @@ print(
     f"状态：{'已启用' if updated.get('status') == 1 else '已禁用'}\n"
     f"API 密钥：{api_key}\n"
     f"剩余额度：{remain_quota_text}\n"
-    f"消耗额度：{updated.get('used_quota', 0) / QUOTA_PER_CNY:.4f} CNY\n"
+    f"消耗额度：{updated.get('used_quota', 0) / 500000:.4f} CNY\n"
     f"模型限制：{model_limits_text}\n"
     f"IP 限制：{allow_ips_text}\n"
     f"创建时间：{time_text(updated.get('created_time'))}\n"
