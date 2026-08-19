@@ -9,8 +9,15 @@
 ## 📌 接口地址
 
 ```
-GET   https://www.dmxapi.cn/api/token/
-POST  https://www.dmxapi.cn/api/token/{token_id}/key
+PUT   https://www.dmxapi.cn/api/token/
+```
+
+脚本还会依次调用以下辅助接口：
+
+```
+GET   https://www.dmxapi.cn/api/token/              # 查询令牌列表，用于找到 token_id
+GET   https://www.dmxapi.cn/api/token/{token_id}    # 读取当前配置，构造全量更新请求
+POST  https://www.dmxapi.cn/api/token/{token_id}/key # 更新后读取完整 API Key
 ```
 
 - 认证：`SYSTEM_TOKEN` + `USER_ID`，详见 [系统令牌与用户 ID](security_token_ID.md)
