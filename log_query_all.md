@@ -6,11 +6,13 @@
 
 ![使用日志中的消耗细化列表](img/log_query_all_01.png)
 
-## 接口地址
+## 📌 接口地址
 
-| 接口 | 请求方式 | URL |
-|------|---------|-----|
-| 查询当前用户的消耗明细 | GET | `https://www.dmxapi.cn/api/log/self` |
+```
+https://www.dmxapi.cn/api/log/self
+```
+
+- 请求方式：`GET`
 
 :::warning 认证格式
 本接口通过 `Authorization: Bearer {SYSTEM_TOKEN}` 认证,`SYSTEM_TOKEN` 的获取方式详见 [系统令牌与用户 ID](security_token_ID.md)。请不要在公开代码、截图、日志或客户端输出中暴露真实令牌，运行代码前必须替换为自己的令牌。

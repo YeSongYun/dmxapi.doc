@@ -1,8 +1,11 @@
 # 模型周期消耗统计
 使用该接口将返回当天(或自定义时间周期)的模型用量统计
 
-## 请求地址
-`https://www.dmxapi.cn/api/data/self`
+## 📌 接口地址
+
+```
+https://www.dmxapi.cn/api/data/self
+```
 
 :::tip 注意
 系统访问令牌在个人资料 → 安全 → 访问令牌中获取。

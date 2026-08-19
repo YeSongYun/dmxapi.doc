@@ -2,11 +2,15 @@
 
 获取当前账号下API Key 令牌信息，包括状态、API 密钥、剩余额度、消耗额度、模型限制IP限制、令牌限流、创建时间、最后使用时间、过期时间的令牌信息。
 
-## 接口
+## 📌 接口地址
 
-- 方法：`POST`
-- 地址：`https://www.dmxapi.cn/api/token/{token_id}/key`
-- 完整 Key：响应中的 `data.key`
+```
+GET   https://www.dmxapi.cn/api/token/
+POST  https://www.dmxapi.cn/api/token/{token_id}/key
+```
+
+- 认证：`SYSTEM_TOKEN` + `USER_ID`，详见 [系统令牌与用户 ID](security_token_ID.md)
+- 完整 Key：`POST` 响应中的 `data.key`
 
 ::: danger 完整 Key 会直接显示在终端
 将 `MASK_KEYS` 改为 `False` 后，请只在可信终端运行，不要截图、分享或记录输出。

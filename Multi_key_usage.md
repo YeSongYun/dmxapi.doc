@@ -27,13 +27,15 @@
 所有"按 Key 筛选"都通过 `token_name`（令牌名称）字段进行，不是 Key 本身。**强烈建议分发 Key 时给每个 Key 取有意义的名字**（例如 `客户A`、`项目X-生产`、`员工-张三`），这样统计自然按业务分组。
 :::
 
-## 接口说明
+## 📌 接口地址
 
-- 请求方式：`GET`
-- 请求地址（依次调用）：
-  - `https://www.dmxapi.cn/api/token/`
-  - `https://www.dmxapi.cn/api/log/self/stat`
-  - `https://www.dmxapi.cn/api/log/self`
+```
+https://www.dmxapi.cn/api/token/
+https://www.dmxapi.cn/api/log/self/stat
+https://www.dmxapi.cn/api/log/self
+```
+
+- 请求方式：`GET`（依次调用上述三个接口）
 - 认证头：`Authorization: Bearer {SYSTEM_TOKEN}` + `Dmx-Api-User: {USER_ID}`
 - 用途：组合查询多 Key 的累计/分时段用量、剩余额度与最近调用记录
 

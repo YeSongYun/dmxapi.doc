@@ -1,7 +1,12 @@
 # DMXAPI 用户信息接口
 
-## 接口地址
-`GET https://www.dmxapi.cn/api/user/self`
+## 📌 接口地址
+
+```
+https://www.dmxapi.cn/api/user/self
+```
+
+- 请求方式：`GET`
 
 ## 认证方式
 需要在请求头中同时携带系统访问令牌和用户 ID。两项必须属于同一个账号。

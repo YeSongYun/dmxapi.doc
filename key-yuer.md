@@ -6,10 +6,13 @@
 完整 API Key 只在本地转换为脱敏形式，不会作为查询参数发送。
 :::
 
-## 接口
+## 📌 接口地址
 
-- 方法：`GET`
-- 地址：`https://www.dmxapi.cn/api/token/`
+```
+https://www.dmxapi.cn/api/token/
+```
+
+- 请求方式：`GET`
 - 认证：`SYSTEM_TOKEN` + `USER_ID`，详见 [系统令牌与用户 ID](security_token_ID.md)
 
 ## Python 示例

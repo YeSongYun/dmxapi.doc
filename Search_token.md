@@ -6,9 +6,15 @@
 脚本会在终端直接输出完整 API Key。请只在可信的本地设备运行，不要截图、分享或写入日志。
 :::
 
-## 接口
+## 📌 接口地址
 
-认证：`SYSTEM_TOKEN` + `USER_ID`，详见 [系统令牌与用户 ID](security_token_ID.md)。搜索内容只用于本地筛选。
+```
+GET   https://www.dmxapi.cn/api/token/
+POST  https://www.dmxapi.cn/api/token/{token_id}/key
+```
+
+- 认证：`SYSTEM_TOKEN` + `USER_ID`，详见 [系统令牌与用户 ID](security_token_ID.md)
+- 搜索内容只用于本地筛选
 
 ## 两种查询方式
 

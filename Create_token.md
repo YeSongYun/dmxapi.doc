@@ -2,10 +2,13 @@
 
 通过平台管理接口创建 API Key。
 
-## 接口
+## 📌 接口地址
 
-- 方法：`POST`
-- 地址：`https://www.dmxapi.cn/api/token/`
+```
+https://www.dmxapi.cn/api/token/
+```
+
+- 请求方式：`POST`
 - 认证：`SYSTEM_TOKEN` + `USER_ID`，详见 [系统令牌与用户 ID](security_token_ID.md)
 
 

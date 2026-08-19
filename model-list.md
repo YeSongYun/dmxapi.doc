@@ -1,7 +1,12 @@
 # DMXAPI 模型列表查询接口
 获取模型列表。
-## 接口地址
-`GET https://www.dmxapi.cn/v1/models`  
+## 📌 接口地址
+
+```
+https://www.dmxapi.cn/v1/models
+```
+
+- 请求方式：`GET`
 
 
 ## 请求示例

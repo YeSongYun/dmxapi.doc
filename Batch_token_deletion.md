@@ -6,9 +6,14 @@
 请求体必须填写令牌 ID，不是令牌名称或 API Key。请在执行批量删除前仔细核对查询结果。
 :::
 
-## 接口
+## 📌 接口地址
 
-认证：`SYSTEM_TOKEN` + `USER_ID`，详见 [系统令牌与用户 ID](security_token_ID.md)。
+```
+GET   https://www.dmxapi.cn/api/token/
+POST  https://www.dmxapi.cn/api/token/batch
+```
+
+- 认证：`SYSTEM_TOKEN` + `USER_ID`，详见 [系统令牌与用户 ID](security_token_ID.md)
 
 
 ## 一、查询要删除的令牌 ID
