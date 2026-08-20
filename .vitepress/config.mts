@@ -442,23 +442,22 @@ export default defineConfig({
                       { text: '多图融合', link: '/qwen-image-2.0-pro-multi-image-fusion' },
                     ],
                   },
-                  // 暂时隐藏，后续开放
-                  // {
-                  //   text: 'qwen-image-3.0',
-                  //   collapsed: true,
-                  //   items: [
-                  //     { text: '文生图', link: '/qwen-image-3.0-text-to-image' },
-                  //     { text: '图生图-图片编辑', link: '/qwen-image-3.0-image-editing' },
-                  //   ],
-                  // },
-                  // {
-                  //   text: 'qwen-image-3.0-pro',
-                  //   collapsed: true,
-                  //   items: [
-                  //     { text: '文生图', link: '/qwen-image-3.0-pro-text-to-image' },
-                  //     { text: '图生图-图片编辑', link: '/qwen-image-3.0-pro-image-edit' },
-                  //   ],
-                  // },
+                  {
+                    text: 'qwen-image-3.0',
+                    collapsed: true,
+                    items: [
+                      { text: '文生图', link: '/qwen-image-3.0-text-to-image' },
+                      { text: '图生图-图片编辑', link: '/qwen-image-3.0-image-editing' },
+                    ],
+                  },
+                  {
+                    text: 'qwen-image-3.0-pro',
+                    collapsed: true,
+                    items: [
+                      { text: '文生图', link: '/qwen-image-3.0-pro-text-to-image' },
+                      { text: '图生图-图片编辑', link: '/qwen-image-3.0-pro-image-edit' },
+                    ],
+                  },
 
                 ],
               },
