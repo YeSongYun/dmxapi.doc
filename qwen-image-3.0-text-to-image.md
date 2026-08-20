@@ -2,15 +2,11 @@
 
 基于千问图像生成与编辑 3.0 标准模型的文生图（T2I）接口，通过 `/v1/responses` 端点同步调用，一次请求即可拿到图像结果。该模型兼顾生成质量与响应速度，擅长复杂文本渲染与图文混合排版；支持单次输出 1~6 张图，输出分辨率总像素在 512×512 至 2048×2048 之间、宽高比 1:8 至 8:1 自由设置（不指定 `size` 时由模型根据提示词自动推荐分辨率），并提供提示词智能改写（DPE / APE）与思考模式两档质量增强开关，适合海报设计、电商配图、创意插画等场景。
 
-> 上游官方文档：<https://help.aliyun.com/zh/model-studio/qwen-image-generation-and-editing-api-reference>
-
 ## 接口地址
 
 | 接口 | 请求方式 | URL |
 |------|---------|-----|
 | 生成图像 | POST | `https://www.dmxapi.cn/v1/responses` |
-
-
 
 :::warning
 请妥善保管您的 API Key！严禁将密钥泄露给他人、硬编码到代码中或提交到公开的代码仓库。如果怀疑密钥已泄露，请立即前往 DMXAPI 官网重新生成。
@@ -98,7 +94,6 @@ payload = {
         # 可选值:
         #   - "direct" 直接提示词增强(DPE)，适用于大多数场景，T2I 和 I2I 均支持
         #   - "agent"  智能体提示词增强(APE)，提供更精细的改写效果
-        #              仅支持文生图(T2I)，图生图(I2I)场景传入 agent 将返回 400 错误
         "prompt_extend_mode": "direct",
 
         # 【watermark】(bool, 可选) 是否添加水印，默认值 False
@@ -173,14 +168,6 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 主要返回字段说明：
 
 - `output.choices[].message.content[].image`：生成图像的 URL，图像格式为 PNG。**链接有效期为 24 小时**，请及时下载并保存图像。
-- `output.rewrite_status`：提示词改写状态，具体取值由请求是否开启改写以及改写执行结果决定。
-- `output.choices[].finish_reason`：任务停止原因，自然停止时为 `stop`。
-- `usage.output_width` / `usage.output_height`：最终输出图片的宽度和高度（像素）。
-- `usage.input_image_count`：请求中输入图片的数量，文生图（T2I）时为 `0`。
-- `usage.output_image_count`：实际返回的输出图片数量。
-- `usage.input_image_type` / `usage.output_image_type`：计量档位，按输出分辨率像素面积判断，面积 ≤ 2,250,000 为 `qima_input_1k` / `qima_output_1k`，面积 > 2,250,000 为 `qima_input_2k` / `qima_output_2k`。
-- `request_id`：请求唯一标识，可用于请求明细溯源和问题排查。
-
 <p align="center">
   <small>© 2026 DMXAPI qwen-image-3.0 文生图</small>
 </p>
