@@ -1,7 +1,9 @@
 # qwen-image-3.0-pro 图生图-图片编辑 API 使用文档
 
 基于千问图像生成与编辑 3.0 Pro 系列模型的图生图 / 图像编辑（I2I）接口，通过 `/v1/responses` 端点同步调用。传入 1~3 张参考图并配合编辑指令，即可实现人物特征保留、换装、换背景、风格迁移等精确编辑；Pro 系列在细节还原与语义遵循上更强，输出分辨率总像素在 512×512 至 2048×2048 之间、宽高比 1:8 至 8:1 自由设置（不指定 `size` 时由模型根据提示词自动推荐分辨率），单次可输出 1~6 张图，适合人像写真、商品图重绘、创意二次编辑等对成片质量要求较高的场景。
+
 ## 接口地址
+
 | 接口 | 请求方式 | URL |
 |------|---------|-----|
 | 图像编辑 | POST | `https://www.dmxapi.cn/v1/responses` |
@@ -271,7 +273,6 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 主要返回字段说明：
 
 - `output.choices[].message.content[].image`：生成图像的 URL，图像格式为 PNG。**链接有效期为 24 小时**，请及时下载并保存图像。
-  
 <p align="center">
   <small>© 2026 DMXAPI qwen-image-3.0-pro 图生图-图片编辑</small>
 </p>
