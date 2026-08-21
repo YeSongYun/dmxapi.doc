@@ -1,35 +1,89 @@
-# GPT-5.6 Sol 使用指南
+# GPT-5.6 专题：Sol、Terra 与 Luna
 
-`gpt-5.6-sol` 是 OpenAI 的前沿模型，面向专业知识工作、复杂推理、编码和代理任务。本指南区分两类信息：OpenAI 官方公布的上游能力，以及本次通过 DMXAPI 兼容代理实际验证的调用能力。
+GPT-5.6 系列包含 `gpt-5.6-sol`、`gpt-5.6-terra` 和 `gpt-5.6-luna` 三个模型。本专题以 Microsoft Foundry 官方 GPT-5.6 模型表和推理模型文档为主要规格来源，并结合 OpenAI 官方模型指南说明三档定位。示例代码继续使用 DMXAPI 兼容代理地址；上游规格不等同于 DMXAPI 的配额、价格或部署承诺。
 
 :::warning API 密钥安全
 示例令牌全部是不可用占位符。真实 DMXAPI 令牌只能保存在服务端环境变量或密钥管理系统中，不要写入文档、前端代码、公开仓库或日志。
 :::
 
-## 接口地址
+## 三个模型怎么选
+
+三个模型使用相同的 GPT-5.6 接口能力，主要区别是质量、成本与吞吐量定位：
+
+| 模型 | 官方定位 | 适合场景 | 本轮 DMXAPI 最小请求 |
+|------|----------|----------|----------------------|
+| `gpt-5.6-sol` | 前沿能力档 | 高难度专业工作、复杂推理、编码与代理任务 | 通过 |
+| `gpt-5.6-terra` | 智能与成本平衡档 | 日常生产工作流、批量分析、兼顾质量与成本 | 通过 |
+| `gpt-5.6-luna` | 高效率档 | 高并发、低成本、大批量处理 | 通过 |
+
+OpenAI 官方还提供 `gpt-5.6` 别名，该别名会路由到 `gpt-5.6-sol`。通过 DMXAPI 调用时，建议显式填写需要的完整模型名称，避免业务代码依赖别名的后续路由变化。
+
+定位来源：[OpenAI GPT-5.6 模型指南](https://developers.openai.com/api/docs/guides/latest-model)。
+
+## Microsoft Foundry 官方规格
+
+Microsoft Foundry 当前将三款模型列为同一组能力规格：
+
+| 项目 | `gpt-5.6-sol` | `gpt-5.6-terra` | `gpt-5.6-luna` |
+|------|---------------|-----------------|----------------|
+| Microsoft 模型版本 | 2026-07-09 | 2026-07-09 | 2026-07-09 |
+| 总上下文窗口 | 1,050,000 tokens | 1,050,000 tokens | 1,050,000 tokens |
+| 输入上限 | 922,000 tokens | 922,000 tokens | 922,000 tokens |
+| 最大输出 | 128,000 tokens | 128,000 tokens | 128,000 tokens |
+| 训练数据截至 | 2026 年 6 月 | 2026 年 6 月 | 2026 年 6 月 |
+| 输入与输出 | 文本、图片输入；文本输出 | 文本、图片输入；文本输出 | 文本、图片输入；文本输出 |
+| API | Responses、Chat Completions | Responses、Chat Completions | Responses、Chat Completions |
+| 能力 | 推理、结构化输出、函数/工具、并行工具调用、流式、Computer use | 同左 | 同左 |
+
+`128,000` 是最大输出上限，不代表每次请求都会预留这么多可见输出。输入、可见输出和推理 token 会共同占用可用预算；长输入或较高推理强度会减少剩余生成空间。生产环境应同时检查响应状态、结束原因和 token 使用量。
+
+Microsoft 官方来源：
+
+- [Foundry Models 中的 GPT-5.6 模型表](https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure?pivots=azure-openai)
+- [Azure OpenAI 推理模型与功能限制](https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/reasoning)
+
+:::info 上游规格与 DMXAPI 的边界
+Microsoft 页面描述的是 Azure/Foundry 上游模型与部署。本文只借其确认模型能力、参数和限制；DMXAPI 的实际模型开通、路由、配额与计费以 DMXAPI 当前服务为准。
+:::
+
+## DMXAPI 接口地址
 
 | 接口 | 请求方式 | URL |
 |------|---------|-----|
 | Responses API | POST | `https://www.dmxapi.cn/v1/responses` |
 | Chat Completions API | POST | `https://www.dmxapi.cn/v1/chat/completions` |
 
-Responses API 适合推理、工具、多轮与新项目，优先推荐；Chat Completions API 适合兼容现有项目。
+新项目、推理任务、工具调用和多轮工作流优先使用 Responses API。Chat Completions 适合兼容已有项目，但部分推理与工具组合受到限制。
 
-## 模型名称
+## 推理强度控制
 
-DMXAPI 文档和示例统一显式使用：
+GPT-5.6 支持六档推理强度。推理等级越高，模型通常会投入更多推理 token，质量上限可能提高，但延迟与用量也会增加。
 
-```text
-gpt-5.6-sol
-```
+| 强度 | 推荐用途 | 选择建议 |
+|------|----------|----------|
+| `none` | 简单问答、抽取、分类、格式转换 | 最低延迟基线；不进行额外推理 |
+| `low` | 轻量分析、常规代码修改 | 延迟敏感且需要少量推理时使用 |
+| `medium` | 通用生产任务 | 官方默认值，建议作为首个评测基线 |
+| `high` | 复杂分析、规划、调试 | 只有评测确认质量提升时再提高 |
+| `xhigh` | 高难度、多约束问题 | 面向质量优先任务，关注延迟和 token |
+| `max` | 最困难、需要充分探索与复核的任务 | 仅 GPT-5.6 Responses API；应与 `xhigh` 做对照评测 |
 
-OpenAI 上游的 `gpt-5.6` 别名会路由到 GPT-5.6 Sol；通过 DMXAPI 调用时，建议使用本页已经实测的完整名称 `gpt-5.6-sol`。
+### 字段与端点规则
 
-## Responses API 请求示例
+| 接口 | 参数写法 | 支持范围 | 重要限制 |
+|------|----------|----------|----------|
+| Responses API | `reasoning={"effort": "..."}` | `none`、`low`、`medium`、`high`、`xhigh`、`max` | 推荐用于推理与工具组合 |
+| Chat Completions | `reasoning_effort="..."` | `none`、`low`、`medium`、`high`、`xhigh` | `max` 不适用于该接口 |
+
+如果省略推理强度，GPT-5.6 默认使用 `medium`。Chat Completions 请求一旦携带 `tools`，必须显式设置 `reasoning_effort="none"`；即使省略该字段，也会因为默认 `medium` 而失败。需要模型先推理再调用工具时，应改用 Responses API。
+
+## Responses API 推理强度请求示例
+
+下面两个标签分别演示 Sol 的最高推理档与 Terra 的平衡档。每个标签都是可独立运行的完整程序。
 
 ::: code-group
 
-```python [Responses SDK]
+```python [Responses SDK · Sol max]
 from openai import OpenAI
 
 
@@ -40,14 +94,17 @@ client = OpenAI(
 
 response = client.responses.create(
     model="gpt-5.6-sol",
-    input="请用三句话解释量子纠缠。",
-    reasoning={"effort": "none"},
-    max_output_tokens=512,
+    input="分析将一个单体应用拆分为微服务的主要风险，并给出迁移顺序。",
+    reasoning={"effort": "max"},
+    max_output_tokens=8192,
 )
+
 print(response.output_text)
 ```
 
-```python [Responses requests]
+```python [Responses requests · Terra medium]
+import json
+
 import requests
 
 
@@ -58,40 +115,37 @@ response = requests.post(
         "Content-Type": "application/json",
     },
     json={
-        "model": "gpt-5.6-sol",
-        "input": "请用三句话解释量子纠缠。",
-        "reasoning": {"effort": "none"},
-        "max_output_tokens": 512,
+        "model": "gpt-5.6-terra",
+        "input": "比较 PostgreSQL 与 MySQL 在分析型查询中的取舍。",
+        "reasoning": {"effort": "medium"},
+        "max_output_tokens": 1024,
     },
-    timeout=120,
+    timeout=180,
 )
 response.raise_for_status()
-print(response.json())
+print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 ```
 
 :::
 
 ## Responses API 返回示例
 
-Responses API 返回 `response` 对象；示例 ID 为合成值：
+以下为结构示意，ID 为合成值；实际响应还可能包含推理项和用量字段：
 
 ```json
 {
-  "id": "resp_example_gpt56_quickstart_001",
+  "id": "resp_example_gpt56_reasoning_001",
   "object": "response",
   "status": "completed",
-  "model": "gpt-5.6-sol",
+  "model": "gpt-5.6-terra-2026-07-09",
   "output": [
     {
-      "id": "msg_example_gpt56_quickstart_001",
       "type": "message",
-      "status": "completed",
       "role": "assistant",
       "content": [
         {
           "type": "output_text",
-          "text": "量子纠缠描述了多个粒子之间不可独立分割的量子关联。",
-          "annotations": []
+          "text": "PostgreSQL 与 MySQL 的选择应结合查询复杂度、生态和运维能力评估。"
         }
       ]
     }
@@ -99,9 +153,13 @@ Responses API 返回 `response` 对象；示例 ID 为合成值：
 }
 ```
 
-## Chat Completions API 请求示例
+## Chat Completions 推理强度请求示例
+
+Chat Completions 使用顶层 `reasoning_effort`。本例以 Luna 的 `high` 档演示兼容写法：
 
 ```python
+import json
+
 import requests
 
 
@@ -112,34 +170,35 @@ response = requests.post(
         "Content-Type": "application/json",
     },
     json={
-        "model": "gpt-5.6-sol",
+        "model": "gpt-5.6-luna",
         "messages": [
-            {"role": "user", "content": "请用三句话解释量子纠缠。"}
+            {
+                "role": "user",
+                "content": "找出这段需求中可能产生歧义的地方：用户可以导出最近的数据。",
+            }
         ],
-        "reasoning_effort": "none",
-        "max_completion_tokens": 512,
+        "reasoning_effort": "high",
+        "max_completion_tokens": 1024,
     },
-    timeout=120,
+    timeout=180,
 )
 response.raise_for_status()
-print(response.json())
+print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 ```
 
-## Chat Completions API 返回示例
-
-Chat Completions 可能返回带日期的模型快照名；示例 ID 为合成值：
+## Chat Completions 返回示例
 
 ```json
 {
-  "id": "chatcmpl_example_gpt56_quickstart_001",
+  "id": "chatcmpl_example_gpt56_reasoning_001",
   "object": "chat.completion",
-  "model": "gpt-5.6-sol-2026-07-09",
+  "model": "gpt-5.6-luna-2026-07-09",
   "choices": [
     {
       "index": 0,
       "message": {
         "role": "assistant",
-        "content": "量子纠缠描述了多个粒子之间不可独立分割的量子关联。"
+        "content": "“最近”可能指最近一天、最近一周或最近一个完整统计周期，需要明确时间范围。"
       },
       "finish_reason": "stop"
     }
@@ -147,146 +206,69 @@ Chat Completions 可能返回带日期的模型快照名；示例 ID 为合成�
 }
 ```
 
-## 官方规格
+`high`、`xhigh` 和 `max` 会消耗更多推理 token。`max_output_tokens` 同时覆盖推理与可见输出；设置过小可能得到 `incomplete` 响应，甚至没有最终文本。上面的 Sol 示例因此为 `max` 预留了更充足的生成预算。
 
-以下规格来自 OpenAI 官方模型页：
+## 如何选择推理强度
 
-| 项目 | GPT-5.6 Sol |
-|------|-------------|
-| 上下文窗口 | 1,050,000 tokens |
-| 最大输出 | 128,000 tokens |
-| 知识截止日期 | 2026-02-16 |
-| 输入 | 文本、图片 |
-| 输出 | 文本 |
-| API | Responses、Chat Completions |
-| 支持 | 流式、函数调用、结构化输出 |
-| 不支持 | 微调 |
+不要把推理等级当作固定的“质量开关”。更稳妥的做法是：
 
-官方资料：
+1. 为真实业务准备固定评测集，记录正确率、格式稳定性、延迟和 token 用量。
+2. 先以默认 `medium` 建立基线，再测试低一档；GPT-5.6 可能用更少 token 达到相近质量。
+3. 只有低档无法满足质量要求时，才逐步提升到 `high` 或 `xhigh`。
+4. `max` 只用于最困难且质量优先的任务，并与 `xhigh` 做同一评测集对比。
+5. 简单抽取或格式转换先测试 `none`，但涉及多步判断、工具规划或复杂代码时至少比较 `low`。
 
-- [GPT-5.6 Sol 模型页](https://developers.openai.com/api/docs/models/gpt-5.6-sol)
-- [最新模型使用指南](https://developers.openai.com/api/docs/guides/latest-model)
+### 推理强度与回答详细程度不同
 
-## 推理强度
-
-GPT-5.6 Sol 支持六档推理强度：
-
-| 强度 | 典型用途 |
-|------|---------|
-| `none` | 简单聊天、抽取、格式转换和低延迟任务 |
-| `low` | 轻量分析与常规代码修改 |
-| `medium` | 默认值，兼顾质量与延迟 |
-| `high` | 复杂分析、规划和调试 |
-| `xhigh` | 高难度、多约束问题 |
-| `max` | 需要最大推理预算的任务 |
-
-Responses API 使用嵌套对象，Chat Completions 使用顶层字段：
+`reasoning.effort` 控制模型在生成答案前投入多少推理；`text.verbosity` 控制最终答案展开程度。需要深入思考但简短作答时，可以组合：
 
 ```json
 {
   "reasoning": {
-    "effort": "high",
-    "summary": "auto"
+    "effort": "high"
+  },
+  "text": {
+    "verbosity": "low"
   }
 }
 ```
 
+不要因为输出很短就认为模型没有推理，也不要用提高 verbosity 代替提高 reasoning effort。
+
+## 工具调用注意事项
+
+Microsoft 官方明确说明，GPT-5.6 在 Chat Completions 中不能同时使用工具与非 `none` 推理强度：
+
 ```json
 {
-  "reasoning_effort": "high"
+  "reasoning_effort": "none",
+  "tools": [
+    {
+      "type": "function",
+      "function": {
+        "name": "get_weather"
+      }
+    }
+  ]
 }
 ```
 
-本仓库的基础示例显式设置 `none`，便于控制简单任务的延迟。不要把它误认为模型默认值；OpenAI 官方默认值是 `medium`。迁移现有任务时，应先保留旧任务的推理强度，再分别测试同档和低一档的质量、延迟与成本。
+需要 `low` 到 `max` 推理强度并结合工具时，请使用 Responses API。这样还可以携带推理项处理后续回合。
 
-## 输出详细程度
-
-Responses API 可通过 `text.verbosity` 控制回答详细程度：
-
-```python
-from openai import OpenAI
-
-
-client = OpenAI(
-    api_key="sk-***************************************",
-    base_url="https://www.dmxapi.cn/v1",
-)
-
-response = client.responses.create(
-    model="gpt-5.6-sol",
-    input="解释这个 Python 函数的性能瓶颈。",
-    reasoning={"effort": "medium"},
-    text={"verbosity": "low"},
-)
-```
-
-可选值为 `low`、`medium` 和 `high`。它控制答案展开程度，不等同于推理强度。本字段已使用 `low` 通过 DMXAPI 定点实测。
-
-## 为什么优先使用 Responses API
-
-OpenAI 官方建议推理、工具调用和多轮工作流优先使用 Responses API。它把消息、推理项、函数调用和其他输出组织在统一的 `output` 数组中，也更适合传递先前响应状态。
-
-Chat Completions 仍受支持，适合对现有项目做低风险迁移。DMXAPI 实测中，Chat 和 Responses 都可能返回带日期或网关前缀的规范化模型名；业务逻辑不应依赖返回模型名必须与请求字符串完全相同。
-
-## 图片、文件和工具
-
-本次 DMXAPI 实测确认以下路径可用：
-
-- 网络图片 URL 与 Base64 Data URL 输入；
-- 公开文件 URL 分析；
-- Chat Completions 和 Responses 的函数调用；
-- 流式文本输出；
-- Chat 多轮上下文；
-- Responses 推理摘要。
-
-GPT-5.6 Sol 上游还支持图片的 `original` 细节级别，适合需要保留原始分辨率信息的视觉任务。此参数尚未在 DMXAPI 本轮验证矩阵中单独测试，生产使用前应先做小流量验证。
-
-## OpenAI 上游新增能力
-
-以下能力由 OpenAI 官方公布，但本轮没有通过 DMXAPI 逐项验证。它们不应被当作 DMXAPI 当前兼容性承诺：
-
-| 能力 | 上游说明 | DMXAPI 状态 |
-|------|---------|-------------|
-| Pro 模式 | `reasoning.mode: "pro"`，面向最高质量任务 | 未验证 |
-| 持久化推理上下文 | 使用 `reasoning.context` 延续推理状态 | 未验证 |
-| 显式提示缓存 | 使用 `prompt_cache_options` 控制缓存 | 未验证 |
-| PTC | 程序化工具调用能力 | 未验证 |
-| Multi-agent | 多代理能力，官方标记为 beta | 未验证 |
-
-OpenAI 官方说明显式提示缓存的写入价格按相应输入价格的 1.25 倍计算。价格和兼容性可能变化，使用前应查看官方最新模型指南和 DMXAPI 当前计费说明。
-
-## 迁移建议
-
-从旧模型迁移时，建议按以下顺序进行：
-
-1. 只替换模型名为 `gpt-5.6-sol`，保留现有接口、提示词和推理强度。
-2. 建立一组固定评测样本，对比正确率、格式稳定性、延迟和 token 用量。
-3. 在质量达标后，测试同一推理强度和低一档强度，选择更合适的成本与延迟。
-4. 删除提示词中为旧模型补充的重复步骤、过度强调和互相冲突的约束。
-5. 新工作流优先迁移到 Responses API，再逐步启用工具、缓存或持久化推理能力。
-
-## 本次 DMXAPI 验证结果
+## 本轮 DMXAPI 验证
 
 验证日期：2026-08-21。
 
-二次验收已将本次范围内的 25 个独立请求代码围栏逐一运行，全部通过；SDK、requests、cURL、流式和多轮实现均按独立代码验收。
+| 验证项 | 结果 |
+|--------|------|
+| `gpt-5.6-sol` 最小 Responses 请求 | 通过 |
+| `gpt-5.6-terra` 最小 Responses 请求 | 通过 |
+| `gpt-5.6-luna` 最小 Responses 请求 | 通过 |
+| Sol 的 `none` / `low` / `medium` / `high` / `xhigh` / `max` | 六档全部通过 |
+| 专题中的 Responses SDK、Responses requests、Chat Completions 示例 | 逐代码独立复验通过 |
 
-| 接口能力 | 结果 |
-|----------|------|
-| Chat 非流式与 SDK | 通过 |
-| Chat 流式 | 通过；需兼容 `choices: []` 的元数据块 |
-| Chat 结构化 JSON | 通过 |
-| Chat 网络图片与本地图片 | 通过 |
-| Chat 函数调用 | 通过；省略或显式传入 `reasoning_effort: none` 均可 |
-| Chat 多轮上下文 | 通过 |
-| Responses 非流式与 SDK | 通过 |
-| Responses 流式 | 通过 |
-| Responses 网络图片、本地图片和文件 | 通过 |
-| Responses 函数调用 | 通过 |
-| Responses 推理项与摘要 | 推理项通过；`summary` 可能为空 |
-
-测试结果只代表验证时的 DMXAPI 服务状态。上线前仍应使用你自己的输入、超时、错误处理和配额进行回归测试。
+此前对 `gpt-5.6-sol` 的通用与 Responses 请求矩阵也已完成二次验收。以上结果只代表验证时的 DMXAPI 服务状态；上线前仍应使用你的真实提示词、错误处理、超时、预算和并发配置做回归测试。
 
 <p align="center">
-  <small>© 2026 DMXAPI GPT-5.6 Sol 使用指南</small>
+  <small>© 2026 DMXAPI GPT-5.6 专题</small>
 </p>

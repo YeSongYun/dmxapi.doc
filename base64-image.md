@@ -45,7 +45,10 @@ payload = {
         {
             "role": "user",
             "content": [
-                {"type": "text", "text": "请简要描述这张图片。"},
+                {
+                    "type": "text",
+                    "text": "图片顶部红框中的中文标题是什么？只回复标题。",
+                },
                 {
                     "type": "image_url",
                     "image_url": {
@@ -79,7 +82,7 @@ print(result["choices"][0]["message"]["content"])
       "index": 0,
       "message": {
         "role": "assistant",
-        "content": "这是一张深色界面的文档导航截图。"
+        "content": "推理强度控制"
       },
       "finish_reason": "stop"
     }
@@ -90,6 +93,7 @@ print(result["choices"][0]["message"]["content"])
 ## 注意事项
 
 - Base64 会增加请求体积；大图应关注上传时间、输入 token 与超时设置。
+- 本页示例图片应包含“推理强度控制”标题；确定性问题便于验证模型确实读取了图片内容。
 - 数据 URI 的 MIME 类型应与实际图片格式一致。
 - 本地路径仅由客户端读取，不会作为路径字符串直接发送给模型。
 - 二次验收中，仅替换为 `deepseek-v4-flash-0731` 会返回 HTTP 400、错误码 10305；该模型不适用于本页图片输入。

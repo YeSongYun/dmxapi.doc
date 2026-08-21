@@ -35,11 +35,14 @@ payload = {
         {
             "role": "user",
             "content": [
-                {"type": "text", "text": "请简要描述这张图片。"},
+                {
+                    "type": "text",
+                    "text": "图片中是哪一种编程语言的标志？只回复语言名称。",
+                },
                 {
                     "type": "image_url",
                     "image_url": {
-                        "url": "https://www.w3.org/Icons/w3c_home.png"
+                        "url": "https://www.python.org/static/community_logos/python-logo-master-v3-TM.png"
                     },
                 },
             ],
@@ -69,7 +72,7 @@ print(result["choices"][0]["message"]["content"])
       "index": 0,
       "message": {
         "role": "assistant",
-        "content": "图片中是蓝色的 W3C 标志。"
+        "content": "Python"
       },
       "finish_reason": "stop"
     }
@@ -80,6 +83,7 @@ print(result["choices"][0]["message"]["content"])
 ## 注意事项
 
 - `image_url.url` 必须是模型服务可访问的公网图片直链。
+- 本页使用 Python 官方标志做确定性验收；返回内容应能识别出 `Python`。
 - GPT-5.6 支持图片输入、文本输出；本页不涉及图片生成。
 - 二次验收中，仅替换为 `deepseek-v4-flash-0731` 会返回 HTTP 400、错误码 10305；该模型不适用于本页图片输入。
 - 对票据、证件等重要内容的模型识别结果应由业务系统再次核验。

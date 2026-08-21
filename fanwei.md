@@ -89,6 +89,25 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 
 `deepseek-v4-flash-0731` 在本轮测试中不接受图片输入，因此图片分析代码继续使用页面注明的 `gpt-5.6-sol`。这属于替代模型能力边界，不代表 Chat Completions 请求格式或图片代码失效。
 
+## Qwen3.8 Max 二次验收
+
+2026-08-21 将通用 Chat Completions 组中每个独立实现的 `model` 临时替换为 `qwen3.8-max`，在不改变请求语义的前提下逐代码执行。返回模型名与请求模型或网关规范化别名相符，10 个实现全部通过：
+
+| 文档与代码类型 | 验收条件 | 结果 |
+|----------------|----------|------|
+| `fanwei.md` requests 非流式 | 返回非空文本 | 通过 |
+| `openai-chat.md` SDK | 返回非空文本 | 通过 |
+| `openai-chat.md` requests | 返回非空文本 | 通过 |
+| `openai-chat-stream.md` requests 流式 | 收到文本增量并正常结束 | 通过 |
+| `openai-json.md` Pydantic 结构化输出 | 得到非空 `ProductInfo` | 通过 |
+| `url-image.md` 网络图片 | 返回非空视觉描述 | 通过 |
+| `base64-image.md` Base64 图片 | 返回非空视觉描述 | 通过 |
+| `function-call.md` 函数调用 | 返回指定工具名和可解析参数 | 通过 |
+| `gpt-5.4_Multi-turn-dialogue.md` requests | 第二轮正确召回“蓝鲸” | 通过 |
+| `gpt-5.4_Multi-turn-dialogue.md` SDK | 第二轮正确召回“蓝鲸” | 通过 |
+
+Embedding、视频、STT、TTS、绘图和 GPT-5.2 Pro 页面使用专用端点或固定模型，不属于“仅替换聊天模型即可验证”的通用组，因此没有强行改成 `qwen3.8-max`。这避免把端点与模型类型不匹配造成的失败误判为代码错误。
+
 <p align="center">
   <small>© 2026 DMXAPI API 统一请求格式</small>
 </p>
