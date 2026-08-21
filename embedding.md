@@ -12,10 +12,10 @@
 > 💡 这个"坐标"不仅仅是一个简单的编号，它的精髓在于能够捕捉原始数据背后的含义和关系。
 
 
-## 📡 请求地址
+## 🔗 请求地址
 
-```
-POST https://www.dmxapi.cn/v1/embeddings
+```text
+https://www.dmxapi.cn/v1/embeddings
 ```
 
 ## 🤖 模型名称
@@ -62,13 +62,13 @@ openai.base_url = "https://www.dmxapi.cn/v1/"
 def get_embedding(text):
     """
     获取文本的向量嵌入表示
-    
+
     参数：
         text (str): 需要转换为向量的文本内容
-    
+
     返回：
         list: 文本的向量嵌入表示（浮点数列表）
-    
+
     功能说明：
         调用 OpenAI Embeddings API，将输入文本转换为高维向量表示。
         这个向量能够捕捉文本的语义信息，相似的文本会有相似的向量。
@@ -77,11 +77,11 @@ def get_embedding(text):
     response = openai.embeddings.create(
         # 使用的嵌入模型（text-embedding-3-small 性价比高，适合大多数场景）
         model="text-embedding-3-small",
-        
+
         # 输入需要嵌入的文本
         input=text
     )
-    
+
     # 返回第一个结果的嵌入向量
     return response.data[0].embedding
 
@@ -93,11 +93,11 @@ def get_embedding(text):
 if __name__ == "__main__":
     # 定义示例文本
     text = "这是一个示例文本,用于演示如何获取文本嵌入。"
-    
+
     # 调用函数获取文本嵌入向量
     print("正在获取文本嵌入向量...")
     embedding = get_embedding(text)
-    
+
     # 输出结果
     print("="*60)
     print("文本嵌入结果")
@@ -106,7 +106,7 @@ if __name__ == "__main__":
     print(f"嵌入向量维度: {len(embedding)}")
     print(f"向量前 5 个元素: {embedding[:5]}")
     print("="*60)
-    
+
     # 提示：可以将这个向量存储到向量数据库中，用于后续的语义搜索
 ```
 

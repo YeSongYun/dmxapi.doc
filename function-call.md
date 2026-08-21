@@ -2,11 +2,11 @@
 
 本页演示通过 DMXAPI 兼容代理让 `gpt-5.6-sol` 返回函数调用参数。模型只负责选择工具并生成参数，真实天气查询仍需由你的程序执行。
 
-## 接口地址
+## 🔗 请求地址
 
-| 接口 | 请求方式 | URL |
-|------|---------|-----|
-| 创建函数调用 | POST | `https://www.dmxapi.cn/v1/chat/completions` |
+```text
+https://www.dmxapi.cn/v1/chat/completions
+```
 
 :::warning API 密钥安全
 示例令牌为不可用占位符。请妥善保管真实 DMXAPI 令牌，不要写入公开代码或日志。
@@ -19,59 +19,79 @@
 ## Python 请求示例
 
 ```python
+"""
+DMXAPI Function Calling 示例
+功能:演示如何使用 DMXAPI 的函数调用功能查询天气信息
+"""
+
+import http.client
 import json
-import requests
 
+# ========== 第一步:建立连接 ==========
+# 创建到 DMXAPI 服务器的 HTTPS 安全连接
+conn = http.client.HTTPSConnection("www.dmxapi.cn")
 
-url = "https://www.dmxapi.cn/v1/chat/completions"
-payload = {
-    "model": "gpt-5.6-sol",
-    "messages": [
-        {"role": "user", "content": "请查询上海今天的天气。"}
-    ],
-    # DMXAPI 已实测 tools 与 reasoning_effort=none 可组合使用。
-    "reasoning_effort": "none",
-    "max_completion_tokens": 256,
-    "tools": [
-        {
-            "type": "function",
-            "function": {
-                "name": "get_current_weather",
-                "description": "获取指定城市的当前天气",
-                "parameters": {
-                    "type": "object",
-                    "properties": {
-                        "location": {
-                            "type": "string",
-                            "description": "城市和国家或地区"
-                        },
-                        "unit": {
-                            "type": "string",
-                            "enum": ["celsius", "fahrenheit"]
-                        }
+# ========== 第二步:构造请求数据 ==========
+payload = json.dumps({
+    # 模型配置
+    "model": "gpt-5.6-sol",              # 使用的 AI 模型
+    "temperature": 1,             # 控制生成文本的随机性(0-2,越高越随机)
+    "stream": False,                # 是否使用流式输出(False 为一次性返回)
+
+    # 对话消息
+    "messages": [{
+        "role": "user",             # 消息角色:用户
+        "content": "上海今天几度？"  # 用户的问题内容
+    }],
+
+    # 工具定义(Function Calling)
+    "tools": [{
+        "type": "function",         # 工具类型:函数
+        "function": {
+            # 函数基本信息
+            "name": "get_current_weather",        # 函数名称(模型会调用此函数)
+            "description": "获得天气信息",         # 函数功能描述(帮助模型理解何时调用)
+
+            # 函数参数结构定义
+            "parameters": {
+                "type": "object",                 # 参数类型为对象
+                "properties": {
+                    # 参数1: 地点(必填)
+                    "location": {
+                        "type": "string",
+                        "description": "上海, 中国" # 位置描述
                     },
-                    "required": ["location"],
-                    "additionalProperties": False
-                }
+                    # 参数2: 温度单位(可选)
+                    "unit": {
+                        "type": "string",
+                        "enum": ["celsius", "fahrenheit"]  # 枚举值:摄氏度或华氏度
+                    }
+                },
+                "required": ["location"]          # 声明 location 为必填参数
             }
         }
-    ],
-    "tool_choice": "required"
-}
+    }]
+})
+
+# ========== 第三步:设置请求头 ==========
 headers = {
-    "Authorization": "sk-***************************************",
-    "Content-Type": "application/json",
+    "Accept": "application/json",                           # 接受 JSON 格式响应
+    "Authorization": "sk-********************************",  # DMXAPI 密钥认证(请替换为你的真实密钥)
+    "Content-Type": "application/json"                      # 请求体为 JSON 格式
 }
 
-response = requests.post(
-    url,
-    headers=headers,
-    json=payload,
-    timeout=120,
-)
-response.raise_for_status()
-result = response.json()
-print(json.dumps(result, indent=2, ensure_ascii=False))
+# ========== 第四步:发送 POST 请求 ==========
+# 向 /v1/chat/completions 端点发送请求
+conn.request("POST", "/v1/chat/completions", payload, headers)
+
+# ========== 第五步:接收并处理响应 ==========
+res = conn.getresponse()            # 获取响应对象
+data = res.read()                   # 读取响应数据(字节格式)
+
+# ========== 第六步:输出结果 ==========
+# 将字节数据解码为 UTF-8 字符串并格式化输出 JSON
+response_data = json.loads(data.decode("utf-8"))
+print(json.dumps(response_data, indent=2, ensure_ascii=False))
 ```
 
 ## 返回示例
@@ -107,7 +127,7 @@ print(json.dumps(result, indent=2, ensure_ascii=False))
 
 ## 注意事项
 
-- DMXAPI 修改前实测中，省略 `reasoning_effort` 和显式设置 `none` 均能返回 `tool_calls`；本页显式使用 `none`，使行为更可控。
+- 本页调用沿用修改前的基础结构，不设置思考等级和最大输出。
 - 如果工作流需要模型推理、执行工具并继续多轮处理，优先使用 Responses API。
 - 不要直接信任模型生成的函数参数；执行工具前应做 schema 校验、权限检查和输入过滤。
 

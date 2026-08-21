@@ -2,12 +2,19 @@
 
 > STT (Speech-to-Text) / ASR (Automatic Speech Recognition) 语音识别服务
 
-## 📡 接口地址
+## 🔗 请求地址
 
-| 服务类型 | 接口地址 | 说明 |
-|---------|---------|------|
-| 音频翻译 | `https://www.dmxapi.cn/v1/audio/translations` | 将音频翻译成英文 |
-| 音频转写 | `https://www.dmxapi.cn/v1/audio/transcriptions` | 将音频转写为繁体中文 |
+### 音频翻译
+
+```text
+https://www.dmxapi.cn/v1/audio/translations
+```
+
+### 音频转写
+
+```text
+https://www.dmxapi.cn/v1/audio/transcriptions
+```
 
 ## 🤖 模型名称
 
@@ -56,7 +63,7 @@ with open(audio_file_path, "rb") as audio_file:
         "file": audio_file,              # 音频文件对象(支持 flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, or webm)
         "model": (None, "whisper-1"),    # 使用的模型名称
     }
-    
+
     # 发送 POST 请求到翻译 API
     response = requests.post(url, headers=headers, files=files)
 
@@ -151,7 +158,7 @@ with open(audio_file_path, "rb") as audio_file:
         "file": audio_file,              # 音频文件二进制流
         "model": (None, "whisper-1"),    # 指定使用 Whisper-1 模型
     }
-    
+
     # 发送 POST 请求到音频转写 API
     response = requests.post(url, headers=headers, files=files)
 
@@ -197,7 +204,7 @@ else:
 ============================================================
 {
   "text": "您好,Oliver Smith,我是您的智能虛擬助手,Max,感謝您的來電,我已找到您的檔案,電話號碼14154-159921的未付清餘額為1234.56元,關聯的IP地址是192.168.1.1,您的下一個付款到7日,是2032年5月6日,如有任何疑問,請聯繫support-vip at technet.com。 多謝您收睇時局新聞,再會!"
-}    
+}
 ```
 
 

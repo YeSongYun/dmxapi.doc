@@ -8,9 +8,9 @@
 
 `qwen3-vl-235b-a22b-thinking`
 
-## 🔗 接口地址
+## 🔗 请求地址
 
-```
+```text
 https://www.dmxapi.cn/v1/chat/completions
 ```
 

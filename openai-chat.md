@@ -2,11 +2,11 @@
 
 本页演示通过 DMXAPI 兼容代理的 Chat Completions 接口调用 `gpt-5.6-sol`，分别提供 OpenAI Python SDK 与 `requests` 写法。
 
-## 接口地址
+## 🔗 请求地址
 
-| 接口 | 请求方式 | URL |
-|------|---------|-----|
-| 创建聊天补全 | POST | `https://www.dmxapi.cn/v1/chat/completions` |
+```text
+https://www.dmxapi.cn/v1/chat/completions
+```
 
 :::warning API 密钥安全
 请使用自己的 DMXAPI 令牌替换占位符，并通过服务端环境变量管理真实令牌；不要泄露令牌。
@@ -21,53 +21,108 @@
 ::: code-group
 
 ```python [SDK]
-import json
+"""
+DMXAPI OpenAI SDK 调用示例
+功能：使用 gpt-5.6-sol 模型进行智能对话
+"""
 
 from openai import OpenAI
+import json
 
+# ==================== 客户端初始化 ====================
 
+# 创建 OpenAI 客户端实例
 client = OpenAI(
-    api_key="sk-***************************************",
-    base_url="https://www.dmxapi.cn/v1",
+    api_key="sk-**************************************",  # 替换为你的 DMXAPI 令牌
+    base_url="https://www.dmxapi.cn/v1"  # DMXAPI 接口地址
 )
 
-response = client.chat.completions.create(
-    model="gpt-5.6-sol",
+# ==================== 发送对话请求 ====================
+
+# 调用对话完成接口
+chat_completion = client.chat.completions.create(
     messages=[
-        {"role": "system", "content": "You are a helpful assistant."},
-        {"role": "user", "content": "请简单介绍鲁迅。"},
+        {
+            "role": "user",  # 用户角色
+            "content": "周树人和鲁迅是兄弟吗？"  # 用户提问
+        }
     ],
-    reasoning_effort="none",
-    max_completion_tokens=256,
+    model= "gpt-5.6-sol"  # 指定使用的模型
 )
 
-print(json.dumps(response.model_dump(), indent=2, ensure_ascii=False))
+# ==================== 格式化输出结果 ====================
+
+# 将响应对象转换为字典
+result = chat_completion.model_dump()
+
+# 美化输出
+print("=" * 50)
+print("✨ API 响应结果")
+print("=" * 50)
+print(json.dumps(result, indent=2, ensure_ascii=False))
+print("=" * 50)
+
+# 输出关键信息摘要
+print("📊 关键信息摘要：")
+print(f"  • 模型: {result['model']}")
+print(f"  • 回复: {result['choices'][0]['message']['content']}")
+print(f"  • Token 使用: {result['usage']['total_tokens']} (输入: {result['usage']['prompt_tokens']}, 输出: {result['usage']['completion_tokens']})")
 ```
 
 ```python [requests]
-import json
+"""
+DMXAPI 对话接口调用示例
+功能：使用 gpt-5.6-sol 模型进行智能对话
+"""
 
+import json
 import requests
 
+# ==================== API 配置 ====================
 
+# API 接口地址
 url = "https://www.dmxapi.cn/v1/chat/completions"
+
+# 请求头配置
 headers = {
-    "Authorization": "sk-***************************************",
-    "Content-Type": "application/json",
-}
-payload = {
-    "model": "gpt-5.6-sol",
-    "messages": [
-        {"role": "system", "content": "You are a helpful assistant."},
-        {"role": "user", "content": "请简单介绍鲁迅。"},
-    ],
-    "reasoning_effort": "none",
-    "max_completion_tokens": 256,
+    "Authorization": "sk-**********************************",  # 替换为你的 DMXAPI 令牌
+    "Content-Type": "application/json"
 }
 
-response = requests.post(url, headers=headers, json=payload, timeout=120)
-response.raise_for_status()
-print(json.dumps(response.json(), indent=2, ensure_ascii=False))
+# ==================== 请求参数 ====================
+
+# 构造请求数据
+payload = {
+    "model": "gpt-5.6-sol",  # 选择使用的模型
+    "messages": [
+        {
+            "role": "system",
+            "content": "You are a helpful assistant."  # 系统提示词：定义 AI 助手的角色
+        },
+        {
+            "role": "user",
+            "content": "介绍下鲁迅"  # 用户问题
+        }
+    ]
+}
+
+# ==================== 发送请求 ====================
+
+try:
+    # 发送 POST 请求到 API
+    response = requests.post(url, headers=headers, data=json.dumps(payload))
+    response.raise_for_status()  # 检查 HTTP 错误
+
+    # 输出响应结果
+    print("=" * 50)
+    print("API 响应结果：")
+    print("=" * 50)
+    print(json.dumps(response.json(), indent=2, ensure_ascii=False))
+
+except requests.exceptions.RequestException as e:
+    # 异常处理
+    print(f"❌ 请求失败: {e}")
+
 ```
 
 :::
@@ -95,8 +150,7 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 
 ## 注意事项
 
-- GPT-5.6 官方默认推理强度为 `medium`；本页使用 `none` 作为普通问答的低延迟示例。
-- Chat Completions 的推理字段是 `reasoning_effort`；Responses API 使用嵌套的 `reasoning.effort`。
+- 两种调用都沿用修改前的基础结构，不设置思考等级和最大输出。
 - DMXAPI 实测的 Chat Completions 响应模型名为版本化快照 `gpt-5.6-sol-2026-07-09`。
 
 <p align="center">

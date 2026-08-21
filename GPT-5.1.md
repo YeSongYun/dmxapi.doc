@@ -1,8 +1,8 @@
 # GPT-5.1 使用指南
 
-## 请求地址
+## 🔗 请求地址
 
-```
+```text
 https://www.dmxapi.cn/v1/responses
 ```
 
@@ -58,7 +58,6 @@ client = OpenAI(
 result = client.responses.create(
     model="gpt-5.1",                    # 使用的模型版本
     input="早上好",                      # 输入的提示文本
-    reasoning={"effort": "none"},       # 推理配置：低推理程度
 )
 
 # ============================================================
