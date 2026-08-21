@@ -46,12 +46,19 @@ Microsoft 官方来源：
 Microsoft 页面描述的是 Azure/Foundry 上游模型与部署。本文只借其确认模型能力、参数和限制；DMXAPI 的实际模型开通、路由、配额与计费以 DMXAPI 当前服务为准。
 :::
 
-## DMXAPI 接口地址
+## 🔗 请求地址
 
-| 接口 | 请求方式 | URL |
-|------|---------|-----|
-| Responses API | POST | `https://www.dmxapi.cn/v1/responses` |
-| Chat Completions API | POST | `https://www.dmxapi.cn/v1/chat/completions` |
+### Responses API
+
+```text
+https://www.dmxapi.cn/v1/responses
+```
+
+### Chat Completions API
+
+```text
+https://www.dmxapi.cn/v1/chat/completions
+```
 
 新项目、推理任务、工具调用和多轮工作流优先使用 Responses API。Chat Completions 适合兼容已有项目，但部分推理与工具组合受到限制。
 
@@ -77,13 +84,37 @@ GPT-5.6 支持六档推理强度。推理等级越高，模型通常会投入更
 
 如果省略推理强度，GPT-5.6 默认使用 `medium`。Chat Completions 请求一旦携带 `tools`，必须显式设置 `reasoning_effort="none"`；即使省略该字段，也会因为默认 `medium` 而失败。需要模型先推理再调用工具时，应改用 Responses API。
 
-## Responses API 推理强度请求示例
+### 按需添加的推理参数
 
-下面两个标签分别演示 Sol 的最高推理档与 Terra 的平衡档。每个标签都是可独立运行的完整程序。
+完整调用示例默认不显式设置推理强度；只有业务需要覆盖默认 `medium` 时，才把对应片段加入请求。
 
 ::: code-group
 
-```python [Responses SDK · Sol max]
+```python [Responses SDK]
+reasoning={"effort": "high"}
+```
+
+```json [Responses requests]
+{
+  "reasoning": {
+    "effort": "high"
+  }
+}
+```
+
+```python [Chat Completions]
+reasoning_effort="high"
+```
+
+:::
+
+## Responses API 请求示例
+
+下面的代码参考修改前的基础示例编写，只保留调用所需的模型与输入参数，不显式设置推理强度和最大输出。
+
+::: code-group
+
+```python [SDK]
 from openai import OpenAI
 
 
@@ -94,15 +125,13 @@ client = OpenAI(
 
 response = client.responses.create(
     model="gpt-5.6-sol",
-    input="分析将一个单体应用拆分为微服务的主要风险，并给出迁移顺序。",
-    reasoning={"effort": "max"},
-    max_output_tokens=8192,
+    input="请用三句话解释量子纠缠。",
 )
 
 print(response.output_text)
 ```
 
-```python [Responses requests · Terra medium]
+```python [requests]
 import json
 
 import requests
@@ -115,10 +144,8 @@ response = requests.post(
         "Content-Type": "application/json",
     },
     json={
-        "model": "gpt-5.6-terra",
-        "input": "比较 PostgreSQL 与 MySQL 在分析型查询中的取舍。",
-        "reasoning": {"effort": "medium"},
-        "max_output_tokens": 1024,
+        "model": "gpt-5.6-sol",
+        "input": "请用三句话解释量子纠缠。",
     },
     timeout=180,
 )
@@ -134,10 +161,10 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 
 ```json
 {
-  "id": "resp_example_gpt56_reasoning_001",
+  "id": "resp_example_gpt56_quickstart_001",
   "object": "response",
   "status": "completed",
-  "model": "gpt-5.6-terra-2026-07-09",
+  "model": "gpt-5.6-sol-2026-07-09",
   "output": [
     {
       "type": "message",
@@ -145,7 +172,7 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
       "content": [
         {
           "type": "output_text",
-          "text": "PostgreSQL 与 MySQL 的选择应结合查询复杂度、生态和运维能力评估。"
+          "text": "量子纠缠描述了多个粒子之间不可独立分割的量子关联。"
         }
       ]
     }
@@ -153,9 +180,9 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 }
 ```
 
-## Chat Completions 推理强度请求示例
+## Chat Completions API 请求示例
 
-Chat Completions 使用顶层 `reasoning_effort`。本例以 Luna 的 `high` 档演示兼容写法：
+本例同样沿用修改前的基础结构，不显式设置推理强度和最大输出：
 
 ```python
 import json
@@ -170,15 +197,13 @@ response = requests.post(
         "Content-Type": "application/json",
     },
     json={
-        "model": "gpt-5.6-luna",
+        "model": "gpt-5.6-sol",
         "messages": [
             {
                 "role": "user",
-                "content": "找出这段需求中可能产生歧义的地方：用户可以导出最近的数据。",
+                "content": "请用三句话解释量子纠缠。",
             }
         ],
-        "reasoning_effort": "high",
-        "max_completion_tokens": 1024,
     },
     timeout=180,
 )
@@ -190,23 +215,21 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 
 ```json
 {
-  "id": "chatcmpl_example_gpt56_reasoning_001",
+  "id": "chatcmpl_example_gpt56_quickstart_001",
   "object": "chat.completion",
-  "model": "gpt-5.6-luna-2026-07-09",
+  "model": "gpt-5.6-sol-2026-07-09",
   "choices": [
     {
       "index": 0,
       "message": {
         "role": "assistant",
-        "content": "“最近”可能指最近一天、最近一周或最近一个完整统计周期，需要明确时间范围。"
+        "content": "量子纠缠描述了多个粒子之间不可独立分割的量子关联。"
       },
       "finish_reason": "stop"
     }
   ]
 }
 ```
-
-`high`、`xhigh` 和 `max` 会消耗更多推理 token。`max_output_tokens` 同时覆盖推理与可见输出；设置过小可能得到 `incomplete` 响应，甚至没有最终文本。上面的 Sol 示例因此为 `max` 预留了更充足的生成预算。
 
 ## 如何选择推理强度
 
