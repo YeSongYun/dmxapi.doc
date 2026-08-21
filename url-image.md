@@ -81,6 +81,7 @@ print(result["choices"][0]["message"]["content"])
 
 - `image_url.url` 必须是模型服务可访问的公网图片直链。
 - GPT-5.6 支持图片输入、文本输出；本页不涉及图片生成。
+- 二次验收中，仅替换为 `deepseek-v4-flash-0731` 会返回 HTTP 400、错误码 10305；该模型不适用于本页图片输入。
 - 对票据、证件等重要内容的模型识别结果应由业务系统再次核验。
 
 <p align="center">

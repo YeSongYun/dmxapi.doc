@@ -92,6 +92,7 @@ print(result["choices"][0]["message"]["content"])
 - Base64 会增加请求体积；大图应关注上传时间、输入 token 与超时设置。
 - 数据 URI 的 MIME 类型应与实际图片格式一致。
 - 本地路径仅由客户端读取，不会作为路径字符串直接发送给模型。
+- 二次验收中，仅替换为 `deepseek-v4-flash-0731` 会返回 HTTP 400、错误码 10305；该模型不适用于本页图片输入。
 
 <p align="center">
   <small>© 2026 DMXAPI OpenAI 本地图片分析</small>

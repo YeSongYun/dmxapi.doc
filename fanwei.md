@@ -74,6 +74,21 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 }
 ```
 
+## DeepSeek 替换模型二次验收
+
+2026-08-21 将上述通用组代码中的 `model` 单独替换为 `deepseek-v4-flash-0731` 后，逐代码实测结果如下：
+
+| 代码类型 | 结果 |
+|----------|------|
+| 非流式 requests、SDK | 通过 |
+| 流式 requests | 通过 |
+| Pydantic 结构化输出 | 通过 |
+| 函数调用 | 通过 |
+| requests、SDK 多轮对话 | 通过 |
+| 网络图片、Base64 图片 | 不兼容；接口返回 HTTP 400、错误码 10305 |
+
+`deepseek-v4-flash-0731` 在本轮测试中不接受图片输入，因此图片分析代码继续使用页面注明的 `gpt-5.6-sol`。这属于替代模型能力边界，不代表 Chat Completions 请求格式或图片代码失效。
+
 <p align="center">
   <small>© 2026 DMXAPI API 统一请求格式</small>
 </p>

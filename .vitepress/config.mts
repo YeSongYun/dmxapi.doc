@@ -149,7 +149,7 @@ export default defineConfig({
             text: 'Openai 请求格式（通用）',
             collapsed: true,
             items: [
-              { text: '适用范围：♥ 所有模型', link: '/fanwei' },
+              { text: '适用范围与兼容性', link: '/fanwei' },
               { text: '普通文本对话（非流）', link: '/openai-chat' },
               { text: '普通文本对话（流式输出）', link: '/openai-chat-stream' },
               { text: '固定格式化输出Json', link: '/openai-json' },

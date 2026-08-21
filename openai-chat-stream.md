@@ -48,11 +48,16 @@ response = requests.post(
 )
 response.raise_for_status()
 
-for raw_line in response.iter_lines(decode_unicode=True):
-    if not raw_line or not raw_line.startswith("data: "):
+for raw_line in response.iter_lines():
+    if not raw_line:
         continue
 
-    event_data = raw_line[6:]
+    # 先按字节切出完整行，再统一按 UTF-8 解码，避免中文被拆成半截 JSON。
+    line = raw_line.decode("utf-8")
+    if not line.startswith("data: "):
+        continue
+
+    event_data = line[6:]
     if event_data == "[DONE]":
         break
 

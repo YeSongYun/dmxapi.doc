@@ -70,8 +70,9 @@ with requests.post(
 ) as response:
     response.raise_for_status()
     current_event = ""
-    for raw_line in response.iter_lines(decode_unicode=True):
-        line = raw_line.strip() if raw_line else ""
+    for raw_line in response.iter_lines():
+        # 先按字节切出完整行，再统一按 UTF-8 解码，避免中文被拆成半截 JSON。
+        line = raw_line.decode("utf-8").strip() if raw_line else ""
         if line.startswith("event:"):
             current_event = line[6:].strip()
         elif line.startswith("data:"):

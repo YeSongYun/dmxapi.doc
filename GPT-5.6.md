@@ -204,6 +204,14 @@ Responses API 使用嵌套对象，Chat Completions 使用顶层字段：
 Responses API 可通过 `text.verbosity` 控制回答详细程度：
 
 ```python
+from openai import OpenAI
+
+
+client = OpenAI(
+    api_key="sk-***************************************",
+    base_url="https://www.dmxapi.cn/v1",
+)
+
 response = client.responses.create(
     model="gpt-5.6-sol",
     input="解释这个 Python 函数的性能瓶颈。",
@@ -260,6 +268,8 @@ OpenAI 官方说明显式提示缓存的写入价格按相应输入价格的 1.2
 ## 本次 DMXAPI 验证结果
 
 验证日期：2026-08-21。
+
+二次验收已将本次范围内的 25 个独立请求代码围栏逐一运行，全部通过；SDK、requests、cURL、流式和多轮实现均按独立代码验收。
 
 | 接口能力 | 结果 |
 |----------|------|

@@ -90,7 +90,7 @@ curl -X POST https://www.dmxapi.cn/v1/responses \
   -H "Authorization: sk-***************************************" \
   --json '{
     "model": "gpt-5.6-sol",
-    "input": "比较归并排序和快速排序，并说明各自更适合的场景。",
+    "input": "\u6bd4\u8f83\u5f52\u5e76\u6392\u5e8f\u548c\u5feb\u901f\u6392\u5e8f\uff0c\u5e76\u8bf4\u660e\u5404\u81ea\u66f4\u9002\u5408\u7684\u573a\u666f\u3002",
     "reasoning": {"effort": "low", "summary": "auto"},
     "max_output_tokens": 512
   }'

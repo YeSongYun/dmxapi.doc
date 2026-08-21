@@ -70,7 +70,7 @@ print(result.output_text)
 
 ### 返回示例
 
-```json
+```text
 早上好呀！🙂
 今天有什么想聊的或需要我帮忙的吗？
 ```
