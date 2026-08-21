@@ -1,161 +1,88 @@
-# Openai 请求格式 - 网络图片分析 API 文档
+# OpenAI Chat Completions 网络图片分析
 
-## 📖 接口说明
+本页演示通过 DMXAPI 兼容代理调用 `gpt-5.6-sol`，使用 Chat Completions 的 `image_url` 内容项分析公网图片。该请求形状已通过 DMXAPI 实测。
 
-通过多模态 AI 模型分析网络图片内容，理解图片、提取图片信息。以下示例使用 `gpt-5.6-sol-ssvip` 模型，通过图片 URL（`image_url`）传入待分析图片。
+## 接口地址
 
-:::tip 提示
-OpenAI 出了新的 responses 接口,兼容性更好  
-老接口在部分照片格式兼容上有一定的问题  
-新接口文档:[http://doc.dmxapi.cn/res-url-image.html](http://doc.dmxapi.cn/res-url-image.html)
+| 接口 | 请求方式 | URL |
+|------|---------|-----|
+| 分析网络图片 | POST | `https://www.dmxapi.cn/v1/chat/completions` |
+
+:::warning API 密钥安全
+示例令牌为不可用占位符。请妥善保管真实 DMXAPI 令牌，不要提交到公开仓库或日志。
 :::
 
-## 🔗 接口地址
+## 模型名称
 
-```
-https://www.dmxapi.cn/v1/chat/completions
-```
+- `gpt-5.6-sol`
 
+## Python 调用示例
 
-## 💻 Python 调用示例
 ```python
-"""
-图片分析工具 - 使用 gpt-5.6-sol-ssvip 模型进行网络图片内容分析
-============================================================
-本脚本演示如何通过 DMXAPI 调用 OpenAI 兼容的 chat/completions 接口
-以图片 URL 方式传入网络图片，让模型分析并描述图片内容
-适用于图片描述、物体识别、票据识别等应用场景
-"""
+import json
 
 import requests
 
-# ============================================================
-# API 配置区域
-# ============================================================
-BASE_URL = "https://www.dmxapi.cn/"                                      # API 基础地址
-API_ENDPOINT = BASE_URL + "v1/chat/completions"                          # 对话完成接口
-API_KEY = "sk-*************************************************"         # API 密钥(请替换为你的密钥)
-MODEL = "gpt-5.6-sol-ssvip"                                              # 使用的模型名称
-IMAGE_URL = "https://fenxiang.yesongyun.com/fapiao.png"                  # 待分析图片的 URL 地址
 
-# ============================================================
-# 核心功能函数
-# ============================================================
-def analyze_image(image_url, prompt):
-    """
-    调用模型分析网络图片内容
+url = "https://www.dmxapi.cn/v1/chat/completions"
+headers = {
+    "Authorization": "sk-***************************************",
+    "Content-Type": "application/json",
+}
+payload = {
+    "model": "gpt-5.6-sol",
+    "messages": [
+        {
+            "role": "user",
+            "content": [
+                {"type": "text", "text": "请简要描述这张图片。"},
+                {
+                    "type": "image_url",
+                    "image_url": {
+                        "url": "https://www.w3.org/Icons/w3c_home.png"
+                    },
+                },
+            ],
+        }
+    ],
+    "reasoning_effort": "none",
+    "max_completion_tokens": 512,
+}
 
-    功能说明:
-        通过 DMXAPI 调用 gpt-5.6-sol-ssvip 模型,对指定 URL 的图片进行智能分析
-        支持图片描述、物体识别、场景理解等多种分析任务
-
-    参数:
-        image_url (str): 图片的 URL 地址,需要是公网可访问的链接
-        prompt (str): 分析提示词,描述你希望模型如何分析这张图片
-    """
-    # 构建请求载荷(单条 user 消息,内容包含文本提示与图片 URL)
-    payload = {
-        "model": MODEL,                                                  # 使用的模型名称
-        "messages": [
-            {
-                "role": "user",                                          # 用户角色:发送分析请求
-                "content": [
-                    {"type": "text", "text": prompt},                    # 分析提示词
-                    {"type": "image_url", "image_url": {"url": image_url}}  # 图片 URL
-                ]
-            }
-        ]
-    }
-
-    # 构建请求头
-    headers = {
-        "Content-Type": "application/json",                              # 内容类型:JSON 格式
-        "Authorization": f"{API_KEY}"                                    # 授权令牌
-    }
-
-    # 发送 API 请求并处理响应
-    try:
-        response = requests.post(API_ENDPOINT, headers=headers, json=payload, timeout=120)
-        response.raise_for_status()                                      # 检查 HTTP 状态码
-        return response.json()["choices"][0]["message"]["content"]       # 提取分析结果文本
-    except Exception as e:
-        print(f"❌ 请求失败: {e}")                                        # 错误提示
-        return None
-
-# ============================================================
-# 程序入口
-# ============================================================
-if __name__ == "__main__":
-    print("=" * 60)
-    print("开始分析图片...")
-    print("=" * 60)
-
-    # 调用图片分析函数
-    result = analyze_image(IMAGE_URL, "分析这个图片")
-
-    # 输出分析结果
-    if result:
-        print("✅ 分析结果:")
-        print("-" * 60)
-        print(result)
-        print("-" * 60)
-    else:
-        print("❌ 图片分析失败,请检查配置和网络连接")
+response = requests.post(url, headers=headers, json=payload, timeout=120)
+response.raise_for_status()
+result = response.json()
+print(json.dumps(result, indent=2, ensure_ascii=False))
+print(result["choices"][0]["message"]["content"])
 ```
 
-## 📤 返回示例
+## 返回示例
+
 ```json
-============================================================
-开始分析图片...
-============================================================
-✅ 分析结果:
-------------------------------------------------------------
-这是一张**电子发票（普通发票）**，主要信息如下：
-
-### 发票内容
-- **开票日期**：2026年06月01日
-- **开票地区**：印章显示为上海市税务机关
-- **项目名称**：`*生产生活服务*技术服务费`
-- **数量**：1
-- **不含税单价**：943.396226415094元
-- **不含税金额**：943.40元
-- **税率**：6%
-- **税额**：56.60元
-- **价税合计**：1000.00元
-- **大写金额**：壹仟圆整
-- **备注栏**：为空
-- **下载次数**：右侧显示为1次
-
-### 金额核算
-计算关系正确：
-
-- 943.40 × 6% ≈ 56.60元
-- 943.40 + 56.60 = 1000.00元
-
-单价出现很多位小数通常是因为按含税总额倒算：
-
-> 1000 ÷ 1.06 ≈ 943.396226……
-
-这在开票系统中较常见，不一定代表异常。
-
-### 图像与真实性判断
-- 购买方、销售方名称及纳税人识别号大部分已打码。
-- 左上角二维码也被遮挡，无法通过图片直接扫码核验。
-- 版式、税率和金额逻辑未见明显问题，但**仅凭截图不能确认发票真伪**。
-- 建议使用电子税务局或"全国增值税发票查验平台"，输入完整的发票号码、开票日期及金额等信息进行核验。
-- 报销时最好同时取得原始的 **PDF/OFD/XML电子文件**，不要只保留截图。
-------------------------------------------------------------
+{
+  "id": "chatcmpl_example_gpt56_image_url_001",
+  "object": "chat.completion",
+  "created": 1787270400,
+  "model": "gpt-5.6-sol-2026-07-09",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "图片中是蓝色的 W3C 标志。"
+      },
+      "finish_reason": "stop"
+    }
+  ]
+}
 ```
 
-## ⚠️ 注意事项
+## 注意事项
 
-- `IMAGE_URL` 需为公网可访问的图片直链地址
-- 请妥善保管您的 API 密钥,不要将其暴露在公开代码中
-- 图片较大或网络较慢时,建议适当调大 `timeout`
-- 部分特殊图片格式在老接口上兼容性欠佳,建议改用 [responses 新接口](http://doc.dmxapi.cn/res-url-image.html)
-
----
+- `image_url.url` 必须是模型服务可访问的公网图片直链。
+- GPT-5.6 支持图片输入、文本输出；本页不涉及图片生成。
+- 对票据、证件等重要内容的模型识别结果应由业务系统再次核验。
 
 <p align="center">
-  <small>© 2026 DMXAPI Openai 网络图片分析</small>
+  <small>© 2026 DMXAPI OpenAI 网络图片分析</small>
 </p>
