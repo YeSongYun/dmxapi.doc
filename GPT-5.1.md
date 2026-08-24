@@ -5,6 +5,11 @@
 ```text
 https://www.dmxapi.cn/v1/responses
 ```
+
+:::tip 接口限制
+GPT-5.1 系列仅支持 Responses API，请使用 `/v1/responses`；不支持 `/v1/chat/completions`。
+:::
+
 ## 模型列表
 - `gpt-5.1` - 标准版本
 ## 快速入门

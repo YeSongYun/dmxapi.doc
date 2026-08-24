@@ -29,6 +29,7 @@ conn = http.client.HTTPSConnection("www.dmxapi.cn")
 payload = json.dumps({
     # 模型配置
     "model": "gpt-5.6-sol",              # 使用的 AI 模型
+    "reasoning_effort": "none",          # Chat Completions 携带 tools 时必须关闭推理
     "temperature": 1,             # 控制生成文本的随机性(0-2,越高越随机)
     "stream": False,                # 是否使用流式输出(False 为一次性返回)
 
@@ -121,7 +122,7 @@ print(json.dumps(response_data, indent=2, ensure_ascii=False))
 
 ## 注意事项
 
-- 本页调用沿用修改前的基础结构，不设置思考等级和最大输出。
+- GPT-5.6 的 Chat Completions 请求携带 `tools` 时，必须显式设置 `reasoning_effort: "none"`；省略该字段会采用默认的 `medium` 并导致请求失败。
 - 如果工作流需要模型推理、执行工具并继续多轮处理，优先使用 Responses API。
 - 不要直接信任模型生成的函数参数；执行工具前应做 schema 校验、权限检查和输入过滤。
 

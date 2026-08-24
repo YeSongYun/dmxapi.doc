@@ -40,7 +40,7 @@ chat_completion = client.chat.completions.create(
             "content": "周树人和鲁迅是兄弟吗？"  # 用户提问
         }
     ],
-    model= "gpt-5.6-sol"  # 指定使用的模型
+    model="gpt-5.6-sol"  # 指定使用的模型
 )
 
 # ==================== 格式化输出结果 ====================

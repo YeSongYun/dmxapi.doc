@@ -160,7 +160,7 @@ export default defineConfig({
               { text: '函数调用FunctionCall', link: '/function-call' },
               { text: 'whisper-stt', link: '/opneai-stt' },
               { text: 'gpt-tts', link: '/openai-tts' },
-              { text: 'gpt-5.5-pro-ssvip', link: '/gpt-5.2-pro' },
+              { text: 'Pro 系列（Responses）', link: '/gpt-5.2-pro' },
               { text: 'openai绘图模型', link: '/gpt-image' },
               { text: 'openai多轮对话', link: '/gpt-5.4_Multi-turn-dialogue' }
             ],

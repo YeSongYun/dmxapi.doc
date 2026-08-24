@@ -1,5 +1,3 @@
-# 1
-
 # OpenAI 请求格式 TTS 语音合成 API 文档
 TTS (Text-to-Speech) 将文本转换为自然语音的技术
 
