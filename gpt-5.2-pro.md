@@ -8,8 +8,10 @@ https://www.dmxapi.cn/v1/responses
 
 ## 模型名称
 
-- `gpt-5.2-pro`
 - `gpt-5-pro`
+- `gpt-5.2-pro`
+- `gpt-5.4-pro-ssvip`
+- `gpt-5.5-pro-ssvip`
 
 
 ## 调用示例

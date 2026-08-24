@@ -7,15 +7,9 @@
 ```text
 https://www.dmxapi.cn/v1/responses
 ```
-
-:::warning API 密钥安全
-示例令牌为不可用占位符。请妥善保管真实 DMXAPI 令牌，不要写入公开代码或日志。
-:::
-
 ## 模型名称
-
-- `gpt-5.6-sol`
-
+- 本页示例：`gpt-5.6-sol`
+- 其他模型：替换 `model`，并检查该模型对推理、输出长度和工具参数的支持情况。
 ## Python 请求示例
 
 ```python
@@ -113,13 +107,6 @@ else:
   ]
 }
 ```
-
-## 注意事项
-
-- 文件 URL 必须能被服务端直接访问，且响应内容应与声明的文件类型一致。
-- 大文件会增加处理时间与 token 消耗；生产环境应限制文件大小、来源和类型。
-- 本页公开 PDF、公司名称提取提示词和返回结构均已通过 DMXAPI 实测；模型措辞可能略有差异。
-
 <p align="center">
   <small>© 2026 DMXAPI OpenAI Responses API 文件分析</small>
 </p>

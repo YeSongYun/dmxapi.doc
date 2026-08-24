@@ -3,18 +3,13 @@
 本页演示通过 DMXAPI 兼容代理流式调用 `gpt-5.6-sol`，并处理 `response.output_text.delta` 事件。
 
 ## 🔗 请求地址
-
 ```text
 https://www.dmxapi.cn/v1/responses
 ```
-
-:::warning API 密钥安全
-示例令牌为不可用占位符。请妥善保管真实 DMXAPI 令牌，不要写入公开仓库、前端代码或日志。
-:::
-
 ## 模型名称
 
-- `gpt-5.6-sol`
+- 本页示例：`gpt-5.6-sol`
+- 其他模型：替换 `model`，并检查该模型对推理、输出长度和工具参数的支持情况。
 
 ## Python 请求示例
 
@@ -228,11 +223,6 @@ event: response.completed
 data: {"type":"response.completed","response":{"id":"resp_example_gpt56_stream_001","status":"completed","model":"gpt-5.6-sol"}}
 ```
 
-## 注意事项
-
-- SDK 已封装 SSE；直接使用 HTTP 时，要同时解析 `event:` 和 `data:` 行。
-- 每个事件由空行分隔，文本增量只处理 `response.output_text.delta`。
-- 本页普通流式调用不显式设置思考等级和最大输出，直接使用模型默认行为。
 
 <p align="center">
   <small>© 2026 DMXAPI OpenAI Responses API 流式调用</small>

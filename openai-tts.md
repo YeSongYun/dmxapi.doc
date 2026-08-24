@@ -1,3 +1,5 @@
+# 1
+
 # OpenAI 请求格式 TTS 语音合成 API 文档
 TTS (Text-to-Speech) 将文本转换为自然语音的技术
 
@@ -12,8 +14,6 @@ https://www.dmxapi.cn/v1/audio/speech
 | 模型名称 | 说明 |
 |---------|------|
 | `gpt-4o-mini-tts` | GPT-4o Mini TTS 模型 |
-| `tts-1-hd` | 高清音质 TTS 模型 |
-| `tts-1` | 标准 TTS 模型 |
 
 ## 📝 参数说明
 

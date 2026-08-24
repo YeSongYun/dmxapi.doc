@@ -1,21 +1,14 @@
 # OpenAI Chat Completions 本地图片分析
 
-本页演示将本地图片编码为 Base64 数据 URI，再通过 DMXAPI 兼容代理的 Chat Completions 接口交给 `gpt-5.6-sol` 分析。该请求形状已通过 DMXAPI 实测。
+本页演示将本地图片编码为 Base64 数据 URI，再通过 DMXAPI 兼容代理的 Chat Completions 接口交给 `gpt-5.6-sol` 分析。
 
 ## 🔗 请求地址
-
 ```text
 https://www.dmxapi.cn/v1/chat/completions
 ```
-
-:::warning API 密钥安全
-示例中的令牌为不可用占位符。请妥善保管真实 DMXAPI 令牌，不要在客户端或日志中泄露。
-:::
-
 ## 模型名称
-
-- `gpt-5.6-sol`
-
+- 本页示例：`gpt-5.6-sol`
+- 其他模型：替换 `model`，并检查该模型对推理、输出长度和工具参数的支持情况。
 ## Python 调用示例
 
 ```python
@@ -186,14 +179,6 @@ print("=" * 80)
   ]
 }
 ```
-
-## 注意事项
-
-- Base64 会增加请求体积；大图应关注上传时间、输入 token 与超时设置。
-- 本页示例直接读取仓库内的 `img/cc_01.png`；红色箭头指向“添加供应商”按钮，便于验证模型确实读取了图片内容。
-- 数据 URI 的 MIME 类型应与实际图片格式一致。
-- 本地路径仅由客户端读取，不会作为路径字符串直接发送给模型。
-- 二次验收中，仅替换为 `deepseek-v4-flash-0731` 会返回 HTTP 400、错误码 10305；该模型不适用于本页图片输入。
 
 <p align="center">
   <small>© 2026 DMXAPI OpenAI 本地图片分析</small>

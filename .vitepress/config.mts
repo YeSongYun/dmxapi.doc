@@ -160,7 +160,7 @@ export default defineConfig({
               { text: '函数调用FunctionCall', link: '/function-call' },
               { text: 'whisper-stt', link: '/opneai-stt' },
               { text: 'gpt-tts', link: '/openai-tts' },
-              { text: 'gpt-5.2-pro', link: '/gpt-5.2-pro' },
+              { text: 'gpt-5.5-pro-ssvip', link: '/gpt-5.2-pro' },
               { text: 'openai绘图模型', link: '/gpt-image' },
               { text: 'openai多轮对话', link: '/gpt-5.4_Multi-turn-dialogue' }
             ],
@@ -180,7 +180,7 @@ export default defineConfig({
               { text: 'GPT-5.1 指南', link: '/GPT-5.1' },
               { text: 'GPT-5.2 指南', link: '/gpt-5.2' },
               { text: 'GPT-5.4 指南', link: '/GPT-5.4' },
-              { text: 'GPT-5.6 专题', link: '/GPT-5.6' },
+              { text: 'GPT-5.6 指南', link: '/GPT-5.6' },
               // { text: 'GPT-5.4 Computer Use', link: '/gpt-5.4_computer_use' },
 
             ],

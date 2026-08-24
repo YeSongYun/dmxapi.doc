@@ -4,7 +4,7 @@
 
 OpenAI 提供了强大的图像生成和编辑能力,支持文生图、图片编辑等多种功能。
 
-👉 **完整文档**: [OpenAI 绘图模型系列](./img-gpt-image-1.md)
+👉 **完整文档**: [OpenAI 绘图模型系列](./gpt-image-2-text-to-image)
 
 
 ## 🚀 快速导航

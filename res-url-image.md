@@ -13,9 +13,8 @@ https://www.dmxapi.cn/v1/responses
 :::
 
 ## 模型名称
-
-- `gpt-5.6-sol`
-
+- 本页示例：`gpt-5.6-sol`
+- 其他模型：替换 `model`，并检查该模型对推理、输出长度和工具参数的支持情况。
 ## Python 请求示例
 
 ```python
@@ -126,12 +125,6 @@ except ValueError as e:
   ]
 }
 ```
-
-## 注意事项
-
-- 图片 URL 必须能被服务端公开访问，不能依赖本地登录态或临时浏览器会话。
-- 生产环境应校验 URL 来源、文件类型和大小，避免服务端请求伪造风险。
-- 本页已使用同一请求结构通过 DMXAPI 实测；图片内容不同会产生不同回答。
 
 <p align="center">
   <small>© 2026 DMXAPI OpenAI Responses API 网络图片分析</small>

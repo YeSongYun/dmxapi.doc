@@ -7,15 +7,9 @@
 ```text
 https://www.dmxapi.cn/v1/responses
 ```
-
-:::warning API 密钥安全
-示例令牌为不可用占位符。请妥善保管真实 DMXAPI 令牌，不要写入公开代码或日志。
-:::
-
 ## 模型名称
-
-- `gpt-5.6-sol`
-
+- 本页示例：`gpt-5.6-sol`
+- 其他模型：替换 `model`，并检查该模型对推理、输出长度和工具参数的支持情况。
 ## Python 请求示例
 
 ```python
@@ -131,13 +125,6 @@ else:
   "tool_choice": "auto"
 }
 ```
-
-## 注意事项
-
-- `arguments` 是 JSON 字符串；反序列化后仍需按 schema、权限和业务规则再次校验。
-- 收到 `function_call` 后，由应用执行真实工具，再把结果作为后续输入提交给模型。
-- 本页使用 `tool_choice: "auto"`，已通过 DMXAPI 定点实测并成功返回 `function_call`。
-
 <p align="center">
   <small>© 2026 DMXAPI OpenAI Responses API 函数调用</small>
 </p>

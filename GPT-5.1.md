@@ -5,18 +5,8 @@
 ```text
 https://www.dmxapi.cn/v1/responses
 ```
-
-:::tip 重要提示
-GPT-5.1 系列模型只能通过 `responses` 接口调用
-:::
-
 ## 模型列表
-
 - `gpt-5.1` - 标准版本
-- `gpt-5.1-chat` - 对话优化版本
-- `gpt-5.1-codex` - 代码生成版本
-- `gpt-5.1-codex-mini` - 轻量级代码版本
-
 ## 快速入门
 
 GPT-5.1 新增了推理模式选项 `none`，适用于低延迟交互场景。系统默认将 GPT-5.1 的推理模式设置为 `none`。
@@ -249,7 +239,7 @@ print(json.dumps(response.model_dump(), indent=2, ensure_ascii=False))
 ## 参数兼容性
 
 :::warning 重要提示
-使用 GPT-5.1 系列模型时（如 `gpt-5.1`、`gpt-5.1-chat`、`gpt-5.1-codex` 等），以下参数**不被支持**：
+使用 GPT-5.1 系列模型时（如 `gpt-5.1` ），以下参数**不被支持**：
 
 - `temperature`
 - `top_p`

@@ -166,12 +166,6 @@ curl -X POST https://www.dmxapi.cn/v1/responses \
 ```
 
 ## 注意事项
-
-- 即使设置 `summary: auto`，返回的 `summary` 仍可能为空；代码必须兼容该情况。
-- DMXAPI 实测中，较复杂请求在 `low`、`medium` 和 `high` 下均能返回推理项，但摘要是否出现会随请求和调用而变化。
-- 推理 token 会计入输出用量；应根据准确性、延迟和成本选择强度。
-- OpenAI 上游模型说明与最新模型指南分别见：<https://developers.openai.com/api/docs/models/gpt-5.6-sol>、<https://developers.openai.com/api/docs/guides/latest-model>。
-
 <p align="center">
   <small>© 2026 DMXAPI GPT-5.6 Sol 推理摘要</small>
 </p>

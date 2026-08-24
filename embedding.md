@@ -22,7 +22,6 @@ https://www.dmxapi.cn/v1/embeddings
 
 - `text-embedding-3-small`
 - `text-embedding-3-large`
-- `text-embedding-ada-002`
 
 > 💡 更多模型请在模型价格页面搜索 **embedding**
 

@@ -3,18 +3,13 @@
 本页保留原有 URL 以兼容旧链接，内容已迁移到 `gpt-5.6-sol`。示例通过 DMXAPI 兼容代理的 Chat Completions 接口维护完整 `messages` 历史，实现多轮上下文。
 
 ## 🔗 请求地址
-
 ```text
 https://www.dmxapi.cn/v1/chat/completions
 ```
-
-:::warning API 密钥安全
-示例令牌为不可用占位符。请妥善保管真实 DMXAPI 令牌，不要在公开仓库或日志中泄露。
-:::
-
 ## 模型名称
 
-- `gpt-5.6-sol`
+- 本页示例：`gpt-5.6-sol`
+- 其他模型：替换 `model`，并检查该模型对推理、输出长度和工具参数的支持情况。
 
 ## 多轮对话示例代码
 
@@ -285,13 +280,6 @@ if __name__ == "__main__":
 用户：我的代号是什么？只回复代号。
 助手：蓝鲸
 ```
-
-## 注意事项
-
-- 每一轮都要把此前的 `user` 和 `assistant` 消息按原顺序带回。
-- 对话变长时要关注上下文 token、延迟与成本；不要无限累积无关历史。
-- DMXAPI 修改前实测已验证两轮上下文能正确保留“蓝鲸”代号。
-
 <p align="center">
   <small>© 2026 DMXAPI GPT-5.6 Sol 多轮对话</small>
 </p>

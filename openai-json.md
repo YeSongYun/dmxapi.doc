@@ -7,14 +7,10 @@
 ```text
 https://www.dmxapi.cn/v1/chat/completions
 ```
-
-:::warning API 密钥安全
-请使用自己的 DMXAPI 令牌替换占位符。不要把真实令牌写进公开仓库或日志。
-:::
-
 ## 模型名称
 
-- `gpt-5.6-sol`
+- 本页示例：`gpt-5.6-sol`
+- 其他模型：替换 `model`，并检查该模型对推理、输出长度和工具参数的支持情况。
 
 ## Python 示例代码
 

@@ -1,21 +1,11 @@
 # OpenAI Chat Completions 流式调用
-
-本页演示通过 DMXAPI 兼容代理调用 `gpt-5.6-sol` 的 Chat Completions 流式接口，并从 `text/event-stream` 响应中提取 `choices[].delta.content`。
-
 ## 🔗 请求地址
-
 ```text
 https://www.dmxapi.cn/v1/chat/completions
 ```
-
-:::warning API 密钥安全
-示例中的令牌为不可用占位符。请勿在浏览器端或公开代码中保存、泄露真实 DMXAPI 令牌。
-:::
-
 ## 模型名称
-
-- `gpt-5.6-sol`
-
+- 本页示例：`gpt-5.6-sol`
+- 其他模型：替换 `model`，并检查该模型对推理、输出长度和工具参数的支持情况。
 ## Python 请求示例
 
 ```python

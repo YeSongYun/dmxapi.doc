@@ -1,6 +1,6 @@
 # GPT-5.6 专题：Sol、Terra 与 Luna
 
-GPT-5.6 系列包含 `gpt-5.6-sol`、`gpt-5.6-terra` 和 `gpt-5.6-luna` 三个模型。本专题以 Microsoft Foundry 官方 GPT-5.6 模型表和推理模型文档为主要规格来源，并结合 OpenAI 官方模型指南说明三档定位。示例代码继续使用 DMXAPI 兼容代理地址；上游规格不等同于 DMXAPI 的配额、价格或部署承诺。
+GPT-5.6 系列包含 `gpt-5.6-sol`、`gpt-5.6-terra` 和 `gpt-5.6-luna` 三个模型。本专题以 Microsoft Foundry 官方 GPT-5.6 模型表和推理模型文档为主要规格来源，并结合 OpenAI 官方模型指南说明三档定位。
 
 :::warning API 密钥安全
 示例令牌全部是不可用占位符。真实 DMXAPI 令牌只能保存在服务端环境变量或密钥管理系统中，不要写入文档、前端代码、公开仓库或日志。
@@ -18,8 +18,6 @@ GPT-5.6 系列包含 `gpt-5.6-sol`、`gpt-5.6-terra` 和 `gpt-5.6-luna` 三个�
 
 OpenAI 官方还提供 `gpt-5.6` 别名，该别名会路由到 `gpt-5.6-sol`。通过 DMXAPI 调用时，建议显式填写需要的完整模型名称，避免业务代码依赖别名的后续路由变化。
 
-定位来源：[OpenAI GPT-5.6 模型指南](https://developers.openai.com/api/docs/guides/latest-model)。
-
 ## Microsoft Foundry 官方规格
 
 Microsoft Foundry 当前将三款模型列为同一组能力规格：
@@ -36,15 +34,6 @@ Microsoft Foundry 当前将三款模型列为同一组能力规格：
 | 能力 | 推理、结构化输出、函数/工具、并行工具调用、流式、Computer use | 同左 | 同左 |
 
 `128,000` 是最大输出上限，不代表每次请求都会预留这么多可见输出。输入、可见输出和推理 token 会共同占用可用预算；长输入或较高推理强度会减少剩余生成空间。生产环境应同时检查响应状态、结束原因和 token 使用量。
-
-Microsoft 官方来源：
-
-- [Foundry Models 中的 GPT-5.6 模型表](https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure?pivots=azure-openai)
-- [Azure OpenAI 推理模型与功能限制](https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/reasoning)
-
-:::info 上游规格与 DMXAPI 的边界
-Microsoft 页面描述的是 Azure/Foundry 上游模型与部署。本文只借其确认模型能力、参数和限制；DMXAPI 的实际模型开通、路由、配额与计费以 DMXAPI 当前服务为准。
-:::
 
 ## 🔗 请求地址
 
@@ -231,33 +220,6 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 }
 ```
 
-## 如何选择推理强度
-
-不要把推理等级当作固定的“质量开关”。更稳妥的做法是：
-
-1. 为真实业务准备固定评测集，记录正确率、格式稳定性、延迟和 token 用量。
-2. 先以默认 `medium` 建立基线，再测试低一档；GPT-5.6 可能用更少 token 达到相近质量。
-3. 只有低档无法满足质量要求时，才逐步提升到 `high` 或 `xhigh`。
-4. `max` 只用于最困难且质量优先的任务，并与 `xhigh` 做同一评测集对比。
-5. 简单抽取或格式转换先测试 `none`，但涉及多步判断、工具规划或复杂代码时至少比较 `low`。
-
-### 推理强度与回答详细程度不同
-
-`reasoning.effort` 控制模型在生成答案前投入多少推理；`text.verbosity` 控制最终答案展开程度。需要深入思考但简短作答时，可以组合：
-
-```json
-{
-  "reasoning": {
-    "effort": "high"
-  },
-  "text": {
-    "verbosity": "low"
-  }
-}
-```
-
-不要因为输出很短就认为模型没有推理，也不要用提高 verbosity 代替提高 reasoning effort。
-
 ## 工具调用注意事项
 
 Microsoft 官方明确说明，GPT-5.6 在 Chat Completions 中不能同时使用工具与非 `none` 推理强度：
@@ -277,21 +239,6 @@ Microsoft 官方明确说明，GPT-5.6 在 Chat Completions 中不能同时使�
 ```
 
 需要 `low` 到 `max` 推理强度并结合工具时，请使用 Responses API。这样还可以携带推理项处理后续回合。
-
-## 本轮 DMXAPI 验证
-
-验证日期：2026-08-21。
-
-| 验证项 | 结果 |
-|--------|------|
-| `gpt-5.6-sol` 最小 Responses 请求 | 通过 |
-| `gpt-5.6-terra` 最小 Responses 请求 | 通过 |
-| `gpt-5.6-luna` 最小 Responses 请求 | 通过 |
-| Sol 的 `none` / `low` / `medium` / `high` / `xhigh` / `max` | 六档全部通过 |
-| 专题中的 Responses SDK、Responses requests、Chat Completions 示例 | 逐代码独立复验通过 |
-
-此前对 `gpt-5.6-sol` 的通用与 Responses 请求矩阵也已完成二次验收。以上结果只代表验证时的 DMXAPI 服务状态；上线前仍应使用你的真实提示词、错误处理、超时、预算和并发配置做回归测试。
-
 <p align="center">
   <small>© 2026 DMXAPI GPT-5.6 专题</small>
 </p>

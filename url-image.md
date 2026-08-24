@@ -1,21 +1,13 @@
 # OpenAI Chat Completions 网络图片分析
 
-本页演示通过 DMXAPI 兼容代理调用 `gpt-5.6-sol`，使用 Chat Completions 的 `image_url` 内容项分析公网图片。该请求形状已通过 DMXAPI 实测。
-
+本页演示通过 DMXAPI 兼容代理调用 `gpt-5.6-sol`，使用 Chat Completions 的 `image_url` 内容项分析公网图片。
 ## 🔗 请求地址
-
 ```text
 https://www.dmxapi.cn/v1/chat/completions
 ```
-
-:::warning API 密钥安全
-示例令牌为不可用占位符。请妥善保管真实 DMXAPI 令牌，不要提交到公开仓库或日志。
-:::
-
 ## 模型名称
-
-- `gpt-5.6-sol`
-
+- 本页示例：`gpt-5.6-sol`
+- 其他模型：替换 `model`，并检查该模型对推理、输出长度和工具参数的支持情况。
 ## Python 调用示例
 
 ```python
@@ -130,10 +122,6 @@ if __name__ == "__main__":
 ## 注意事项
 
 - `image_url.url` 必须是模型服务可访问的公网图片直链。
-- 本页使用 Python 官方标志做确定性验收；返回内容应能识别出 `Python`。
-- GPT-5.6 支持图片输入、文本输出；本页不涉及图片生成。
-- 二次验收中，仅替换为 `deepseek-v4-flash-0731` 会返回 HTTP 400、错误码 10305；该模型不适用于本页图片输入。
-- 对票据、证件等重要内容的模型识别结果应由业务系统再次核验。
 
 <p align="center">
   <small>© 2026 DMXAPI OpenAI 网络图片分析</small>

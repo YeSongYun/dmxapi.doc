@@ -7,15 +7,9 @@
 ```text
 https://www.dmxapi.cn/v1/responses
 ```
-
-:::warning API 密钥安全
-请将示例中的占位符替换为自己的 DMXAPI 令牌。不要把真实令牌提交到代码仓库、前端代码或公开日志中。
-:::
-
 ## 模型名称
-
-- `gpt-5.6-sol`
-
+- 本页示例：`gpt-5.6-sol`
+- 其他模型：替换 `model`，并检查该模型对推理、输出长度和工具参数的支持情况。
 ## 调用示例
 
 ::: code-group
@@ -212,13 +206,6 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
   }
 }
 ```
-
-## 注意事项
-
-- 本页普通调用不显式设置思考等级和最大输出，直接使用模型默认行为。
-- 需要工具调用、多轮状态或 GPT-5.6 新能力时，优先继续使用 Responses API。
-- 文本结果位于 `output` 数组中 `type` 为 `message` 的项目内；SDK 可直接读取 `response.output_text`。
-- DMXAPI 代理请求地址与 OpenAI 上游原生地址不同，请保留本页的 DMXAPI Base URL。
 
 <p align="center">
   <small>© 2026 DMXAPI OpenAI Responses 非流式调用</small>
