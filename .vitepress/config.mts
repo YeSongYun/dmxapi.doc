@@ -149,7 +149,7 @@ export default defineConfig({
             text: 'Openai 请求格式（通用）',
             collapsed: true,
             items: [
-              { text: '适用范围：♥ 所有模型', link: '/fanwei' },
+              { text: '适用范围与兼容性', link: '/fanwei' },
               { text: '普通文本对话（非流）', link: '/openai-chat' },
               { text: '普通文本对话（流式输出）', link: '/openai-chat-stream' },
               { text: '固定格式化输出Json', link: '/openai-json' },
@@ -160,7 +160,7 @@ export default defineConfig({
               { text: '函数调用FunctionCall', link: '/function-call' },
               { text: 'whisper-stt', link: '/opneai-stt' },
               { text: 'gpt-tts', link: '/openai-tts' },
-              { text: 'gpt-5.2-pro', link: '/gpt-5.2-pro' },
+              { text: 'Pro 系列（Responses）', link: '/gpt-5.2-pro' },
               { text: 'openai绘图模型', link: '/gpt-image' },
               { text: 'openai多轮对话', link: '/gpt-5.4_Multi-turn-dialogue' }
             ],
@@ -180,6 +180,7 @@ export default defineConfig({
               { text: 'GPT-5.1 指南', link: '/GPT-5.1' },
               { text: 'GPT-5.2 指南', link: '/gpt-5.2' },
               { text: 'GPT-5.4 指南', link: '/GPT-5.4' },
+              { text: 'GPT-5.6 指南', link: '/GPT-5.6' },
               // { text: 'GPT-5.4 Computer Use', link: '/gpt-5.4_computer_use' },
 
             ],

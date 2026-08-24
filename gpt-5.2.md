@@ -1,4 +1,19 @@
 # GPT-5.2 使用指南
+
+## 🔗 请求地址
+
+### Responses API
+
+```text
+https://www.dmxapi.cn/v1/responses
+```
+
+### Chat Completions API
+
+```text
+https://www.dmxapi.cn/v1/chat/completions
+```
+
 OpenAI 推出了三款新模型。总体而言，`gpt-5.2` 最适合处理那些需要广泛世界知识的复杂任务，它已取代此前的 `gpt-5.1` 模型。ChatGPT 所采用的模型是 `gpt-5.2-chat-latest`。第三款模型 `gpt-5.2-pro` 则通过投入更多计算资源，以进行更深入的思考，从而持续提供更优质的答案。
 
 ## 新特性
@@ -165,7 +180,7 @@ client = OpenAI(
     # 🔐 DMXAPI 密钥 (请替换为您自己的密钥)
     # 获取方式: 登录 DMXAPI 官网 -> 个人中心 -> API 密钥管理
     api_key="sk-***************************************",
-    
+
     # 🌐 DMXAPI 服务端点地址
     # 所有 API 请求都将发送到此基础 URL
     base_url="https://www.dmxapi.cn/v1"

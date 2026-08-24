@@ -3,7 +3,7 @@ TTS (Text-to-Speech) 将文本转换为自然语音的技术
 
 ## 🔗 请求地址
 
-```
+```text
 https://www.dmxapi.cn/v1/audio/speech
 ```
 
@@ -12,8 +12,6 @@ https://www.dmxapi.cn/v1/audio/speech
 | 模型名称 | 说明 |
 |---------|------|
 | `gpt-4o-mini-tts` | GPT-4o Mini TTS 模型 |
-| `tts-1-hd` | 高清音质 TTS 模型 |
-| `tts-1` | 标准 TTS 模型 |
 
 ## 📝 参数说明
 
@@ -61,28 +59,28 @@ try:
     output_dir = "output"
     os.makedirs(output_dir, exist_ok=True)
     print("📁 输出目录已准备就绪")
-    
+
     # 步骤2: 发送语音合成请求
     print("🚀 正在请求语音合成服务...")
-    response = requests.post(url, 
+    response = requests.post(url,
                            headers={"Authorization": f"{api_key}"},
                            json=payload)
-    
+
     # 步骤3: 检查响应状态码
     response.raise_for_status()
-    
+
     # 步骤4: 处理并保存音频文件
     if response.headers["Content-Type"] in ("audio/mpeg", "audio/mp3"):
         # 生成时间戳格式: YYYYMMDD_HHMMSS
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        
+
         # 构建带时间戳的输出文件路径
         output_path = os.path.join(output_dir, f"output_{timestamp}.mp3")
-        
+
         # 以二进制模式写入音频文件
         with open(output_path, "wb") as f:
             f.write(response.content)
-        
+
         print(f"✅ 语音合成成功!文件已保存至: {output_path}")
     else:
         # 处理非音频响应

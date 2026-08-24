@@ -1,20 +1,12 @@
-# OpenAI 流式输出 API 文档
-
-## 📡 接口地址
-
-```
+# OpenAI Chat Completions 流式调用
+## 🔗 请求地址
+```text
 https://www.dmxapi.cn/v1/chat/completions
 ```
-
-## 📋 请求参数
-
-| 参数     | 类型    | 必填 | 说明                      |
-|----------|---------|------|---------------------------|
-| model    | string  | 是   | 模型名称               |
-| stream   | boolean | 是   | 是否开启流式输出          |
-| messages | array   | 是   | 对话消息列表              |
-
-## 💻 Python 请求示例
+## 模型名称
+- 本页示例：`gpt-5.6-sol`
+- 其他模型：替换 `model`，并检查该模型对推理、输出长度和工具参数的支持情况。
+## Python 请求示例
 
 ```python
 """
@@ -47,7 +39,7 @@ headers = {
 # 3. 构建请求数据
 # =================================================================
 payload = {
-    "model": "gpt-5-mini",  # 选择AI模型(此处使用gpt-5-mini模型)
+    "model": "gpt-5.6-sol",  # 选择AI模型(此处使用gpt-5.6-sol模型)
     "stream": True,  # 启用流式输出模式,可实时接收生成的内容片段
     "messages": [
         {
@@ -77,18 +69,18 @@ for chunk in response.iter_content(chunk_size=None):
     if chunk:  # 确保接收到的数据块非空
         # 将二进制数据解码为UTF-8字符串并追加到缓冲区
         buffer += chunk.decode("utf-8")
-        
+
         # -----------------------------------------------------------
         # 按行处理缓冲区数据(SSE协议是基于行的)
         # -----------------------------------------------------------
         while "\n" in buffer:
             # 提取第一行数据,剩余部分保留在缓冲区
             line, buffer = buffer.split("\n", 1)
-            
+
             # 跳过空行(SSE协议中空行用于分隔事件)
             if not line.strip():
                 continue
-            
+
             # -----------------------------------------------------------
             # 解析SSE格式数据(Server-Sent Events)
             # SSE数据格式: "data: {JSON内容}"
@@ -96,29 +88,29 @@ for chunk in response.iter_content(chunk_size=None):
             if line.startswith("data: "):
                 # 提取"data: "后面的实际JSON数据
                 data_line = line[6:].strip()
-                
+
                 # 检查流结束标记
                 if data_line == "[DONE]":
                     break
-                
+
                 try:
                     # 解析JSON数据
                     data = json.loads(data_line)
-                    
+
                     # ---------------------------------------------------
                     # 提取AI生成的文本内容
                     # 数据结构: data.choices[0].delta.content
                     # ---------------------------------------------------
                     if "choices" in data and len(data["choices"]) > 0 and "delta" in data["choices"][0]:
                         content = data["choices"][0]["delta"].get("content", "")
-                        
+
                         # 只输出非空内容(过滤掉仅包含元数据的响应)
                         if content:
                             # end="": 不换行
                             # flush=True: 立即输出,不等待缓冲区满
                             # 实现打字机效果的实时显示
                             print(content, end="", flush=True)
-                
+
                 except json.JSONDecodeError:
                     # ---------------------------------------------------
                     # JSON解析失败处理
@@ -129,20 +121,22 @@ for chunk in response.iter_content(chunk_size=None):
                     break  # 退出while循环,继续接收下一个chunk
 ```
 
-## 📤 返回示例
-
-**流式输出效果:**
+## 返回示例
 
 ```text
-不是。周树人是鲁迅的本名，鲁迅是他的笔名——两者是同一个人。鲁迅（周树人，1881–1936）是中国现代著名作家，代表作有《狂人日记》《阿Q正传》等。
+data: {"id":"chatcmpl_example_stream_001","model":"gpt-5.6-sol-2026-07-09","choices":[{"index":0,"delta":{"content":"不是。"}}]}
+
+data: {"id":"chatcmpl_example_stream_001","model":"gpt-5.6-sol-2026-07-09","choices":[{"index":0,"delta":{"content":"周树人和鲁迅是同一个人。"}}]}
+
+data: [DONE]
 ```
 
-## ⚠️ 注意事项
+## 注意事项
 
-- 请妥善保管您的 API Key,不要泄露给他人
-- 流式输出适合需要实时展示响应内容的场景
-- 确保网络连接稳定以获得最佳的流式体验
+- DMXAPI 实测流中会出现 `choices: []` 的元数据块；不要直接访问 `choices[0]`。
+- 文本增量位于 `choices[0].delta.content`，结束标记为 `data: [DONE]`。
+- 网络层使用 `stream=True`，请求体也必须包含 `"stream": true`。
 
 <p align="center">
-  <small>© 2026 DMXAPI OpenAI Stream</small>
+  <small>© 2026 DMXAPI OpenAI Chat Completions 流式调用</small>
 </p>

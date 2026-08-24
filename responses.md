@@ -1,5 +1,11 @@
 # OpenAI Responses API 请求格式介绍
 
+## 🔗 请求地址
+
+```text
+https://www.dmxapi.cn/v1/responses
+```
+
 ## 📖 简介
 
 OpenAI 在 **2025 年 3 月 11 日**推出了全新的 **Responses API**，定位为 Chat Completions 的继任者。该 API 旨在简化开发流程并增强多模态能力，主要特性包括：

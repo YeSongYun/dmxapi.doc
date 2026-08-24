@@ -1,15 +1,17 @@
 # OpenAI Response 接口格式调用
 
-## 接口地址
+## 🔗 请求地址
 
-```
+```text
 https://www.dmxapi.cn/v1/responses
 ```
 
 ## 模型名称
 
-- `gpt-5.2-pro`
 - `gpt-5-pro`
+- `gpt-5.2-pro`
+- `gpt-5.4-pro-ssvip`
+- `gpt-5.5-pro-ssvip`
 
 
 ## 调用示例
@@ -44,9 +46,9 @@ data = {
     "model": "gpt-5.2-pro",    # 指定使用的 AI 模型版本
     "input": "你好",          # 发送给 AI 的问题或指令
     "stream": True,          # 启用流式输出 - 实时接收响应而不是等待完整回复
-    
+
     # ---------- 输出控制参数 ----------
-    # 📏 最大输出令牌数 
+    # 📏 最大输出令牌数
     # 控制模型响应的最大长度
     # 💡 提示: 实际输出可能少于此值
     "max_output_tokens": 128000,
@@ -68,11 +70,11 @@ data = {
     # 💡 提示: 较低的值会让输出更集中,较高的值会增加多样性
     # ⚠️ 建议: 只调整 temperature 或 top_p 其中之一
     "top_p": 1,
-    
+
     # ---------- 推理配置 ----------
 
     "reasoning": {
-  
+
         # 📌 注意: gpt-5.2-pro 模型默认且仅支持 high 级别
         "effort": "high"
     }
@@ -92,39 +94,39 @@ try:
     # 初始化变量用于跟踪当前事件和数据
     current_event = None    # 当前 SSE 事件类型
     current_data = None     # 当前 SSE 事件数据
-    
+
     # 逐行读取响应流 - 处理服务器发送的每一行数据
     for line in response.iter_lines():
         if line:  # 如果行不为空
             # 解码字节数据为 UTF-8 字符串并去除首尾空白
             line_text = line.decode('utf-8').strip()
-            
+
             # ---- 处理 SSE (Server-Sent Events) 格式的事件流 ----
             if line_text.startswith('event: '):
                 # 解析事件类型 - 提取事件名称
-                current_event = line_text[7:]  
-                
+                current_event = line_text[7:]
+
             elif line_text.startswith('data: '):
                 # 解析事件数据 - 提取数据内容
-                current_data = line_text[6:]  
-                
+                current_data = line_text[6:]
+
                 # 只处理包含文本内容的增量事件
                 if current_event == 'response.output_text.delta' and current_data:
                     try:
                         # 解析 JSON 数据 - 将字符串转换为 Python 字典
                         json_data = json.loads(current_data)
-                        
+
                         # 提取文本内容 - 根据实际数据结构,文本在 delta 字段中
                         if 'delta' in json_data:
                             content = json_data['delta']    # 获取增量文本内容
                             if content:
                                 # 实时打印文本内容 - 不换行,立即刷新输出缓冲区
                                 print(content, end='', flush=True)
-                                
+
                     except json.JSONDecodeError:
                         # 静默处理 JSON 解析错误 - 避免干扰正常输出
                         pass
-                        
+
             elif line_text == '':
                 # 空行表示一个事件结束 - 重置事件状态
                 current_event = None
@@ -136,7 +138,7 @@ try:
 except KeyboardInterrupt:
     # 处理用户中断 - 当用户按 Ctrl+C 时优雅退出
     print("\n\n⚠️ 用户中断了请求")
-    
+
 except Exception as e:
     # 处理其他异常 - 捕获并显示任何意外错误
     print(f"\n\n❌ 发生错误: {e}")

@@ -2,10 +2,18 @@
 
 GPT-5.4 是 OpenAI 迄今为止最强大的前沿模型，在 GPT-5.2 的基础上带来了多项突破性新特性：**百万 Token 上下文窗口**、**内置 Computer Use**（直接操控 UI）、**原生上下文压缩**以及更精细的输出控制。强烈推荐通过 **Responses API** 调用，以充分利用跨轮传递推理链（chain of thought）的能力。
 
-## 请求地址
+## 🔗 请求地址
 
-```
+### Responses API
+
+```text
 https://www.dmxapi.cn/v1/responses
+```
+
+### Chat Completions API
+
+```text
+https://www.dmxapi.cn/v1/chat/completions
 ```
 
 <!-- ## 模型列表

@@ -1,22 +1,17 @@
 # GPT-5.1 使用指南
 
-## 请求地址
+## 🔗 请求地址
 
-```
+```text
 https://www.dmxapi.cn/v1/responses
 ```
 
-:::tip 重要提示
-GPT-5.1 系列模型只能通过 `responses` 接口调用
+:::tip 接口限制
+GPT-5.1 系列仅支持 Responses API，请使用 `/v1/responses`；不支持 `/v1/chat/completions`。
 :::
 
 ## 模型列表
-
 - `gpt-5.1` - 标准版本
-- `gpt-5.1-chat` - 对话优化版本
-- `gpt-5.1-codex` - 代码生成版本
-- `gpt-5.1-codex-mini` - 轻量级代码版本
-
 ## 快速入门
 
 GPT-5.1 新增了推理模式选项 `none`，适用于低延迟交互场景。系统默认将 GPT-5.1 的推理模式设置为 `none`。
@@ -58,7 +53,6 @@ client = OpenAI(
 result = client.responses.create(
     model="gpt-5.1",                    # 使用的模型版本
     input="早上好",                      # 输入的提示文本
-    reasoning={"effort": "none"},       # 推理配置：低推理程度
 )
 
 # ============================================================
@@ -70,7 +64,7 @@ print(result.output_text)
 
 ### 返回示例
 
-```json
+```text
 早上好呀！🙂
 今天有什么想聊的或需要我帮忙的吗？
 ```
@@ -250,7 +244,7 @@ print(json.dumps(response.model_dump(), indent=2, ensure_ascii=False))
 ## 参数兼容性
 
 :::warning 重要提示
-使用 GPT-5.1 系列模型时（如 `gpt-5.1`、`gpt-5.1-chat`、`gpt-5.1-codex` 等），以下参数**不被支持**：
+使用 GPT-5.1 系列模型时（如 `gpt-5.1` ），以下参数**不被支持**：
 
 - `temperature`
 - `top_p`
