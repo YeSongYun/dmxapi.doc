@@ -57,23 +57,34 @@ api_key = "sk-******************************************"
 # 步骤2: 配置素材输入
 
 # 参考图片（0-9 张，按顺序对应提示词中的 图片1 / 图片2 ...）
-# 支持三种来源，程序会自动识别：网络 URL / 素材 ID（asset://）/ 本地文件路径（自动转 base64）
+# 【方式一】网络图片 URL
 image_inputs = [
     "https://ark-project.tos-cn-beijing.volces.com/doc_image/r2v_tea_pic1.jpg",
     "https://ark-project.tos-cn-beijing.volces.com/doc_image/r2v_tea_pic2.jpg",
 ]
+# 【方式二】本地图片路径（程序自动读取并编码）
+# image_inputs = ["C:/Users/a1/Pictures/pic1.jpg", "C:/Users/a1/Pictures/pic2.jpg"]
+# 【方式三】素材 ID
+# image_inputs = ["asset://<IMAGE_ASSET_ID_1>", "asset://<IMAGE_ASSET_ID_2>"]
 
 # 参考视频（0-3 个，所有视频总时长不超过 15 秒）
-# 仅支持网络 URL 或素材 ID（asset://），不支持本地文件 base64 上传
+# 【方式一】网络视频 URL（视频不支持本地文件 Base64）
 video_inputs = [
     "https://ark-project.tos-cn-beijing.volces.com/doc_video/r2v_tea_video1.mp4",
 ]
+# 【方式二】素材 ID
+# video_inputs = ["asset://<VIDEO_ASSET_ID>"]
 
 # 参考音频（0-3 个）
 # 注意：不可单独输入音频，应至少包含 1 个参考视频或图片
+# 【方式一】网络音频 URL
 audio_inputs = [
     "https://ark-project.tos-cn-beijing.volces.com/doc_audio/r2v_tea_audio1.mp3",
 ]
+# 【方式二】本地音频路径（程序自动读取并编码）
+# audio_inputs = ["C:/Users/a1/Music/reference_audio.mp3"]
+# 【方式三】素材 ID
+# audio_inputs = ["asset://<AUDIO_ASSET_ID>"]
 
 # 生成视频的提示词
 prompt_text = "全程使用视频1的第一视角构图，全程使用音频1作为背景音乐。第一人称视角果茶宣传广告；首帧为图片1，你的手摘下一颗带晨露的红苹果；2-4 秒：快速切镜，将苹果块投入雪克杯，加入冰块与茶底用力摇晃；4-6 秒：成品特写，分层果茶倒入透明杯，轻挤奶盖在顶部铺展；6-8 秒：手持举杯将果茶举到镜头前，尾帧定格为图片2。"

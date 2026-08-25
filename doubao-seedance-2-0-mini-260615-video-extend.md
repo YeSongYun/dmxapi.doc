@@ -54,7 +54,15 @@ headers = {
     "Authorization": f"{api_key}",
 }
 
-# 步骤3: 配置请求参数
+# 步骤3: 配置待延长视频来源（二选一即可）
+
+# 【方式一】网络视频 URL
+video_source = "https://ark-project.tos-cn-beijing.volces.com/doc_video/r2v_tea_video1.mp4"
+
+# 【方式二】素材 ID
+# video_source = "asset://<VIDEO_ASSET_ID>"
+
+# 步骤4: 配置请求参数
 
 payload = {
     # 【model】(string, 必填) 模型名称，指定使用 doubao-seedance-2-0-mini 模型
@@ -74,7 +82,7 @@ payload = {
             # 【video_url.url】视频 URL 或素材 ID（asset://<ASSET_ID>），不支持 Base64
             "type": "video_url",
             "video_url": {
-                "url": "https://ark-project.tos-cn-beijing.volces.com/doc_video/r2v_tea_video1.mp4"
+                "url": video_source
             },
             # 【role】(string, 必填) 参考视频固定为 "reference_video"
             "role": "reference_video",
@@ -129,7 +137,7 @@ payload = {
     "tools": [{"type": "web_search"}],
 }
 
-# 步骤4: 发送请求并输出结果
+# 步骤5: 发送请求并输出结果
 
 response = requests.post(url, headers=headers, json=payload)
 print(json.dumps(response.json(), indent=2, ensure_ascii=False))

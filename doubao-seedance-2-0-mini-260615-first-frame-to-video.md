@@ -22,7 +22,7 @@ doubao-seedance-2-0-mini-260615 支持图生视频-首帧模式：输入 1 张�
 | 项目 | 要求 |
 |------|------|
 | 图片数量 | 1 张 |
-| 图片来源 | 公网 URL / Base64 编码 / 素材 ID（`asset://<ASSET_ID>`） |
+| 示例代码输入 | 公网 URL / 本地文件路径（程序自动读取并编码）/ 素材 ID（`asset://<ASSET_ID>`） |
 | 格式 | jpeg、png、webp、bmp、tiff、gif、heic、heif |
 | 宽高比（宽/高） | [0.4, 2.5] |
 | 宽高长度（px） | [300, 6000] |
@@ -38,23 +38,72 @@ seedance 2.0 系列模型不支持直接上传含有真人人脸的参考图。
 ```python
 import requests
 import json
+import base64
+import os
 
-# 步骤1: 配置 API 连接信息
+# ═══════════════════════════════════════════════════════════════
+# 🔑 步骤1: 配置 API 连接信息
+# ═══════════════════════════════════════════════════════════════
 
-# DMXAPI 服务端点地址
+# 🌐 DMXAPI 服务端点地址
 url = "https://www.dmxapi.cn/v1/responses"
 
-# DMXAPI 密钥 (请替换为您自己的密钥)
+# 🔐 DMXAPI 密钥 (请替换为您自己的密钥)
+# 获取方式: 登录 DMXAPI 官网 -> 个人中心 -> API 密钥管理
 api_key = "sk-******************************************"
 
-# 步骤2: 配置请求头
+# ═══════════════════════════════════════════════════════════════
+# 📋 步骤2: 配置请求头
+# ═══════════════════════════════════════════════════════════════
 
 headers = {
-    "Content-Type": "application/json",
-    "Authorization": f"{api_key}",
+    "Content-Type": "application/json",  # 指定请求体为 JSON 格式
+    "Authorization": f"{api_key}",       # token 认证方式
 }
 
-# 步骤3: 配置请求参数
+# ═══════════════════════════════════════════════════════════════
+# 🖼️ 步骤3: 配置首帧图片来源 (三选一即可)
+# ═══════════════════════════════════════════════════════════════
+
+# 【方式一】网络图片 URL (支持 HTTP / HTTPS 协议)
+# image_source = "https://img.shetu66.com/2023/07/14/1689320796087949.png"
+
+# 【方式二】本地图片路径 (请替换为您自己的图片路径)
+image_source = "C:/Users/a1/Pictures/1689320796087949.png"
+
+# 【方式三】素材 ID
+# image_source = "asset://<ASSET_ID>"
+
+# ╔═══════════════════════════════════════════════════════════════╗
+# ║  ⚙️ 图片处理函数（自动识别网络 URL、本地路径或素材 ID，无需修改） ║
+# ╚═══════════════════════════════════════════════════════════════╝
+
+
+def resolve_image_url(source):
+    """
+    自动识别图片来源并返回可用于 API 请求的 URL 字符串。
+
+    - 网络图片或素材 ID: 直接返回原值
+    - 本地图片: 读取文件并转换为 Base64 Data URL
+    """
+    if source.startswith(("http://", "https://", "asset://")):
+        return source
+    if not os.path.isfile(source):
+        raise FileNotFoundError(f"本地图片不存在: {source}")
+    if os.path.getsize(source) >= 30 * 1024 * 1024:
+        raise ValueError("本地图片必须小于 30 MB")
+    ext = os.path.splitext(source)[1].lower().lstrip(".")
+    ext = {"jpg": "jpeg", "tif": "tiff"}.get(ext, ext)
+    if ext not in {"jpeg", "png", "webp", "bmp", "tiff", "gif", "heic", "heif"}:
+        raise ValueError(f"不支持的图片格式: {ext or '无扩展名'}")
+    with open(source, "rb") as f:
+        base64_data = base64.b64encode(f.read()).decode("utf-8")
+    return f"data:image/{ext};base64,{base64_data}"
+
+
+# ═══════════════════════════════════════════════════════════════
+# 💬 步骤4: 配置请求参数
+# ═══════════════════════════════════════════════════════════════
 
 payload = {
     # 【model】(string, 必填) 模型名称，指定使用 doubao-seedance-2-0-mini 模型
@@ -71,10 +120,10 @@ payload = {
             "text": "镜头缓缓推进，微风吹过，花瓣轻轻摇曳，阳光穿过花丛形成斑驳光影",
         },
         {
-            # 【image_url.url】图片 URL、Base64 编码（data:image/png;base64,<编码>）或素材 ID（asset://<ASSET_ID>）
+            # 【image_url.url】自动解析网络 URL、本地图片路径或素材 ID
             "type": "image_url",
             "image_url": {
-                "url": "https://ark-project.tos-cn-beijing.volces.com/doc_image/i2v_foxrgirl.png"
+                "url": resolve_image_url(image_source)
             },
             # 【role】(string, 可选) 首帧图片对应的 role 为 "first_frame"，不填时默认按首帧处理
             "role": "first_frame",
@@ -130,7 +179,9 @@ payload = {
     "tools": [{"type": "web_search"}],
 }
 
-# 步骤4: 发送请求并输出结果
+# ═══════════════════════════════════════════════════════════════
+# 📤 步骤5: 发送请求并输出结果
+# ═══════════════════════════════════════════════════════════════
 
 response = requests.post(url, headers=headers, json=payload)
 print(json.dumps(response.json(), indent=2, ensure_ascii=False))
