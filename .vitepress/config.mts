@@ -588,6 +588,18 @@ export default defineConfig({
                     ],
                   },
                   {
+                    text: 'seedance 2.5',
+                    collapsed: true,
+                    items: [
+                      { text: '文生视频', link: '/doubao-seedance-2-5-260628-text-to-video' },
+                      { text: '首帧生视频', link: '/doubao-seedance-2-5-260628-first-frame-to-video' },
+                      { text: '首尾帧生视频', link: '/doubao-seedance-2-5-260628-first-last-frame-to-video' },
+                      { text: '视频编辑', link: '/doubao-seedance-2-5-260628-video-edit' },
+                      { text: '视频延长', link: '/doubao-seedance-2-5-260628-video-extend' },
+                      { text: '多模态参考生视频', link: '/doubao-seedance-2-5-260628-multimodal-reference-to-video' }
+                    ],
+                  },
+                  {
                     text: 'seedance 2.0 真人方案',
                     collapsed: true,
                     items: [
