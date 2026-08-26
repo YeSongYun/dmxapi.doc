@@ -492,15 +492,15 @@ export default defineConfig({
                       { text: '图生图', link: '/agnes-image-21-flash-i2i' },
                     ],
                   },
-                  {
-                    text: 'agnes-image-2.0-flash',
-                    collapsed: true,
-                    items: [
-                      { text: '文生图', link: '/agnes-image-20-flash-t2i' },
-                      { text: '图生图', link: '/agnes-image-20-flash-i2i' },
-                      { text: '多图合成', link: '/agnes-image-20-flash-images' },
-                    ],
-                  },
+                  // {
+                  //   text: 'agnes-image-2.0-flash',
+                  //   collapsed: true,
+                  //   items: [
+                  //     { text: '文生图', link: '/agnes-image-20-flash-t2i' },
+                  //     { text: '图生图', link: '/agnes-image-20-flash-i2i' },
+                  //     { text: '多图合成', link: '/agnes-image-20-flash-images' },
+                  //   ],
+                  // },
                 ],
               },
 
