@@ -15,7 +15,7 @@
 - **档案号 `GroupId`**（步骤二返回）—— 某个真人的唯一身份；丢失只能让本人重新扫脸建档。
 - **素材号 `Id`**（步骤三返回，形如 `asset-...`）—— 生成视频时用 `asset://<Id>` 引用；丢失需重新上传素材入库。
 
-建议拿到后**立刻记录到自己的数据库 / 表格**，并与对应的真人、项目名（`ProjectName`）一一对应保存好。
+建议拿到后**立刻记录到自己的数据库 / 表格**，并与对应的真人一一对应保存好。
 :::
 
 ## 流程总览
@@ -90,8 +90,6 @@ payload = {
     # 【CallbackURL】(string, 必填) 你的回调网址；真人扫脸完成后浏览器跳回此地址，
     # 并在网址 query 上带回 bytedToken、resultCode（resultCode=10000 表示通过）。
     "CallbackURL": "https://www.dmxapi.cn/callback",
-    # 【ProjectName】项目名为shuyuan，请勿更改，
-    "ProjectName": "shuyuan",
 }
 
 response = requests.post(url, headers=headers, json=payload)
@@ -140,8 +138,6 @@ payload = {
     "input": "validate",
     # 【BytedToken】(string, 必填) 第 1 步扫脸回跳网址里读到的bytedToken，有效期 120 秒，要尽快用
     "BytedToken": "2026062................5A72",
-    # 【ProjectName】(string, 选填) 项目名为shuyuan，请勿更改
-    "ProjectName": "shuyuan",
 }
 
 response = requests.post(url, headers=headers, json=payload)
@@ -220,8 +216,6 @@ payload = {
     "AssetType": "Image",
     # 【Name】(string, 选填) 素材名称
     "Name": "test",
-    # 【ProjectName】项目名为shuyuan，请勿更改
-    "ProjectName": "shuyuan",
 }
 response = requests.post(url, headers=headers, json=payload)
 print(json.dumps(response.json(), indent=2, ensure_ascii=False))
@@ -268,8 +262,6 @@ payload = {
     "input": "validate",
     # 【Id】(string, 必填) 要查询的素材资产 ID，即第 3 步返回的 asset-...
     "Id": "asset........m25",
-    # 【ProjectName】项目名为shuyuan，请勿更改
-    "ProjectName": "shuyuan",
 }
 
 # 轮询直到 Active / Failed
@@ -297,8 +289,7 @@ while True:
     "Strategy": "Default"
   },
   "CreateTime": "2026-06-18T05:31:02Z",
-  "UpdateTime": "2026-06-18T05:31:05Z",
-  "ProjectName": "shuyuan"
+  "UpdateTime": "2026-06-18T05:31:05Z"
 }
 ```
 

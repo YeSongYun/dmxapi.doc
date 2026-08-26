@@ -185,7 +185,7 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 
 ```json
 {
-  "id": "cgt-20260603165348-mcqlc",
+  "id": "task_dhA1xpbyJv0wQ7CYTa86AmgUWH77pzCD",
   "usage": {
     "total_tokens": 40000,
     "input_tokens": 0,
@@ -217,7 +217,7 @@ headers = {
 
 payload = {
     "model": "seedance-2-0-get",
-    "input": "cgt-20260403150532-lvbsj"
+    "input": "task_dhA1xpbyJv0wQ7CYTa86AmgUWH77pzCD"
 }
 
 response = requests.post(url, headers=headers, json=payload)
@@ -238,7 +238,7 @@ except Exception as e:
 
 ```json
 {
-  "request_id": "cgt-20260403150532-lvbsj",
+  "request_id": "task_dhA1xpbyJv0wQ7CYTa86AmgUWH77pzCD",
   "output": [
     {
       "type": "message",

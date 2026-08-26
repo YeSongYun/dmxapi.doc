@@ -390,14 +390,14 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 
 ```json
 {
-  "id": "cgt-20260602183016-gs6ll",
+  "id": "task_F0BxymZd0McM4aI0jt6UtaYBUZZVPvM7",
   "usage": {
-    "total_tokens": 60850,
+    "total_tokens": 64630,
     "input_tokens": 0,
     "input_tokens_details": {
       "cached_tokens": 0
     },
-    "output_tokens": 60850,
+    "output_tokens": 64630,
     "output_tokens_details": {
       "reasoning_tokens": 0
     }
@@ -424,7 +424,7 @@ payload = {
     "model": "seedance-2-0-get",
     # 【input】(string, 必填) 提交任务时返回的任务 ID（id 字段的值）
     # 任务 ID 仅保存 7 天，超时后自动清除
-    "input": "cgt-20260403171827-s64n7"
+    "input": "task_F0BxymZd0McM4aI0jt6UtaYBUZZVPvM7"
 }
 
 response = requests.post(url, headers=headers, json=payload)
@@ -445,7 +445,7 @@ except Exception as e:
 
 ```json
 {
-  "request_id": "cgt-20260403171827-s64n7",
+  "request_id": "task_F0BxymZd0McM4aI0jt6UtaYBUZZVPvM7",
   "output": [
     {
       "type": "message",

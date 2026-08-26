@@ -309,7 +309,24 @@ response = requests.post(url, headers=headers, json=payload)
 # - ensure_ascii=False: 正确显示中文字符
 print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 ```
+### 返回示例
 
+```json
+{
+  "id": "task_vhlevrcYnOEomUprf92xIlOjYWqLklDB",
+  "usage": {
+    "total_tokens": 64630,
+    "input_tokens": 0,
+    "input_tokens_details": {
+      "cached_tokens": 0
+    },
+    "output_tokens": 64630,
+    "output_tokens_details": {
+      "reasoning_tokens": 0
+    }
+  }
+}
+```
 ## 📥 获取结果 示例代码
 
 ```python
@@ -331,7 +348,7 @@ payload = {
     # 【model】(string, 必填) 固定值，用于获取视频生成结果
     "model": "seedance-2-0-get",
     # 【input】(string, 必填) 提交任务时返回的任务 ID
-    "input": "cgt-20260402221419-2kcc7"
+    "input": "task_vhlevrcYnOEomUprf92xIlOjYWqLklDB"
 }
 
 response = requests.post(url, headers=headers, json=payload)
@@ -352,7 +369,7 @@ except Exception as e:
 
 ```json
 {
-  "request_id": "cgt-20260403171827-s64n7",
+  "request_id": "task_vhlevrcYnOEomUprf92xIlOjYWqLklDB",
   "output": [
     {
       "type": "message",

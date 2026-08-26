@@ -315,11 +315,11 @@ import json
 # ═══════════════════════════════════════════════════════════════
 
 # 🌐 DMXAPI 服务端点地址
-url = "https://test.dmxapi.vip/v1/responses"
+url = "https://www.dmxapi.cn/v1/responses"
 
 # 🔐 DMXAPI 密钥 (请替换为您自己的密钥)
 # 获取方式: 登录 DMXAPI 官网 -> 个人中心 -> API 密钥管理
-api_key = "sk-e7n5Te15uEM594bmlhoo5jTnBXe5qVv2OynYBkjGX8lYVANA"
+api_key = "sk-******************************************"
 
 # ═══════════════════════════════════════════════════════════════
 # 📋 步骤2: 配置请求头
@@ -378,7 +378,7 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
       "content": [
         {
           "type": "output_text",
-          "text": "https://ark-acg-cn-bejing.tos-cn-beijing.volces.com/doubao-seedance-2-5/029ee3a08ea8488cb43c0fd61f90d53f.mp4?X-Tos-Algorithm=TOS4-HMAC-SHA256&X-Tos-Credential=AKLTNTEwMTIwZTEzYWE0NDcwOWE1Yzk2MzQ0ZjViYTk3OWU%2F20260826%2Fcn-beijing%2Ftos%2Frequest&X-Tos-Date=20260826T082501Z&X-Tos-Expires=86399&X-Tos-Signature=9f499873fa24bfa90cc4ad08bb5d5a122d9b16b149ebb925f55de15debbf22ad&X-Tos-SignedHeaders=host"
+          "text": "https://ark-acg-cn-bejing.tos-cn-beijing.volces.com/doubao-seedance-2-5/029ee3a08ea8488cb43c0fd61f90d53f.mp4?X-Tos-Algorithm=TOS4-HMAC-SHA256&X-Tos-Credential=AKLTMWIyYzNkNGU1ZjY0Nzg4OTlhYWJiY2NkZGVlZmYwMA%2F20260826%2Fcn-beijing%2Ftos%2Frequest&X-Tos-Date=20260826T082501Z&X-Tos-Expires=86399&X-Tos-Signature=b2c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e5f60718293a4b5c6d7e8f90a1&X-Tos-SignedHeaders=host"
         }
       ]
     }

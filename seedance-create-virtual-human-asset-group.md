@@ -19,7 +19,7 @@
 
 :::
 
-:::warning 重要：请保存好 GroupId、Asset Id 和 ProjectName
+:::warning 重要：请保存好 GroupId 和 Asset Id
 
 本流程会产生两类需要长期保存的 ID：
 
@@ -101,7 +101,6 @@
 | `Name` | string | 是 | 素材组名称，最多 64 个字符。 |
 | `Description` | string | 否 | 素材组描述，最多 300 个字符。 |
 | `GroupType` | string | 否 | 当前仅支持 `AIGC`，建议显式填写。 |
-| `ProjectName` | string | 是 | 项目名称固定填写 `shuyuan`，请勿更改。 |
 
 ### 示例代码
 
@@ -133,9 +132,6 @@ payload = {
 
     # 【GroupType】(string, 选填) 当前仅支持 AIGC
     "GroupType": "AIGC",
-
-    # 【ProjectName】(string, 必填) 项目名固定为 shuyuan，请勿更改
-    "ProjectName": "shuyuan",
 }
 
 response = requests.post(
@@ -162,7 +158,6 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 - 返回的 `Id` 是素材组 ID，形如 `group-...`，请立即保存。
 - 步骤二请求里的字段名是 `GroupId`，直接填写这里返回的 `Id` 即可。
 - 一个素材组可以存放同一个虚拟人物的多份图片、视频或音频素材。
-- `ProjectName` 必须保持为 `shuyuan`，后续上传、查询和生成都要处于同一项目。
 
 
 ## 步骤二：上传虚拟人素材（volc-asset-create）
@@ -228,9 +223,6 @@ payload = {
 
     # 【Name】(string, 选填) 便于管理和检索的素材名称
     "Name": "front-view",
-
-    # 【ProjectName】(string, 必填) 必须与创建素材组时一致
-    "ProjectName": "shuyuan",
 }
 
 response = requests.post(
@@ -295,9 +287,6 @@ payload = {
 
     # 【Id】(string, 必填) 填写步骤二返回的素材 Id
     "Id": "asset-20260811101530-fghij",
-
-    # 【ProjectName】(string, 必填) 必须与创建和上传素材时一致
-    "ProjectName": "shuyuan",
 }
 
 while True:
@@ -344,8 +333,7 @@ while True:
     "Strategy": "Default"
   },
   "CreateTime": "2026-08-11T02:15:30Z",
-  "UpdateTime": "2026-08-11T02:15:35Z",
-  "ProjectName": "shuyuan"
+  "UpdateTime": "2026-08-11T02:15:35Z"
 }
 ```
 

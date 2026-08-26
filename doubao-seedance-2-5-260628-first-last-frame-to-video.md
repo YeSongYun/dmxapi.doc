@@ -374,7 +374,7 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
       "content": [
         {
           "type": "output_text",
-          "text": "https://ark-acg-cn-bejing.tos-cn-beijing.volces.com/doubao-seedance-2-5/5284b7e74fa5421a9d0168d285cb301e.mp4?X-Tos-Algorithm=TOS4-HMAC-SHA256&X-Tos-Credential=AKLTNTEwMTIwZTEzYWE0NDcwOWE1Yzk2MzQ0ZjViYTk3OWU%2F20260821%2Fcn-beijing%2Ftos%2Frequest&X-Tos-Date=20260821T115520Z&X-Tos-Expires=86399&X-Tos-Signature=41fcc14c329e51221f18175fce31ad510e13c653c16b8cfa28d90b8ec8b5a1d4&X-Tos-SignedHeaders=host"
+          "text": "https://ark-acg-cn-bejing.tos-cn-beijing.volces.com/doubao-seedance-2-5/5284b7e74fa5421a9d0168d285cb301e.mp4?X-Tos-Algorithm=TOS4-HMAC-SHA256&X-Tos-Credential=AKLTMWIyYzNkNGU1ZjY0Nzg4OTlhYWJiY2NkZGVlZmYwMA%2F20260821%2Fcn-beijing%2Ftos%2Frequest&X-Tos-Date=20260821T115520Z&X-Tos-Expires=86399&X-Tos-Signature=c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e5f60718293a4b5c6d7e8f90a1b2&X-Tos-SignedHeaders=host"
         }
       ]
     }

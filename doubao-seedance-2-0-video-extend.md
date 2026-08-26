@@ -157,14 +157,14 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 
 ```json
 {
-  "id": "cgt-20260402222046-9vmsw",
+  "id": "task_3LbK7fV40gIGiDlNekEClU3mxMGQ3rhJ",
   "usage": {
-    "total_tokens": 97360,
+    "total_tokens": 64630,
     "input_tokens": 0,
     "input_tokens_details": {
       "cached_tokens": 0
     },
-    "output_tokens": 97360,
+    "output_tokens": 64630,
     "output_tokens_details": {
       "reasoning_tokens": 0
     }
@@ -192,7 +192,7 @@ payload = {
     # 【model】(string, 必填) 获取结果专用模型，固定填写 seedance-2-0-get
     "model": "seedance-2-0-get",
     # 【input】(string, 必填) 提交任务时返回的任务 ID
-    "input": "cgt-20260403171827-s64n7"
+    "input": "task_3LbK7fV40gIGiDlNekEClU3mxMGQ3rhJ"
 }
 
 response = requests.post(url, headers=headers, json=payload)
@@ -213,7 +213,7 @@ except Exception as e:
 
 ```json
 {
-  "request_id": "cgt-20260403171827-s64n7",
+  "request_id": "task_3LbK7fV40gIGiDlNekEClU3mxMGQ3rhJ",
   "output": [
     {
       "type": "message",
