@@ -443,23 +443,22 @@ export default defineConfig({
                       { text: '多图融合', link: '/qwen-image-2.0-pro-multi-image-fusion' },
                     ],
                   },
-                  // 暂时隐藏，后续开放
-                  // {
-                  //   text: 'qwen-image-3.0',
-                  //   collapsed: true,
-                  //   items: [
-                  //     { text: '文生图', link: '/qwen-image-3.0-text-to-image' },
-                  //     { text: '图生图-图片编辑', link: '/qwen-image-3.0-image-editing' },
-                  //   ],
-                  // },
-                  // {
-                  //   text: 'qwen-image-3.0-pro',
-                  //   collapsed: true,
-                  //   items: [
-                  //     { text: '文生图', link: '/qwen-image-3.0-pro-text-to-image' },
-                  //     { text: '图生图-图片编辑', link: '/qwen-image-3.0-pro-image-edit' },
-                  //   ],
-                  // },
+                  {
+                    text: 'qwen-image-3.0',
+                    collapsed: true,
+                    items: [
+                      { text: '文生图', link: '/qwen-image-3.0-text-to-image' },
+                      { text: '图生图-图片编辑', link: '/qwen-image-3.0-image-editing' },
+                    ],
+                  },
+                  {
+                    text: 'qwen-image-3.0-pro',
+                    collapsed: true,
+                    items: [
+                      { text: '文生图', link: '/qwen-image-3.0-pro-text-to-image' },
+                      { text: '图生图-图片编辑', link: '/qwen-image-3.0-pro-image-edit' },
+                    ],
+                  },
 
                 ],
               },
@@ -492,15 +491,15 @@ export default defineConfig({
                       { text: '图生图', link: '/agnes-image-21-flash-i2i' },
                     ],
                   },
-                  {
-                    text: 'agnes-image-2.0-flash',
-                    collapsed: true,
-                    items: [
-                      { text: '文生图', link: '/agnes-image-20-flash-t2i' },
-                      { text: '图生图', link: '/agnes-image-20-flash-i2i' },
-                      { text: '多图合成', link: '/agnes-image-20-flash-images' },
-                    ],
-                  },
+                  // {
+                  //   text: 'agnes-image-2.0-flash',
+                  //   collapsed: true,
+                  //   items: [
+                  //     { text: '文生图', link: '/agnes-image-20-flash-t2i' },
+                  //     { text: '图生图', link: '/agnes-image-20-flash-i2i' },
+                  //     { text: '多图合成', link: '/agnes-image-20-flash-images' },
+                  //   ],
+                  // },
                 ],
               },
 
@@ -575,6 +574,30 @@ export default defineConfig({
                   //     { text: '多模态参考生视频', link: '/doubao-seedance-2-0-fast-260128-video' }
                   //   ],
                   // },
+                  // {
+                  //   text: 'seedance 2.0-mini',
+                  //   collapsed: true,
+                  //   items: [
+                  //     { text: '文生视频', link: '/doubao-seedance-2-0-mini-260615-text-to-video' },
+                  //     { text: '首帧生视频', link: '/doubao-seedance-2-0-mini-260615-first-frame-to-video' },
+                  //     { text: '首尾帧生视频', link: '/doubao-seedance-2-0-mini-260615-first-last-frame' },
+                  //     { text: '视频编辑', link: '/doubao-seedance-2-0-mini-260615-video-editing' },
+                  //     { text: '视频延长', link: '/doubao-seedance-2-0-mini-260615-video-extend' },
+                  //     { text: '多模态参考生视频', link: '/doubao-seedance-2-0-mini-260615-multimodal-reference-video' }
+                  //   ],
+                  // },
+                  {
+                    text: 'seedance 2.5',
+                    collapsed: true,
+                    items: [
+                      { text: '文生视频', link: '/doubao-seedance-2-5-260628-text-to-video' },
+                      { text: '首帧生视频', link: '/doubao-seedance-2-5-260628-first-frame-to-video' },
+                      { text: '首尾帧生视频', link: '/doubao-seedance-2-5-260628-first-last-frame-to-video' },
+                      { text: '视频编辑', link: '/doubao-seedance-2-5-260628-video-edit' },
+                      { text: '视频延长', link: '/doubao-seedance-2-5-260628-video-extend' },
+                      { text: '多模态参考生视频', link: '/doubao-seedance-2-5-260628-multimodal-reference-to-video' }
+                    ],
+                  },
                   {
                     text: 'seedance 2.0 真人方案',
                     collapsed: true,
@@ -910,15 +933,14 @@ export default defineConfig({
                 collapsed: true,
                 items: [
                   { text: 'music-3.0', link: '/music-3.0-text-to-music' },
-                  // 暂时隐藏，后续开放
-                  // {
-                  //   text: 'music-cover',
-                  //   collapsed: true,
-                  //   items: [
-                  //     { text: '翻唱前处理', link: '/music-cover-preprocess' },
-                  //     { text: '音乐生成', link: '/music-cover-music-generation' }
-                  //   ],
-                  // },
+                  {
+                    text: 'music-cover',
+                    collapsed: true,
+                    items: [
+                      { text: '翻唱前处理', link: '/music-cover-preprocess' },
+                      { text: '音乐生成', link: '/music-cover-music-generation' }
+                    ],
+                  },
                   { text: 'music-2.6', link: '/music-2.6-music-generation' },
                   {
                     text: 'music-2.5',

@@ -17,6 +17,10 @@
 请妥善保管您的 API Key！严禁将密钥泄露给他人、硬编码到代码中或提交到公开的代码仓库。如果怀疑密钥已泄露，请立即前往 DMXAPI 官网重新生成。
 :::
 
+:::warning 异步任务，请妥善保存任务 ID
+本模型为**异步任务**接口：提交任务后不会直接返回视频，只返回一个任务 ID（响应中的 `id` 字段），需再用查询模型 `seedance-2-0-get` 凭该 ID 换取最终视频地址。请在提交成功后立即将任务 ID 落库或写入日志妥善保存——一旦丢失将无法找回，本次生成结果也无法再取回，但费用已产生。
+:::
+
 
 ## 🎥 首帧生视频 示例代码
 
@@ -181,7 +185,7 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 
 ```json
 {
-  "id": "cgt-20260603165348-mcqlc",
+  "id": "task_dhA1xpbyJv0wQ7CYTa86AmgUWH77pzCD",
   "usage": {
     "total_tokens": 40000,
     "input_tokens": 0,
@@ -213,7 +217,7 @@ headers = {
 
 payload = {
     "model": "seedance-2-0-get",
-    "input": "cgt-20260403150532-lvbsj"
+    "input": "task_dhA1xpbyJv0wQ7CYTa86AmgUWH77pzCD"
 }
 
 response = requests.post(url, headers=headers, json=payload)
@@ -234,7 +238,7 @@ except Exception as e:
 
 ```json
 {
-  "request_id": "cgt-20260403150532-lvbsj",
+  "request_id": "task_dhA1xpbyJv0wQ7CYTa86AmgUWH77pzCD",
   "output": [
     {
       "type": "message",

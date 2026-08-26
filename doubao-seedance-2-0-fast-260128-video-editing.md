@@ -1,12 +1,10 @@
 # doubao-seedance-2-0-fast-260128 视频编辑 API 使用文档
 
-doubao-seedance-2-0-fast-260128 是字节跳动火山引擎 Seedance 2.0 Fast 系列的多模态视频编辑模型，支持通过参考图片、参考视频与文本提示词组合驱动视频内容编辑，实现替换视频元素、风格迁移、延长视频等多种场景。模型支持 720p 分辨率输出，支持有声/无声视频生成，并可通过联网搜索工具增强时效性内容创作。接口采用两步异步模式：提交任务获取任务 ID，再通过轮询接口获取生成的视频链接。
+基于字节跳动 Seedance 2.0 Fast 多模态视频生成模型，doubao-seedance-2-0-fast-260128 支持参考图片和视频进行智能视频编辑，可实现场景替换、主体替换、视频延长、风格迁移等多种编辑效果。支持多模态输入（文本 + 图片 + 视频 + 音频组合），最多接受 9 张参考图和 3 段参考视频，生成分辨率支持 480p/720p（不支持 1080p 与 4k），时长 8~15 秒可控。采用异步任务模式，提交任务后获取任务 ID，再通过专用接口获取生成的视频 URL。
 
-## 模型名称
-
+## 🎬 模型名称
 - `doubao-seedance-2-0-fast-260128`
-
-## 接口地址
+## 🔗 接口地址
 
 | 接口 | 请求方式 | URL |
 |------|---------|-----|
@@ -14,280 +12,223 @@ doubao-seedance-2-0-fast-260128 是字节跳动火山引擎 Seedance 2.0 Fast �
 | 获取结果 | POST | `https://www.dmxapi.cn/v1/responses` |
 
 :::warning
-请妥善保管您的 API Key！严禁将密钥泄露给他人、硬编码到代码中或提交到公开的代码仓库。
+请妥善保管您的 API Key！严禁将密钥泄露给他人、硬编码到代码中或提交到公开的代码仓库。如果怀疑密钥已泄露，请立即前往 DMXAPI 官网重新生成。
 :::
 
-## 视频编辑 示例代码
+:::warning 异步任务，请妥善保存任务 ID
+本模型为**异步任务**接口：提交任务后不会直接返回视频，只返回一个任务 ID（响应中的 `id` 字段），需再用查询模型 `seedance-2-0-get` 凭该 ID 换取最终视频地址。请在提交成功后立即将任务 ID 落库或写入日志妥善保存——一旦丢失将无法找回，本次生成结果也无法再取回，但费用已产生。
+:::
+
+
+## 🎥 视频编辑 示例代码
 
 ```python
 import requests
 import json
-import os
 import base64
-import mimetypes
+import os
 
-# ============================================================================
-# 【用户配置区】以下内容需要您根据实际情况修改
-# ============================================================================
+# ╔═══════════════════════════════════════════════════════════════╗
+# ║              ⚙️ 基础配置（密钥 & 输入素材）                     ║
+# ╚═══════════════════════════════════════════════════════════════╝
 
-# 步骤1: 配置 API 连接信息
-
-# DMXAPI 服务端点地址
-url = "https://www.dmxapi.cn/v1/responses"
-
-# DMXAPI 密钥 (请替换为您自己的密钥)
+# ---------- 🔐 API 密钥 ----------
 # 获取方式: 登录 DMXAPI 官网 -> 个人中心 -> API 密钥管理
-api_key = "sk-**********************************************"
+api_key = "sk-****************************************"
 
-# 步骤2: 配置输入素材来源（可自由替换为 URL / asset://素材ID / 本地路径 / Base64 字符串）
+# ---------- 🖼️ 图片输入 ----------
+# 无需手动选择模式，直接填入即可，程序会自动识别以下三种格式：
+#   1. 网络图片 URL    （http:// 或 https:// 开头）
+#   2. 素材库 ID       （asset:// 开头，如 asset://asset-20260401123823-6d4x2）
+#   3. 本地图片路径    （上述两种以外，按本地文件读取并转 Base64）
+# image_input = "C:/Users/a1/Pictures/20230301120626930.jpg"
+# image_input = "asset://asset-20260401123823-6d4x2"
+image_input = "https://ark-project.tos-cn-beijing.volces.com/doc_image/r2v_edit_pic1.jpg"
 
-# 文本提示词，描述期望的视频编辑效果
-# 中文提示词不超过 500 字，英文不超过 1000 词
-# 可使用 [图1]、[视频1] 等方式指定对应参考素材
+# ---------- 🎬 视频输入 ----------
+# 无需手动选择模式，直接填入即可，程序会自动识别以下两种格式：
+#   1. 网络视频 URL    （http:// 或 https:// 开头）
+#   2. 素材库 ID       （asset:// 开头，如 asset://asset-20260224190654-9nbbl）
+# ⚠️ 注意：视频仅支持 URL / 素材 ID，不支持本地路径转 Base64
+# ⚠️ 建议：传入视频的秒数最好是 15s
+video_url = "https://ark-project.tos-cn-beijing.volces.com/doc_video/r2v_edit_video1.mp4"
+
+# ---------- 📝 提示词 ----------
 prompt_text = "将视频1礼盒中的香水替换成图片1中的面霜，运镜不变"
 
-# 图片输入：兼容 本地上传、url 和素材 id（如 asset://...）
-image_source = "https://ark-project.tos-cn-beijing.volces.com/doc_image/r2v_edit_pic1.jpg"
 
-# 视频输入：兼容 url 和素材 id（如 asset://...）
-# ⚠️ 建议：传入视频的秒数最好是 15s
-video_source = "https://ark-project.tos-cn-beijing.volces.com/doc_video/r2v_edit_video1.mp4"
+# ╔═══════════════════════════════════════════════════════════════╗
+# ║           🔩 内部处理逻辑（无需修改）                            ║
+# ╚═══════════════════════════════════════════════════════════════╝
 
-# 音频输入（可选）：兼容 base64、url 和素材 id（如 asset://...）
-# 如果不需要音频输入，可将其设置为 None
-# 注意：不可单独输入音频，至少需包含 1 个参考视频或图片
-audio_source = None
-
-# 步骤3: 配置生成参数
-
-# 【generate_audio】(boolean, 可选) 是否生成与画面同步的声音，默认值 true
-# true：输出包含人声/音效/背景音乐的有声视频；false：输出无声视频
-# 注意：生成的有声视频均为单声道
-generate_audio = True
-
-# 【ratio】(string, 可选) 视频宽高比，默认值 "adaptive"
-# 可选值: "16:9" / "4:3" / "1:1" / "3:4" / "9:16" / "21:9" / "adaptive"
-# "adaptive" 表示根据输入素材或提示词自动选择最合适的宽高比
-ratio = "16:9"
-
-# 【duration】(integer, 可选) 视频时长（秒），默认值 8
-# seedance 2.0 fast 取值范围：[8, 15]
-# 输出视频的秒数必须大于等于8s
-# 注意：视频时长与计费相关，请谨慎设置
-duration = 8
-
-# 【watermark】(boolean, 可选) 是否在视频中添加水印，默认值 false
-# true：含水印；false：不含水印
-watermark = True
-
-# 【resolution】(string, 可选) 视频分辨率，默认值 "720p"
-# seedance 2.0 fast 支持: "480p" / "720p"（不支持 1080p）
-resolution = "480p"
-
-# 【seed】(integer, 可选) 随机种子，控制生成内容的随机性，默认值 -1
-# 取值范围：[-1, 2^32-1]
-# -1 表示使用随机数；相同 seed 值会生成类似但不保证完全一致的结果
-seed = -1
-
-# 【callback_url】(string, 可选) 任务状态变化时的回调通知地址
-# 方舟将向此地址推送 POST 请求，内容与查询任务接口返回体一致
-# 回调状态包括: queued / running / succeeded / failed / expired
-callback_url = "https://www.dmxapi.cn"
-
-# 【return_last_frame】(boolean, 可选) 是否返回生成视频的尾帧图像，默认值 false
-# true：可通过查询接口获取 PNG 格式尾帧图像（无水印，分辨率与视频一致）
-# 可用于实现多段连续视频生成（以上一段尾帧作为下一段首帧）
-return_last_frame = False
-
-# 【execution_expires_after】(integer, 可选) 任务超时阈值（秒），默认值 172800
-# 取值范围：[3600, 259200]，从任务创建时间开始计算
-# 超时后任务自动终止并标记为 expired 状态
-execution_expires_after = 172800
+def encode_image_to_base64(path):
+    """读取本地图片并转换为 Base64 Data URL"""
+    ext = path.lower().split(".")[-1]
+    mime_map = {
+        "jpg": "image/jpeg", "jpeg": "image/jpeg",
+        "png": "image/png",  "webp": "image/webp",
+        "gif": "image/gif",
+    }
+    mime_type = mime_map.get(ext, "image/jpeg")
+    with open(path, "rb") as f:
+        encoded = base64.b64encode(f.read()).decode("utf-8")
+    return f"data:{mime_type};base64,{encoded}"
 
 
-# ============================================================================
-# 【固定逻辑区】以下内容为通用处理逻辑，一般无需修改
-# ============================================================================
-
-# 步骤4: 配置请求头
-
-headers = {
-    "Content-Type": "application/json",      # 指定请求体为 JSON 格式
-    "Authorization": f"Bearer {api_key}",           # token 认证方式
-}
-
-
-# 步骤5: 通用输入来源处理函数
-# ----------------------------------------------------------------------------
-# 为了让图片 / 音频 / 视频的输入同时兼容以下三种来源：
-#   1) URL          —— 以 "http://" 或 "https://" 开头的网络地址
-#   2) 素材 ID       —— 以 "asset://" 开头的方舟素材标识（如 asset://xxxxxx）
-#   3) Base64        —— 本地文件路径或已经编码好的 Base64 字符串
-# 下面封装一个统一的解析函数，自动判断来源类型并返回最终可用于请求体的字符串。
-# ----------------------------------------------------------------------------
-
-def resolve_source(source, media_type="image"):
+def resolve_image_url(source):
     """
-    解析多模态输入来源，返回可直接放入请求体 url 字段的字符串。
-
-    参数:
-        source (str): 输入来源，可能是 URL / asset://素材ID / 本地文件路径 / 已编码的Base64字符串
-        media_type (str): 媒体类型，可选 "image" / "audio" / "video"，用于在缺少
-                          MIME 信息时推断默认的 data URI 前缀
-
-    返回:
-        str: 最终用于请求体的字符串（URL、素材ID 或 data:...;base64,... 形式）
+    自动识别图片来源并返回可用的 URL 字符串：
+      - 网络图片 URL  : 直接返回原始 URL
+      - 素材库 ID     : 形如 asset://asset-xxx，直接返回原始素材 ID
+      - 本地图片路径  : 读取文件并转换为 Base64 Data URL
     """
-    # 情况1: 网络 URL —— 直接返回，无需任何处理
+    source = source.strip()
+
+    # 网络图片 URL：直接返回
     if source.startswith("http://") or source.startswith("https://"):
         return source
 
-    # 情况2: 素材 ID —— 以 asset:// 开头，直接返回，由服务端解析
+    # 素材库 ID：形如 asset://asset-20260401123823-6d4x2，直接返回
     if source.startswith("asset://"):
         return source
 
-    # 情况3: 已经是 data URI 形式的 Base64（data:image/png;base64,xxxx）—— 直接返回
-    if source.startswith("data:"):
+    # 其余情况按本地图片路径处理
+    return encode_image_to_base64(source)
+
+
+def resolve_video_url(source):
+    """
+    自动识别视频来源并返回可用的 URL 字符串：
+      - 网络视频 URL  : 直接返回原始 URL（http:// 或 https:// 开头）
+      - 素材库 ID     : 形如 asset://asset-xxx，直接返回原始素材 ID
+    ⚠️ 注意：视频仅支持 URL / 素材 ID 方式，不支持本地路径转 Base64。
+            如需使用本地视频，请先上传至素材库或对象存储获取 URL。
+    """
+    source = source.strip()
+
+    # 网络视频 URL：直接返回
+    if source.startswith("http://") or source.startswith("https://"):
         return source
 
-    # 情况4: 本地文件路径 —— 读取文件并转换为 data URI 形式的 Base64
-    if os.path.isfile(source):
-        # 根据文件扩展名猜测 MIME 类型
-        mime_type, _ = mimetypes.guess_type(source)
-        if not mime_type:
-            # 猜测失败时，根据 media_type 给出兜底 MIME 类型
-            default_mime = {
-                "image": "image/jpeg",
-                "audio": "audio/mpeg",
-                "video": "video/mp4",
-            }
-            mime_type = default_mime.get(media_type, "application/octet-stream")
+    # 素材库 ID：形如 asset://asset-20260224190654-9nbbl，直接返回
+    if source.startswith("asset://"):
+        return source
 
-        # 读取文件二进制内容并进行 Base64 编码
-        with open(source, "rb") as f:
-            encoded = base64.b64encode(f.read()).decode("utf-8")
-
-        # 拼接为标准 data URI 形式
-        return f"data:{mime_type};base64,{encoded}"
-
-    # 情况5: 视为已经编码好的纯 Base64 字符串（无前缀）—— 补全 data URI 前缀
-    default_mime = {
-        "image": "image/jpeg",
-        "audio": "audio/mpeg",
-        "video": "video/mp4",
-    }
-    mime_type = default_mime.get(media_type, "application/octet-stream")
-    return f"data:{mime_type};base64,{source}"
+    # 其余情况（如本地路径）不被支持，主动报错提示
+    raise ValueError(
+        f"❌ 视频输入不支持该格式: {source}\n"
+        f"   视频仅支持: 1) 公网 URL(http/https)  2) 素材库 ID(asset://)\n"
+        f"   如需使用本地视频，请先上传至素材库或对象存储获取 URL。"
+    )
 
 
-# 步骤6: 组装多模态输入列表
+# ╔═══════════════════════════════════════════════════════════════╗
+# ║              📋 请求参数配置（按需调整）                         ║
+# ╚═══════════════════════════════════════════════════════════════╝
 
-# 先组装 input 列表的基础内容（文本 + 图片 + 视频）
-# 支持文本、图片、视频、音频四种类型的组合
-# 合法组合：文本；文本+图片；文本+视频；文本+图片+视频；文本+图片+音频；文本+视频+音频；文本+图片+视频+音频
-# 注意：不可单独输入音频，至少需包含 1 个参考视频或图片
-input_list = [
-    {
-        # 【input[].type】(string) 内容类型，文本时固定为 "text"
-        "type": "text",
-        # 【input[].text】(string) 文本提示词
-        "text": prompt_text
-    },
-    {
-        # 【input[].type】(string) 内容类型，图片时固定为 "image_url"
-        "type": "image_url",
-        "image_url": {
-            # 【input[].image_url.url】(string) 图片 URL、Base64 编码或素材 ID
-            # 兼容三种来源：URL / asset://素材ID / Base64（本地路径或纯Base64字符串）
-            # 格式要求：jpeg/png/webp/bmp/tiff/gif，宽高比 (0.4, 2.5)，单张 < 30MB
-            "url": resolve_source(image_source, media_type="image")
-        },
-        # 【input[].role】(string, 条件必填) 图片的用途
-        # 可选值: "first_frame"(首帧) / "last_frame"(尾帧) / "reference_image"(参考图)
-        # 多模态参考生视频场景必填，每张参考图均填 "reference_image"
-        "role": "reference_image"
-    },
-    {
-        # 【input[].type】(string) 内容类型，视频时固定为 "video_url"
-        "type": "video_url",
-        "video_url": {
-            # 【input[].video_url.url】(string) 视频 URL 或素材 ID
-            # 兼容两种来源：URL / asset://素材ID
-            # 格式：mp4/mov；分辨率：480p/720p/1080p；时长：[2, 15]s；单个 < 50MB
-            # 最多传入 3 个参考视频，所有视频总时长不超过 15s
-            # ⚠️ 建议：传入视频的秒数最好是 15s
-            "url": resolve_source(video_source, media_type="video")
-        },
-        # 【input[].role】(string, 条件必填) 视频用途
-        # 当前仅支持 "reference_video"（参考视频）
-        "role": "reference_video"
-    },
-]
-
-# 如果配置了音频来源，则追加音频输入项
-# 注意：不可单独输入音频，至少需包含 1 个参考视频或图片
-if audio_source:
-    input_list.append({
-        # 【input[].type】(string) 内容类型，音频时固定为 "input_audio"
-        "type": "input_audio",
-        "input_audio": {
-            # 【input[].input_audio.url】(string) 音频 URL、Base64 编码或素材 ID
-            # 兼容三种来源：URL / asset://素材ID / Base64（本地路径或纯Base64字符串）
-            "url": resolve_source(audio_source, media_type="audio")
-        },
-    })
-
-
-# 步骤7: 配置请求参数
+headers = {
+    "Content-Type": "application/json",
+    "Authorization": f"{api_key}",
+}
 
 payload = {
     # 【model】(string, 必填) 调用的模型 ID
-    # 当前固定使用 doubao-seedance-2-0-fast-260128
     "model": "doubao-seedance-2-0-fast-260128",
-
-    # 【input】(array, 必填) 输入给模型的多模态内容列表
-    "input": input_list,
-
-    # 是否生成与画面同步的声音
-    "generate_audio": generate_audio,
-
-    # 视频宽高比
-    "ratio": ratio,
-
-    # 视频时长（秒）
-    "duration": duration,
-
-    # 是否添加水印
-    "watermark": watermark,
-
-    # 视频分辨率
-    "resolution": resolution,
-
-    # 随机种子
-    "seed": seed,
-
-    # 回调通知地址
-    "callback_url": callback_url,
-
-    # 是否返回尾帧图像
-    "return_last_frame": return_last_frame,
-
-    # 任务超时阈值（秒）
-    "execution_expires_after": execution_expires_after,
-
-    # 【tools】(array, 可选) 配置模型调用的工具，仅 seedance 2.0 & 2.0 fast 支持
-    # type 可选值: "web_search"（联网搜索），开启后模型自主判断是否搜索互联网内容
-    "tools": [{"type": "web_search"}]
+    # 【input】(object[], 必填) 多模态输入内容数组
+    "input": [
+        {
+            # 【type】(string, 必填) 内容类型，text 表示文本提示词
+            "type": "text",
+            # 【text】(string, 可选) 文本提示词，描述编辑指令
+            # 支持中英文，建议中文不超过 500 字，英文不超过 1000 词
+            # 可使用 [图1][图2] 等方式明确指定参考图片的用途
+            "text": prompt_text,
+        },
+        {
+            # 【type】(string, 必填) 内容类型，image_url 表示图片
+            "type": "image_url",
+            "image_url": {
+                # 【url】(string) 图片地址，支持以下三种格式（程序自动识别）：
+                #   1. 公网 URL（http:// 或 https://）
+                #   2. Base64 编码（data:image/...;base64,...，由本地图片自动生成）
+                #   3. 素材库 ID（形如 asset://asset-20260401123823-6d4x2）
+                # 图片格式：jpeg/png/webp/bmp/tiff/gif
+                # 宽高比：(0.4, 2.5)，宽高长度：(300, 6000) px，单张不超过 30 MB
+                "url": resolve_image_url(image_input),
+            },
+            # 【role】(string, 条件必填) 图片用途
+            # 可选值: "first_frame"(首帧) / "last_frame"(尾帧) / "reference_image"(参考图)
+            # 多模态参考生视频场景必填，最多支持 9 张参考图
+            "role": "reference_image",
+        },
+        {
+            # 【type】(string, 必填) 内容类型，video_url 表示视频
+            "type": "video_url",
+            "video_url": {
+                # 【url】(string) 视频 URL 或素材 ID（视频仅支持 URL / 素材 ID 方式，程序自动识别）：
+                #   1. 公网 URL（http:// 或 https://）
+                #   2. 素材库 ID（形如 asset://asset-20260224190654-9nbbl）
+                # 视频格式：mp4/mov，分辨率：480p/720p
+                # 时长：[2, 15] s，最多传入 3 个参考视频，总时长不超过 15s
+                # 单个视频不超过 50 MB，帧率：[24, 60] FPS
+                # ⚠️ 建议：传入视频的秒数最好是 15s
+                "url": resolve_video_url(video_url),
+            },
+            # 【role】(string, 条件必填) 视频用途
+            # 可选值: "reference_video"(参考视频)
+            "role": "reference_video",
+        },
+    ],
+    # 【generate_audio】(boolean, 可选) 是否生成同步音频
+    # true: 生成包含人声、音效和背景音乐的有声视频（建议将对话置于双引号内）
+    # false: 生成无声视频
+    # 默认值: true
+    "generate_audio": True,
+    # 【ratio】(string, 可选) 视频宽高比
+    # 可选值: "16:9" / "4:3" / "1:1" / "3:4" / "9:16" / "21:9" / "adaptive"(根据输入自动选择)
+    # Seedance 2.0 fast 默认值: adaptive
+    "ratio": "16:9",
+    # 【duration】(integer, 可选) 视频时长（秒）
+    # Seedance 2.0 & 2.0 fast 取值范围: [8, 15]
+    # 输出视频的秒数必须大于等于8s
+    # 默认值: 8
+    "duration": 8,
+    # 【watermark】(boolean, 可选) 是否添加水印
+    # false: 不含水印 / true: 含水印
+    # 默认值: false
+    "watermark": True,
+    # 【resolution】(string, 可选) 视频分辨率
+    # 可选值: "480p" / "720p"（Seedance 2.0 fast 不支持 1080p 与 4k）
+    # 默认值: 720p
+    "resolution": "480p",
+    # 【seed】(integer, 可选) 随机种子，控制生成内容的随机性
+    # 取值范围: [-1, 2^32-1]，-1 表示使用随机数
+    # 相同 seed 值生成类似结果，但不保证完全一致
+    # 默认值: -1
+    "seed": -1,
+    # 【callback_url】(string, 可选) 任务状态变更回调地址
+    # 任务状态包括: queued(排队中) / running(运行中) / succeeded(成功) / failed(失败) / expired(超时)
+    # 失败时回调最多重试 3 次（5 秒超时）
+    "callback_url": "https://www.dmxapi.cn",
+    # 【return_last_frame】(boolean, 可选) 是否返回生成视频的尾帧图像（png 格式，无水印）
+    # 可用于生成多段连续视频：以上一段视频的尾帧作为下一段的首帧
+    # 默认值: false
+    "return_last_frame": False,
+    # 【execution_expires_after】(integer, 可选) 任务超时时间（秒）
+    # 取值范围: [3600, 259200]，从任务创建时间开始计算，超时后任务自动终止并标记为 expired
+    # 默认值: 172800（48 小时）
+    "execution_expires_after": 172800,
+    # 【tools】(object[], 可选) 工具配置，仅 Seedance 2.0 & 2.0 fast 支持
+    # web_search: 联网搜索工具，可提升视频时效性，但会增加一定时延
+    "tools": [{"type": "web_search"}],
 }
 
-# 步骤8: 发送请求并输出结果
 
-# 发送 POST 请求到 API 服务器
-response = requests.post(url, headers=headers, json=payload)
+# ╔═══════════════════════════════════════════════════════════════╗
+# ║              📤 发送请求（无需修改）                             ║
+# ╚═══════════════════════════════════════════════════════════════╝
 
-# 格式化输出 JSON 响应
-# - indent=2: 缩进 2 空格，便于阅读
-# - ensure_ascii=False: 正确显示中文字符
+response = requests.post("https://www.dmxapi.cn/v1/responses", headers=headers, json=payload)
 print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 ```
 
@@ -310,7 +251,7 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 }
 ```
 
-## 获取结果 示例代码
+## 📥 获取结果 示例代码
 
 ```python
 import requests
@@ -323,16 +264,15 @@ api_key = "sk-******************************************"
 
 headers = {
     "Content-Type": "application/json",
-    # 获取结果接口使用 Bearer 认证方式
+    # Authorization: Bearer 方式鉴权
     "Authorization": f"Bearer {api_key}",
 }
 
 payload = {
-    # 【model】(string, 必填) 查询模型，固定为 seedance-2-0-get
+    # 【model】(string, 必填) 固定值，用于获取视频生成结果
     "model": "seedance-2-0-get",
-
-    # 【input】(string, 必填) 第一步提交任务返回的任务 ID
-    "input": "cgt-20260507191840-fpbsd"
+    # 【input】(string, 必填) 提交任务时返回的任务 ID
+    "input": "cgt-20260428165939-ccb9g"
 }
 
 response = requests.post(url, headers=headers, json=payload)
@@ -345,9 +285,6 @@ try:
     inner = json.loads(text)
     video_url = inner["content"]["video_url"]
     print(f"\n视频链接: {video_url}")
-    last_frame_url = inner["content"].get("last_frame_url")
-    if last_frame_url:
-        print(f"尾帧图像: {last_frame_url}")
 except Exception as e:
     print(f"提取 URL 失败: {e}")
 ```
@@ -363,7 +300,7 @@ except Exception as e:
       "content": [
         {
           "type": "output_text",
-          "text": "{\"content\":{\"video_url\":\"https://ark-acg-cn-beijing.tos-cn-beijing.volces.com/doubao-seedance-2-0-fast/02177736688829100000000000000000000ffffac177fcdd9df5d.mp4?X-Tos-Algorithm=TOS4-HMAC-SHA256&X-Tos-Credential=...&X-Tos-Expires=86400\"},\"id\":\"cgt-20260428165939-ccb9g\",\"model\":\"doubao-seedance-2-0-fast-260128\",\"status\":\"succeeded\"}"
+          "text": "{\"content\":{\"video_url\":\"https://ark-acg-cn-beijing.tos-cn-beijing.volces.com/doubao-seedance-2-0-fast/02177736688829100000000000000000000ffffac177fcdd9df5d.mp4?...\"},\"id\":\"cgt-20260428165939-ccb9g\",\"model\":\"doubao-seedance-2-0-fast-260128\",\"status\":\"succeeded\"}"
         }
       ]
     }
@@ -380,8 +317,6 @@ except Exception as e:
     }
   }
 }
-
-视频链接: https://ark-acg-cn-beijing.tos-cn-beijing.volces.com/doubao-seedance-2-0-fast/02177736688829100000000000000000000ffffac177fcdd9df5d.mp4?...
 ```
 
 <p align="center">
