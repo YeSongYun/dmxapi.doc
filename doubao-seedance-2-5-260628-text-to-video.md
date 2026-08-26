@@ -162,27 +162,17 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 
 ```json
 {
-  "output": [
-    {
-      "type": "message",
-      "content": [
-        {
-          "type": "output_text",
-          "text": "Task ID: task_PkucWMByIsMaeyVULkgA6Jqy7LukjBdm"
-        }
-      ]
-    }
-  ],
+  "id": "task_8AAJeEO9Gf0GiSh0cSKeX32u2X1n43Fn",
   "usage": {
     "input_tokens": 0,
     "input_tokens_details": {
       "cached_tokens": 0
     },
-    "output_tokens": 108000,
+    "output_tokens": 86400,
     "output_tokens_details": {
       "reasoning_tokens": 0
     },
-    "total_tokens": 108000
+    "total_tokens": 86400
   }
 }
 ```
@@ -236,7 +226,7 @@ payload = {
     # 视频生成任务 ID 仅保存 7 天（从 created_at 时间戳开始计算），超时后将自动清除
     # 创建视频生成任务为异步接口，获取 ID 后需通过本接口查询任务状态，
     # 任务成功后会输出生成视频的链接
-    "input": "task_PkucWMByIsMaeyVULkgA6Jqy7LukjBdm"
+    "input": "task_8AAJeEO9Gf0GiSh0cSKeX32u2X1n43Fn"
 
 }
 
@@ -258,12 +248,12 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 
 ```json
 {
-  "created_at": 1787312176,
-  "duration": 5,
+  "created_at": 1787717650,
+  "duration": 4,
   "execution_expires_after": 172800,
   "framespersecond": 24,
   "generate_audio": true,
-  "id": "task_PkucWMByIsMaeyVULkgA6Jqy7LukjBdm",
+  "id": "task_8AAJeEO9Gf0GiSh0cSKeX32u2X1n43Fn",
   "model": "doubao-seedance-2-5-260628",
   "output": [
     {
@@ -271,19 +261,19 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
       "content": [
         {
           "type": "output_text",
-          "text": "https://ark-acg-cn-bejing.tos-cn-beijing.volces.com/doubao-seedance-2-5/772ef640ec344d769378e357b4570b90.mp4?X-Tos-Algorithm=TOS4-HMAC-SHA256&X-Tos-Credential=AKLTNTEwMTIwZTEzYWE0NDcwOWE1Yzk2MzQ0ZjViYTk3OWU%2F20260821%2Fcn-beijing%2Ftos%2Frequest&X-Tos-Date=20260821T113824Z&X-Tos-Expires=86399&X-Tos-Signature=c1700648ba5d8deba28119af1825436b94eb8fc5afee27147ba52c7c2f74a071&X-Tos-SignedHeaders=host"
+          "text": "https://ark-acg-cn-bejing.tos-cn-beijing.volces.com/doubao-seedance-2-5/3d7e2b88b26248b58e5b7c3fcaa7fb87.mp4?X-Tos-Algorithm=TOS4-HMAC-SHA256&X-Tos-Credential=AKLTNTEwMTIwZTEzYWE0NDcwOWE1Yzk2MzQ0ZjViYTk3OWU%2F20260826%2Fcn-beijing%2Ftos%2Frequest&X-Tos-Date=20260826T041707Z&X-Tos-Expires=86399&X-Tos-Signature=a0c80830fc314112b417ffea4dcca28bfba8a1b851175f23d5ed5e7ccc590273&X-Tos-SignedHeaders=host"
         }
       ]
     }
   ],
   "ratio": "9:16",
   "resolution": "720p",
-  "seed": 64259,
+  "seed": 62244,
   "service_tier": "default",
   "status": "succeeded",
-  "updated_at": 1787312282,
+  "updated_at": 1787717823,
   "usage": {
-    "completion_tokens": 108900,
+    "completion_tokens": 87300,
     "input_tokens": 0,
     "input_tokens_details": {
       "cached_tokens": 0

@@ -41,7 +41,7 @@ url = "https://www.dmxapi.cn/v1/responses"
 
 # DMXAPI 密钥 (请替换为您自己的密钥)
 # 获取方式: 登录 DMXAPI 官网 -> 个人中心 -> API 密钥管理
-api_key = "sk-******************************************"
+api_key = "sk------------------------------------"
 
 # ===============================================================
 # 步骤2: 配置请求头
@@ -57,10 +57,10 @@ headers = {
 # ===============================================================
 
 # 【方式一】网络图片 URL（支持 HTTP / HTTPS 协议）
-# image_source = "https://arkdocs.tos-cn-beijing.volces.com/images/video-generation/seedance2.5_reference1.png"
+image_source = "https://img.shetu66.com/2023/07/14/1689320796087949.png"
 
 # 【方式二】本地图片路径（代码自动转换为 Data URL）
-image_source = "C:/path/input_image.png"
+# image_source = "C:/path/input_image.png"
 
 # 【方式三】素材 ID
 # image_source = "asset://<ASSET_ID>"
@@ -73,6 +73,19 @@ payload = {
     # 【input】(object[], 必填) 输入内容列表
     # 输入给模型生成视频的信息，本示例传入 1 张首帧图片
     "input": [
+        {
+            # 【type】(string, 必填) 内容类型
+            # 输入内容的类型，此处固定为 text
+            "type": "text",
+            # 【text】(string, 必填) 文本提示词
+            # 输入给模型的文本提示词，描述期望生成的视频
+            # 语言支持: 中英文，额外支持西班牙语、印度尼西亚语、葡萄牙语、日语、马来语、
+            #           泰语、阿拉伯语、越南语、韩语
+            # 字数建议: 中文提示词不超过 500 字，英文提示词不超过 1000 词
+            #           字数过多易导致信息分散，模型可能忽略细节、仅关注重点，
+            #           进而造成视频缺失部分元素
+            "text": "图中小狗在跳舞"
+        },
         {
             # 【image_url】(object, 必填) 图片对象
             # 输入给模型的图片对象
@@ -243,7 +256,11 @@ def _resolve_media(value: str, rule: dict, field: str) -> tuple:
             pass
     raise ValueError(f"{field} 不符合接口媒体契约")
 
-payload["input"][0]["image_url"]["url"] = _resolve_media(payload["input"][0]["image_url"]["url"], _MEDIA_RULES["rule_1"], "payload[\"input\"][0][\"image_url\"][\"url\"]")[0]
+# 按类型定位图片元素，避免手写索引在增删输入项后错位
+for _i, _item in enumerate(payload["input"]):
+    if _item.get("type") == "image_url":
+        _field = f'payload["input"][{_i}]["image_url"]["url"]'
+        _item["image_url"]["url"] = _resolve_media(_item["image_url"]["url"], _MEDIA_RULES["rule_1"], _field)[0]
 
 # ===============================================================
 # 步骤5: 发送请求并输出结果
@@ -262,17 +279,7 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 
 ```json
 {
-  "output": [
-    {
-      "type": "message",
-      "content": [
-        {
-          "type": "output_text",
-          "text": "Task ID: task_ZuC3T2twfzE4PYctn0z0JOQNkpRTCInw"
-        }
-      ]
-    }
-  ],
+  "id": "task_NLcYeKS1P5MIaPvbTTvYuuu6euv56uvV",
   "usage": {
     "input_tokens": 0,
     "input_tokens_details": {
@@ -308,11 +315,11 @@ import json
 # ═══════════════════════════════════════════════════════════════
 
 # 🌐 DMXAPI 服务端点地址
-url = "https://www.dmxapi.cn/v1/responses"
+url = "https://test.dmxapi.vip/v1/responses"
 
 # 🔐 DMXAPI 密钥 (请替换为您自己的密钥)
 # 获取方式: 登录 DMXAPI 官网 -> 个人中心 -> API 密钥管理
-api_key = "sk-******************************************"
+api_key = "sk-e7n5Te15uEM594bmlhoo5jTnBXe5qVv2OynYBkjGX8lYVANA"
 
 # ═══════════════════════════════════════════════════════════════
 # 📋 步骤2: 配置请求头
@@ -336,7 +343,7 @@ payload = {
     # 视频生成任务 ID 仅保存 7 天（从 created_at 时间戳开始计算），超时后将自动清除
     # 创建视频生成任务为异步接口，获取 ID 后需通过本接口查询任务状态，
     # 任务成功后会输出生成视频的链接
-    "input": "task_ZuC3T2twfzE4PYctn0z0JOQNkpRTCInw"
+    "input": "task_NLcYeKS1P5MIaPvbTTvYuuu6euv56uvV"
 
 }
 
@@ -358,12 +365,12 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 
 ```json
 {
-  "created_at": 1787312935,
-  "duration": 6,
+  "created_at": 1787732533,
+  "duration": 10,
   "execution_expires_after": 172800,
   "framespersecond": 24,
   "generate_audio": true,
-  "id": "task_ZuC3T2twfzE4PYctn0z0JOQNkpRTCInw",
+  "id": "task_NLcYeKS1P5MIaPvbTTvYuuu6euv56uvV",
   "model": "doubao-seedance-2-5-260628",
   "output": [
     {
@@ -371,19 +378,19 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
       "content": [
         {
           "type": "output_text",
-          "text": "https://ark-acg-cn-bejing.tos-cn-beijing.volces.com/doubao-seedance-2-5/371abaade3244a6b80f38833b4e8f76b.mp4?X-Tos-Algorithm=TOS4-HMAC-SHA256&X-Tos-Credential=AKLTNTEwMTIwZTEzYWE0NDcwOWE1Yzk2MzQ0ZjViYTk3OWU%2F20260821%2Fcn-beijing%2Ftos%2Frequest&X-Tos-Date=20260821T115051Z&X-Tos-Expires=86399&X-Tos-Signature=bbc7e53f14a3fc383a9d3c1284c5c73a341f87e866b604ead9196717e689e1a2&X-Tos-SignedHeaders=host"
+          "text": "https://ark-acg-cn-bejing.tos-cn-beijing.volces.com/doubao-seedance-2-5/029ee3a08ea8488cb43c0fd61f90d53f.mp4?X-Tos-Algorithm=TOS4-HMAC-SHA256&X-Tos-Credential=AKLTNTEwMTIwZTEzYWE0NDcwOWE1Yzk2MzQ0ZjViYTk3OWU%2F20260826%2Fcn-beijing%2Ftos%2Frequest&X-Tos-Date=20260826T082501Z&X-Tos-Expires=86399&X-Tos-Signature=9f499873fa24bfa90cc4ad08bb5d5a122d9b16b149ebb925f55de15debbf22ad&X-Tos-SignedHeaders=host"
         }
       ]
     }
   ],
-  "ratio": "1:1",
+  "ratio": "393:589",
   "resolution": "720p",
-  "seed": 52917,
+  "seed": 55909,
   "service_tier": "default",
   "status": "succeeded",
-  "updated_at": 1787313045,
+  "updated_at": 1787732696,
   "usage": {
-    "completion_tokens": 130500,
+    "completion_tokens": 217913,
     "input_tokens": 0,
     "input_tokens_details": {
       "cached_tokens": 0

@@ -41,7 +41,7 @@ url = "https://www.dmxapi.cn/v1/responses"
 
 # DMXAPI 密钥 (请替换为您自己的密钥)
 # 获取方式: 登录 DMXAPI 官网 -> 个人中心 -> API 密钥管理
-api_key = "sk-******************************************"
+api_key = "sk------------------------------------------"
 
 # ===============================================================
 # 步骤2: 配置请求头
@@ -49,35 +49,46 @@ api_key = "sk-******************************************"
 
 headers = {
     "Content-Type": "application/json",      # 指定请求体为 JSON 格式
-    "Authorization": f"{api_key}",           # token 认证方式
+    "Authorization": f"Bearer {api_key}",    # Bearer token 认证方式
 }
 
 # ===============================================================
-# 步骤3: 配置图片来源（选择一种即可）
-# ===============================================================
-
-# 【方式一】网络图片 URL（支持 HTTP / HTTPS 协议）
-# image_source = "https://arkdocs.tos-cn-beijing.volces.com/images/video-generation/seedance2.5_reference1.png"
-
-# 【方式二】本地图片路径（代码自动转换为 Data URL）
-image_source = "C:/path/input_image.png"
-
-# 【方式三】素材 ID
-# image_source = "asset://<ASSET_ID>"
-
-# ===============================================================
-# 步骤4: 配置请求参数
+# 步骤3: 配置请求参数
 # ===============================================================
 
 payload = {
+    # 【model】(string, 必填) 调用的模型名称
+    "model": "doubao-seedance-2-5-260628",
+
     # 【input】(object[], 必填) 输入内容列表
-    # 输入给模型生成视频的信息，支持文本、图片、视频、音频等多种类型的元素
-    # 本示例传入 1 张参考图片 + 1 个参考视频
+    # 所有文本、图片和视频参数均直接写在 payload 中。
     "input": [
+        {           
+            # 【text】(string, 必填) 文本提示词
+            # 输入给模型的文本提示词，描述期望生成的视频
+            # 语言支持: 中英文，额外支持西班牙语、印度尼西亚语、葡萄牙语、日语、马来语、
+            #           泰语、阿拉伯语、越南语、韩语
+            # 字数建议: 中文提示词不超过 500 字，英文提示词不超过 1000 词
+            #           字数过多易导致信息分散，模型可能忽略细节、仅关注重点，
+            #           进而造成视频缺失部分元素
+            "type": "text",
+            # 【type】(string, 必填) 内容类型
+            # 输入内容的类型，此处固定为 text
+            "text": (
+                "明亮多彩的广告片风格，果味饼干为主角，包含草莓、苹果、葡萄、橙子四种口味，"
+                "草莓味参考@图像1，饼干与对应水果以强秩序感的几何阵列排布，整体画面干净、高级、节奏强。"
+                "开场水果快速建立视觉聚焦，参考@视频1的构图，音乐重拍切入。随后不同口味饼干整齐排列，切特写，"
+                "参考@视频2的动态和运镜。高潮段一块饼干被折断，瞬间进入慢动作，果味夹心爆开，碎屑飞溅，"
+                "果汁感与颗粒冲击被放大展示，参考@视频3的冲击感。横向阵列，形成节奏抛物感，参考@视频4的运动，"
+                "突出秩序美感与产品丰富度。随后迅速回到快节奏剪辑。结尾英文文字 "
+                "One bite of crispness, a heart full of delight 快速分词切换入画，"
+                "配合强节奏文字运动与产品定格，参考@视频5，最终品牌感收束，饼干和水果向四周发散，"
+                "参考@视频6画面充满年轻、活力、好吃、想分享的广告氛围。"
+            ),
+        },
         {
-            # 【image_url】(object, 必填) 图片对象
-            # 输入给模型的图片对象
-            "image_url": {
+            # 【type】(string, 必填) 图片内容类型，固定为 image_url
+            "type": "image_url",
                 # 【url】(string, 必填) 图片来源
                 # 支持图片 URL、图片 Base64 编码、素材 ID 三种形式:
                 #   - 图片 URL: 填入图片的公网 URL
@@ -90,31 +101,15 @@ payload = {
                 #   - 宽高长度(px): [300, 6000]
                 #   - 大小: 单张图片小于 30 MB，请求体大小不超过 64 MB
                 #           大文件请勿使用 Base64 编码
-                #   - 数量: Seedance 2.5 全模态参考生视频 1-30 张
-                "url": image_source
+            "image_url": {
+                "url": "https://arkdocs.tos-cn-beijing.volces.com/images/video-generation/seedance2.5_reference1.png"
             },
-
-            # 【role】(string, 可选) 角色/用途
-            # 图片的位置或用途。全模态参考生视频中，每张参考图对应的 role 均为 reference_image
-            # 注意: 图生视频-首帧、图生视频-首尾帧、全模态参考生视频为 3 种互斥场景，不可混用
+            # 【role】(string, 可选)角色/用途 全模态参考图固定为 reference_image
             "role": "reference_image",
-
-            # 【type】(string, 必填) 内容类型
-            # 输入内容的类型，此处固定为 image_url
-            "type": "image_url"
         },
         {
-            # 【role】(string, 可选) 角色/用途
-            # 视频的位置或用途，此处固定为 reference_video
-            "role": "reference_video",
-
-            # 【type】(string, 必填) 内容类型
-            # 输入内容的类型，此处固定为 video_url
+            # 【参考视频1】提示词中的 @视频1，对应官方 reference2.mp4
             "type": "video_url",
-
-            # 【video_url】(object, 必填) 视频对象
-            # 输入给模型的视频对象
-            "video_url": {
                 # 【url】(string, 必填) 视频来源
                 # 支持视频 URL、素材 ID 两种形式:
                 #   - 视频 URL: 填入视频的公网 URL
@@ -131,53 +126,151 @@ payload = {
                 #   - 总像素数: [407696, 8295044]，即宽和高的乘积需落在该区间
                 #   - 大小: 单个视频不超过 200 MB
                 #   - 帧率(FPS): [24, 60]
+            "video_url": {
                 "url": "https://arkdocs.tos-cn-beijing.volces.com/videos/video-generation/seedance2.5_reference2.mp4"
-            }
-        }
+            },
+            # 【role】(string, 可选) 角色/用途
+            # 视频的位置或用途，此处固定为 reference_video
+            "role": "reference_video",
+        },
+        {
+            # 【参考视频2】提示词中的 @视频2，对应官方 reference3.mp4
+            "type": "video_url",
+                # 【url】(string, 必填) 视频来源
+                # 支持视频 URL、素材 ID 两种形式:
+                #   - 视频 URL: 填入视频的公网 URL
+                #   - 素材 ID: 遵循格式 asset://<ASSET_ID>，可从素材 & 虚拟人像库获取
+                # 传入单个视频要求:
+                #   - 视频格式: mp4、mov
+                #               MP4 支持视频编码 H.264/AVC、H.265/HEVC，音频编码 AAC、MP3
+                #               MOV 支持视频编码 H.264/AVC、H.265/HEVC，音频编码 AAC、MP3、PCM
+                #   - 分辨率: 480p、720p、1080p、4k
+                #   - 时长: 非视频编辑任务单个视频 [2, 30] s；视频编辑任务单个视频 [4, 30] s
+                #           最多传入 10 个参考视频，所有视频总时长不超过 30 s
+                #   - 宽高比(宽/高): [0.4, 2.5]
+                #   - 宽高长度(px): [300, 6000]
+                #   - 总像素数: [407696, 8295044]，即宽和高的乘积需落在该区间
+                #   - 大小: 单个视频不超过 200 MB
+                #   - 帧率(FPS): [24, 60]
+            "video_url": {
+                "url": "https://arkdocs.tos-cn-beijing.volces.com/videos/video-generation/seedance2.5_reference3.mp4"
+            },
+            "role": "reference_video",
+        },
+        {
+            # 【参考视频3】提示词中的 @视频3，对应官方 reference4.mp4
+            "type": "video_url",
+                # 【url】(string, 必填) 视频来源
+                # 支持视频 URL、素材 ID 两种形式:
+                #   - 视频 URL: 填入视频的公网 URL
+                #   - 素材 ID: 遵循格式 asset://<ASSET_ID>，可从素材 & 虚拟人像库获取
+                # 传入单个视频要求:
+                #   - 视频格式: mp4、mov
+                #               MP4 支持视频编码 H.264/AVC、H.265/HEVC，音频编码 AAC、MP3
+                #               MOV 支持视频编码 H.264/AVC、H.265/HEVC，音频编码 AAC、MP3、PCM
+                #   - 分辨率: 480p、720p、1080p、4k
+                #   - 时长: 非视频编辑任务单个视频 [2, 30] s；视频编辑任务单个视频 [4, 30] s
+                #           最多传入 10 个参考视频，所有视频总时长不超过 30 s
+                #   - 宽高比(宽/高): [0.4, 2.5]
+                #   - 宽高长度(px): [300, 6000]
+                #   - 总像素数: [407696, 8295044]，即宽和高的乘积需落在该区间
+                #   - 大小: 单个视频不超过 200 MB
+                #   - 帧率(FPS): [24, 60]
+            "video_url": {
+                "url": "https://arkdocs.tos-cn-beijing.volces.com/videos/video-generation/seedance2.5_reference4.mp4"
+            },
+            "role": "reference_video",
+        },
+        {
+            # 【参考视频4】提示词中的 @视频4，对应官方 reference5.mp4
+            "type": "video_url",
+                # 【url】(string, 必填) 视频来源
+                # 支持视频 URL、素材 ID 两种形式:
+                #   - 视频 URL: 填入视频的公网 URL
+                #   - 素材 ID: 遵循格式 asset://<ASSET_ID>，可从素材 & 虚拟人像库获取
+                # 传入单个视频要求:
+                #   - 视频格式: mp4、mov
+                #               MP4 支持视频编码 H.264/AVC、H.265/HEVC，音频编码 AAC、MP3
+                #               MOV 支持视频编码 H.264/AVC、H.265/HEVC，音频编码 AAC、MP3、PCM
+                #   - 分辨率: 480p、720p、1080p、4k
+                #   - 时长: 非视频编辑任务单个视频 [2, 30] s；视频编辑任务单个视频 [4, 30] s
+                #           最多传入 10 个参考视频，所有视频总时长不超过 30 s
+                #   - 宽高比(宽/高): [0.4, 2.5]
+                #   - 宽高长度(px): [300, 6000]
+                #   - 总像素数: [407696, 8295044]，即宽和高的乘积需落在该区间
+                #   - 大小: 单个视频不超过 200 MB
+                #   - 帧率(FPS): [24, 60]
+            "video_url": {
+                "url": "https://arkdocs.tos-cn-beijing.volces.com/videos/video-generation/seedance2.5_reference5.mp4"
+            },
+            "role": "reference_video",
+        },
+        {
+            "type": "video_url",
+                # 【url】(string, 必填) 视频来源
+                # 支持视频 URL、素材 ID 两种形式:
+                #   - 视频 URL: 填入视频的公网 URL
+                #   - 素材 ID: 遵循格式 asset://<ASSET_ID>，可从素材 & 虚拟人像库获取
+                # 传入单个视频要求:
+                #   - 视频格式: mp4、mov
+                #               MP4 支持视频编码 H.264/AVC、H.265/HEVC，音频编码 AAC、MP3
+                #               MOV 支持视频编码 H.264/AVC、H.265/HEVC，音频编码 AAC、MP3、PCM
+                #   - 分辨率: 480p、720p、1080p、4k
+                #   - 时长: 非视频编辑任务单个视频 [2, 30] s；视频编辑任务单个视频 [4, 30] s
+                #           最多传入 10 个参考视频，所有视频总时长不超过 30 s
+                #   - 宽高比(宽/高): [0.4, 2.5]
+                #   - 宽高长度(px): [300, 6000]
+                #   - 总像素数: [407696, 8295044]，即宽和高的乘积需落在该区间
+                #   - 大小: 单个视频不超过 200 MB
+                #   - 帧率(FPS): [24, 60]
+            "video_url": {
+                "url": "https://arkdocs.tos-cn-beijing.volces.com/videos/video-generation/seedance2.5_reference6.mp4"
+            },
+            "role": "reference_video",
+        },
+        {
+            # 【参考视频6】提示词中的 @视频6，对应官方 reference7.mp4
+            "type": "video_url",
+                # 【url】(string, 必填) 视频来源
+                # 支持视频 URL、素材 ID 两种形式:
+                #   - 视频 URL: 填入视频的公网 URL
+                #   - 素材 ID: 遵循格式 asset://<ASSET_ID>，可从素材 & 虚拟人像库获取
+                # 传入单个视频要求:
+                #   - 视频格式: mp4、mov
+                #               MP4 支持视频编码 H.264/AVC、H.265/HEVC，音频编码 AAC、MP3
+                #               MOV 支持视频编码 H.264/AVC、H.265/HEVC，音频编码 AAC、MP3、PCM
+                #   - 分辨率: 480p、720p、1080p、4k
+                #   - 时长: 非视频编辑任务单个视频 [2, 30] s；视频编辑任务单个视频 [4, 30] s
+                #           最多传入 10 个参考视频，所有视频总时长不超过 30 s
+                #   - 宽高比(宽/高): [0.4, 2.5]
+                #   - 宽高长度(px): [300, 6000]
+                #   - 总像素数: [407696, 8295044]，即宽和高的乘积需落在该区间
+                #   - 大小: 单个视频不超过 200 MB
+                #   - 帧率(FPS): [24, 60]
+            "video_url": {
+                "url": "https://arkdocs.tos-cn-beijing.volces.com/videos/video-generation/seedance2.5_reference7.mp4"
+            },
+            # 【type】(string, 必填) 内容类型
+            # 输入内容的类型，此处固定为 video_url
+            "role": "reference_video",
+        },
     ],
 
-    # 【duration】(integer, 可选) 视频时长
-    # 生成视频时长（单位：秒），默认值 -1
-    # 取值范围: [4, 30]；或设置为 -1（智能选择，模型在有效取值范围内自主选择合适的整数秒时长）
-    # 说明: 查询任务接口返回的 duration = 实际总帧数 / 24（向下取整），为整数秒约数
-    "duration": 4,
-
-    # 【execution_expires_after】(integer, 可选) 任务超时阈值
-    # 指定任务提交后的过期时间（单位：秒），从 created_at 时间戳开始计算，默认值 172800（48 小时）
-    # 超过该时间后任务会被自动终止，并标记为 expired 状态
-    # 取值范围: [3600, 259200]
-    "execution_expires_after": 172800,
-
-    # 【generate_audio】(boolean, 可选) 生成有声视频
-    # 控制生成的视频是否包含与画面同步的声音，默认值 true
-    # 可选值:
-    #   - True(模型输出的视频包含同步音频，会基于文本提示词与视觉内容自动生成
-    #          匹配的人声、音效及背景音乐)
-    #   - False(模型输出的视频为无声视频)
-    # 建议将对话部分置于双引号内以优化音频生成效果
-    # 注意: 生成的有声视频均为单声道，和传入的音频声道数无关
+    # 【generate_audio】(boolean, 可选) 是否生成与画面同步的音频，默认为 true
     "generate_audio": True,
 
-    # 【model】(string, 必填) 调用的模型名称
-    "model": "doubao-seedance-2-5-260628",
+    # 【ratio】(string, 可选) 视频宽高比
+    # 生成视频的宽高比例，默认值 adaptive
+    # 可选值: "16:9" / "4:3" / "1:1" / "3:4" / "9:16" / "21:9"
+    #         "adaptive"(根据任务类型和输入内容自动适配宽高比)
+    "ratio": "16:9",
 
-    # 【omni_reference_task_type】(string, 可选) 任务类型引导
-    # 全模态参考生视频任务包括参考生视频、视频编辑和视频延长 3 类子任务，不同任务类型对参数
-    # 有特殊限制，可通过本参数指定子任务类型，以提前校验对应限制。默认值 auto
-    # 可选值:
-    #   - "auto"(由模型根据输入素材和提示词自动判定任务类型，再校验参数取值；如果参数与实际
-    #            任务类型不兼容，任务将触发异步报错，错误码 InvalidParameter.TaskTypeConstraint)
-    #   - "reference"(参考生视频任务，即基于参考图片、参考视频或参考音频生成新视频；
-    #                 设置 reference 时，ratio 或 duration 无特殊限制)
-    #   - "edit"(视频编辑任务，即对原视频的画面或音频进行编辑操作；设置 edit 时，输入内容中
-    #            必须至少包含一个 reference_video，且视频时长必须为 4-30 秒；
-    #            ratio 必须为 adaptive；duration 必须为 -1)
-    #   - "extend"(视频延长任务，即对原视频向前或向后延长；设置 extend 时，输入内容中必须
-    #              至少包含一个 reference_video；ratio 必须为 adaptive)
-    # 说明: 显式指定任务类型时，接口在提交任务时提前校验对应限制，不符合要求会立即报错，任务不会创建
-    # 注意: 实际处理任务时，模型仍会进一步结合提示词判断任务类型。若实际判定的任务类型和指定的
-    #       不一致，仍会触发异步报错（错误码 InvalidParameter.TaskTypeMismatch）
-    "omni_reference_task_type": "auto",
+    # 【duration】(integer, 可选) 生成时长，单位为秒；可用范围 [4, 30] 或 -1
+    "duration": 15,
+
+    # 【omni_reference_task_type】(string, 可选) auto / reference / edit / extend
+    # reference 表示基于参考图片、视频或音频生成新视频。
+    "omni_reference_task_type": "reference",
 
     # 【output_format】(string, 可选) 输出格式
     # 输出视频的格式，默认值 mp4
@@ -188,14 +281,11 @@ payload = {
     #           抠像、合成等对色彩还原要求高的专业后期加工；推荐在视频编辑、视频延长场景
     #           使用 mov 格式作为输入和输出)
     # 注意: mov 格式采用 H.264 视频编码 + yuv444p 色度采样 + PCM 音频编码，部分播放器可能
-    #       不兼容，常见支持的播放器有 IINA(仅 macOS)、VLC、mpv、ffplay
-    "output_format": "mp4",
+    #       不兼容，常见支持的播放器有 IINA(仅 macOS)、VLC、mpv、ffpla
+    "output_format": "mov",
 
-    # 【ratio】(string, 可选) 视频宽高比
-    # 生成视频的宽高比例，默认值 adaptive
-    # 可选值: "16:9" / "4:3" / "1:1" / "3:4" / "9:16" / "21:9"
-    #         "adaptive"(根据任务类型和输入内容自动适配宽高比)
-    "ratio": "adaptive",
+    # 【execution_expires_after】(integer, 可选) 任务过期时间，单位为秒，取值范围 [3600, 259200]
+    "execution_expires_after": 172800,
 
     # 【resolution】(string, 可选) 视频分辨率
     # 视频分辨率，默认值 720p
@@ -217,35 +307,49 @@ payload = {
     # 使用该参数可实现生成多个连续视频：以上一个生成视频的尾帧作为下一个视频任务的首帧
     "return_last_frame": False,
 
+
     # 【watermark】(boolean, 可选) 视频水印
     # 生成视频是否包含水印，默认值 false
     # 可选值:
     #   - True(生成视频右下角会展示「AI 生成」水印)
     #   - False(生成视频不含水印)
-    "watermark": False
+    "watermark": False,
 }
-
 # 媒体处理逻辑（无需修改）
 
 _MEDIA_RULES = {
     "rule_1": {
         "allow_url": True,
-        "allow_data_uri": True,
+        "allow_data_uri": False,
         "allow_raw_base64": False,
         "allow_asset": True,
-        "allow_local_file": True,
-        "local_encoding": "data_uri",
+        "allow_local_file": False,
+        "local_encoding": "",
         "file_formats": {
-            ".jpg": "image/jpeg",
-            ".jpeg": "image/jpeg",
-            ".png": "image/png",
-            ".bmp": "image/bmp",
-            ".webp": "image/webp",
-            ".gif": "image/gif",
-            ".heic": "image/heic",
-            ".heif": "image/heif",
         },
-        "data_types": ["image/bmp", "image/gif", "image/heic", "image/heif", "image/jpeg", "image/png", "image/webp"],
+        "data_types": [],
+    },
+    "rule_2": {
+        "allow_url": True,
+        "allow_data_uri": False,
+        "allow_raw_base64": False,
+        "allow_asset": True,
+        "allow_local_file": False,
+        "local_encoding": "",
+        "file_formats": {
+        },
+        "data_types": [],
+    },
+    "rule_3": {
+        "allow_url": True,
+        "allow_data_uri": False,
+        "allow_raw_base64": False,
+        "allow_asset": True,
+        "allow_local_file": False,
+        "local_encoding": "",
+        "file_formats": {
+        },
+        "data_types": [],
     },
 }
 
@@ -292,19 +396,39 @@ def _resolve_media(value: str, rule: dict, field: str) -> tuple:
             pass
     raise ValueError(f"{field} 不符合接口媒体契约")
 
-payload["input"][0]["image_url"]["url"] = _resolve_media(payload["input"][0]["image_url"]["url"], _MEDIA_RULES["rule_1"], "payload[\"input\"][0][\"image_url\"][\"url\"]")[0]
+# 按类型遍历全部输入项：text 跳过，image_url 用 rule_1，video_url 用 rule_2
+for _i, _item in enumerate(payload["input"]):
+    _type = _item.get("type")
+    if _type == "image_url":
+        _key, _rule = "image_url", _MEDIA_RULES["rule_1"]
+    elif _type == "video_url":
+        _key, _rule = "video_url", _MEDIA_RULES["rule_2"]
+    else:
+        continue
+    _field = f'payload["input"][{_i}]["{_key}"]["url"]'
+    _item[_key]["url"] = _resolve_media(_item[_key]["url"], _rule, _field)[0]
 
 # ===============================================================
 # 步骤5: 发送请求并输出结果
 # ===============================================================
 
-# 发送 POST 请求到 API 服务器
-response = requests.post(url, headers=headers, json=payload)
+# 发送 POST 请求到 API 服务器（timeout 防止网络异常时永久阻塞）
+response = requests.post(url, headers=headers, json=payload, timeout=60)
+
+# 先检查 HTTP 状态码，避免服务端返回错误页时被 JSON 解析异常掩盖真实原因
+if response.status_code != 200:
+    print(f"请求失败，HTTP {response.status_code}")
+    print(response.text)
+    raise SystemExit(1)
 
 # 格式化输出 JSON 响应
 # - indent=2: 缩进 2 空格，便于阅读
 # - ensure_ascii=False: 正确显示中文字符
-print(json.dumps(response.json(), indent=2, ensure_ascii=False))
+try:
+    print(json.dumps(response.json(), indent=2, ensure_ascii=False))
+except ValueError:
+    print("响应不是合法 JSON，原始内容如下：")
+    print(response.text)
 ```
 
 ## 返回示例
