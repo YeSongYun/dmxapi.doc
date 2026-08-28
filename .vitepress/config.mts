@@ -917,6 +917,28 @@ export default defineConfig({
             text: '🎵音乐模型',
             collapsed: true,
             items: [
+              {
+                text: 'mureka',
+                collapsed: true,
+                items: [
+                  {
+                    text: 'mureka-9.5',
+                    collapsed: true,
+                    items: [
+                      { text: '提示词生成歌曲', link: '/mureka-9.5-prompt-to-song' },
+                      { text: '歌词生成歌曲', link: '/mureka-9.5-lyrics-to-song' }
+                    ],
+                  },
+                  {
+                    text: 'mureka-9.5-pure',
+                    collapsed: true,
+                    items: [
+                      { text: '生成纯音乐', link: '/mureka-9.5-pure-instrumental-generation' }
+                    ],
+                  }
+                ],
+              },
+
               // {
               //   text: 'suno-music',
               //   collapsed: true,
