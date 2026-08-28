@@ -599,7 +599,7 @@ export default defineConfig({
                     ],
                   },
                   {
-                    text: 'seedance 2.0 真人方案',
+                    text: 'seedance系列真人方案',
                     collapsed: true,
                     items: [
                       { text: '方案一 · 信任产物', link: '/seedance-2-0-real-person-plan1-trusted-output' },
@@ -608,7 +608,7 @@ export default defineConfig({
                     ],
                   },
                   {
-                    text: 'seedance 2.0 私域虚拟人像素材方案',
+                    text: 'seedance系列私域虚拟人像素材方案',
                     collapsed: true,
                     items: [
                       { text: '方案指南', link: '/seedance-create-virtual-human-asset-group' },
@@ -917,6 +917,28 @@ export default defineConfig({
             text: '🎵音乐模型',
             collapsed: true,
             items: [
+              {
+                text: 'mureka',
+                collapsed: true,
+                items: [
+                  {
+                    text: 'mureka-9.5',
+                    collapsed: true,
+                    items: [
+                      { text: '提示词生成歌曲', link: '/mureka-9.5-prompt-to-song' },
+                      { text: '歌词生成歌曲', link: '/mureka-9.5-lyrics-to-song' }
+                    ],
+                  },
+                  {
+                    text: 'mureka-9.5-pure',
+                    collapsed: true,
+                    items: [
+                      { text: '生成纯音乐', link: '/mureka-9.5-pure-instrumental-generation' }
+                    ],
+                  }
+                ],
+              },
+
               // {
               //   text: 'suno-music',
               //   collapsed: true,
