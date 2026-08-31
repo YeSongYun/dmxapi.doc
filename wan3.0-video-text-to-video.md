@@ -69,7 +69,6 @@ payload = {
         # 【duration】(integer, 可选) 生成视频的时长，单位为秒
         # 默认值为 5
         #   - 无视频输入时: 取值范围为 [2, 30] 的整数
-        #   - 有视频输入时: 输入视频总时长 + 输出视频时长不超过 30 秒
         #   - 传 -1 时: 智能时长模式，模型根据输入的 prompt、内容和富媒体自动推荐合适时长生成
         "duration": 5,
         # 【prompt_extend】(boolean, 可选) 是否开启 prompt 智能改写
@@ -248,8 +247,6 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
   }
 }
 ```
-
-任务成功后 `output` 中返回视频的临时下载链接（有效期由 `Expires` 参数决定，请及时转存）；`usage` 中的 `SR` 为输出分辨率短边、`duration` / `output_video_duration` 为视频时长（秒）、`fps` 为帧率、`ratio` 为实际输出的宽高比、`video_count` 为生成视频数量。
 
 <p align="center">
   <small>© 2026 DMXAPI wan3.0-video 文生视频</small>

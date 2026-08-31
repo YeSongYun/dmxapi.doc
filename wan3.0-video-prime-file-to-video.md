@@ -275,8 +275,6 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 }
 ```
 
-任务成功后 `output` 中返回视频的临时下载链接（有效期由 `Expires` 参数决定，请及时转存）；`usage` 中的 `SR` 为输出分辨率短边、`duration` / `output_video_duration` 为视频时长（秒）、`fps` 为帧率、`ratio` 为实际输出的宽高比、`video_count` 为生成视频数量。
-
 <p align="center">
   <small>© 2026 DMXAPI wan3.0-video-prime 参考文件生视频</small>
 </p>

@@ -76,11 +76,6 @@ payload = {
             # 【media】(array[object], 条件必选) 媒体素材数组
             # 支持图像、视频、音频、文件和网页作为输入，和 prompt 必填其一
             # 数组中每个元素为一个媒体对象，包含 type 与 url 字段
-            # 在参考生视频模式下，按照数组顺序定义 prompt 中素材引用的顺序
-            # 图和视频分别计数，即可同时存在图1、视频1:
-            #   - 第 1 个 reference_image 对应 图1，第 2 个对应 图2，以此类推
-            #   - 第 1 个 reference_video 对应 视频1，第 2 个对应 视频2，以此类推
-            #   - 第 1 个 reference_audio 对应 音频1，第 2 个对应 音频2，以此类推
             # 注意: reference_xx / file / link 类型和 first_frame / last_frame 类型互斥，
             # 不能在同一请求中混用
             "media": [
@@ -370,8 +365,6 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
   }
 }
 ```
-
-任务成功后 `output` 中返回视频的临时下载链接（有效期由 `Expires` 参数决定，请及时转存）；`usage` 中的 `SR` 为输出分辨率短边、`duration` / `output_video_duration` 为视频时长（秒）、`fps` 为帧率、`ratio` 为实际输出的宽高比、`video_count` 为生成视频数量。
 
 <p align="center">
   <small>© 2026 DMXAPI wan3.0-video-prime 首尾帧生视频</small>
