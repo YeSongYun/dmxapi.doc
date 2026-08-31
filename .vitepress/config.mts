@@ -809,6 +809,28 @@ export default defineConfig({
                 collapsed: true,
                 items: [
               {
+                text: 'wan3.0-video',
+                collapsed: true,
+                items: [
+                  { text: '文生视频', link: '/wan3.0-video-text-to-video' },
+                  { text: '首帧生视频', link: '/wan3.0-video-first-frame-to-video' },
+                  { text: '首尾帧生视频', link: '/wan3.0-video-first-last-frame-to-video' },
+                  { text: '参考生视频', link: '/wan3.0-video-reference-to-video' },
+                  { text: '参考文件生视频', link: '/wan3.0-video-file-to-video' },
+                ],
+              },
+              {
+                text: 'wan3.0-video-prime',
+                collapsed: true,
+                items: [
+                  { text: '文生视频', link: '/wan3.0-video-prime-text-to-video' },
+                  { text: '首帧生视频', link: '/wan3.0-video-prime-first-frame-to-video' },
+                  { text: '首尾帧生视频', link: '/wan3.0-video-prime-first-last-frame-to-video' },
+                  { text: '参考生视频', link: '/wan3.0-video-prime-reference-to-video' },
+                  { text: '参考文件生视频', link: '/wan3.0-video-prime-file-to-video' },
+                ],
+              },
+              {
                 text: 'wan2.7',
                 collapsed: true,
                 items: [
