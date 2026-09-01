@@ -677,6 +677,23 @@ export default defineConfig({
                       },
                     ],
                   },
+                  {
+                    text: 'MiniMax-H3-Max',
+                    collapsed: true,
+                    items: [
+                      { text: '文生视频', link: '/MiniMax-H3-Max-text-to-video' },
+                      { text: '图生视频(首帧-尾帧)', link: '/MiniMax-H3-Max-image-to-video-first-last-frame' },
+                    ],
+                  },
+                  {
+                    text: 'MiniMax-H3-Context-IR',
+                    collapsed: true,
+                    items: [
+                      { text: '文生视频', link: '/MiniMax-H3-Context-IR-text-to-video' },
+                      { text: '图生视频', link: '/MiniMax-H3-Context-IR-image-to-video' },
+                      { text: '多模态参考生视频', link: '/MiniMax-H3-Context-IR-multimodal-reference-to-video' },
+                    ],
+                  },
                 ],
               },
 

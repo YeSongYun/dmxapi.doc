@@ -37,7 +37,7 @@ url = "https://www.dmxapi.cn/v1/responses"
 
 # DMXAPI 密钥 (请替换为您自己的密钥)
 # 获取方式: 登录 DMXAPI 官网 -> 个人中心 -> API 密钥管理
-api_key = "sk-***********************************************"
+api_key = "sk-----------------------------------------------"
 
 # ===============================================================
 # 步骤2: 配置请求头
@@ -53,10 +53,10 @@ headers = {
 # ===============================================================
 
 # 【方式一】网络图片 URL（支持 HTTP / HTTPS 协议）
-# image_source = "https://cdn.hailuoai.com/prod/hailuo_demo/testsets/H3_AA_I2VA/gallery/sr_v17_variants_seed42_43_20260724/inputs/4a3a90bf9100_KDmcbkhzYo5sjjxr9FqcVmWVnzb.png"
+image_source = "https://cdn.hailuoai.com/prod/hailuo_demo/testsets/H3_AA_I2VA/gallery/sr_v17_variants_seed42_43_20260724/inputs/4a3a90bf9100_KDmcbkhzYo5sjjxr9FqcVmWVnzb.png"
 
 # 【方式二】本地图片路径（代码自动转换为 Data URL）
-image_source = "C:/path/input_image.png"
+# image_source = "C:/path/input_image.png"
 
 # 限制：本地图片不超过 30 MiB
 
@@ -220,7 +220,13 @@ response = requests.post(url, headers=headers, json=payload)
 # 格式化输出 JSON 响应
 # - indent=2: 缩进 2 空格，便于阅读
 # - ensure_ascii=False: 正确显示中文字符
-print(json.dumps(response.json(), indent=2, ensure_ascii=False))
+try:
+    print(json.dumps(response.json(), indent=2, ensure_ascii=False))
+except requests.exceptions.JSONDecodeError:
+    # 服务器返回的不是 JSON（常见于 URL 写错、被网关/前端页面兜底、鉴权跳转等）
+    print(f"响应不是 JSON | status={response.status_code} "
+          f"content-type={response.headers.get('Content-Type')}")
+    print(response.text[:1000])
 ```
 
 ## 返回示例
