@@ -189,8 +189,9 @@ payload = {
     # Seedance 2.0 fast 默认值: adaptive
     "ratio": "16:9",
     # 【duration】(integer, 可选) 视频时长（秒）
-    # Seedance 2.0 & 2.0 fast 取值范围: [8, 15]
-    # 输出视频的秒数必须大于等于8s
+    # 取值范围: [4, 15]，或 -1 由模型在有效范围内自主选择合适时长
+    # 传 -1 时按 15 秒预扣费，实际时长确定后多退少补
+    # 注意: 视频时长与计费相关，请谨慎设置
     # 默认值: 8
     "duration": 8,
     # 【watermark】(boolean, 可选) 是否添加水印
