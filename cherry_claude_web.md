@@ -1,5 +1,9 @@
 # Cherry Studio 配置 Anthropic 格式模型
 
+::: warning 本文已迁移
+本文基于旧版 Cherry Studio 编写，Anthropic 格式模型的最新配置方法请参考 [Cherry Studio 对话模型格式切换](/cherry-studio-model-format)。
+:::
+
 本教程将指导你在 Cherry Studio 中以 Anthropic 格式接入 DMXAPI 的 Claude 模型。
 
 ## ⚙️ 第一步：进入设置

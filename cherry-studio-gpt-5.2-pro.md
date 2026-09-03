@@ -1,5 +1,9 @@
 # Cherry Studio如何调用gpt-5.2-pro
 
+::: warning 本文已迁移
+本文基于旧版 Cherry Studio 编写，模型协议切换的最新配置方法请参考 [Cherry Studio 对话模型格式切换](/cherry-studio-model-format)。
+:::
+
 ## 模型名称
 
 - `gpt-5.2-pro` 
