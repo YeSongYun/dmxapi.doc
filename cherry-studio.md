@@ -1,4 +1,9 @@
 # cherry studio 客户端的使用方法
+
+::: warning 本文已迁移
+本文基于旧版 Cherry Studio 编写，内容已迁移至 [Cherry Studio 快速开始](/cherry-studio-fast-start)，请优先参考新文档。
+:::
+
 Cherry Studio 是一款集多模型对话、知识库管理、AI 绘画、翻译等功能于一体的全能 AI 助手平台
 
 ## 基础配置

@@ -1,5 +1,9 @@
 # Cherry Studio 使用 Gemini 模型联网搜索教程
 
+::: warning 本文已迁移
+本文基于旧版 Cherry Studio 编写，Gemini 格式模型的最新配置方法请参考 [Cherry Studio 对话模型格式切换](/cherry-studio-model-format)。
+:::
+
 本教程介绍如何在 Cherry Studio 中接入 DMXAPI 的 Gemini文本模型，并启用其原生联网搜索能力。完成配置后，Gemini 会自动判断是否需要检索最新信息，并在回答中附带可点击的引用来源，适用于查询实时新闻、价格行情、最新政策等需要最新数据的场景。
 
 ## 第一步 打开设置，添加新的模型提供商
