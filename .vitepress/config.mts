@@ -562,30 +562,30 @@ export default defineConfig({
                       { text: '多模态参考生视频', link: '/doubao-seedance-2-0-multimodal-reference-video' }
                     ],
                   },
-                  // {
-                  //   text: 'seedance 2.0-fast',
-                  //   collapsed: true,
-                  //   items: [
-                  //     { text: '文生视频', link: '/doubao-seedance-2-0-fast-text-to-video' },
-                  //     { text: '首帧生视频', link: '/doubao-seedance-2-0-fast-260128-first-frame-to-video' },
-                  //     { text: '首尾帧生视频', link: '/doubao-seedance-2-0-fast-260128-first-last-frame' },
-                  //     { text: '视频编辑', link: '/doubao-seedance-2-0-fast-260128-video-editing' },
-                  //     { text: '视频延长', link: '/doubao-seedance-2-0-fast-260128-video-extend' },
-                  //     { text: '多模态参考生视频', link: '/doubao-seedance-2-0-fast-260128-video' }
-                  //   ],
-                  // },
-                  // {
-                  //   text: 'seedance 2.0-mini',
-                  //   collapsed: true,
-                  //   items: [
-                  //     { text: '文生视频', link: '/doubao-seedance-2-0-mini-260615-text-to-video' },
-                  //     { text: '首帧生视频', link: '/doubao-seedance-2-0-mini-260615-first-frame-to-video' },
-                  //     { text: '首尾帧生视频', link: '/doubao-seedance-2-0-mini-260615-first-last-frame' },
-                  //     { text: '视频编辑', link: '/doubao-seedance-2-0-mini-260615-video-editing' },
-                  //     { text: '视频延长', link: '/doubao-seedance-2-0-mini-260615-video-extend' },
-                  //     { text: '多模态参考生视频', link: '/doubao-seedance-2-0-mini-260615-multimodal-reference-video' }
-                  //   ],
-                  // },
+                  {
+                    text: 'seedance 2.0-fast',
+                    collapsed: true,
+                    items: [
+                      { text: '文生视频', link: '/doubao-seedance-2-0-fast-text-to-video' },
+                      { text: '首帧生视频', link: '/doubao-seedance-2-0-fast-260128-first-frame-to-video' },
+                      { text: '首尾帧生视频', link: '/doubao-seedance-2-0-fast-260128-first-last-frame' },
+                      { text: '视频编辑', link: '/doubao-seedance-2-0-fast-260128-video-editing' },
+                      { text: '视频延长', link: '/doubao-seedance-2-0-fast-260128-video-extend' },
+                      { text: '多模态参考生视频', link: '/doubao-seedance-2-0-fast-260128-video' }
+                    ],
+                  },
+                  {
+                    text: 'seedance 2.0-mini',
+                    collapsed: true,
+                    items: [
+                      { text: '文生视频', link: '/doubao-seedance-2-0-mini-260615-text-to-video' },
+                      { text: '首帧生视频', link: '/doubao-seedance-2-0-mini-260615-first-frame-to-video' },
+                      { text: '首尾帧生视频', link: '/doubao-seedance-2-0-mini-260615-first-last-frame' },
+                      { text: '视频编辑', link: '/doubao-seedance-2-0-mini-260615-video-editing' },
+                      { text: '视频延长', link: '/doubao-seedance-2-0-mini-260615-video-extend' },
+                      { text: '多模态参考生视频', link: '/doubao-seedance-2-0-mini-260615-multimodal-reference-video' }
+                    ],
+                  },
                   {
                     text: 'seedance 2.5',
                     collapsed: true,
