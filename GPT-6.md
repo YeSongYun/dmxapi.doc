@@ -1,6 +1,6 @@
 # GPT-6 使用指南
 
-本页介绍如何通过 DMXAPI 代理调用 OpenAI 的 GPT-6 Astra（模型 ID 为 `gpt-6-astra`），涵盖最小请求、推理强度控制、**缓存创建和读取（`prompt_cache_key`）**、Chat Completions 兼容调用以及工具调用注意事项。新项目、推理任务、工具调用和多轮工作流优先使用 **Responses API**。
+本页介绍如何通过 DMXAPI 代理调用 GPT-6 Astra（模型 ID 为 `gpt-6-astra`），涵盖最小请求、推理强度控制、**缓存创建和读取（`prompt_cache_key`）**、Chat Completions 调用以及工具调用注意事项。模型能力与参数限制参照 Azure 官方规范，接入地址和鉴权使用 DMXAPI 约定。推理与工具结合的任务使用 **Responses API**。
 
 :::warning API 密钥安全
 示例从环境变量读取令牌。真实 DMXAPI 令牌只能保存在服务端环境变量或密钥管理系统中，不要写入文档、前端代码、公开仓库或日志。
@@ -10,9 +10,9 @@
 
 | 模型 | 说明 |
 |------|------|
-| `gpt-6-astra` | GPT-6 Astra；本页两个接口均已通过 DMXAPI 实测 |
+| `gpt-6-astra` | GPT-6 Astra；本文参考的 Azure 模型版本为 `2026-09-03` |
 
-上下文窗口、最大输出、训练数据截止等规格以 OpenAI 官方模型页与 DMXAPI 模型列表为准，本页不再单独罗列。输入、可见输出和推理 token 会共同占用可用预算；长输入或较高推理强度会减少剩余生成空间。生产环境应同时检查响应状态、结束原因和 token 使用量。
+模型版本及规格参见 [Azure GPT-6 Astra 模型卡](https://ai.azure.com/catalog/models/gpt-6-astra)与 [Azure API 和功能支持表](https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/reasoning#api-and-feature-support)。输入、可见输出和推理 token 会共同占用可用预算；长输入或较高推理强度会减少剩余生成空间。生产环境应同时检查响应状态、结束原因和 token 使用量。
 
 <a id="🔗-请求地址"></a>
 <a id="responses-api"></a>
@@ -25,7 +25,7 @@
 | Responses API | POST | `https://www.dmxapi.cn/v1/responses` |
 | Chat Completions API | POST | `https://www.dmxapi.cn/v1/chat/completions` |
 
-以下地址均为 DMXAPI 代理接口；上游规范与代理实际行为有差异时，本页分别说明。请求中的模型名使用 `gpt-6-astra`，响应可能返回带日期或渠道前缀的实际模型名。
+以下地址均为 DMXAPI 代理接口，请求中的模型名使用 `gpt-6-astra`。Azure 官方规范用于界定本文介绍的模型能力；代理渠道的实际可用性仍以 DMXAPI 提供的服务为准。
 
 ## 快速入门请求示例 {#快速入门}
 
@@ -128,7 +128,7 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 
 ## 推理强度控制
 
-推理等级越高，通常会增加推理用量和延迟，应按自己的任务评测。OpenAI 的 [GPT-6 Astra 模型页](https://developers.openai.com/api/docs/models/gpt-6-astra)列出的等级是 `low`、`medium`、`high`、`xhigh`、`max`。
+推理等级越高，通常会增加推理用量和延迟，应按自己的任务评测。按照 [Azure 推理功能说明](https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/reasoning#gpt-5-and-gpt-6-reasoning-features)，GPT-6 Astra 的推理档位包括 `low`、`medium`、`high`、`xhigh`、`max`，其中 `max` 仅适用于 Responses API。
 
 | 强度 | 使用建议 |
 |------|----------|
@@ -136,24 +136,28 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 | `medium` | 可作为常规任务的评测起点 |
 | `high` | 复杂分析、规划、调试 |
 | `xhigh` | 高难度、多约束任务 |
-| `max` | 质量优先，需关注延迟和 token 用量 |
+| `max` | 仅 Responses API；质量优先，需关注延迟和 token 用量 |
 
 ### 字段与端点规则
 
-以下是 **2026-09-08 使用 DMXAPI 的实测结果**，不代表所有账号或后续渠道配置：
+以下支持范围按 Azure 的 GPT-6 Astra 规范列出：
 
-| 接口 | 参数写法 | 已通过的文本请求档位 |
+| 接口 | 参数写法 | 支持的推理档位 |
 |------|----------|--------------------|
 | Responses API | `reasoning={"effort": "..."}` | `low`、`medium`、`high`、`xhigh`、`max` |
-| Chat Completions | `reasoning_effort="..."` | `low`、`medium`、`high`、`xhigh`、`max` |
+| Chat Completions | `reasoning_effort="..."` | `low`、`medium`、`high`、`xhigh` |
 
-本次省略推理强度的 Responses 请求回显 `reasoning.effort="medium"`；Chat 响应没有回显该字段，不能据此确认其默认值。**Chat Completions 的 `max` 已实测成功，并非仅限 Responses。**
+需要固定推理强度时，请显式传入上表中的值。本文将 `medium` 作为可选的评测起点，不将其声明为 Azure GPT-6 Astra 的默认档位。
 
-DMXAPI 本次还接受了两个端点的 `none` 请求，但 OpenAI 的 [Astra 推理说明](https://developers.openai.com/api/docs/guides/reasoning#reasoning-effort)明确不支持 `none`。因此 `none` 仅作为本次代理兼容性结果记录，不作为上游通用能力或长期保证；常规示例省略该参数，或使用上表档位。
+**GPT-6 Astra 不支持 `none`，两个端点都不要使用该值。** Chat Completions 不支持工具调用；需要工具时使用 Responses API，详见后面的“工具调用注意事项”。
+
+### 参数限制
+
+按照 [Azure 不支持的参数说明](https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/reasoning#unsupported-parameters)，GPT-6 Astra 不支持自定义 `temperature`、`top_p`，也不支持 `logprobs`。本页示例不传这些参数。
 
 ### 按需添加的推理参数
 
-以下只是参数片段，不能作为独立请求运行。需要指定推理强度时，将其加入上面的完整请求：SDK 片段作为调用参数，JSON 片段合并进请求体。`high` 已在两个端点实测通过。
+以下只是参数片段，不能作为独立请求运行。需要指定推理强度时，将其加入上面的完整请求：SDK 片段作为调用参数，JSON 片段合并进请求体。`high` 适用于两个端点。
 
 ::: code-group
 
@@ -179,12 +183,20 @@ reasoning_effort="high"
 
 多轮对话时，每次请求都会带上之前的聊天记录。这些请求开头重复的内容，就叫作“公共前缀”。给这些请求设置相同的 `prompt_cache_key`，可以帮助它们到达保存了相同前缀缓存的服务节点，提高复用已有缓存的机会。首次请求只有符合服务端条件的前缀才可能**写入**缓存；后续请求只有命中已有前缀时才会**读取**缓存。
 
-命中缓存后，模型可以复用前面已经完成的计算，减少处理重复内容的时间；重复输入也可按缓存价格计费，实际费用以所用服务为准。
+命中缓存后，模型可以复用前面已经完成的计算，减少处理重复内容的时间。[Azure 缓存说明](https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/prompt-caching)指出，GPT-5.6 及后续模型的缓存读取可享受相应优惠，**缓存写入也可能收费**。通过 DMXAPI 调用时，实际费用以 DMXAPI 计费规则为准。
 
-| 参数 | 类型 | 是否必填 | 本页示例 | 说明 |
+| 参数 | 类型 | 是否必填 | 取值或示例 | 说明 |
 |------|------|---------|---------|------|
 | `prompt_cache_key` | 字符串 | 否 | `"gpt6-chat-v1"` | 缓存标识，名称自定义；同一段连续对话中保持不变 |
-| `prompt_cache_options.mode` | 字符串 | 否 | `"implicit"` | 上游定义的隐式缓存模式，在最新符合条件的 user/tool 消息末尾设置断点；本次 DMXAPI 请求已接受该参数 |
+| `prompt_cache_options.mode` | 字符串 | 否 | `"implicit"` / `"explicit"` | 默认为 `implicit`，下方代码使用此模式 |
+| `prompt_cache_options.ttl` | 字符串 | 否 | `"30m"` | 默认且目前唯一支持的值；表示断点的最低缓存寿命，不是最长保留时间 |
+
+Azure 对两种缓存模式的定义如下：
+
+- `implicit`：默认模式，在最新消息上设置断点，同时使用请求中提供的显式断点。
+- `explicit`：仅使用显式断点进行缓存读写；请求没有显式断点时，不进行缓存读写，也不产生缓存写入费用。
+
+下方示例没有手动设置显式断点，使用 `implicit`。示例省略 `ttl`，按 Azure 定义使用默认的 `30m`；缓存可能保留更久，不能将其解释为 30 分钟后必然删除。
 
 `gpt6-chat-v1` 是自己起的名字，可以直接照用，也可以换成便于识别的名称。它不是 API 密钥，也不负责保存聊天记录。**它是帮助缓存匹配的可选参数。** 不传它也可能使用自动缓存；设置它也不保证每次命中，输入前缀仍需匹配，并满足服务端的缓存条件。
 
@@ -230,7 +242,7 @@ def ask_model(history):
         # 本示例由 history 保存并传递聊天记录
         "store": False,
 
-        # 请求返回可供后续对话复用的加密推理项
+        # 兼容性参数：保留可供后续对话复用的加密推理项
         # 后面随完整输出一起保留即可，无需自行解读
         "include": ["reasoning.encrypted_content"],
 
@@ -238,7 +250,7 @@ def ask_model(history):
         # 名称可以自定义；同一对话中保持不变
         "prompt_cache_key": "gpt6-chat-v1",
 
-        # implicit：自动在最新符合条件的消息末尾设置缓存断点
+        # implicit：默认模式，自动在最新消息上设置缓存断点
         "prompt_cache_options": {
             "mode": "implicit"
         },
@@ -346,7 +358,7 @@ def ask_model(history):
         # 本示例由 history 保存并传递聊天记录
         store=False,
 
-        # 请求返回可供后续对话复用的加密推理项
+        # 兼容性参数：保留可供后续对话复用的加密推理项
         # 后面随完整输出一起保留即可，无需自行解读
         include=["reasoning.encrypted_content"],
 
@@ -357,7 +369,7 @@ def ask_model(history):
         # 通过 extra_body 把额外参数传给服务端
         extra_body={
             "prompt_cache_options": {
-                # implicit：自动在最新符合条件的消息末尾设置缓存断点
+                # implicit：默认模式，自动在最新消息上设置缓存断点
                 "mode": "implicit"
             }
         },
@@ -443,18 +455,19 @@ while True:
 - `cached_tokens = 0`：只能说明没有读取到缓存，**不能据此判断已创建缓存**。
 - 字段缺失时，上面的程序显示 `None`（未报告），不能当成缓存用量为零。
 
-OpenAI 的 [Prompt caching 说明](https://developers.openai.com/api/docs/guides/prompt-caching)将 GPT-5.6 及后续模型的最低可缓存前缀设为 1,024 个可见输入 token；DMXAPI 是否写入和命中仍以返回的用量字段为准。短对话完全可能连续返回 `0`。
+按照 [Azure 缓存条件](https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/prompt-caching#getting-started)，可复用前缀至少需要 1,024 个 token，且前缀内容必须相同。是否写入和命中以返回的用量字段为准；短对话完全可能连续返回 `0`。
 
 ### 注意事项
 
 - **保持内容稳定**：新问题追加在后面，尽量不要改写前面的聊天记录；相同的缓存标识不能让不同内容自动匹配。
-- **两个参数各有用途**：`prompt_cache_key` 帮助路由匹配，`implicit` 的上游含义是自动选择缓存断点。请求接受该字段并不能单独证明代理按该字段执行，本示例通过返回的用量观察缓存。
+- **缓存标识与缓存模式**：`prompt_cache_key` 帮助匹配共享前缀，`prompt_cache_options.mode` 决定断点的使用方式；相同标识或使用 `implicit` 都不保证每次命中。
+- **保留完整输出**：`store=False` 时，通过完整的 `output` 回传推理项和回答。[Azure 无状态推理说明](https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/reasoning#preserve-reasoning-without-stored-responses)说明加密推理内容默认返回，示例保留 `include=["reasoning.encrypted_content"]` 作为兼容写法。
 - **聊天记录仍要传递**：`history` 保存本次运行中的问答；固定缓存标识不会替代它。输入 `清空` 重新开始，输入 `退出` 结束；重启程序也会从空白开始。
 - **上下文限制**：本示例不会自动压缩历史，长时间对话仍需留意上下文限制。“清空”只清除本程序的聊天记录，不会主动删除服务端缓存。
 
 ## Chat Completions API 请求示例
 
-以下为已经通过 DMXAPI 实测的纯文本请求。涉及工具时，请同时阅读后面的代理兼容性说明：
+以下为 Chat Completions 的纯文本请求。按照 Azure GPT-6 Astra 规范，此接口不支持工具调用，也不支持 `max` 推理档位：
 
 ```python
 import json
@@ -506,11 +519,11 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 
 ## 工具调用注意事项
 
-OpenAI 的 [GPT-6 Astra 指南](https://developers.openai.com/api/docs/guides/latest-model#update-api-and-model-parameters)要求工具调用使用 Responses API。本次 DMXAPI 验证中，Responses 携带函数工具与 `reasoning={"effort": "low"}`，成功返回 `function_call`。
+按照 [Azure 工具调用说明](https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/reasoning#tool-calling-with-reasoning-models)，**GPT-6 Astra 的工具调用必须使用 Responses API**。
 
-DMXAPI 的 Chat 兼容行为需单独看待：本次同一函数工具请求使用 `reasoning_effort="low"` 返回 HTTP 400，改为 `reasoning_effort="none"` 后返回 `finish_reason="tool_calls"`。这仅证明当前代理配置接受该组合，不代表上游 Astra 支持，也不保证其他渠道一致。新项目的工具调用建议使用 Responses。
+Chat Completions 不支持 GPT-6 Astra 的工具调用；由于 Astra 不支持 `none`，也不能通过设置 `reasoning_effort="none"` 来启用 Chat 工具。已有 Chat 工具工作流需要迁移到 Responses API。
 
-工具调用返回的是函数名称和参数，应用仍需执行相应函数、回传结果，才能完成整个工具流程。本页只验证工具调用的生成，没有演示完整的工具执行循环。
+函数工具调用返回的是函数名称和参数，应用仍需执行相应函数、回传结果，才能完成整个工具流程。本页介绍接口选择与限制，没有演示完整的工具执行循环。
 
 <p align="center">
   <small>© 2026 DMXAPI GPT-6 使用指南</small>
