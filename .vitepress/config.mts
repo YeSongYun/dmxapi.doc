@@ -186,6 +186,7 @@ export default defineConfig({
                   { text: 'GPT-5.2 指南', link: '/gpt-5.2' },
                   { text: 'GPT-5.4 指南', link: '/GPT-5.4' },
                   { text: 'GPT-5.6 指南', link: '/GPT-5.6' },
+                  { text: 'GPT-6 指南', link: '/GPT-6' },
                 ],
               },
               // { text: 'GPT-5.4 Computer Use', link: '/gpt-5.4_computer_use' },
