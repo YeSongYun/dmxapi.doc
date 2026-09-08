@@ -228,6 +228,14 @@ export default defineConfig({
                 collapsed: true,
                 items: [
                   {
+                    text: 'gpt-image-2',
+                    collapsed: true,
+                    items: [
+                      { text: '文生图', link: '/gpt-image-2-text-to-image' },
+                      { text: '图片编辑', link: '/gpt-image-2-image-edit' }
+                    ],
+                  },
+                  {
                     text: 'gpt-image-1.5',
                     collapsed: true,
                     items: [
@@ -235,14 +243,6 @@ export default defineConfig({
                       { text: '图片编辑', link: '/gpt-image-edit' }
                     ],
                   },
-                  {
-                    text: 'gpt-image-2',
-                    collapsed: true,
-                    items: [
-                      { text: '文生图', link: '/gpt-image-2-text-to-image' },
-                      { text: '图片编辑', link: '/gpt-image-2-image-edit' }
-                    ],
-                  }
                 ],
               },
               {
@@ -370,12 +370,13 @@ export default defineConfig({
                 collapsed: true,
                 items: [
                   {
-                    text: 'wan2.6-image',
+                    text: 'wan2.7-image-pro',
                     collapsed: true,
                     items: [
-                      { text: '文生图', link: '/wan2.6-t2i' },
-                      { text: '图文混排', link: '/wan2.6-image-interleave' },
-                      { text: '图片编辑', link: '/wan2.6-image-edit' },
+                      { text: '文生图', link: '/wan2.7-image-pro-text-to-image' },
+                      { text: '图片编辑', link: '/wan2.7-image-pro-image-editing' },
+                      { text: '组图生成', link: '/wan2.7-image-pro-group-image-generation' },
+                      { text: '交互式编辑', link: '/wan2.7-image-pro-interactive-edit' },
                     ],
                   },
                   {
@@ -389,13 +390,12 @@ export default defineConfig({
                     ],
                   },
                   {
-                    text: 'wan2.7-image-pro',
+                    text: 'wan2.6-image',
                     collapsed: true,
                     items: [
-                      { text: '文生图', link: '/wan2.7-image-pro-text-to-image' },
-                      { text: '图片编辑', link: '/wan2.7-image-pro-image-editing' },
-                      { text: '组图生成', link: '/wan2.7-image-pro-group-image-generation' },
-                      { text: '交互式编辑', link: '/wan2.7-image-pro-interactive-edit' },
+                      { text: '文生图', link: '/wan2.6-t2i' },
+                      { text: '图文混排', link: '/wan2.6-image-interleave' },
+                      { text: '图片编辑', link: '/wan2.6-image-edit' },
                     ],
                   },
                 ],
@@ -405,33 +405,20 @@ export default defineConfig({
                 text: '千问绘图模型',
                 collapsed: true,
                 items: [
-                  { text: 'qwen-image', link: '/img-qwen-image' },
-                  { text: 'qwen-image-edit', link: '/img-qwen-image-edit' },
-                  { text: 'qwen-image-max', link: '/qwen-image-max' },
-                  { text: 'qwen-image-plus-2026-01-09', link: '/qwen-image-plus-2026-01-09' },
                   {
-                    text: 'qwen-image-edit-max-2026-01-16',
+                    text: 'qwen-image-3.0-pro',
                     collapsed: true,
                     items: [
-                      { text: '图片编辑', link: '/qwen-image-edit-max-2026-01-16-img-edit' },
-                      { text: '多图融合', link: '/qwen-image-edit-max-2026-01-16-mul' },
+                      { text: '文生图', link: '/qwen-image-3.0-pro-text-to-image' },
+                      { text: '图生图-图片编辑', link: '/qwen-image-3.0-pro-image-edit' },
                     ],
                   },
                   {
-                    text: 'qwen-image-edit-plus-20260226',
+                    text: 'qwen-image-3.0',
                     collapsed: true,
                     items: [
-                      { text: '图片编辑', link: '/qwen-image-edit-plus-20260226-img-edit' },
-                      { text: '多图融合', link: '/qwen-image-edit-plus-20260226-mul' },
-                    ],
-                  },
-                  {
-                    text: 'qwen-image-2.0',
-                    collapsed: true,
-                    items: [
-                      { text: '文生图', link: '/qwen-image-2.0-text-to-image' },
-                      { text: '图片编辑', link: '/qwen-image-2.0-image-editing' },
-                      { text: '多图融合', link: '/qwen-image-2.0-multi-image-fusion' },
+                      { text: '文生图', link: '/qwen-image-3.0-text-to-image' },
+                      { text: '图生图-图片编辑', link: '/qwen-image-3.0-image-editing' },
                     ],
                   },
                   {
@@ -444,21 +431,34 @@ export default defineConfig({
                     ],
                   },
                   {
-                    text: 'qwen-image-3.0',
+                    text: 'qwen-image-2.0',
                     collapsed: true,
                     items: [
-                      { text: '文生图', link: '/qwen-image-3.0-text-to-image' },
-                      { text: '图生图-图片编辑', link: '/qwen-image-3.0-image-editing' },
+                      { text: '文生图', link: '/qwen-image-2.0-text-to-image' },
+                      { text: '图片编辑', link: '/qwen-image-2.0-image-editing' },
+                      { text: '多图融合', link: '/qwen-image-2.0-multi-image-fusion' },
                     ],
                   },
                   {
-                    text: 'qwen-image-3.0-pro',
+                    text: 'qwen-image-edit-plus-20260226',
                     collapsed: true,
                     items: [
-                      { text: '文生图', link: '/qwen-image-3.0-pro-text-to-image' },
-                      { text: '图生图-图片编辑', link: '/qwen-image-3.0-pro-image-edit' },
+                      { text: '图片编辑', link: '/qwen-image-edit-plus-20260226-img-edit' },
+                      { text: '多图融合', link: '/qwen-image-edit-plus-20260226-mul' },
                     ],
                   },
+                  {
+                    text: 'qwen-image-edit-max-2026-01-16',
+                    collapsed: true,
+                    items: [
+                      { text: '图片编辑', link: '/qwen-image-edit-max-2026-01-16-img-edit' },
+                      { text: '多图融合', link: '/qwen-image-edit-max-2026-01-16-mul' },
+                    ],
+                  },
+                  { text: 'qwen-image-plus-2026-01-09', link: '/qwen-image-plus-2026-01-09' },
+                  { text: 'qwen-image-max', link: '/qwen-image-max' },
+                  { text: 'qwen-image-edit', link: '/img-qwen-image-edit' },
+                  { text: 'qwen-image', link: '/img-qwen-image' },
 
                 ],
               },
@@ -551,27 +551,15 @@ export default defineConfig({
                   //   ],
                   // },
                   {
-                    text: 'seedance 2.0',
+                    text: 'seedance 2.5',
                     collapsed: true,
                     items: [
-                      { text: '文生视频', link: '/doubao-seedance-2-0-text-to-video' },
-                      { text: '首帧生视频', link: '/doubao-seedance-2-0-260128-first-frame-to-video' },
-                      { text: '首尾帧生视频', link: '/doubao-seedance-2-0-first-last-frame-video' },
-                      { text: '视频编辑', link: '/doubao-seedance-2-0-260128-video-edit' },
-                      { text: '视频延长', link: '/doubao-seedance-2-0-video-extend' },
-                      { text: '多模态参考生视频', link: '/doubao-seedance-2-0-multimodal-reference-video' }
-                    ],
-                  },
-                  {
-                    text: 'seedance 2.0-fast',
-                    collapsed: true,
-                    items: [
-                      { text: '文生视频', link: '/doubao-seedance-2-0-fast-text-to-video' },
-                      { text: '首帧生视频', link: '/doubao-seedance-2-0-fast-260128-first-frame-to-video' },
-                      { text: '首尾帧生视频', link: '/doubao-seedance-2-0-fast-260128-first-last-frame' },
-                      { text: '视频编辑', link: '/doubao-seedance-2-0-fast-260128-video-editing' },
-                      { text: '视频延长', link: '/doubao-seedance-2-0-fast-260128-video-extend' },
-                      { text: '多模态参考生视频', link: '/doubao-seedance-2-0-fast-260128-video' }
+                      { text: '文生视频', link: '/doubao-seedance-2-5-260628-text-to-video' },
+                      { text: '首帧生视频', link: '/doubao-seedance-2-5-260628-first-frame-to-video' },
+                      { text: '首尾帧生视频', link: '/doubao-seedance-2-5-260628-first-last-frame-to-video' },
+                      { text: '视频编辑', link: '/doubao-seedance-2-5-260628-video-edit' },
+                      { text: '视频延长', link: '/doubao-seedance-2-5-260628-video-extend' },
+                      { text: '多模态参考生视频', link: '/doubao-seedance-2-5-260628-multimodal-reference-to-video' }
                     ],
                   },
                   {
@@ -587,15 +575,27 @@ export default defineConfig({
                     ],
                   },
                   {
-                    text: 'seedance 2.5',
+                    text: 'seedance 2.0-fast',
                     collapsed: true,
                     items: [
-                      { text: '文生视频', link: '/doubao-seedance-2-5-260628-text-to-video' },
-                      { text: '首帧生视频', link: '/doubao-seedance-2-5-260628-first-frame-to-video' },
-                      { text: '首尾帧生视频', link: '/doubao-seedance-2-5-260628-first-last-frame-to-video' },
-                      { text: '视频编辑', link: '/doubao-seedance-2-5-260628-video-edit' },
-                      { text: '视频延长', link: '/doubao-seedance-2-5-260628-video-extend' },
-                      { text: '多模态参考生视频', link: '/doubao-seedance-2-5-260628-multimodal-reference-to-video' }
+                      { text: '文生视频', link: '/doubao-seedance-2-0-fast-text-to-video' },
+                      { text: '首帧生视频', link: '/doubao-seedance-2-0-fast-260128-first-frame-to-video' },
+                      { text: '首尾帧生视频', link: '/doubao-seedance-2-0-fast-260128-first-last-frame' },
+                      { text: '视频编辑', link: '/doubao-seedance-2-0-fast-260128-video-editing' },
+                      { text: '视频延长', link: '/doubao-seedance-2-0-fast-260128-video-extend' },
+                      { text: '多模态参考生视频', link: '/doubao-seedance-2-0-fast-260128-video' }
+                    ],
+                  },
+                  {
+                    text: 'seedance 2.0',
+                    collapsed: true,
+                    items: [
+                      { text: '文生视频', link: '/doubao-seedance-2-0-text-to-video' },
+                      { text: '首帧生视频', link: '/doubao-seedance-2-0-260128-first-frame-to-video' },
+                      { text: '首尾帧生视频', link: '/doubao-seedance-2-0-first-last-frame-video' },
+                      { text: '视频编辑', link: '/doubao-seedance-2-0-260128-video-edit' },
+                      { text: '视频延长', link: '/doubao-seedance-2-0-video-extend' },
+                      { text: '多模态参考生视频', link: '/doubao-seedance-2-0-multimodal-reference-video' }
                     ],
                   },
                   {
@@ -630,27 +630,20 @@ export default defineConfig({
                 collapsed: true,
                 items: [
                   {
-                    text: 'MiniMax-Hailuo-02',
+                    text: 'MiniMax-H3-Context-IR',
                     collapsed: true,
                     items: [
-                      { text: '文生视频', link: '/MiniMax-Hailuo-02-text-to-video' },
-                      { text: '图生视频', link: '/MiniMax-Hailuo-02-i2v' },
-                      { text: '首尾帧生成视频', link: '/MiniMax-Hailuo-02-fl2v' },
+                      { text: '文生视频', link: '/MiniMax-H3-Context-IR-text-to-video' },
+                      { text: '图生视频', link: '/MiniMax-H3-Context-IR-image-to-video' },
+                      { text: '多模态参考生视频', link: '/MiniMax-H3-Context-IR-multimodal-reference-to-video' },
                     ],
                   },
                   {
-                    text: 'MiniMax-Hailuo-2.3',
+                    text: 'MiniMax-H3-Max',
                     collapsed: true,
                     items: [
-                      { text: '文生视频', link: '/MiniMax-Hailuo-2.3-text-to-video' },
-                      { text: '图生视频', link: '/MiniMax-Hailuo-2.3-i2v' },
-                    ],
-                  },
-                  {
-                    text: 'MiniMax-Hailuo-2.3-Fast',
-                    collapsed: true,
-                    items: [
-                      { text: '图生视频', link: '/MiniMax-Hailuo-2.3-Fast-i2v' },
+                      { text: '文生视频', link: '/MiniMax-H3-Max-text-to-video' },
+                      { text: '图生视频(首帧-尾帧)', link: '/MiniMax-H3-Max-image-to-video-first-last-frame' },
                     ],
                   },
                   {
@@ -678,20 +671,27 @@ export default defineConfig({
                     ],
                   },
                   {
-                    text: 'MiniMax-H3-Max',
+                    text: 'MiniMax-Hailuo-2.3-Fast',
                     collapsed: true,
                     items: [
-                      { text: '文生视频', link: '/MiniMax-H3-Max-text-to-video' },
-                      { text: '图生视频(首帧-尾帧)', link: '/MiniMax-H3-Max-image-to-video-first-last-frame' },
+                      { text: '图生视频', link: '/MiniMax-Hailuo-2.3-Fast-i2v' },
                     ],
                   },
                   {
-                    text: 'MiniMax-H3-Context-IR',
+                    text: 'MiniMax-Hailuo-2.3',
                     collapsed: true,
                     items: [
-                      { text: '文生视频', link: '/MiniMax-H3-Context-IR-text-to-video' },
-                      { text: '图生视频', link: '/MiniMax-H3-Context-IR-image-to-video' },
-                      { text: '多模态参考生视频', link: '/MiniMax-H3-Context-IR-multimodal-reference-to-video' },
+                      { text: '文生视频', link: '/MiniMax-Hailuo-2.3-text-to-video' },
+                      { text: '图生视频', link: '/MiniMax-Hailuo-2.3-i2v' },
+                    ],
+                  },
+                  {
+                    text: 'MiniMax-Hailuo-02',
+                    collapsed: true,
+                    items: [
+                      { text: '文生视频', link: '/MiniMax-Hailuo-02-text-to-video' },
+                      { text: '图生视频', link: '/MiniMax-Hailuo-02-i2v' },
+                      { text: '首尾帧生成视频', link: '/MiniMax-Hailuo-02-fl2v' },
                     ],
                   },
                 ],
@@ -724,14 +724,6 @@ export default defineConfig({
                   // { text: 'viduq2-pro（首尾帧）', link: '/viduq2-pro' },
                   // { text: 'viduq2（多图参考）', link: '/vidu-ptv' },
                   {
-                    text: 'viduq2-pro',
-                    collapsed: true,
-                    items: [
-                      { text: '首尾帧', link: '/viduq2-pro' },
-                      { text: '多图参考', link: '/vidu-ptv' },
-                    ],
-                  },
-                  {
                     text: 'viduq3-pro',
                     collapsed: true,
                     items: [
@@ -739,6 +731,14 @@ export default defineConfig({
                       { text: '图生视频', link: '/viduq3-pro-image-to-video' },
                       { text: '首尾帧生视频', link: '/viduq3-pro-start-end-to-video' },
                       
+                    ],
+                  },
+                  {
+                    text: 'viduq2-pro',
+                    collapsed: true,
+                    items: [
+                      { text: '首尾帧', link: '/viduq2-pro' },
+                      { text: '多图参考', link: '/vidu-ptv' },
                     ],
                   },
                 
@@ -896,6 +896,15 @@ export default defineConfig({
                 collapsed: true,
                 items: [
                   {
+                    text: 'happyhorse-1.1',
+                    collapsed: true,
+                    items: [
+                      { text: '文生视频', link: '/happyhorse-1.1-t2v-text-to-video' },
+                      { text: '首帧生视频', link: '/happyhorse-1.1-i2v-image-to-video' },
+                      { text: '参考生视频', link: '/happyhorse-1.1-r2v-reference-to-video' },
+                    ],
+                  },
+                  {
                     text: 'happyhorse-1.0',
                     collapsed: true,
                     items: [
@@ -903,15 +912,6 @@ export default defineConfig({
                       { text: '首帧生视频', link: '/happyhorse-1.0-i2v-image-to-video' },
                       { text: '参考生视频', link: '/happyhorse-1.0-r2v-reference-to-video' },
                       { text: '视频编辑', link: '/happyhorse-1.0-video-edit-video-editing' },
-                    ],
-                  },
-                  {
-                    text: 'happyhorse-1.1',
-                    collapsed: true,
-                    items: [
-                      { text: '文生视频', link: '/happyhorse-1.1-t2v-text-to-video' },
-                      { text: '首帧生视频', link: '/happyhorse-1.1-i2v-image-to-video' },
-                      { text: '参考生视频', link: '/happyhorse-1.1-r2v-reference-to-video' },
                     ],
                   },
                 ],
