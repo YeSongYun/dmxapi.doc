@@ -114,6 +114,7 @@ export default defineConfig({
               { text: '注册教程', link: '/ZC' },
               { text: '如何新建令牌Key', link: '/lingpai' },
               { text: '充值教程', link: '/CZ' },
+              { text: '开票教程', link: '/fapiao' },
               { text: '重置密码教程', link: '/forget-password' },
               { text: '获得 Base url', link: '/baseurl' },
               { text: '支持官方SDK', link: '/sdk' },
@@ -170,6 +171,7 @@ export default defineConfig({
             collapsed: true,
             items: [
               { text: 'Responses 接口介绍', link: '/responses' },
+              { text: 'gpt模型缓存创建和读取', link: '/gpt-5.6-sol-automatic-prompt-caching' },
               { text: '普通文本对话（非流）', link: '/OpenAI_request_Text' },
               { text: '普通文本对话（流式输出）', link: '/res-chat-stream' },
               { text: '图片分析（网络）', link: '/res-url-image' },
@@ -177,12 +179,18 @@ export default defineConfig({
               { text: '文件分析', link: '/res-file' },
               { text: '函数调用FunctionCall', link: '/res-function-call' },
               { text: 'gpt思考内容', link: '/gpt-thinking' },
-              { text: 'GPT-5.1 指南', link: '/GPT-5.1' },
-              { text: 'GPT-5.2 指南', link: '/gpt-5.2' },
-              { text: 'GPT-5.4 指南', link: '/GPT-5.4' },
-              { text: 'GPT-5.6 指南', link: '/GPT-5.6' },
+              {
+                text: 'GPT模型指南',
+                collapsed: true,
+                items: [
+                  { text: 'GPT-5.1 指南', link: '/GPT-5.1' },
+                  { text: 'GPT-5.2 指南', link: '/gpt-5.2' },
+                  { text: 'GPT-5.4 指南', link: '/GPT-5.4' },
+                  { text: 'GPT-5.6 指南', link: '/GPT-5.6' },
+                  { text: 'GPT-6 指南', link: '/GPT-6' },
+                ],
+              },
               // { text: 'GPT-5.4 Computer Use', link: '/gpt-5.4_computer_use' },
-
             ],
           },
           {
