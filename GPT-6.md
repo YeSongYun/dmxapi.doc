@@ -111,7 +111,7 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 
 ## 推理强度控制
 
-推理等级越高，通常会增加推理用量和延迟，应按自己的任务评测。按照GPT-6 Astra 的推理档位包括 `low`、`medium`、`high`、`xhigh`、`max`，其中 `max` 仅适用于 Responses API。
+推理等级越高，通常会增加推理用量和延迟，应按自己的任务评测。GPT-6 Astra 的推理档位包括 `low`、`medium`、`high`、`xhigh`、`max`，其中 `max` 仅适用于 Responses API。
 
 | 强度 | 使用建议 |
 |------|----------|
@@ -136,7 +136,7 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 
 ### 参数限制
 
-按照Azure 不支持的参数说明，GPT-6 Astra 不支持自定义 `temperature`、`top_p`，也不支持 `logprobs`。本页示例不传这些参数。
+按照 Azure 不支持的参数说明，GPT-6 Astra 不支持自定义 `temperature`、`top_p`，也不支持 `logprobs`。本页示例不传这些参数。
 
 ### 按需添加的推理参数
 
@@ -170,7 +170,7 @@ reasoning_effort="high"
 
 | 参数 | 类型 | 是否必填 | 取值或示例 | 说明 |
 |------|------|---------|---------|------|
-| `prompt_cache_key` | 字符串 | 否 | `"gpt6-chat-v1"` | 缓存标识，名称自定义；同一段连续对话中保持不变 |
+| `prompt_cache_key` | 字符串 | 否 | `"chat-auto-v1"` | 缓存标识，名称自定义；同一段连续对话中保持不变 |
 | `prompt_cache_options.mode` | 字符串 | 否 | `"implicit"` / `"explicit"` | 默认为 `implicit`，下方代码使用此模式 |
 
 Azure 对两种缓存模式的定义如下：
@@ -178,13 +178,13 @@ Azure 对两种缓存模式的定义如下：
 - `implicit`：默认模式，在最新消息上设置断点，同时使用请求中提供的显式断点。
 - `explicit`：仅使用显式断点进行缓存读写；请求没有显式断点时，不进行缓存读写，也不产生缓存写入费用。
 
-`gpt6-chat-v1` 是自己起的名字，可以直接照用，也可以换成便于识别的名称。它不是 API 密钥，也不负责保存聊天记录。**它是帮助缓存匹配的可选参数。** 不传它也可能使用自动缓存；设置它也不保证每次命中，输入前缀仍需匹配，并满足服务端的缓存条件。
+`chat-auto-v1` 是自己起的名字，可以直接照用，也可以换成便于识别的名称。它不是 API 密钥，也不负责保存聊天记录。**它是帮助缓存匹配的可选参数。** 不传它也可能使用自动缓存；设置它也不保证每次命中，输入前缀仍需匹配，并满足服务端的缓存条件。
 
 <a id="调用示例"></a>
 
 ### 多轮对话代码
 
-两种写法的重点都是请求参数里的 `prompt_cache_key`，取值为 `gpt6-chat-v1`。程序从空白聊天开始，每轮只显示模型回答，并打印本轮缓存写入和读取的 token 数。
+两种写法的重点都是请求参数里的 `prompt_cache_key`，取值为 `chat-auto-v1`。程序从空白聊天开始，每轮只显示模型回答。
 
 ::: code-group
 
@@ -376,18 +376,15 @@ while True:
 ```text
 你：请帮我制定一个学习 Python 的计划。
 助手：<模型给出的学习计划>
-[缓存] cache_write_tokens = 0, cached_tokens = 0
 
 你：把第一天的安排详细展开。
 助手：<模型根据前面的计划继续回答>
-[缓存] cache_write_tokens = 0, cached_tokens = 0
 
 你：每天只有一个小时，应该怎样调整？
 助手：<模型结合之前的对话调整计划>
-[缓存] cache_write_tokens = 0, cached_tokens = 0
 ```
 
-这些请求都使用 `gpt6-chat-v1`，并通过 `history` 保留前面的问答，形成可复用的公共前缀。
+这些请求都使用 `chat-auto-v1`，并通过 `history` 保留前面的问答，形成可复用的公共前缀。
 
 
 ## Chat Completions API 请求示例
@@ -444,7 +441,7 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 
 ## 工具调用注意事项
 
-按照Azure 工具调用说明，**GPT-6 Astra 的工具调用必须使用 Responses API**。
+按照 Azure 工具调用说明，**GPT-6 Astra 的工具调用必须使用 Responses API**。
 
 Chat Completions 不支持 GPT-6 Astra 的工具调用；由于 Astra 不支持 `none`，也不能通过设置 `reasoning_effort="none"` 来启用 Chat 工具。已有 Chat 工具工作流需要迁移到 Responses API。
 
