@@ -60,7 +60,6 @@ payload = {
 
     # 【n】(integer, 可选) 单次请求生成图像的张数（控制输出张数，与输入图数量无关）
     # 取值范围: [1, 10]，默认值为 1
-    # 调用gpt-image-2.5-sunburst-cdx和gpt-image-2.5-flare-cdx时，该参数取值范围: [1, 3]，并且按照每张0.25收费
     "n": 1,
 
     # 【size】(string, 可选) 生成图像的分辨率（针对输出，不要求输入图预先缩放）
@@ -69,12 +68,11 @@ payload = {
     #   "1024x1024"  (正方形)
     #   "1536x1024"  (横版/landscape)
     #   "1024x1536"  (竖版/portrait)
-    #   "2048x2048"  (2K/方形1:1，实验性)
+    #   "2048x2048"  (2K/方形1:1)
     #   "2048x1152"  (2K/横版16:9)
-    #   "3840x2160"  (4K/横版16:9，实验性)
-    #   "2160x3840"  (4K/竖版9:16，实验性)
+    #   "3840x2160"  (4K/横版16:9)
+    #   "2160x3840"  (4K/竖版9:16)
     # 约束: 最大边长 <= 3840px；宽高必须都是 16 的倍数；长宽比不能超过 3:1；总像素必须在 655,360 到 8,294,400 之间
-    # 总像素超过 3,686,400 的输出在官方文档中标注为 experimental
     "size": "1024x1024",
 
     # 【output_format】(string, 可选) 指定输出文件格式
@@ -106,7 +104,6 @@ payload = {
     # 【background】(string, 可选) 控制输出背景模式
     # 可选值: "auto"(默认，由模型自动选择) / "opaque"(不透明背景) / "transparent"(透明背景)
     # transparent 必须搭配 png 或 webp 输出，JPEG 不支持透明
-    # 需要透明素材时改为 "transparent"，使用前确认渠道支持
     "background": "auto",
 }
 
@@ -202,22 +199,11 @@ def main():
 if __name__ == "__main__":
     main()
 ```
-
 ## 返回示例
-
-以下为 Windows 上 `n=1`、输出 PNG 时的**脚本运行输出示意**，不是原始 API 响应，也不是本次对 GPT Image 2.5 的实测记录。文件名时间戳会随运行时间变化。
-
 ```text
 status: 200
 saved output\edited_20260909_194855_1.png
 ```
-
-HTTP 响应按 JSON 解析。示例优先读取 `data[].b64_json` 并解码；`data[].url` 是沿用 DMXAPI 参考页的客户端兼容分支，不代表上游保证返回图片 URL。结果保存在当前工作目录下的 `output` 文件夹；切换到 JPEG 或 WebP 后，文件扩展名会相应变为 `.jpg` 或 `.webp`。[DMXAPI 返回处理参考](https://doc.dmxapi.cn/gpt-image-2-image-edit.html)
-
-## 从 gpt-image-2 迁移
-
-沿用 multipart 普通字段与重复 `image` 文件字段，先替换成 DMXAPI 实际开放的 2.5 型号进行基础验证。确认之后再逐项调整质量、背景和分辨率。对于希望保留主体的编辑，可以在提示词中同时说明“修改什么”和“保留什么”，例如修改背景但保持主体位置、比例和可见文字；这是提示词写法建议，不构成像素级保持保证。[官方图像提示词指南](https://developers.openai.com/api/docs/guides/image-prompting)
-
 <p align="center">
   <small>© 2026 DMXAPI gpt-image-2.5 图片编辑</small>
 </p>
