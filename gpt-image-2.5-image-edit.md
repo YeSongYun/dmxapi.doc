@@ -1,6 +1,6 @@
 # gpt-image-2.5 图片编辑 API 使用文档
 
-通过的 `/v1/images/edits` 接口上传一张或多张参考图，配合文字指令使用 `gpt-image-2.5-sunburst` 或 `gpt-image-2.5-flare` 编辑图片。
+通过 `/v1/images/edits` 接口上传一张或多张参考图，配合文字指令使用 `gpt-image-2.5-sunburst` 或 `gpt-image-2.5-flare` 编辑图片。参考图可使用本地文件路径或公网 URL，示例脚本会按文件名后缀判断格式并上传。
 ## 接口地址
 
 | 接口 | 请求方式 | URL |
@@ -14,7 +14,7 @@
 |------|------|------|
 | `gpt-image-2.5-sunburst` | 以图像质量为重点的基础模型 | 更关注最终编辑效果与细节时选用 |
 | `gpt-image-2.5-flare` | 以生成速度为重点的小模型 | 更关注编辑速度时选用 |
-### 输入图片与输出尺寸
+
 ## 图片编辑示例代码
 ```python
 import base64
@@ -91,7 +91,7 @@ payload = {
     "quality": "low",
 
     # 【output_compression】(integer, 可选) 输出压缩率
-    # 仅在 output_format 为 jpeg 或 webp 时生效；数值越高，画质越好、文件越大
+    # 仅在 output_format 为 jpeg 或 webp 时生效；数值越高，压缩越强、文件越小
     # 取值范围: 0 <= x <= 100，默认 100
     # PNG 输出不需要该参数，保持注释即可
     "output_compression": 100,

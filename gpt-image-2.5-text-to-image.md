@@ -1,6 +1,6 @@
 # gpt-image-2.5 文生图 API 使用文档
 
-通过的 `/v1/images/generations` 接口提交文本提示词，使用 `gpt-image-2.5-sunburst` 或 `gpt-image-2.5-flare` 生成图片。本文沿用 GPT Image 2 参考文档中的 JSON 请求、Bearer 鉴权和图片保存方式，补充 GPT Image 2.5 的模型选择。
+通过 `/v1/images/generations` 接口提交文本提示词，使用 `gpt-image-2.5-sunburst` 或 `gpt-image-2.5-flare` 生成图片。本文沿用 GPT Image 2 参考文档中的 JSON 请求、Bearer 鉴权和图片保存方式，补充 GPT Image 2.5 的模型选择。
 ## 接口地址
 | 接口 | 请求方式 | URL |
 |------|---------|-----|
@@ -83,7 +83,7 @@ payload = {
     "quality": "high",
 
     # 【output_compression】(integer, 可选) 输出压缩率
-    # 仅在 output_format 为 jpeg 或 webp 时生效；数值越高，画质越好、文件越大
+    # 仅在 output_format 为 jpeg 或 webp 时生效；数值越高，压缩越强、文件越小
     # 取值范围: 0 <= x <= 100，默认 100
     # PNG 输出不需要该参数，保持注释即可
     "output_compression": 100,
