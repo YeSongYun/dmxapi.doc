@@ -1,6 +1,6 @@
 # gpt-image-2 文生图 API 使用文档
 
-基于 OpenAI GPT Image 2 模型的图像生成接口，通过 `/v1/images/generations` 端点调用，兼容 OpenAI 官方 Images API 协议。支持最大 32000 字符的超长提示词，可配置 auto / 1024×1024 / 1536×1024（横版）/ 1024×1536（竖版）等多种分辨率，、批量生成数量（n=1~10）等精细化控制
+基于 OpenAI GPT Image 2 模型的图像生成接口，通过 `/v1/images/generations` 端点调用，兼容 OpenAI 官方 Images API 协议。支持最大 32000 字符的超长提示词，可配置 auto / 1024×1024 / 1536×1024（横版）/ 1024×1536（竖版）等多种分辨率、批量生成数量（n=1~10）等精细化控制
 
 :::tip 💡 模型推荐
 建议使用后缀带 **ssvip** 的模型（如 `gpt-image-2-ssvip`），可获得更稳定的服务质量和更快的响应速度。
