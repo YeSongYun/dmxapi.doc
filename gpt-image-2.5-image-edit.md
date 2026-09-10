@@ -99,14 +99,8 @@ payload = {
     # 【moderation】(string, 可选) 内容审核强度
     # 可选值: "auto"(默认) / "low"(更宽松，不表示关闭审核)
     # 上游 /v1/images/edits 官方参数表未列出该参数，确认渠道支持后取消注释
-    # "moderation": "low",
-
-    # 【background】(string, 可选) 控制输出背景模式
-    # 可选值: "auto"(默认，由模型自动选择) / "opaque"(不透明背景) / "transparent"(透明背景)
-    # transparent 必须搭配 png 或 webp 输出，JPEG 不支持透明
-    "background": "auto",
+     "moderation": "low",
 }
-
 
 def main():
     if not image_paths:
