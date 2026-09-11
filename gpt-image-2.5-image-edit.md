@@ -99,7 +99,7 @@ payload = {
     # 【moderation】(string, 可选) 内容审核强度
     # 可选值: "auto"(默认) / "low"(更宽松，不表示关闭审核)
     # 上游 /v1/images/edits 官方参数表未列出该参数，确认渠道支持后取消注释
-     "moderation": "low",
+    # "moderation": "low",
 }
 
 def main():
