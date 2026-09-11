@@ -105,6 +105,7 @@ codex --version
     name = "DMX1"
     base_url = "https://www.dmxapi.cn/v1"
     wire_api = "responses"
+    requires_openai_auth = true
     ```
 
 ### 关闭终端，然后再次启动 codex
