@@ -1,6 +1,6 @@
 # scidraw01 图片编辑 API 使用文档
 
-基于 SciDraw scidraw01 模型的科研绘图图片编辑接口，通过 DMXAPI 代理的 `/v1/responses` 端点以异步任务方式调用。提交阶段在 `input` 对象中同时传入一张源图（`image`，支持公网 URL 或本地图片自动转换的 Data URL）和一条自然语言编辑指令（`prompt`），并可通过 `resolution`、`count` 控制输出分辨率与张数；提交后立即返回状态为 `queued` 的任务对象，再以 `scidraw-get` 携带任务 ID 查询，任务成功后从 `data.result.files[].url`（或 `output[0].result`）读取编辑后图片的下载地址。按上游官方文档，编辑指令长度为 5~2000 字符，源图接受 PNG、JPEG、WebP 格式，不超过 10 MiB 且解码后不超过 4000 万像素，分辨率支持 `2K` / `4K`，单次可生成 1~4 张，适合在已有科研配图上追加标注、替换元素或调整局部构图。
+基于 SciDraw scidraw01 模型的科研绘图图片编辑接口，通过 DMXAPI 代理的 `/v1/responses` 端点以异步任务方式调用。提交阶段在 `input` 对象中同时传入一张源图（`image`，支持公网 URL 或本地图片自动转换的 Data URL）和一条自然语言编辑指令（`prompt`），并可通过 `resolution`、`count` 控制输出分辨率与张数；提交后立即返回状态为 `queued` 的任务对象，再以 `scidraw-get` 携带任务 ID 查询，任务成功后从 `data.result.files[].url`（或 `output[0].result`）读取编辑后图片的下载地址。
 
 ## 接口地址
 
@@ -57,7 +57,7 @@ headers = {
 # 【方式二】本地图片路径 (代码自动转换为 Data URL)
 image_source = "C:/path/to/input_image.png"
 
-# 上游官方文档对源图的限制:
+#   对源图的限制:
 #   - 格式:          PNG、JPEG、WebP (服务端按文件签名检测，不信任声明的 MIME)
 #   - 文件大小:      <= 10 MiB
 #   - 解码后像素:    <= 4000 万像素
@@ -74,7 +74,7 @@ payload = {
     # 【input】(object, 必填) 输入信息
     "input": {
         # 【count】(integer, 可选) 生成结果的数量
-        # 上游官方文档: 默认值为 1，取值范围: 1~4
+        #  默认值为 1，取值范围: 1~4
         "count": 1,
 
         # 【image】(string, 必填) 待编辑的源图
@@ -83,11 +83,11 @@ payload = {
         "image": image_source,
 
         # 【prompt】(string, 必填) 自然语言编辑指令
-        # 上游官方文档: 长度须在 5~2000 字符之间
+        #  长度须在 5~2000 字符之间
         "prompt": "在猫的头上加一个具有黄金比例的图形",
 
         # 【resolution】(string, 可选) 输出图片的分辨率
-        # 上游官方文档: 默认值为 "2K"，可选值: "2K" / "4K"
+        #  默认值为 "2K"，可选值: "2K" / "4K"
         "resolution": "2K"
     }
 }

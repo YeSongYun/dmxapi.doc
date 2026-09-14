@@ -1,6 +1,6 @@
 # scidraw01 图片转换 API 使用文档
 
-基于 SciDraw scidraw01 模型的科研绘图图片转换接口，通过 DMXAPI 代理的 `/v1/responses` 端点以异步任务方式调用。提交阶段在 `input` 对象中传入一张源图（`image`，支持公网 URL 或本地图片自动转换的 Data URL）和目标输出格式（`format`），转换为 SVG 时可通过 `vector_mode` 选择保留可编辑文字或全矢量化；提交后立即返回状态为 `queued` 的任务对象，再以 `scidraw-get` 携带任务 ID 查询，任务成功后从 `data.result.files[].url`（或 `output[0].result`）读取转换后文件的下载地址。按上游官方文档，源图接受 PNG、JPEG、WebP 格式，不超过 10 MiB 且解码后不超过 4000 万像素，目标格式支持 `svg`、`pptx`、`png`、`pdf`、`tiff`，适合把位图版科研配图转换为可编辑矢量图或投稿所需的高分辨率格式。
+基于 SciDraw scidraw01 模型的科研绘图图片转换接口，通过 DMXAPI 代理的 `/v1/responses` 端点以异步任务方式调用。提交阶段在 `input` 对象中传入一张源图（`image`，支持公网 URL 或本地图片自动转换的 Data URL）和目标输出格式（`format`），转换为 SVG 时可通过 `vector_mode` 选择保留可编辑文字或全矢量化；提交后立即返回状态为 `queued` 的任务对象，再以 `scidraw-get` 携带任务 ID 查询，任务成功后从 `data.result.files[].url`（或 `output[0].result`）读取转换后文件的下载地址。
 
 ## 接口地址
 
@@ -57,7 +57,7 @@ headers = {
 # 【方式二】本地图片路径 (代码自动转换为 Data URL)
 image_source = "C:/path/to/input_image.png"
 
-# 上游官方文档对源图的限制:
+#   对源图的限制:
 #   - 格式:          PNG、JPEG、WebP
 #   - 文件大小:      <= 10 MiB
 #   - 解码后像素:    <= 4000 万像素
@@ -79,7 +79,7 @@ payload = {
         "image": image_source,
 
         # 【vector_mode】(string, 可选) SVG 矢量化模式
-        # 上游官方文档: 默认值为 "editable_text"，仅 format 为 "svg" 时有效；非 SVG 格式传入 "full_vector" 会返回 400 INVALID_REQUEST
+        #  默认值为 "editable_text"，仅 format 为 "svg" 时有效；非 SVG 格式传入 "full_vector" 会返回 400 INVALID_REQUEST
         # 可选值:
         #   - "editable_text"(在可识别范围内保留可编辑的文字)
         #   - "full_vector"(输出全矢量化的 SVG)
