@@ -519,6 +519,15 @@ export default defineConfig({
                 ],
               },
 
+              {
+                text: 'SciDraw AI专业绘图模型',
+                collapsed: true,
+                items: [
+                  { text: '图片生成', link: '/scidraw01-image-generation' },
+                  { text: '图片编辑', link: '/scidraw01-image-edit' },
+                  { text: '图片转换', link: '/scidraw01-image-conversion' },
+                ],
+              },
 
             ],
           },
