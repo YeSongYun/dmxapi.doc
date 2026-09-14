@@ -64,6 +64,13 @@ payload = {
     # 约束: 最大边长 <= 3840px；宽高必须都是 16 的倍数；长宽比不能超过 3:1；总像素必须在 655,360 到 8,294,400 之间
     "size": "1024x1024",
 
+    # 【background】(string, 可选) 输出图像的背景模式
+    # 可选值:
+    #   "auto"         (自动选择背景，默认值)
+    #   "opaque"       (不透明背景)
+    #   "transparent"  (透明背景)
+    "background": "auto",
+
     "output_format": "png",  # 可选值: "png"(默认) / "jpeg"(更快)/"webp"
 
     # 【quality】(string, 可选) 生成图像的质量等级

@@ -67,9 +67,11 @@ payload = {
     # 约束: 最大边长 <= 3840px；宽高必须都是 16 的倍数；长宽比不能超过 3:1；总像素必须在 655,360 到 8,294,400 之间
     "size": "1024x1024",
 
-    # 【background】(string, 可选) 控制输出背景模式
-    # 官方文档给出的模式为 opaque 或 auto，且 background 支持 auto 自动选择
-    # 可选值: "auto"(默认，由模型自动选择) / "opaque"(不透明背景)
+    # 【background】(string, 可选) 输出图像的背景模式
+    # 可选值:
+    #   "auto"         (自动选择背景，默认值)
+    #   "opaque"       (不透明背景)
+    #   "transparent"  (透明背景)
     "background": "auto",
 
     # 【output_compression】(number, 可选) 控制 JPEG  输出压缩等级
