@@ -67,11 +67,6 @@ payload = {
     # 约束: 最大边长 <= 3840px；宽高必须都是 16 的倍数；长宽比不能超过 3:1；总像素必须在 655,360 到 8,294,400 之间
     "size": "1024x1024",
 
-    # 【background】(string, 可选) 控制输出背景模式
-    # 官方文档给出的模式为 opaque 或 auto，且 background 支持 auto 自动选择
-    # 可选值: "auto"(默认，由模型自动选择) / "opaque"(不透明背景)
-    "background": "auto",
-
     # 【output_compression】(number, 可选) 控制 JPEG  输出压缩等级
     # 仅在 output_format 为 jpeg或webp 时生效；数值越高，压缩越强
     # 取值范围: 0-100
@@ -94,6 +89,13 @@ payload = {
     # 使用建议: 先从 1 开始，便于稳定处理返回结果和落盘逻辑
     # 调用gpt-image-2-03时，该参数只支持传入1
     "n": 1,
+
+    # 【background】(string, 可选) 输出图像的背景模式
+    # 可选值:
+    #   "auto"         (自动选择背景，默认值)
+    #   "opaque"       (不透明背景)
+    #   "transparent"  (透明背景)
+    "background": "auto",
 }
 
 # 准备图片文件（支持 本地文件路径 / 公网 URL，自动识别）

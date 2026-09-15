@@ -92,6 +92,12 @@ payload = {
     # 可选值: "auto"(默认) / "low"(更宽松，不表示关闭审核)
     "moderation": "low",
 
+    # 【background】(string, 可选) 输出图像的背景模式
+    # 可选值:
+    #   "auto"         (自动选择背景，默认值)
+    #   "opaque"       (不透明背景)
+    #   "transparent"  (透明背景)
+    "background": "auto",
 }
 
 
