@@ -183,14 +183,19 @@ def main() -> None:
     
     # 第二步：定义需要处理的图片文件列表
     # 填写相对于脚本所在目录的路径，例如 'img\\ruanzhu.png'
+    # 条目可以是字符串（默认右下角），也可以是 (路径, 位置) 元组指定水印位置
     # 可以根据实际需要修改这个列表
     image_files = [
-        'img/baotao1.png',
-        'img/baota2.png',
-        'img/baota3.png',
-        'img/baota4.png',
-        'img/baota5.png',
-        'img/baota6.png',
+        'img/workbuddy1.png',
+        'img/workbuddy2.png',
+        'img/workbuddy3.png',
+        'img/workbuddy4.png',
+        'img/workbuddy5.png',
+        'img/workbuddy6.png',
+        'img/workbuddy7.png',
+        'img/workbuddy8.png',
+        'img/workbuddy9.png',
+        'img/workbuddy10.png',
     ]
     
     # 第三步：验证水印文件存在性
@@ -216,32 +221,38 @@ def main() -> None:
     
     # 第六步：批量处理图片文件
     # 遍历图片文件列表，逐一进行水印添加处理
-    for index, image_file in enumerate(image_files, 1):
+    for index, entry in enumerate(image_files, 1):
+        # 解析条目：字符串默认右下角，元组则使用指定的位置
+        if isinstance(entry, tuple):
+            image_file, position = entry
+        else:
+            image_file, position = entry, 'bottom-right'
+
         # 构建当前图片的完整路径（相对于脚本目录）
         image_path = os.path.join(base_dir, image_file)
-        
+
         # 显示当前处理进度
-        print(f"[{index}/{total_count}] 正在处理: {image_file}")
-        
+        print(f"[{index}/{total_count}] 正在处理: {image_file}（{position}）")
+
         # 检查原图文件是否存在
         if not os.path.exists(image_path):
             print(f"    ⚠️  跳过不存在的文件: {image_file}")
             continue  # 跳过当前文件，继续处理下一个
-        
+
         # 设置输出路径（直接覆盖原始文件）
         # 这样可以节省存储空间，但建议在处理前备份重要文件
         output_path = image_path
-        
+
         # 调用水印添加函数进行处理
         # 使用精心调优的参数设置：
-        # - position='bottom-right': 水印位置在右下角，不影响主要内容
-        # - opacity=0.3: 30%的不透明度，既保证可见性又不过于突兀
-        # - scale=0.12: 水印大小为原图宽度的12%，大小适中
+        # - position: 由列表条目决定，默认右下角，可按图指定其他角落避免遮挡按钮
+        # - opacity=0.8: 80%透明度，平衡可见性和美观性
+        # - scale=0.2: 水印大小为原图宽度的20%，大小适中
         if add_watermark(
             image_path=image_path,
             watermark_path=watermark_path,
             output_path=output_path,
-            position='bottom-right',  # 右下角位置，符合常见水印习惯
+            position=position,        # 位置由列表条目决定
             opacity=0.8,              # 80%透明度，平衡可见性和美观性
             scale=0.2                 # 20%缩放比例，确保水印不会过大
         ):
