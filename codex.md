@@ -206,6 +206,7 @@ codex --version
     name = "api111"
     base_url = "https://www.dmxapi.cn/v1"
     wire_api = "responses"
+    requires_openai_auth = true
     ```
 
 ### 重启终端，再次启动 codex
@@ -301,6 +302,7 @@ codex --version
     name = "api111"
     base_url = "https://www.dmxapi.cn/v1"
     wire_api = "responses"
+    requires_openai_auth = true
     ```
 
 ### 启动 codex
