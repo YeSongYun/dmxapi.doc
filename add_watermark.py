@@ -187,13 +187,13 @@ def main() -> None:
     # 可以根据实际需要修改这个列表
     image_files = [
         'img/workbuddy1.png',
-        ('img/workbuddy2.png', 'bottom-left'),   # 右下角是「取消/保存」按钮，改放左下
-        ('img/workbuddy3.png', 'bottom-left'),
-        ('img/workbuddy4.png', 'bottom-left'),
-        ('img/workbuddy5.png', 'bottom-left'),
-        ('img/workbuddy6.png', 'bottom-left'),
+        'img/workbuddy2.png',
+        'img/workbuddy3.png',
+        'img/workbuddy4.png',
+        'img/workbuddy5.png',
+        'img/workbuddy6.png',
         'img/workbuddy7.png',
-        ('img/workbuddy8.png', 'bottom-left'),   # 右下角是模型选择器红框与发送按钮，改放左下
+        'img/workbuddy8.png',
         'img/workbuddy9.png',
         'img/workbuddy10.png',
     ]
