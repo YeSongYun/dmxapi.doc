@@ -1136,6 +1136,7 @@ export default defineConfig({
             text: '📄数据处理（文档/PDF/OCR）',
             collapsed: true,
             items: [
+              { text: 'jev-1.13.0 结构化判研', link: '/jev-1.13.0-typesafe-structured-judgment' },
               { text: 'deepseek-ocr', link: '/deepseek-ocr' },
               { text: 'qwen-vl-ocr-latest', link: '/qwen-vl-ocr-latest' },
               { text: 'somark', link: '/somark' },
@@ -1213,7 +1214,6 @@ export default defineConfig({
             text: '其他示例',
             collapsed: true,
             items: [
-              { text: 'jev-1.13.0 结构化判研', link: '/jev-1.13.0-typesafe-structured-judgment' },
               { text: 'LangChain', link: '/langchain' },
               { text: 'qwen-deep-research', link: '/qwen-deep-research' },
               { text: '界面交互模型gui-plus', link: '/gui-plus' },
