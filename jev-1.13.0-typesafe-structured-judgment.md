@@ -183,22 +183,6 @@ if __name__ == "__main__":
 }
 ```
 
-## 📋 返回字段说明
-
-`answers` 以请求中的问题 ID 为 key，每个问题的返回字段随类型不同：
-
-| 字段 | 适用类型 | 说明 |
-|------|----------|------|
-| `type` | 全部 | 回显该问题的类型 |
-| `choice` | choice | 模型选中的选项，为 `criteria` 中的某个 key |
-| `probabilities` | choice / score | 各选项（或各档位）的概率分布 |
-| `confidence` | choice / score | 该答案的置信度 |
-| `legend` | score | 档位索引与 `criteria` 文案的对应关系，索引从 0 开始，顺序与 `criteria` 数组一致 |
-| `score` | score | 评分结果，需结合 `probabilities` 与 `legend` 解读（计算方式接口未说明） |
-| `noul` | noul | 判断结果数值，示例中为 0.96，可理解为判断成立（true）的概率（推断） |
-| `model` | 顶层 | 实际使用的模型名 |
-| `usage` | 顶层 | 本次请求的 token 用量：`input_tokens` 为输入、`output_tokens` 为输出 |
-
 ---
 <p align="center">
   <small>© 2026 DMXAPI jev-1.13.0 TypeSafe 结构化判研</small>
