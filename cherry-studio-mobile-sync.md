@@ -5,8 +5,11 @@ Cherry Studio 移动端支持通过「设备互联」与桌面端配对，直接
 Cherry Studio 移动端 **v2.0** 版本需要配合桌面端 **v2.1.3 及以上** 版本使用，建议移动端和桌面端都更新到最新版。
 :::
 
-::: tip 提示
-配对前请确保手机和电脑连接在 **同一局域网** 内，并且桌面端已配置好 DMXAPI 服务商（可参考 [Cherry Studio 快速开始](/cherry-studio-fast-start)）。
+::: tip 开始前准备
+手机端同步的是桌面端已配置好的服务商和模型，开始前请先完成以下准备：
+- 参考 [Cherry Studio 快速开始](/cherry-studio-fast-start)，在桌面端配置 DMXAPI 服务商并添加模型
+- 如需使用 Claude、GPT、Gemini 系列模型（或以 `-cc` 结尾的模型），参考 [Cherry Studio 对话模型格式切换](/cherry-studio-model-format)，在桌面端按文档填写各协议端点并设置这些模型的对话格式
+- 确保手机和电脑连接在 **同一局域网** 内
 :::
 
 ## 手机端：选择从桌面端同步
