@@ -23,18 +23,18 @@ Cherry Studio 移动端 **v2.0** 版本需要配合桌面端 **v2.1.3 及以上*
 ## 桌面端：开启设备互联
 ### 第一步 打开设置
 打开 Cherry Studio 桌面端，点击左下角 **设置** 图标。
-<img src="./img/cherry-studio-mobile3.png" alt="" width="355">
+![](img/cherry-studio-mobile3.png)
 ### 第二步 进入设备互联
 1. 点击左侧 **设备互联**  
 2. 开启设备互联：若显示「设备互联未开启」，需先点击右侧 **前往 API 网关设置** 启动网关
-<img src="./img/cherry-studio-mobile4.png" alt="" width="355">
+![](img/cherry-studio-mobile4.png)
 ### 第三步 启动 API 网关
 在 **API 网关** 页面点击右上角的 **启动** 按钮。
-<img src="./img/cherry-studio-mobile5.png" alt="" width="355">
+![](img/cherry-studio-mobile5.png)
 ### 第四步 开启局域网并显示配对二维码
 1. 点击左侧 **设备互联** 返回，开启局域网访问。状态显示为「可以连接设备」即表示开启成功，此时按钮会变为 **关闭局域网访问**  
 2. 点击 **显示配对二维码**
-<img src="./img/cherry-studio-mobile6.png" alt="" width="355">
+![](img/cherry-studio-mobile6.png)
 
 ## 配对设备
 ### 第一步 手机端核对验证码
@@ -43,7 +43,7 @@ Cherry Studio 移动端 **v2.0** 版本需要配合桌面端 **v2.1.3 及以上*
 <img src="./img/cherry-studio-mobile7.png" alt="" width="355">
 ### 第二步 桌面端允许配对
 电脑端的 **配对设备** 中会出现手机的设备信息和验证码。确认验证码与手机上显示的一致，并保持勾选 **导入提供商和模型**，然后点击 **允许**。请只配对你信任的设备。
-<img src="./img/cherry-studio-mobile8.png" alt="" width="355">
+![](img/cherry-studio-mobile8.png)
 
 ## 手机端：同步服务商和模型
 ### 第一步 选择并同步服务商
