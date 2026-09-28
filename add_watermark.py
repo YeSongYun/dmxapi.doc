@@ -186,16 +186,18 @@ def main() -> None:
     # 条目可以是字符串（默认右下角），也可以是 (路径, 位置) 元组指定水印位置
     # 可以根据实际需要修改这个列表
     image_files = [
-        'img/workbuddy1.png',
-        'img/workbuddy2.png',
-        'img/workbuddy3.png',
-        'img/workbuddy4.png',
-        'img/workbuddy5.png',
-        'img/workbuddy6.png',
-        'img/workbuddy7.png',
-        'img/workbuddy8.png',
-        'img/workbuddy9.png',
-        'img/workbuddy10.png',
+        'img/cherry-studio-mobile1.png',
+        'img/cherry-studio-mobile2.png',
+        'img/cherry-studio-mobile3.png',
+        'img/cherry-studio-mobile4.png',
+        'img/cherry-studio-mobile5.png',
+        'img/cherry-studio-mobile6.png',
+        'img/cherry-studio-mobile7.png',
+        'img/cherry-studio-mobile8.png',
+        'img/cherry-studio-mobile9.png',
+        'img/cherry-studio-mobile10.png',
+        'img/cherry-studio-mobile11.png',
+        'img/cherry-studio-mobile12.png',
     ]
     
     # 第三步：验证水印文件存在性
