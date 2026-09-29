@@ -14,6 +14,7 @@ Claude Sonnet 5.5（模型名 `claude-sonnet-5-5`）于 2026 年 9 月 28 日发
 
 ::: info 关于本文的示例代码
 - 每个示例都是可以直接运行的完整代码，有 requests、SDK、cURL 三种写法，点代码框上方的标签切换。把 `YOUR_DMXAPI_KEY` 换成你的 DMXAPI 令牌即可运行。
+- 示例调用的模型名是 `claude-sonnet-5-5-ssvip`。
 - requests 和 SDK 写法需要先安装依赖：`pip install -U requests anthropic`。SDK 请升级到最新版。
 - cURL 写法要在 bash 里运行（macOS、Linux 或 Windows 的 Git Bash）。请求体用 `--data-binary @-` 从标准输入发送，这样在 Windows 上中文也不会乱码。需要多次请求的示例写成了 bash 脚本，还要先安装 JSON 处理工具 [jq](https://jqlang.org/)。
 :::
@@ -93,7 +94,7 @@ HEADERS = {
 }
 
 payload = {
-    "model": "claude-sonnet-5-5",
+    "model": "claude-sonnet-5-5-ssvip",
     "max_tokens": 16000,                     # 思考也算在里面，要留足
     "output_config": {"effort": "medium"},
     "messages": [
@@ -123,7 +124,7 @@ client = anthropic.Anthropic(
 )
 
 response = client.messages.create(
-    model="claude-sonnet-5-5",
+    model="claude-sonnet-5-5-ssvip",
     max_tokens=16000,                    # 思考也算在里面，要留足
     output_config={"effort": "medium"},
     messages=[
@@ -146,7 +147,7 @@ curl https://www.dmxapi.cn/v1/messages \
   -H "content-type: application/json" \
   --data-binary @- <<'EOF'
 {
-  "model": "claude-sonnet-5-5",
+  "model": "claude-sonnet-5-5-ssvip",
   "max_tokens": 16000,
   "output_config": {"effort": "medium"},
   "messages": [
@@ -204,7 +205,7 @@ HEADERS = {
 }
 
 payload = {
-    "model": "claude-sonnet-5-5",
+    "model": "claude-sonnet-5-5-ssvip",
     "max_tokens": 16000,
     "thinking": {"type": "between_tools"},   # Sonnet 5 写的是 {"type": "disabled"}
     "output_config": {"effort": "high"},     # 注意：最高只能到 high
@@ -232,7 +233,7 @@ client = anthropic.Anthropic(
 )
 
 response = client.messages.create(
-    model="claude-sonnet-5-5",
+    model="claude-sonnet-5-5-ssvip",
     max_tokens=16000,
     thinking={"type": "between_tools"},  # Sonnet 5 写的是 {"type": "disabled"}
     output_config={"effort": "high"},    # 注意：最高只能到 high
@@ -253,7 +254,7 @@ curl https://www.dmxapi.cn/v1/messages \
   -H "content-type: application/json" \
   --data-binary @- <<'EOF'
 {
-  "model": "claude-sonnet-5-5",
+  "model": "claude-sonnet-5-5-ssvip",
   "max_tokens": 16000,
   "thinking": {"type": "between_tools"},
   "output_config": {"effort": "high"},
@@ -354,7 +355,7 @@ def get_weather(location):
 
 def call_api(messages):
     payload = {
-        "model": "claude-sonnet-5-5",
+        "model": "claude-sonnet-5-5-ssvip",
         "max_tokens": 4096,
         "tools": TOOLS,
         "tool_choice": {"type": "auto"},      # 不能再用 any 或 tool
@@ -424,7 +425,7 @@ def get_weather(location):
 
 def call_api(messages):
     return client.messages.create(
-        model="claude-sonnet-5-5",
+        model="claude-sonnet-5-5-ssvip",
         max_tokens=4096,
         tools=TOOLS,
         tool_choice={"type": "auto"},         # 不能再用 any 或 tool
@@ -484,7 +485,7 @@ TOOLS='[
 call_api() {
   local body resp
   body=$(jq -n --argjson tools "$TOOLS" --argjson messages "$1" '{
-    model: "claude-sonnet-5-5",
+    model: "claude-sonnet-5-5-ssvip",
     max_tokens: 4096,
     tools: $tools,
     tool_choice: {type: "auto"},
@@ -546,7 +547,7 @@ HEADERS = {
 }
 
 payload = {
-    "model": "claude-sonnet-5-5",
+    "model": "claude-sonnet-5-5-ssvip",
     "max_tokens": 4096,
     "output_config": {
         "format": {
@@ -597,7 +598,7 @@ client = anthropic.Anthropic(
 )
 
 response = client.messages.create(
-    model="claude-sonnet-5-5",
+    model="claude-sonnet-5-5-ssvip",
     max_tokens=4096,
     output_config={
         "format": {
@@ -639,7 +640,7 @@ curl https://www.dmxapi.cn/v1/messages \
   -H "content-type: application/json" \
   --data-binary @- <<'EOF'
 {
-  "model": "claude-sonnet-5-5",
+  "model": "claude-sonnet-5-5-ssvip",
   "max_tokens": 4096,
   "output_config": {
     "format": {
@@ -727,7 +728,7 @@ HEADERS = {
 
 
 def call_api(messages):
-    payload = {"model": "claude-sonnet-5-5", "max_tokens": 16000, "messages": messages}
+    payload = {"model": "claude-sonnet-5-5-ssvip", "max_tokens": 16000, "messages": messages}
     response = requests.post(URL, headers=HEADERS, json=payload, timeout=600)
     if response.status_code != 200:
         raise SystemExit(f"请求失败（HTTP {response.status_code}）：{response.text}")
@@ -760,7 +761,7 @@ client = anthropic.Anthropic(
 messages = [{"role": "user", "content": "帮我规划一个三天的北京旅行路线"}]
 
 response = client.messages.create(
-    model="claude-sonnet-5-5",
+    model="claude-sonnet-5-5-ssvip",
     max_tokens=16000,
     messages=messages,
 )
@@ -772,7 +773,7 @@ messages.append({"role": "assistant", "content": response.content})
 messages.append({"role": "user", "content": "第二天改成去长城"})
 
 response = client.messages.create(
-    model="claude-sonnet-5-5",
+    model="claude-sonnet-5-5-ssvip",
     max_tokens=16000,
     messages=messages,
 )
@@ -791,7 +792,7 @@ API_KEY="YOUR_DMXAPI_KEY"  # 替换为你的 DMXAPI 令牌
 
 call_api() {
   local body resp
-  body=$(jq -n --argjson messages "$1" '{model: "claude-sonnet-5-5", max_tokens: 16000, messages: $messages}')
+  body=$(jq -n --argjson messages "$1" '{model: "claude-sonnet-5-5-ssvip", max_tokens: 16000, messages: $messages}')
   resp=$(curl -s https://www.dmxapi.cn/v1/messages \
     -H "x-api-key: $API_KEY" \
     -H "anthropic-version: 2023-06-01" \
@@ -851,7 +852,7 @@ HEADERS = {
 
 def call_api(messages):
     payload = {
-        "model": "claude-sonnet-5-5",
+        "model": "claude-sonnet-5-5-ssvip",
         "max_tokens": 16000,
         # 错误写法示范：每一轮都把当前时间写进 system，前面的内容就变了
         "system": f"你是旅行助手。当前时间：{time.strftime('%Y-%m-%d %H:%M:%S')}",
@@ -893,7 +894,7 @@ client = anthropic.Anthropic(
 
 def call_api(messages):
     return client.beta.messages.create(
-        model="claude-sonnet-5-5",
+        model="claude-sonnet-5-5-ssvip",
         max_tokens=16000,
         # 错误写法示范：每一轮都把当前时间写进 system，前面的内容就变了
         system=f"你是旅行助手。当前时间：{time.strftime('%Y-%m-%d %H:%M:%S')}",
@@ -930,7 +931,7 @@ call_api() {
   local body resp
   # 错误写法示范：每一轮都把当前时间写进 system，前面的内容就变了
   body=$(jq -n --arg now "$(date '+%Y-%m-%d %H:%M:%S')" --argjson messages "$1" '{
-    model: "claude-sonnet-5-5",
+    model: "claude-sonnet-5-5-ssvip",
     max_tokens: 16000,
     system: "你是旅行助手。当前时间：\($now)",
     thinking: {
@@ -1164,7 +1165,7 @@ def run_batch(content):
 messages = [{"role": "user", "content": TASK}]
 for _ in range(MAX_TURNS):
     payload = {
-        "model": "claude-sonnet-5-5",
+        "model": "claude-sonnet-5-5-ssvip",
         "max_tokens": 16000,
         "tools": [{"type": "computer_toolset_20260801"}],  # 不用 beta，也不写 name 和屏幕尺寸
         "messages": messages,
@@ -1334,7 +1335,7 @@ def run_batch(content):
 messages = [{"role": "user", "content": TASK}]
 for _ in range(MAX_TURNS):
     response = client.messages.create(
-        model="claude-sonnet-5-5",
+        model="claude-sonnet-5-5-ssvip",
         max_tokens=16000,
         tools=[{"type": "computer_toolset_20260801"}],  # 不用 beta，也不写 name 和屏幕尺寸
         messages=messages,
@@ -1360,7 +1361,7 @@ curl https://www.dmxapi.cn/v1/messages \
   -H "content-type: application/json" \
   --data-binary @- <<'EOF'
 {
-  "model": "claude-sonnet-5-5",
+  "model": "claude-sonnet-5-5-ssvip",
   "max_tokens": 16000,
   "tools": [{"type": "computer_toolset_20260801"}],
   "messages": [{"role": "user", "content": "打开系统的显示设置"}]
@@ -1402,13 +1403,13 @@ HEADERS = {
 }
 
 payload = {
-    "model": "claude-sonnet-5-5",
+    "model": "claude-sonnet-5-5-ssvip",
     "max_tokens": 16000,
     "tools": [
         {
             "type": "advisor_20260301",
             "name": "advisor",
-            "model": "claude-opus-5-5",  # 不能再用 claude-opus-4-8、claude-opus-4-7、claude-sonnet-5
+            "model": "claude-opus-5-5",  # 顾问写官方模型名，不加 -ssvip；不能再用 claude-opus-4-8、claude-opus-4-7、claude-sonnet-5
         }
     ],
     "messages": [
@@ -1438,14 +1439,14 @@ client = anthropic.Anthropic(
 )
 
 response = client.beta.messages.create(
-    model="claude-sonnet-5-5",
+    model="claude-sonnet-5-5-ssvip",
     max_tokens=16000,
     betas=["advisor-tool-2026-03-01"],  # advisor 工具仍是 beta
     tools=[
         {
             "type": "advisor_20260301",
             "name": "advisor",
-            "model": "claude-opus-5-5",  # 不能再用 claude-opus-4-8、claude-opus-4-7、claude-sonnet-5
+            "model": "claude-opus-5-5",  # 顾问写官方模型名，不加 -ssvip；不能再用 claude-opus-4-8、claude-opus-4-7、claude-sonnet-5
         }
     ],
     messages=[
@@ -1469,7 +1470,7 @@ curl https://www.dmxapi.cn/v1/messages \
   -H "content-type: application/json" \
   --data-binary @- <<'EOF'
 {
-  "model": "claude-sonnet-5-5",
+  "model": "claude-sonnet-5-5-ssvip",
   "max_tokens": 16000,
   "tools": [
     {
@@ -1553,7 +1554,7 @@ def run_tool(name, args):
 
 def call_api(messages):
     payload = {
-        "model": "claude-sonnet-5-5",
+        "model": "claude-sonnet-5-5-ssvip",
         "max_tokens": 16000,
         "thinking": {"type": "adaptive", "display": "updates"},  # 只返回进度说明，思考内容仍隐藏
         "tools": TOOLS,
@@ -1631,7 +1632,7 @@ def run_tool(name, args):
 messages = [{"role": "user", "content": "找出这个项目里所有的 TODO，按文件汇总。"}]
 for _ in range(10):
     response = client.beta.messages.create(
-        model="claude-sonnet-5-5",
+        model="claude-sonnet-5-5-ssvip",
         max_tokens=16000,
         thinking={"type": "adaptive", "display": "updates"},  # 只返回进度说明，思考内容仍隐藏
         tools=TOOLS,
@@ -1693,7 +1694,7 @@ TOOLS='[
 call_api() {
   local body resp
   body=$(jq -n --argjson tools "$TOOLS" --argjson messages "$1" '{
-    model: "claude-sonnet-5-5",
+    model: "claude-sonnet-5-5-ssvip",
     max_tokens: 16000,
     thinking: {type: "adaptive", display: "updates"},
     tools: $tools,
@@ -1790,7 +1791,7 @@ HEADERS = {
 }
 
 payload = {
-    "model": "claude-sonnet-5-5",
+    "model": "claude-sonnet-5-5-ssvip",
     "max_tokens": 128000,                    # 编程 agent 建议直接设成模型上限
     "output_config": {"effort": "medium"},
     "stream": True,                           # 流式输出
@@ -1827,7 +1828,7 @@ client = anthropic.Anthropic(
 )
 
 with client.messages.stream(
-    model="claude-sonnet-5-5",
+    model="claude-sonnet-5-5-ssvip",
     max_tokens=128000,                   # 编程 agent 建议直接设成模型上限
     output_config={"effort": "medium"},
     messages=[
@@ -1852,7 +1853,7 @@ curl -N https://www.dmxapi.cn/v1/messages \
   -H "content-type: application/json" \
   --data-binary @- <<'EOF'
 {
-  "model": "claude-sonnet-5-5",
+  "model": "claude-sonnet-5-5-ssvip",
   "max_tokens": 128000,
   "output_config": {"effort": "medium"},
   "stream": true,
@@ -1888,7 +1889,7 @@ HEADERS = {
 }
 
 payload = {
-    "model": "claude-sonnet-5-5",
+    "model": "claude-sonnet-5-5-ssvip",
     "max_tokens": 16000,
     "messages": [
         {
@@ -1922,7 +1923,7 @@ client = anthropic.Anthropic(
 )
 
 response = client.messages.create(
-    model="claude-sonnet-5-5",
+    model="claude-sonnet-5-5-ssvip",
     max_tokens=16000,
     messages=[
         {
@@ -1950,7 +1951,7 @@ curl https://www.dmxapi.cn/v1/messages \
   -H "content-type: application/json" \
   --data-binary @- <<'EOF'
 {
-  "model": "claude-sonnet-5-5",
+  "model": "claude-sonnet-5-5-ssvip",
   "max_tokens": 16000,
   "messages": [
     {
@@ -2074,7 +2075,7 @@ TOOLS = [
 
 
 def call_api(messages):
-    payload = {"model": "claude-sonnet-5-5", "max_tokens": 16000, "tools": TOOLS, "messages": messages}
+    payload = {"model": "claude-sonnet-5-5-ssvip", "max_tokens": 16000, "tools": TOOLS, "messages": messages}
     response = requests.post(URL, headers=HEADERS, json=payload, timeout=600)
     if response.status_code != 200:
         raise SystemExit(f"请求失败（HTTP {response.status_code}）：{response.text}")
@@ -2120,7 +2121,7 @@ TOOLS = [
 
 def call_api(messages):
     return client.messages.create(
-        model="claude-sonnet-5-5",
+        model="claude-sonnet-5-5-ssvip",
         max_tokens=16000,
         tools=TOOLS,
         messages=messages,
@@ -2165,7 +2166,7 @@ TOOLS='[
 call_api() {
   local body resp
   body=$(jq -n --argjson tools "$TOOLS" --argjson messages "$1" \
-    '{model: "claude-sonnet-5-5", max_tokens: 16000, tools: $tools, messages: $messages}')
+    '{model: "claude-sonnet-5-5-ssvip", max_tokens: 16000, tools: $tools, messages: $messages}')
   resp=$(curl -s https://www.dmxapi.cn/v1/messages \
     -H "x-api-key: $API_KEY" \
     -H "anthropic-version: 2023-06-01" \
@@ -2240,7 +2241,7 @@ HEADERS = {
 }
 
 payload = {
-    "model": "claude-sonnet-5-5",
+    "model": "claude-sonnet-5-5-ssvip",
     "max_tokens": 16000,
     "system": "你是一个代码审查助手，回答要简洁。",    # 最前面的 system 保持不变
     "messages": [
@@ -2280,7 +2281,7 @@ client = anthropic.Anthropic(
 )
 
 response = client.messages.create(
-    model="claude-sonnet-5-5",
+    model="claude-sonnet-5-5-ssvip",
     max_tokens=16000,
     system="你是一个代码审查助手，回答要简洁。",    # 最前面的 system 保持不变
     messages=[
@@ -2313,7 +2314,7 @@ curl https://www.dmxapi.cn/v1/messages \
   -H "content-type: application/json" \
   --data-binary @- <<'EOF'
 {
-  "model": "claude-sonnet-5-5",
+  "model": "claude-sonnet-5-5-ssvip",
   "max_tokens": 16000,
   "system": "你是一个代码审查助手，回答要简洁。",
   "messages": [
@@ -2360,7 +2361,7 @@ HEADERS = {
 }
 
 payload = {
-    "model": "claude-sonnet-5-5",
+    "model": "claude-sonnet-5-5-ssvip",
     "max_tokens": 16000,
     "output_config": {"effort": "high"},    # 整段对话原本用 high
     "messages": [
@@ -2391,7 +2392,7 @@ client = anthropic.Anthropic(
 )
 
 response = client.beta.messages.create(
-    model="claude-sonnet-5-5",
+    model="claude-sonnet-5-5-ssvip",
     max_tokens=16000,
     output_config={"effort": "high"},    # 整段对话原本用 high
     messages=[
@@ -2417,7 +2418,7 @@ curl https://www.dmxapi.cn/v1/messages \
   -H "content-type: application/json" \
   --data-binary @- <<'EOF'
 {
-  "model": "claude-sonnet-5-5",
+  "model": "claude-sonnet-5-5-ssvip",
   "max_tokens": 16000,
   "output_config": {"effort": "high"},
   "messages": [
@@ -2468,7 +2469,7 @@ HEADERS = {
 }
 
 payload = {
-    "model": "claude-sonnet-5-5",
+    "model": "claude-sonnet-5-5-ssvip",
     "max_tokens": 16000,
     # 以前写 {"type": "enabled", "budget_tokens": 10000}，现在改成自适应思考 + effort
     "thinking": {"type": "adaptive", "display": "summarized"},  # summarized：返回思考摘要
@@ -2502,7 +2503,7 @@ client = anthropic.Anthropic(
 )
 
 response = client.messages.create(
-    model="claude-sonnet-5-5",
+    model="claude-sonnet-5-5-ssvip",
     max_tokens=16000,
     # 以前写 {"type": "enabled", "budget_tokens": 10000}，现在改成自适应思考 + effort
     thinking={"type": "adaptive", "display": "summarized"},  # summarized：返回思考摘要
@@ -2529,7 +2530,7 @@ curl https://www.dmxapi.cn/v1/messages \
   -H "content-type: application/json" \
   --data-binary @- <<'EOF'
 {
-  "model": "claude-sonnet-5-5",
+  "model": "claude-sonnet-5-5-ssvip",
   "max_tokens": 16000,
   "thinking": {"type": "adaptive", "display": "summarized"},
   "output_config": {"effort": "high"},
