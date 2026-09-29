@@ -16,7 +16,8 @@ Claude Sonnet 5.5（模型名 `claude-sonnet-5-5`）于 2026 年 9 月 28 日发
 - 每个示例都是可以直接运行的完整代码，有 requests、SDK、cURL 三种写法，点代码框上方的标签切换。把 `YOUR_DMXAPI_KEY` 换成你的 DMXAPI 令牌即可运行。
 - 示例调用的模型名是 `claude-sonnet-5-5-ssvip`。
 - requests 和 SDK 写法需要先安装依赖：`pip install -U requests anthropic`。SDK 请升级到最新版。
-- cURL 写法要在 bash 里运行（macOS、Linux 或 Windows 的 Git Bash）。请求体用 `--data-binary @-` 从标准输入发送，这样在 Windows 上中文也不会乱码。需要多次请求的示例写成了 bash 脚本，还要先安装 JSON 处理工具 [jq](https://jqlang.org/)。
+- cURL 写法都是一条完整的命令，复制到终端（macOS、Linux 或 Windows 的 Git Bash）就能运行，也可以导入 Apifox、Postman 等接口调试工具。cURL 一次只能发一个请求，需要多轮请求的示例，cURL 写法给出的是其中一轮的完整请求，前面几轮的对话已经写在 `messages` 里。
+- Windows 的 Git Bash 自带的 curl 会把命令里的中文按 GBK 编码发送：请求照样返回 200，但模型收到的是乱码。在 Git Bash 里运行时，把命令开头的 `curl` 换成 Windows 自带的 `/c/Windows/System32/curl.exe`，或者把命令导入接口调试工具运行。
 :::
 
 ## 一、Sonnet 5.5 基本信息
@@ -145,16 +146,14 @@ curl https://www.dmxapi.cn/v1/messages \
   -H "x-api-key: YOUR_DMXAPI_KEY" \
   -H "anthropic-version: 2023-06-01" \
   -H "content-type: application/json" \
-  --data-binary @- <<'EOF'
-{
+  -d '{
   "model": "claude-sonnet-5-5-ssvip",
   "max_tokens": 16000,
   "output_config": {"effort": "medium"},
   "messages": [
     {"role": "user", "content": "用三句话解释什么是微服务架构"}
   ]
-}
-EOF
+}'
 ```
 
 :::
@@ -252,8 +251,7 @@ curl https://www.dmxapi.cn/v1/messages \
   -H "x-api-key: YOUR_DMXAPI_KEY" \
   -H "anthropic-version: 2023-06-01" \
   -H "content-type: application/json" \
-  --data-binary @- <<'EOF'
-{
+  -d '{
   "model": "claude-sonnet-5-5-ssvip",
   "max_tokens": 16000,
   "thinking": {"type": "between_tools"},
@@ -261,8 +259,7 @@ curl https://www.dmxapi.cn/v1/messages \
   "messages": [
     {"role": "user", "content": "把这句话翻译成英文：今天的会议改到下午三点。"}
   ]
-}
-EOF
+}'
 ```
 
 :::
@@ -316,7 +313,7 @@ tool_choice: type "tool" and "any" are not supported for this model.
 2. 给工具加上 `"strict": true`，保证模型传入的参数符合你定义的格式。
 3. 在代码里检查模型有没有真的调用工具。`auto` 模式下模型也可以选择不调用，没调用就重试。
 
-下面是完整的工具调用流程：发请求 → 模型调用工具 → 执行工具 → 把结果交回模型 → 拿到最终回答。示例里的天气是写死的演示数据，实际项目里换成真实的天气接口。
+下面是完整的工具调用流程：发请求 → 模型调用工具 → 执行工具 → 把结果交回模型 → 拿到最终回答。示例里的天气是写死的演示数据，实际项目里换成真实的天气接口。cURL 写法是交回工具结果的那次请求：模型调用工具的回复和工具的执行结果已经写进 `messages`，返回的就是最终回答。
 
 ::: code-group
 
@@ -460,71 +457,45 @@ for block in response.content:
 ```
 
 ```bash [cURL]
-#!/usr/bin/env bash
-# 需要先安装 jq
-set -e
-
-API_KEY="YOUR_DMXAPI_KEY"  # 替换为你的 DMXAPI 令牌
-
-TOOLS='[
-  {
-    "name": "get_weather",
-    "description": "查询指定城市的当前天气",
-    "input_schema": {
-      "type": "object",
-      "properties": {
-        "location": {"type": "string", "description": "城市名，例如：北京"}
+curl https://www.dmxapi.cn/v1/messages \
+  -H "x-api-key: YOUR_DMXAPI_KEY" \
+  -H "anthropic-version: 2023-06-01" \
+  -H "content-type: application/json" \
+  -d '{
+  "model": "claude-sonnet-5-5-ssvip",
+  "max_tokens": 4096,
+  "tools": [
+    {
+      "name": "get_weather",
+      "description": "查询指定城市的当前天气",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "location": {"type": "string", "description": "城市名，例如：北京"}
+        },
+        "required": ["location"],
+        "additionalProperties": false
       },
-      "required": ["location"],
-      "additionalProperties": false
+      "strict": true
+    }
+  ],
+  "tool_choice": {"type": "auto"},
+  "messages": [
+    {"role": "user", "content": "北京今天天气怎么样？请使用 get_weather 工具查询。"},
+    {
+      "role": "assistant",
+      "content": [
+        {"type": "tool_use", "id": "toolu_01A09q90qw90lq917835lq9", "name": "get_weather", "input": {"location": "北京"}}
+      ]
     },
-    "strict": true
-  }
-]'
-
-call_api() {
-  local body resp
-  body=$(jq -n --argjson tools "$TOOLS" --argjson messages "$1" '{
-    model: "claude-sonnet-5-5-ssvip",
-    max_tokens: 4096,
-    tools: $tools,
-    tool_choice: {type: "auto"},
-    messages: $messages
-  }')
-  resp=$(curl -s https://www.dmxapi.cn/v1/messages \
-    -H "x-api-key: $API_KEY" \
-    -H "anthropic-version: 2023-06-01" \
-    -H "content-type: application/json" \
-    --data-binary @- <<< "$body")
-  if [ "$(jq -r '.type' <<< "$resp")" != "message" ]; then
-    echo "请求失败：$resp" >&2
-    return 1
-  fi
-  echo "$resp"
-}
-
-MESSAGES='[{"role": "user", "content": "北京今天天气怎么样？请使用 get_weather 工具查询。"}]'
-RESP=$(call_api "$MESSAGES")
-
-# auto 模式不保证一定调用工具，要自己检查
-if [ "$(jq -r '.stop_reason' <<< "$RESP")" != "tool_use" ]; then
-  echo "模型这次没有调用工具，可以重试，或直接使用它的文字回答"
-fi
-
-# 模型要调用工具时：把回复原样放回历史，再为每个 tool_use 回一个 tool_result（天气是演示数据）
-while [ "$(jq -r '.stop_reason' <<< "$RESP")" = "tool_use" ]; do
-  MESSAGES=$(jq -n --argjson m "$MESSAGES" --argjson r "$RESP" '
-    $m + [
-      {role: "assistant", content: $r.content},
-      {role: "user", content: [
-        $r.content[] | select(.type == "tool_use")
-        | {type: "tool_result", tool_use_id: .id, content: "\(.input.location)：晴，25°C，东南风 2 级"}
-      ]}
-    ]')
-  RESP=$(call_api "$MESSAGES")
-done
-
-jq -r '.content[] | select(.type == "text") | .text' <<< "$RESP"
+    {
+      "role": "user",
+      "content": [
+        {"type": "tool_result", "tool_use_id": "toolu_01A09q90qw90lq917835lq9", "content": "北京：晴，25°C，东南风 2 级"}
+      ]
+    }
+  ]
+}'
 ```
 
 :::
@@ -638,8 +609,7 @@ curl https://www.dmxapi.cn/v1/messages \
   -H "x-api-key: YOUR_DMXAPI_KEY" \
   -H "anthropic-version: 2023-06-01" \
   -H "content-type: application/json" \
-  --data-binary @- <<'EOF'
-{
+  -d '{
   "model": "claude-sonnet-5-5-ssvip",
   "max_tokens": 4096,
   "output_config": {
@@ -662,8 +632,7 @@ curl https://www.dmxapi.cn/v1/messages \
       "content": "从下面这段话里提取城市，并用一句话概括：上周我去杭州出差，顺便逛了西湖，雨后的断桥特别安静。"
     }
   ]
-}
-EOF
+}'
 ```
 
 :::
@@ -711,7 +680,7 @@ Sonnet 5.5 的 thinking 块，只在生成它的账号（或与之关联的账�
 3. 同一段对话里，`system` 提示词和 `tools` 工具列表保持不变。
 4. 需要中途追加指令时，在末尾加一条 `role` 为 `system` 的消息（第七节介绍），不要去改最前面的 `system`。
 
-下面是正确的多轮对话写法：
+下面是正确的多轮对话写法。cURL 写法是第二轮请求，第一轮模型的回复已经写进 `messages`。实际开发时，这里要放第一轮返回的完整 `content`（包括 thinking 块）；thinking 块带签名，没法手写，所以示例里只保留了文字块：
 
 ::: code-group
 
@@ -784,39 +753,24 @@ for block in response.content:
 ```
 
 ```bash [cURL]
-#!/usr/bin/env bash
-# 需要先安装 jq
-set -e
-
-API_KEY="YOUR_DMXAPI_KEY"  # 替换为你的 DMXAPI 令牌
-
-call_api() {
-  local body resp
-  body=$(jq -n --argjson messages "$1" '{model: "claude-sonnet-5-5-ssvip", max_tokens: 16000, messages: $messages}')
-  resp=$(curl -s https://www.dmxapi.cn/v1/messages \
-    -H "x-api-key: $API_KEY" \
-    -H "anthropic-version: 2023-06-01" \
-    -H "content-type: application/json" \
-    --data-binary @- <<< "$body")
-  if [ "$(jq -r '.type' <<< "$resp")" != "message" ]; then
-    echo "请求失败：$resp" >&2
-    return 1
-  fi
-  echo "$resp"
-}
-
-MESSAGES='[{"role": "user", "content": "帮我规划一个三天的北京旅行路线"}]'
-RESP=$(call_api "$MESSAGES")
-
-# 把整个 content 原样追加（包括 thinking 块），再在末尾追加新的 user 消息
-MESSAGES=$(jq -n --argjson m "$MESSAGES" --argjson r "$RESP" '
-  $m + [
-    {role: "assistant", content: $r.content},
-    {role: "user", content: "第二天改成去长城"}
-  ]')
-RESP=$(call_api "$MESSAGES")
-
-jq -r '.content[] | select(.type == "text") | .text' <<< "$RESP"
+curl https://www.dmxapi.cn/v1/messages \
+  -H "x-api-key: YOUR_DMXAPI_KEY" \
+  -H "anthropic-version: 2023-06-01" \
+  -H "content-type: application/json" \
+  -d '{
+  "model": "claude-sonnet-5-5-ssvip",
+  "max_tokens": 16000,
+  "messages": [
+    {"role": "user", "content": "帮我规划一个三天的北京旅行路线"},
+    {
+      "role": "assistant",
+      "content": [
+        {"type": "text", "text": "第一天：天安门广场、故宫、景山公园。\n第二天：颐和园、圆明园。\n第三天：天坛、南锣鼓巷、什刹海。"}
+      ]
+    },
+    {"role": "user", "content": "第二天改成去长城"}
+  ]
+}'
 ```
 
 :::
@@ -831,7 +785,7 @@ jq -r '.content[] | select(.type == "text") | .text' <<< "$RESP"
 
 **已经报错了怎么办**：先把历史里所有 `thinking` 块删掉（其他内容保留），再重试一次，之后也不要再把它们放回去。然后找到修改历史的那段代码，改成只追加。
 
-**进阶做法：让 API 自动丢掉失效的 thinking 块，而不是报错。** 使用自适应思考时，在 `thinking` 里加上 `block_binding`，并开启 beta `thinking-binding-controls-2026-08-01`。下面的示例故意在每一轮的 system 提示词里写上当前时间（也就是上面提醒过的错误写法），第二轮请求时 system 变了，上一轮的 thinking 块会被自动丢掉，请求照常成功：
+**进阶做法：让 API 自动丢掉失效的 thinking 块，而不是报错。** 使用自适应思考时，在 `thinking` 里加上 `block_binding`，并开启 beta `thinking-binding-controls-2026-08-01`。下面的示例故意在每一轮的 system 提示词里写上当前时间（也就是上面提醒过的错误写法），第二轮请求时 system 变了，上一轮的 thinking 块会被自动丢掉，请求照常成功。cURL 写法是第二轮请求，用来演示 `block_binding` 和 beta 的写法；它的历史里没有 thinking 块（原因见上面的多轮对话示例），所以不会真的丢块：
 
 ::: code-group
 
@@ -921,50 +875,30 @@ for block in response.content:
 ```
 
 ```bash [cURL]
-#!/usr/bin/env bash
-# 需要先安装 jq
-set -e
-
-API_KEY="YOUR_DMXAPI_KEY"  # 替换为你的 DMXAPI 令牌
-
-call_api() {
-  local body resp
-  # 错误写法示范：每一轮都把当前时间写进 system，前面的内容就变了
-  body=$(jq -n --arg now "$(date '+%Y-%m-%d %H:%M:%S')" --argjson messages "$1" '{
-    model: "claude-sonnet-5-5-ssvip",
-    max_tokens: 16000,
-    system: "你是旅行助手。当前时间：\($now)",
-    thinking: {
-      type: "adaptive",
-      block_binding: {prefix_mismatch_behavior: "drop_block"}
+curl https://www.dmxapi.cn/v1/messages \
+  -H "x-api-key: YOUR_DMXAPI_KEY" \
+  -H "anthropic-version: 2023-06-01" \
+  -H "anthropic-beta: thinking-binding-controls-2026-08-01" \
+  -H "content-type: application/json" \
+  -d '{
+  "model": "claude-sonnet-5-5-ssvip",
+  "max_tokens": 16000,
+  "system": "你是旅行助手。当前时间：2026-09-29 10:05:00",
+  "thinking": {
+    "type": "adaptive",
+    "block_binding": {"prefix_mismatch_behavior": "drop_block"}
+  },
+  "messages": [
+    {"role": "user", "content": "帮我规划一个三天的北京旅行路线"},
+    {
+      "role": "assistant",
+      "content": [
+        {"type": "text", "text": "第一天：天安门广场、故宫、景山公园。\n第二天：颐和园、圆明园。\n第三天：天坛、南锣鼓巷、什刹海。"}
+      ]
     },
-    messages: $messages
-  }')
-  resp=$(curl -s https://www.dmxapi.cn/v1/messages \
-    -H "x-api-key: $API_KEY" \
-    -H "anthropic-version: 2023-06-01" \
-    -H "anthropic-beta: thinking-binding-controls-2026-08-01" \
-    -H "content-type: application/json" \
-    --data-binary @- <<< "$body")
-  if [ "$(jq -r '.type' <<< "$resp")" != "message" ]; then
-    echo "请求失败：$resp" >&2
-    return 1
-  fi
-  echo "$resp"
-}
-
-MESSAGES='[{"role": "user", "content": "帮我规划一个三天的北京旅行路线"}]'
-RESP=$(call_api "$MESSAGES")
-
-# 第二轮：system 里的时间变了，上一轮的 thinking 块会被丢掉，但不会返回 400
-MESSAGES=$(jq -n --argjson m "$MESSAGES" --argjson r "$RESP" '
-  $m + [
-    {role: "assistant", content: $r.content},
-    {role: "user", content: "第二天改成去长城"}
-  ]')
-RESP=$(call_api "$MESSAGES")
-
-jq -r '.content[] | select(.type == "text") | .text' <<< "$RESP"
+    {"role": "user", "content": "第二天改成去长城"}
+  ]
+}'
 ```
 
 :::
@@ -1005,7 +939,7 @@ computer use 是让模型看屏幕截图、操作鼠标和键盘的工具。
 4. 某个动作执行失败时，后面的动作不要再执行，每个都返回 `is_error: true`，内容写 `Not executed: an earlier computer action in this turn failed.`
 5. 截图大小要自己控制，长边不超过 2576 像素。API 不会帮你缩小，图片太大会直接报错。模型返回的坐标是按你发过去的截图计算的，截图缩小过的话，执行前要把坐标换算回屏幕坐标。
 
-下面是完整的 computer use 程序：截屏发给模型，按模型的要求真实地操作鼠标和键盘，直到任务完成。requests 和 SDK 写法用 pyautogui 执行动作，运行前先安装依赖：`pip install -U requests anthropic pyautogui pyperclip pillow`。
+下面是完整的 computer use 程序：截屏发给模型，按模型的要求真实地操作鼠标和键盘，直到任务完成。requests 和 SDK 写法用 pyautogui 执行动作，运行前先安装依赖：`pip install -U requests anthropic pyautogui pyperclip pillow`。cURL 写法只演示第一次请求：声明新的工具集，看模型返回的动作；截屏、执行动作、回传结果要写程序完成。
 
 ::: danger 运行前注意
 这个程序会真的控制你的鼠标和键盘。建议在虚拟机里运行，不要在屏幕上开着重要的文件。想紧急停止时，把鼠标快速甩到屏幕的任意一个角落，pyautogui 会立即中止程序。
@@ -1353,20 +1287,16 @@ for _ in range(MAX_TURNS):
 ```
 
 ```bash [cURL]
-# cURL 只能演示第一次请求：声明新的工具集，看模型返回的动作
-# 截屏、执行动作、回传结果的循环需要写程序完成，见 requests 或 SDK 标签页
 curl https://www.dmxapi.cn/v1/messages \
   -H "x-api-key: YOUR_DMXAPI_KEY" \
   -H "anthropic-version: 2023-06-01" \
   -H "content-type: application/json" \
-  --data-binary @- <<'EOF'
-{
+  -d '{
   "model": "claude-sonnet-5-5-ssvip",
   "max_tokens": 16000,
   "tools": [{"type": "computer_toolset_20260801"}],
   "messages": [{"role": "user", "content": "打开系统的显示设置"}]
-}
-EOF
+}'
 ```
 
 :::
@@ -1468,8 +1398,7 @@ curl https://www.dmxapi.cn/v1/messages \
   -H "anthropic-version: 2023-06-01" \
   -H "anthropic-beta: advisor-tool-2026-03-01" \
   -H "content-type: application/json" \
-  --data-binary @- <<'EOF'
-{
+  -d '{
   "model": "claude-sonnet-5-5-ssvip",
   "max_tokens": 16000,
   "tools": [
@@ -1482,8 +1411,7 @@ curl https://www.dmxapi.cn/v1/messages \
   "messages": [
     {"role": "user", "content": "用 Go 写一个支持优雅退出的并发 worker 池，并说明设计思路。"}
   ]
-}
-EOF
+}'
 ```
 
 :::
@@ -1505,7 +1433,7 @@ EOF
 
 **方法一：使用自适应思考时，开启 `display: "updates"`（beta `thinking-display-updates-2026-08-18`）。** 思考内容仍然隐藏，但进度说明会以文字返回。
 
-下面的示例让模型在一个演示项目里找出所有 TODO。项目文件是写死在代码里的演示数据，模型会多次调用 `list_files` 和 `read_file` 工具，工具调用之间的进度说明会以 `[进度]` 开头打印出来：
+下面的示例让模型在一个演示项目里找出所有 TODO。项目文件是写死在代码里的演示数据，模型会多次调用 `list_files` 和 `read_file` 工具，工具调用之间的进度说明会以 `[进度]` 开头打印出来。cURL 写法是循环中的第二次请求：模型已经调用过 `list_files`，这次会接着调用 `read_file`，返回的 `content` 里内容不为空的 `thinking` 块就是进度说明：
 
 ::: code-group
 
@@ -1661,84 +1589,47 @@ for _ in range(10):
 ```
 
 ```bash [cURL]
-#!/usr/bin/env bash
-# 需要先安装 jq
-set -e
-
-API_KEY="YOUR_DMXAPI_KEY"  # 替换为你的 DMXAPI 令牌
-
-# 演示用的项目文件
-FILES='{
-  "app.py": "def main():\n    # TODO: 读取配置文件\n    print(\"hello\")\n",
-  "utils.py": "def add(a, b):\n    return a + b  # TODO: 处理字符串参数\n",
-  "README.md": "# 示例项目\n\nTODO: 补充安装说明\n"
-}'
-
-TOOLS='[
-  {
-    "name": "list_files",
-    "description": "列出项目里的所有文件",
-    "input_schema": {"type": "object", "properties": {}}
-  },
-  {
-    "name": "read_file",
-    "description": "读取项目里某个文件的内容",
-    "input_schema": {
-      "type": "object",
-      "properties": {"path": {"type": "string", "description": "文件路径，例如 app.py"}},
-      "required": ["path"]
+curl https://www.dmxapi.cn/v1/messages \
+  -H "x-api-key: YOUR_DMXAPI_KEY" \
+  -H "anthropic-version: 2023-06-01" \
+  -H "anthropic-beta: thinking-display-updates-2026-08-18" \
+  -H "content-type: application/json" \
+  -d '{
+  "model": "claude-sonnet-5-5-ssvip",
+  "max_tokens": 16000,
+  "thinking": {"type": "adaptive", "display": "updates"},
+  "tools": [
+    {
+      "name": "list_files",
+      "description": "列出项目里的所有文件",
+      "input_schema": {"type": "object", "properties": {}}
+    },
+    {
+      "name": "read_file",
+      "description": "读取项目里某个文件的内容",
+      "input_schema": {
+        "type": "object",
+        "properties": {"path": {"type": "string", "description": "文件路径，例如 app.py"}},
+        "required": ["path"]
+      }
     }
-  }
-]'
-
-call_api() {
-  local body resp
-  body=$(jq -n --argjson tools "$TOOLS" --argjson messages "$1" '{
-    model: "claude-sonnet-5-5-ssvip",
-    max_tokens: 16000,
-    thinking: {type: "adaptive", display: "updates"},
-    tools: $tools,
-    messages: $messages
-  }')
-  resp=$(curl -s https://www.dmxapi.cn/v1/messages \
-    -H "x-api-key: $API_KEY" \
-    -H "anthropic-version: 2023-06-01" \
-    -H "anthropic-beta: thinking-display-updates-2026-08-18" \
-    -H "content-type: application/json" \
-    --data-binary @- <<< "$body")
-  if [ "$(jq -r '.type' <<< "$resp")" != "message" ]; then
-    echo "请求失败：$resp" >&2
-    return 1
-  fi
-  echo "$resp"
-}
-
-MESSAGES='[{"role": "user", "content": "找出这个项目里所有的 TODO，按文件汇总。"}]'
-for _ in $(seq 1 10); do
-  RESP=$(call_api "$MESSAGES")
-
-  # 内容不为空的 thinking 块就是进度说明
-  jq -r '.content[]
-    | if .type == "thinking" and .thinking != "" then "[进度] \(.thinking)"
-      elif .type == "text" then .text
-      elif .type == "tool_use" then "[调用工具] \(.name) \(.input | tojson)"
-      else empty end' <<< "$RESP"
-
-  # 为每个 tool_use 回一个 tool_result，内容从演示文件里取
-  RESULTS=$(jq -c --argjson files "$FILES" '[.content[] | select(.type == "tool_use") | {
-    type: "tool_result",
-    tool_use_id: .id,
-    content: (if .name == "list_files" then ($files | keys | join("\n"))
-              else ($files[.input.path] // "文件不存在") end)
-  }]' <<< "$RESP")
-
-  # 回复原样放回历史，进度说明块也要放回
-  MESSAGES=$(jq -n --argjson m "$MESSAGES" --argjson r "$RESP" '$m + [{role: "assistant", content: $r.content}]')
-  if [ "$RESULTS" = "[]" ]; then  # 模型不再调用工具，任务完成
-    break
-  fi
-  MESSAGES=$(jq -n --argjson m "$MESSAGES" --argjson r "$RESULTS" '$m + [{role: "user", content: $r}]')
-done
+  ],
+  "messages": [
+    {"role": "user", "content": "找出这个项目里所有的 TODO，按文件汇总。"},
+    {
+      "role": "assistant",
+      "content": [
+        {"type": "tool_use", "id": "toolu_01D7FLrfh4GYq7yT1ULFeyMV", "name": "list_files", "input": {}}
+      ]
+    },
+    {
+      "role": "user",
+      "content": [
+        {"type": "tool_result", "tool_use_id": "toolu_01D7FLrfh4GYq7yT1ULFeyMV", "content": "app.py\nutils.py\nREADME.md"}
+      ]
+    }
+  ]
+}'
 ```
 
 :::
@@ -1773,7 +1664,7 @@ done
 几个要点：
 
 - **想让模型少想，就降低 effort。** 从 `medium` 档起，模型几乎每次回答前都会先想一下，连打招呼也是，所以第一个字出来得会慢一些。在提示词里要求“少思考”没有可靠效果；`low` 档下，简单问题通常会跳过思考。
-- **`max_tokens` 要给思考留出空间。** 思考也计入 `max_tokens`。做编程 agent 时，官方建议直接设为 128000（模型上限），并使用流式输出，一边生成一边返回，避免长时间等待导致请求超时：
+- **`max_tokens` 要给思考留出空间。** 思考也计入 `max_tokens`。做编程 agent 时，官方建议直接设为 128000（模型上限），并使用流式输出，一边生成一边返回，避免长时间等待导致请求超时。cURL 写法加了 `-N`，收到一段就输出一段，正文在返回的 `text_delta` 事件里：
 
 ::: code-group
 
@@ -1846,13 +1737,11 @@ print("\n\n停止原因:", response.stop_reason)
 ```
 
 ```bash [cURL]
-# -N 让 curl 收到一段就输出一段；返回的是 SSE 事件流，正文在 text_delta 事件里
 curl -N https://www.dmxapi.cn/v1/messages \
   -H "x-api-key: YOUR_DMXAPI_KEY" \
   -H "anthropic-version: 2023-06-01" \
   -H "content-type: application/json" \
-  --data-binary @- <<'EOF'
-{
+  -d '{
   "model": "claude-sonnet-5-5-ssvip",
   "max_tokens": 128000,
   "output_config": {"effort": "medium"},
@@ -1863,8 +1752,7 @@ curl -N https://www.dmxapi.cn/v1/messages \
       "content": "用 Python 写一个命令行待办事项工具，支持添加、删除、列出任务，数据保存在 JSON 文件里。"
     }
   ]
-}
-EOF
+}'
 ```
 
 :::
@@ -1894,7 +1782,7 @@ payload = {
     "messages": [
         {
             "role": "user",
-            "content": "检查这段 Python 代码有没有安全问题：\n\nimport os\nhost = input('主机：')\nos.system('ping ' + host)",
+            "content": '检查这段 Python 代码有没有安全问题：\n\nimport os\nhost = input("主机：")\nos.system("ping " + host)',
         }
     ],
 }
@@ -1928,7 +1816,7 @@ response = client.messages.create(
     messages=[
         {
             "role": "user",
-            "content": "检查这段 Python 代码有没有安全问题：\n\nimport os\nhost = input('主机：')\nos.system('ping ' + host)",
+            "content": '检查这段 Python 代码有没有安全问题：\n\nimport os\nhost = input("主机：")\nos.system("ping " + host)',
         }
     ],
 )
@@ -1944,28 +1832,25 @@ else:
 ```
 
 ```bash [cURL]
-# 返回的 JSON 里 stop_reason 为 "refusal" 时表示拒答，类别看 stop_details.category
 curl https://www.dmxapi.cn/v1/messages \
   -H "x-api-key: YOUR_DMXAPI_KEY" \
   -H "anthropic-version: 2023-06-01" \
   -H "content-type: application/json" \
-  --data-binary @- <<'EOF'
-{
+  -d '{
   "model": "claude-sonnet-5-5-ssvip",
   "max_tokens": 16000,
   "messages": [
     {
       "role": "user",
-      "content": "检查这段 Python 代码有没有安全问题：\n\nimport os\nhost = input('主机：')\nos.system('ping ' + host)"
+      "content": "检查这段 Python 代码有没有安全问题：\n\nimport os\nhost = input(\"主机：\")\nos.system(\"ping \" + host)"
     }
   ]
-}
-EOF
+}'
 ```
 
 :::
 
-拒答时返回的 JSON 示例：
+用 cURL 时，直接看返回的 JSON 里的 `stop_reason`。拒答时返回的 JSON 示例：
 
 ```json
 {
@@ -2050,7 +1935,7 @@ Use the search tool to check specifics that may have changed since your training
 
 **用户中途插的话，可能被当成可疑内容。** 模型会防范藏在工具结果里的恶意指令（提示词注入），有时会误伤真正的用户消息。所以不要把用户的话放进 `tool_result` 块里，而是放在同一条 user 消息中、最后一个 `tool_result` 之后，作为单独的 text 块。
 
-下面的示例里，模型调用 `run_tests` 工具运行测试（测试结果是演示数据）；在交回测试结果时，顺带转达用户中途说的一句话：
+下面的示例里，模型调用 `run_tests` 工具运行测试（测试结果是演示数据）；在交回测试结果时，顺带转达用户中途说的一句话。cURL 写法就是交回测试结果的那次请求：
 
 ::: code-group
 
@@ -2149,54 +2034,37 @@ for block in response.content:
 ```
 
 ```bash [cURL]
-#!/usr/bin/env bash
-# 需要先安装 jq
-set -e
-
-API_KEY="YOUR_DMXAPI_KEY"  # 替换为你的 DMXAPI 令牌
-
-TOOLS='[
-  {
-    "name": "run_tests",
-    "description": "运行项目的全部测试，返回测试结果",
-    "input_schema": {"type": "object", "properties": {}}
-  }
-]'
-
-call_api() {
-  local body resp
-  body=$(jq -n --argjson tools "$TOOLS" --argjson messages "$1" \
-    '{model: "claude-sonnet-5-5-ssvip", max_tokens: 16000, tools: $tools, messages: $messages}')
-  resp=$(curl -s https://www.dmxapi.cn/v1/messages \
-    -H "x-api-key: $API_KEY" \
-    -H "anthropic-version: 2023-06-01" \
-    -H "content-type: application/json" \
-    --data-binary @- <<< "$body")
-  if [ "$(jq -r '.type' <<< "$resp")" != "message" ]; then
-    echo "请求失败：$resp" >&2
-    return 1
-  fi
-  echo "$resp"
-}
-
-MESSAGES='[{"role": "user", "content": "运行项目的测试，告诉我结果。"}]'
-RESP=$(call_api "$MESSAGES")
-
-if [ "$(jq -r '.stop_reason' <<< "$RESP")" = "tool_use" ]; then
-  # tool_result 在前，用户中途说的话放在最后，作为单独的 text 块
-  MESSAGES=$(jq -n --argjson m "$MESSAGES" --argjson r "$RESP" '
-    $m + [
-      {role: "assistant", content: $r.content},
-      {role: "user", content: (
-        [$r.content[] | select(.type == "tool_use")
-          | {type: "tool_result", tool_use_id: .id, content: "12 passed, 1 failed: test_login 断言失败"}]
-        + [{type: "text", text: "另外，测试结果请用表格列出来"}]
-      )}
-    ]')
-  RESP=$(call_api "$MESSAGES")
-fi
-
-jq -r '.content[] | select(.type == "text") | .text' <<< "$RESP"
+curl https://www.dmxapi.cn/v1/messages \
+  -H "x-api-key: YOUR_DMXAPI_KEY" \
+  -H "anthropic-version: 2023-06-01" \
+  -H "content-type: application/json" \
+  -d '{
+  "model": "claude-sonnet-5-5-ssvip",
+  "max_tokens": 16000,
+  "tools": [
+    {
+      "name": "run_tests",
+      "description": "运行项目的全部测试，返回测试结果",
+      "input_schema": {"type": "object", "properties": {}}
+    }
+  ],
+  "messages": [
+    {"role": "user", "content": "运行项目的测试，告诉我结果。"},
+    {
+      "role": "assistant",
+      "content": [
+        {"type": "tool_use", "id": "toolu_01VbXa3P8Kx2DwQeRn5sT7mY", "name": "run_tests", "input": {}}
+      ]
+    },
+    {
+      "role": "user",
+      "content": [
+        {"type": "tool_result", "tool_use_id": "toolu_01VbXa3P8Kx2DwQeRn5sT7mY", "content": "12 passed, 1 failed: test_login 断言失败"},
+        {"type": "text", "text": "另外，测试结果请用表格列出来"}
+      ]
+    }
+  ]
+}'
 ```
 
 :::
@@ -2312,8 +2180,7 @@ curl https://www.dmxapi.cn/v1/messages \
   -H "x-api-key: YOUR_DMXAPI_KEY" \
   -H "anthropic-version: 2023-06-01" \
   -H "content-type: application/json" \
-  --data-binary @- <<'EOF'
-{
+  -d '{
   "model": "claude-sonnet-5-5-ssvip",
   "max_tokens": 16000,
   "system": "你是一个代码审查助手，回答要简洁。",
@@ -2332,8 +2199,7 @@ curl https://www.dmxapi.cn/v1/messages \
     },
     {"role": "system", "content": "从现在开始，所有代码建议都要带上类型注解。"}
   ]
-}
-EOF
+}'
 ```
 
 :::
@@ -2416,8 +2282,7 @@ curl https://www.dmxapi.cn/v1/messages \
   -H "anthropic-version: 2023-06-01" \
   -H "anthropic-beta: mid-conversation-output-config-2026-07-01" \
   -H "content-type: application/json" \
-  --data-binary @- <<'EOF'
-{
+  -d '{
   "model": "claude-sonnet-5-5-ssvip",
   "max_tokens": 16000,
   "output_config": {"effort": "high"},
@@ -2427,8 +2292,7 @@ curl https://www.dmxapi.cn/v1/messages \
     {"role": "system", "content": [], "output_config": {"effort": "low"}},
     {"role": "user", "content": "用一句话总结这个计划。"}
   ]
-}
-EOF
+}'
 ```
 
 :::
@@ -2528,8 +2392,7 @@ curl https://www.dmxapi.cn/v1/messages \
   -H "x-api-key: YOUR_DMXAPI_KEY" \
   -H "anthropic-version: 2023-06-01" \
   -H "content-type: application/json" \
-  --data-binary @- <<'EOF'
-{
+  -d '{
   "model": "claude-sonnet-5-5-ssvip",
   "max_tokens": 16000,
   "thinking": {"type": "adaptive", "display": "summarized"},
@@ -2540,8 +2403,7 @@ curl https://www.dmxapi.cn/v1/messages \
       "content": "一个水池，单开进水管 6 小时注满，单开出水管 8 小时放完。两管同时打开，几小时能把空池注满？"
     }
   ]
-}
-EOF
+}'
 ```
 
 :::
