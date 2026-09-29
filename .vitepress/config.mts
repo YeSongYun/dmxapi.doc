@@ -1260,7 +1260,6 @@ export default defineConfig({
                   // { text: 'Claude-Desktop', link: '/claude_code_desktop' },
                 ],
               },
-              { text: 'cc switch余额查询', link: '/cc-switch-balance-query' },
             ],
           },
           {
@@ -1282,7 +1281,6 @@ export default defineConfig({
                   { text: 'cc switch配置', link: '/cc_switch_to_codex_desktop' },
                 ],
               },
-              { text: 'cc switch余额查询', link: '/cc-switch-balance-query' },
             ],
           },
           {
@@ -1329,6 +1327,7 @@ export default defineConfig({
           { text: 'hermes', link: '/hermes_agent' },
           { text: 'Cursor', link: '/cursor' },
           { text: '沉浸式翻译', link: '/chenjinshifanyi' },
+          { text: 'cc switch余额查询', link: '/cc-switch-balance-query' },
           { text: 'n8n', link: '/n8n' },
           { text: 'Dify', link: '/dify' },
           { text: 'coze', link: '/coze-llm-plug' },
