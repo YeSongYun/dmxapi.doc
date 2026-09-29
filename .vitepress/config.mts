@@ -40,7 +40,7 @@ export default defineConfig({
       { text: '文档首页', link: '/' },
       { text: '联系我们', link: '/lianxi' },
       { text: '|', link: '' },
-      { text: '📗更新', link: 'https://www.dmxapi.cn/weblog' },
+      { text: '📗更新', link: 'https://www.dmxapi.cn/dmxapi/iframe/222d7ede-55d2-41d8-a4e2-f0bc02758962' },
       { text: '💰模型价格', link: 'https://www.dmxapi.cn/rmb' },
       { text: '🐍Claude Code', link: '/claude-code-new' },
       // { text: '🔧模型参数', link: 'http://models.dmxapi.cn/' },
