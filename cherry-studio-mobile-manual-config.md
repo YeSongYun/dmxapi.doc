@@ -7,11 +7,11 @@
 
 ## 快速开始
 ### 第一步 同意隐私与数据
-打开 Cherry Studio 移动端，在 **隐私与数据** 弹窗中点击 **同意并继续**。
+
 <img src="./img/cherry-studio-mobile-manual-config1.png" alt="" width="355">
 
 ### 第二步 连接服务商
-在欢迎页点击 **连接服务商**。
+
 <img src="./img/cherry-studio-mobile-manual-config2.png" alt="" width="355">
 
 ### 第三步 选择 DMXAPI
@@ -20,7 +20,7 @@
 <img src="./img/cherry-studio-mobile-manual-config3.png" alt="" width="355">
 
 ### 第四步 添加密钥
-点击 **添加密钥**。服务地址已自动填写，如需修改，可打开 **高级设置**。
+
 <img src="./img/cherry-studio-mobile-manual-config4.png" alt="" width="355">
 
 ### 第五步 填写 API Key
