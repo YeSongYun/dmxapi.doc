@@ -1,9 +1,5 @@
 # 令牌管理指南
 
-## 令牌概述
-
-令牌（Key）是访问 DMXAPI 服务的凭证，与 OpenAI 官方 API Key 不同。
-
 ## 创建令牌
 
 1. 登录 [www.dmxapi.cn](https://www.dmxapi.cn)

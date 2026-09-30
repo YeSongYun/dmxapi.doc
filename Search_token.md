@@ -10,25 +10,22 @@
 
 ```
 GET   https://www.dmxapi.cn/api/token/
-POST  https://www.dmxapi.cn/api/token/{token_id}/key
 ```
 
 ## 两种查询方式
 
-- 按名称查询：`search_type = "name"`，`search_value` 填完整名称或名称的一部分。
-- 按完整 API Key 查询：`search_type = "key"`，`search_value` 填包含 `sk-` 前缀的完整 Key。
+两种方式各是一个完整脚本，填写系统访问令牌和用户 ID 后即可直接运行：
 
-## Python 示例
+:::: code-group
 
-```python
+```python [按名称查询]
 from datetime import datetime
 import requests
 
 # 只需修改这里
 SYSTEM_TOKEN = "请在这里填写系统访问令牌"
 USER_ID = "请在这里填写用户 ID"
-search_type = "name"  # name：按名称查询；key：按完整 API Key 查询
-search_value = "DMXAPI创建测试"
+search_value = "DMXAPI创建测试"  # 令牌的完整名称或名称的一部分
 
 # 下面无需修改
 BASE_URL = "https://www.dmxapi.cn"
@@ -54,20 +51,10 @@ tokens = requests.get(
     timeout=30,
 ).json()["data"]["items"]
 
-if search_type == "name":
-    tokens = [
-        token for token in tokens
-        if search_value.lower() in str(token.get("name") or "").lower()
-    ]
-elif search_type == "key":
-    raw_key = search_value.removeprefix("sk-")
-    tokens = [
-        token for token in tokens
-        if "*" not in (key := str(token.get("key") or "").removeprefix("sk-"))
-        or (raw_key.startswith(key.partition("*")[0]) and raw_key.endswith(key.rpartition("*")[2]))
-    ]
-else:
-    raise ValueError('search_type 只能填写 "name" 或 "key"')
+tokens = [
+    token for token in tokens
+    if search_value.lower() in str(token.get("name") or "").lower()
+]
 
 def api_key_of(token):
     value = requests.post(
@@ -79,8 +66,6 @@ def api_key_of(token):
 
 
 tokens = [(token, api_key_of(token)) for token in tokens]
-if search_type == "key":
-    tokens = [(token, api_key) for token, api_key in tokens if api_key == search_value]
 
 print(f"找到 {len(tokens)} 个令牌")
 for token, api_key in tokens:
@@ -108,6 +93,87 @@ for token, api_key in tokens:
         "----------------------------------------"
     )
 ```
+
+```python [按完整 API Key 查询]
+from datetime import datetime
+import requests
+
+# 只需修改这里
+SYSTEM_TOKEN = "请在这里填写系统访问令牌"
+USER_ID = "请在这里填写用户 ID"
+search_value = "sk-xxxxxxxxxxxxxxxxxxxxxxxx"  # 包含 sk- 前缀的完整 API Key
+
+# 下面无需修改
+BASE_URL = "https://www.dmxapi.cn"
+headers = {
+    "Authorization": f"Bearer {SYSTEM_TOKEN}",
+    "Dmx-Api-User": str(USER_ID),
+}
+search_value = search_value.strip()
+if not search_value:
+    raise ValueError("请填写搜索内容")
+
+
+def time_text(value):
+    return "永不过期" if value == -1 else (
+        datetime.fromtimestamp(value).astimezone().strftime("%Y-%m-%d %H:%M:%S")
+        if value else "无记录"
+    )
+
+tokens = requests.get(
+    f"{BASE_URL}/api/token/",
+    headers=headers,
+    params={"page": 1, "page_size": 999},
+    timeout=30,
+).json()["data"]["items"]
+
+raw_key = search_value.removeprefix("sk-")
+tokens = [
+    token for token in tokens
+    if "*" not in (key := str(token.get("key") or "").removeprefix("sk-"))
+    or (raw_key.startswith(key.partition("*")[0]) and raw_key.endswith(key.rpartition("*")[2]))
+]
+
+def api_key_of(token):
+    value = requests.post(
+        f"{BASE_URL}/api/token/{token['id']}/key",
+        headers=headers,
+        timeout=30,
+    ).json()["data"]["key"]
+    return value if value.startswith("sk-") else f"sk-{value}"
+
+
+tokens = [(token, api_key_of(token)) for token in tokens]
+tokens = [(token, api_key) for token, api_key in tokens if api_key == search_value]
+
+print(f"找到 {len(tokens)} 个令牌")
+for token, api_key in tokens:
+    remain_quota_text = (
+        "无限额度"
+        if token.get("unlimited_quota")
+        else f"{token.get('remain_quota', 0) / 500000:.4f} CNY"  # 500000 原始额度 = 1 元
+    )
+    model_limits_text = (str(token.get("model_limits") or "").strip() if token.get("model_limits_enabled") else "") or "无限制"
+    allow_ips_text = "、".join(
+        filter(None, map(str.strip, str(token.get("allow_ips") or "").splitlines()))
+    ) or "无限制"
+    print(
+        f"令牌名称：{token.get('name', '')}\n"
+        f"所属用户 ID：{USER_ID}\n"
+        f"状态：{'已启用' if token.get('status') == 1 else '已禁用'}\n"
+        f"API 密钥：{api_key}\n"
+        f"剩余额度：{remain_quota_text}\n"
+        f"消耗额度：{token.get('used_quota', 0) / 500000:.4f} CNY\n"
+        f"模型限制：{model_limits_text}\n"
+        f"IP 限制：{allow_ips_text}\n"
+        f"创建时间：{time_text(token.get('created_time'))}\n"
+        f"最后使用时间：{time_text(token.get('accessed_time'))}\n"
+        f"过期时间：{time_text(token.get('expired_time'))}\n"
+        "----------------------------------------"
+    )
+```
+
+::::
 
 ## 输出示例
 

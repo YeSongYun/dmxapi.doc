@@ -6,7 +6,6 @@
 
 ```
 GET   https://www.dmxapi.cn/api/token/
-POST  https://www.dmxapi.cn/api/token/{token_id}/key
 ```
 
 ::: danger 完整 Key 会直接显示在终端
