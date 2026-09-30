@@ -32,8 +32,7 @@ Claude Sonnet 5.5（模型名 `claude-sonnet-5-5`）于 2026 年 9 月 28 日发
 | 思考（thinking） | 默认开启，由模型自己决定想多少（adaptive） |
 | 默认 effort | `high` |
 | 知识截止 | 2026 年 6 月 |
-| 分词器 | 与 Sonnet 5 相同，同样的文字 token 数不变 |
-| 官方定价 | 与 Sonnet 5 相同 |
+
 
 ## 二、先弄懂 5 个概念
 
@@ -1339,8 +1338,7 @@ payload = {
         {
             "type": "advisor_20260301",
             "name": "advisor",
-            "model": "claude-opus-5-5",  # 顾问写官方模型名，不加 -ssvip；不能再用 claude-opus-4-8、claude-opus-4-7、claude-sonnet-5
-        }
+            "model": "claude-opus-5-5",  # 顾问写官方模型名
     ],
     "messages": [
         {"role": "user", "content": "用 Go 写一个支持优雅退出的并发 worker 池，并说明设计思路。"}
@@ -1376,9 +1374,7 @@ response = client.beta.messages.create(
         {
             "type": "advisor_20260301",
             "name": "advisor",
-            "model": "claude-opus-5-5",  # 顾问写官方模型名，不加 -ssvip；不能再用 claude-opus-4-8、claude-opus-4-7、claude-sonnet-5
-        }
-    ],
+            "model": "claude-opus-5-5",  # 顾问写官方模型
     messages=[
         {"role": "user", "content": "用 Go 写一个支持优雅退出的并发 worker 池，并说明设计思路。"}
     ],
@@ -2294,234 +2290,9 @@ curl https://www.dmxapi.cn/v1/messages \
   ]
 }'
 ```
-
 :::
 
-## 八、从更老的模型升级
-
-如果你是从 Sonnet 4.6、Sonnet 4.5 或 Haiku 4.5 升级，除了前面七节，还要处理下面这些变化。这些限制在 Sonnet 5 上就已经存在，所以从 Sonnet 5 升级的项目可以跳过这一节。
-
-### 1. 从 Sonnet 4.6 或更早的模型升级
-
-**不写 thinking 也会思考。** 以前不写 `thinking` 参数，模型就不思考；现在默认会思考，响应开头可能出现 `thinking` 块。所以要做三件事：按块的 `type` 读取正文；把 thinking 块原样放回历史；调大 `max_tokens`，给思考留出空间。
-
-**思考预算 budget_tokens 会报错。** 以前的写法 `"thinking": {"type": "enabled", "budget_tokens": 10000}` 会返回 400：
-
-```text
-"thinking.type.enabled" is not supported for this model. Use "thinking.type.adaptive" and "output_config.effort" to control thinking behavior.
-```
-
-改成自适应思考 `{"type": "adaptive"}` 加 effort。预算和 effort 之间没有固定的换算关系，建议用两三个档位分别测试效果。
-
-**temperature、top_p、top_k 会报错。** 设置成非默认值就会返回 400，直接删掉即可。想调整语气或风格，写在提示词里。
-
-**思考内容默认不返回。** thinking 块的内容默认是空字符串。需要展示思考摘要时，在 `thinking` 里加上 `"display": "summarized"`。
-
-下面的完整示例同时用上了这两处改法：用自适应思考加 effort 代替思考预算，并打开思考摘要：
-
-::: code-group
-
-```python [requests]
-import requests
-
-API_KEY = "YOUR_DMXAPI_KEY"  # 替换为你的 DMXAPI 令牌
-URL = "https://www.dmxapi.cn/v1/messages"
-HEADERS = {
-    "x-api-key": API_KEY,
-    "anthropic-version": "2023-06-01",
-    "content-type": "application/json",
-}
-
-payload = {
-    "model": "claude-sonnet-5-5-ssvip",
-    "max_tokens": 16000,
-    # 以前写 {"type": "enabled", "budget_tokens": 10000}，现在改成自适应思考 + effort
-    "thinking": {"type": "adaptive", "display": "summarized"},  # summarized：返回思考摘要
-    "output_config": {"effort": "high"},                          # 也可以是 low、medium、xhigh、max
-    "messages": [
-        {
-            "role": "user",
-            "content": "一个水池，单开进水管 6 小时注满，单开出水管 8 小时放完。两管同时打开，几小时能把空池注满？",
-        }
-    ],
-}
-
-response = requests.post(URL, headers=HEADERS, json=payload, timeout=600)
-if response.status_code != 200:
-    raise SystemExit(f"请求失败（HTTP {response.status_code}）：{response.text}")
-data = response.json()
-
-for block in data["content"]:
-    if block["type"] == "thinking" and block["thinking"]:
-        print("【思考摘要】", block["thinking"])
-    elif block["type"] == "text":
-        print("【回答】", block["text"])
-```
-
-```python [SDK]
-import anthropic
-
-client = anthropic.Anthropic(
-    api_key="YOUR_DMXAPI_KEY",  # 替换为你的 DMXAPI 令牌
-    base_url="https://www.dmxapi.cn",
-)
-
-response = client.messages.create(
-    model="claude-sonnet-5-5-ssvip",
-    max_tokens=16000,
-    # 以前写 {"type": "enabled", "budget_tokens": 10000}，现在改成自适应思考 + effort
-    thinking={"type": "adaptive", "display": "summarized"},  # summarized：返回思考摘要
-    output_config={"effort": "high"},                          # 也可以是 low、medium、xhigh、max
-    messages=[
-        {
-            "role": "user",
-            "content": "一个水池，单开进水管 6 小时注满，单开出水管 8 小时放完。两管同时打开，几小时能把空池注满？",
-        }
-    ],
-)
-
-for block in response.content:
-    if block.type == "thinking" and block.thinking:
-        print("【思考摘要】", block.thinking)
-    elif block.type == "text":
-        print("【回答】", block.text)
-```
-
-```bash [cURL]
-curl https://www.dmxapi.cn/v1/messages \
-  -H "x-api-key: YOUR_DMXAPI_KEY" \
-  -H "anthropic-version: 2023-06-01" \
-  -H "content-type: application/json" \
-  -d '{
-  "model": "claude-sonnet-5-5-ssvip",
-  "max_tokens": 16000,
-  "thinking": {"type": "adaptive", "display": "summarized"},
-  "output_config": {"effort": "high"},
-  "messages": [
-    {
-      "role": "user",
-      "content": "一个水池，单开进水管 6 小时注满，单开出水管 8 小时放完。两管同时打开，几小时能把空池注满？"
-    }
-  ]
-}'
-```
-
-:::
-
-**同样的文字，token 数多约 30%。** Sonnet 5.5 使用新的分词器，和 Sonnet 4.6、Sonnet 4.5、Haiku 4.5 相比，同样的文字大约多出 30% 的 token（具体取决于内容）。要重新估算 `max_tokens` 和成本，可以用 `/v1/messages/count_tokens` 接口实际计数。
-
-**图片消耗的 token 可能更多。** Sonnet 5.5 支持更高分辨率的图片：长边最多 2576 像素，每张最多约 4784 个 token；以前最多 1568 像素、1568 个 token。一张 2000×1500 的图片，token 大约是以前的 2.5 倍。不需要高清细节时，发送前先把图片缩小。
-
-**新增网络安全方面的拒答。** 以前不会遇到这类拒答，处理方法见第六节第 2 点。
-
-### 2. 从 Sonnet 4.5 或更早的模型升级
-
-**预填（prefill）会报错。** 以前可以在 `messages` 的最后放一条 assistant 消息，让模型接着往下写。现在会返回 400：
-
-```text
-This model does not support assistant message prefill. The conversation must end with a user message.
-```
-
-按原来的用途替换：
-
-| 原来用 prefill 做什么 | 现在的做法 |
-| --- | --- |
-| 控制输出格式，比如让回复以 `{` 开头输出 JSON | 使用结构化输出 `output_config.format`（写法见第四节第 2 点） |
-| 跳过开场白 | 在 system 提示词里要求直接回答 |
-| 避免不必要的拒答 | 在 user 消息里把要求写清楚，通常就够了 |
-| 续写被中断的回答 | 放到 user 消息里，例如 “Your previous response was interrupted and ended with `[previous_response]`. Continue from where you left off.” |
-| 提醒上下文 | 放进 user 消息 |
-
-**output_format 参数已弃用。** 改用 `output_config.format`。如果继续用 `output_format`，必须开启 beta `structured-outputs-2025-11-13`，否则返回 400。
-
-**旧版 computer use 工具 `computer_20250124` 不再支持。** 改法见第四节第 4 点。
-
-**工具参数要用 JSON 解析器处理。** 工具调用参数里字符的转义方式可能和以前不同，要用 `json.loads` 这类标准方法解析，不要直接对原始字符串做匹配。
-
-**要显式设置 effort。** Sonnet 4.5 没有 effort 参数，升级后记得在 `output_config` 里写上。
-
-**清理旧的 beta。**
-
-- 删掉上下文窗口相关的 beta，1M 上下文已经不需要 beta。
-- 删掉 `interleaved-thinking-2025-05-14`，现在工具调用之间会自动思考。
-- `fine-grained-tool-streaming-2025-05-14` 换成在需要的工具定义上写 `"eager_input_streaming": true`。
-
-### 3. 从 Sonnet 4 或 Claude 3.7 Sonnet 升级
-
-- 工具版本更新：文本编辑工具用 `text_editor_20250728`（工具名 `str_replace_based_edit_tool`，没有 `undo_edit` 命令）；代码执行工具用 `code_execution_20260521`。
-- 处理两种停止原因：`refusal`（拒答）和 `model_context_window_exceeded`（上下文用满）。
-- 工具调用的字符串参数会保留结尾的换行符，检查依赖这一点的代码。
-- 删掉旧的 beta：`token-efficient-tools-2025-02-19`、`output-128k-2025-02-19`。
-- 对照官方的提示词最佳实践，把提示词检查一遍。
-
-### 4. 从 Haiku 4.5 升级
-
-先做完上面第 1、2 小节（第 3 小节不用做），再做下面几项：
-
-- 模型名 `claude-haiku-4-5-20251001`（或 `claude-haiku-4-5`）改成 `claude-sonnet-5-5`。
-- 单价更高，同样的文字 token 也更多，要重新估算成本。
-- 能缓存的最短长度从 4096 token 降到 512 token，以前太短缓存不了的提示词，现在可以缓存了。
-- 工具调用之间的思考会自动进行，不需要开启任何 beta。
-- Sonnet 5.5 能读 Haiku 4.5 的 thinking 块，从 Haiku 升到 Sonnet 5.5 的对话能保留推理；反过来，从 Sonnet 5.5 降回 Haiku 4.5，Sonnet 5.5 的 thinking 块会被丢掉。
-
-## 九、升级检查清单
-
-下面是官方迁移检查清单，共 30 项，分成 5 组。从第 1 组往下做，做到你的起始模型对应的那一组为止：
-
-| 起始模型 | 要做的组 |
-| --- | --- |
-| Sonnet 5 | 第 1 组 |
-| Sonnet 4.6 | 第 1、2 组 |
-| Sonnet 4.5 | 第 1、2、3 组 |
-| Sonnet 4、Claude 3.7 Sonnet | 第 1、2、3、4 组 |
-| Haiku 4.5 | 第 1、2、3、5 组 |
-
-**第 1 组：所有项目都要做（10 项）**
-
-1. 模型名改成 `claude-sonnet-5-5`，没有日期后缀。
-2. 按 `type` 读取内容块，thinking 块原样放回历史。
-3. 需要关闭思考时，改用 `between_tools`，effort 不超过 `high`。
-4. 强制工具调用改成 `auto` 加 strict 工具。
-5. 对话历史只追加、不修改。
-6. computer use 换成 `computer_toolset_20260801`，并删掉 `fine-grained-tool-streaming-2025-05-14`。
-7. advisor 工具换成支持的顾问，并接受顾问建议是加密的。
-8. 从 thinking 块读取工具调用之间的说明文字。
-9. 处理拒答，按需配置回退。
-10. 重新测试 effort 档位，重新估算成本。
-
-**第 2 组：从 Sonnet 4.6 或更早升级（5 项）**
-
-11. 不写 thinking 也会思考，调大 `max_tokens`。
-12. 思考预算 `budget_tokens` 改成 effort。
-13. 删掉非默认的 `temperature`、`top_p`、`top_k`。
-14. 需要展示思考内容时，设置 `display: "summarized"`。
-15. 重新计算 token 数，重新估算图片的 token。
-
-**第 3 组：从 Sonnet 4.5 或更早升级（7 项）**
-
-16. 替换 prefill。
-17. 用标准 JSON 解析器处理工具参数。
-18. 把 `computer_20250124` 换成新的工具集。
-19. 显式设置 `output_config.effort`。
-20. 删掉上下文窗口相关的 beta。
-21. 删掉 `interleaved-thinking-2025-05-14`，把 `fine-grained-tool-streaming-2025-05-14` 换成 `eager_input_streaming`。
-22. `output_format` 改成 `output_config.format`。
-
-**第 4 组：从 Sonnet 4 或 Claude 3.7 Sonnet 升级（5 项）**
-
-23. 工具版本更新到 `text_editor_20250728` 和 `code_execution_20260521`。
-24. 处理 `refusal` 和 `model_context_window_exceeded` 两种停止原因。
-25. 检查工具字符串参数结尾的换行符。
-26. 删掉 `token-efficient-tools-2025-02-19` 和 `output-128k-2025-02-19`。
-27. 检查一遍提示词。
-
-**第 5 组：只针对 Haiku 4.5（3 项）**
-
-28. 替换 `claude-haiku-4-5-20251001` 或它的别名 `claude-haiku-4-5`。
-29. 按更高的单价重新估算成本。
-30. 检查以前因为太短而没法缓存的提示词。
-
-## 十、常见报错速查
+## 八、常见报错速查
 
 | 报错信息 | 原因 | 解决办法 |
 | --- | --- | --- |
