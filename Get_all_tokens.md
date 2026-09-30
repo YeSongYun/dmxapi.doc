@@ -1,6 +1,6 @@
 # 获取所有令牌
 
-获取当前账号下API Key 令牌信息，包括状态、API 密钥、剩余额度、消耗额度、模型限制IP限制、令牌限流、创建时间、最后使用时间、过期时间的令牌信息。
+获取当前账号下API Key 令牌信息，包括状态、API 密钥、剩余额度、消耗额度、模型限制、IP限制、令牌限流、创建时间、最后使用时间、过期时间等令牌信息。
 
 ## 📌 接口地址
 
@@ -8,9 +8,6 @@
 GET   https://www.dmxapi.cn/api/token/
 POST  https://www.dmxapi.cn/api/token/{token_id}/key
 ```
-
-- 认证：`SYSTEM_TOKEN` + `USER_ID`，详见 [系统令牌与用户 ID](security_token_ID.md)
-- 完整 Key：`POST` 响应中的 `data.key`
 
 ::: danger 完整 Key 会直接显示在终端
 将 `MASK_KEYS` 改为 `False` 后，请只在可信终端运行，不要截图、分享或记录输出。
@@ -29,7 +26,7 @@ SYSTEM_TOKEN = "请在这里填写系统访问令牌"  # 管理接口使用的�
 USER_ID = "请在这里填写用户 ID"  # 与系统访问令牌同账号的用户 ID
 MASK_KEYS = False  # True 显示脱敏 Key；False 显示完整 Key
 PAGE = 1  # 要查看的页码
-PAGE_SIZE =10   # 每页显示条数
+PAGE_SIZE = 10  # 每页显示条数，注意这里最高只能填写100
 
 # 下面无需修改
 BASE_URL = "https://www.dmxapi.cn"
@@ -40,7 +37,7 @@ headers = {
 
 def time_text(value):
     return "永不过期" if value == -1 else (
-        datetime.fromtimestamp(value).astimezone().strftime("%Y-%m-%d %H:%M:%S %z")
+        datetime.fromtimestamp(value).astimezone().strftime("%Y-%m-%d %H:%M:%S")
         if value else "无记录"
     )
 
@@ -113,8 +110,8 @@ API 密钥：sk-4Exb**********iVaU
 模型限制：无限制
 IP 限制：无限制
 令牌限流：无限制
-创建时间：2026-07-13 19:03:26 +0800
-最后使用时间：2026-07-18 16:19:20 +0800
+创建时间：2026-07-13 19:03:26
+最后使用时间：2026-07-18 16:19:20
 过期时间：永不过期
 ----------------------------------------
 ----------------------------------------
@@ -122,7 +119,7 @@ IP 限制：无限制
 
 `MASK_KEYS=True` 时显示列表接口返回的脱敏 Key；改为 `False` 后，只有”API 密钥”一行会显示完整值，并且每个令牌会增加一次单令牌 Key 请求（每两个请求间隔 1 秒以控制限流）。
 
-`PAGE` 和 `PAGE_SIZE` 控制分页，请求直接按参数分页获取，不会全量拉取后再本地截取。
+`PAGE` 和 `PAGE_SIZE` 控制分页，脚本一次性获取全部令牌后在本地分页显示。
 
 <p align="center">
   <small>© 2026 DMXAPI 获取所有令牌</small>

@@ -5,12 +5,8 @@
 ## 📌 接口地址
 
 ```
-https://www.dmxapi.cn/api/token/
+POST  https://www.dmxapi.cn/api/token/
 ```
-
-- 请求方式：`POST`
-- 认证：`SYSTEM_TOKEN` + `USER_ID`，详见 [系统令牌与用户 ID](security_token_ID.md)
-
 
 ## Python 示例
 

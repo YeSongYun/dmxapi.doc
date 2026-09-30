@@ -1,6 +1,6 @@
 # 消耗细化查询
 
-获取当前账号指定时间范围内的 API 消费日志，包括令牌、模型、Token、人民币消耗、耗时和请求 ID。请求发送到 DMXAPI 代理平台的管理接口；脚本固仅查用户消费日志并以一次性获取时间范围内的全部记录，不做分页截断，再生成包含汇总表和逐条详情的 TXT 报告。
+获取当前账号指定时间范围内的 API 消费日志，包括令牌、模型、Token、人民币消耗、耗时和请求 ID。请求发送到 DMXAPI 代理平台的管理接口；脚本仅查询用户消费日志，一次性获取时间范围内的全部记录，不做分页截断，并生成包含汇总表和逐条详情的 TXT 报告。
 
 ## 总消耗查询内容在DMXAPI的位置
 
@@ -12,10 +12,8 @@
 https://www.dmxapi.cn/api/log/self
 ```
 
-- 请求方式：`GET`
-
-:::warning 认证格式
-本接口通过 `Authorization: Bearer {SYSTEM_TOKEN}` 认证,`SYSTEM_TOKEN` 的获取方式详见 [系统令牌与用户 ID](security_token_ID.md)。请不要在公开代码、截图、日志或客户端输出中暴露真实令牌，运行代码前必须替换为自己的令牌。
+:::warning 需要系统令牌
+本接口通过 `Authorization: Bearer {SYSTEM_TOKEN}` 认证，需配合 Bearer 前缀使用，`SYSTEM_TOKEN` 的获取方式详见 [系统令牌与用户 ID](security_token_ID.md)。请不要在公开代码、截图、日志或客户端输出中暴露真实令牌，运行代码前必须替换为自己的令牌。
 :::
 
 ## 代码示例
@@ -23,9 +21,9 @@ https://www.dmxapi.cn/api/log/self
 |------|------|------|
 | `today` | 今天 `00:00:00` | 今天 `23:59:59` |
 | `yesterday` | 昨天 `00:00:00` | 昨天 `23:59:59` |
-| `week` | 最近 7 天（含今天）起 `00:00:00` | 今天 `23:59:59` |
-| `month` | 最近 30 天（含今天）起 `00:00:00` | 今天 `23:59:59` |
-| `custom` | `CUSTOM_START_TIME` | `CUSTOM_END_TIME` |
+| `week` | 七天前 `00:00:00` | 今天 `23:59:59` |
+| `month` | 三十天前 `00:00:00` | 今天 `23:59:59` |
+| `custom` | 自定义开始时间 | 自定义结束时间 |
 
 ### 请求代码
 
@@ -42,7 +40,7 @@ import requests
 
 
 # 只需修改这里
-ACCESS_TOKEN = "***********************************************"  # 系统令牌 SYSTEM_TOKEN（需配合 Bearer 前缀使用）
+ACCESS_TOKEN = "***********************************************"  # 系统令牌 SYSTEM_TOKEN
 QUERY_MODE = "month"  # 默认最近 30 天；也可选 today、yesterday、week、custom
 CUSTOM_START_TIME = "2025-01-01 00:00:00"  # custom 模式的开始时间
 CUSTOM_END_TIME = "2025-01-01 23:59:59"  # custom 模式的结束时间
@@ -186,7 +184,7 @@ def build_details(report_logs: list[dict]) -> str:
     for index, item in enumerate(report_logs, start=1):
         created_at = item.get("created_at", 0)
         created_at_detail = (
-            datetime.fromtimestamp(created_at).astimezone().strftime("%Y-%m-%d %H:%M:%S %z")
+            datetime.fromtimestamp(created_at).astimezone().strftime("%Y-%m-%d %H:%M:%S")
             if created_at
             else "无记录"
         )

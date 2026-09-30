@@ -1,5 +1,7 @@
 # 总消耗 日志查询
 
+使用该接口将返回指定时间范围内的 API 总消耗统计，包括总消耗额度、每分钟请求数（RPM）、每分钟 Token 数（TPM）指标。
+
 ## 总消耗查询内容在DMXAPI的位置
 
 ![log_query](img/log_query_01.png)
@@ -11,7 +13,7 @@ https://www.dmxapi.cn/api/log/self/stat
 ```
 
 ::: warning 日志接口认证格式
-`Authorization` 直接填写 `SYSTEM_TOKEN`，不带 `Bearer` 前缀；这与令牌管理接口不同。
+需要填写系统令牌，`Authorization` 直接填写 `SYSTEM_TOKEN`，不带 `Bearer` 前缀；这与令牌管理接口不同。
 :::
 
 ## 代码示例
@@ -21,7 +23,7 @@ https://www.dmxapi.cn/api/log/self/stat
                            API 总消耗统计查询工具
 ================================================================================
 功能描述: 查询 dmxapi.cn 平台的 API 使用统计数据，包括总消耗额度、
-         请求频率(RPM)、Token消耗(TPM)、消息数量(MPM)等指标。
+         请求频率(RPM)、Token消耗(TPM)等指标。
 使用方法:
     1. 配置 SYSTEM_TOKEN 和 USER_ID
     2. 运行脚本: python 总消耗查询.py
@@ -31,7 +33,6 @@ https://www.dmxapi.cn/api/log/self/stat
     - quota : 总消耗额度
     - rpm   : Requests Per Minute  - 每分钟请求数
     - tpm   : Tokens Per Minute    - 每分钟 Token 消耗数
-    - mpm   : Messages Per Minute  - 每分钟消息数
 
 ================================================================================
 """
@@ -48,7 +49,7 @@ BASE_URL = "https://www.dmxapi.cn"
 # 认证信息配置 (请替换为你自己的信息)
 # ------------------------------------------------------------------------------
 # SYSTEM_TOKEN: 系统访问令牌，用于平台管理接口认证
-#               获取方式: 登录 dmxapi.cn -> 个人资料 -> 安全 -> 访问令牌
+#               获取方式: 登录 dmxapi.cn -> 安全与访问 -> 访问令牌
 SYSTEM_TOKEN = "YOUR_SYSTEM_TOKEN"  # 替换为你的系统令牌
 
 # USER_ID: 用户唯一标识
@@ -98,8 +99,7 @@ def get_stat_data(start_timestamp: int, end_timestamp: int, log_type: int = 0,
               {
                   "quota": int,  # 总消耗额度 
                   "rpm": int,    # 每分钟请求数
-                  "tpm": int,    # 每分钟 Token 数
-                  "mpm": int     # 每分钟消息数
+                  "tpm": int     # 每分钟 Token 数
               }
               请求失败时返回空字典 {}
 
@@ -158,7 +158,7 @@ def print_stat(data: dict, start_datetime: datetime, end_datetime: datetime):
 
     Args:
         data (dict):           API 返回的统计数据字典
-                               必须包含: quota, rpm, tpm, mpm 字段
+                               必须包含: quota, rpm, tpm 字段
         start_datetime (datetime): 查询开始时间
         end_datetime (datetime):   查询结束时间
 
@@ -176,7 +176,6 @@ def print_stat(data: dict, start_datetime: datetime, end_datetime: datetime):
         --------------------------------------------------
           每分钟请求数 (RPM): XXX
           每分钟Token数 (TPM): XXXXXXX
-          每分钟消息数 (MPM): XXXXXXX
         ==================================================
     """
     # -------------------------------------------------------------------------
@@ -210,7 +209,6 @@ def print_stat(data: dict, start_datetime: datetime, end_datetime: datetime):
     print("-" * 50)
     print(f"  每分钟请求数 (RPM): {data.get('rpm', 0)}")
     print(f"  每分钟Token数 (TPM): {data.get('tpm', 0)}")
-    print(f"  每分钟消息数 (MPM): {data.get('mpm', 0)}")
     print("=" * 50)
 
 
@@ -320,7 +318,6 @@ if __name__ == "__main__":
 --------------------------------------------------
   每分钟请求数 (RPM): 0
   每分钟Token数 (TPM): 0
-  每分钟消息数 (MPM): 0
 ==================================================
 ```
 

@@ -13,9 +13,6 @@ GET   https://www.dmxapi.cn/api/token/
 POST  https://www.dmxapi.cn/api/token/batch
 ```
 
-- 认证：`SYSTEM_TOKEN` + `USER_ID`，详见 [系统令牌与用户 ID](security_token_ID.md)
-
-
 ## 一、查询要删除的令牌 ID
 
 填写系统访问令牌和用户 ID 后运行：

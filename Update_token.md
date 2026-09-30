@@ -20,8 +20,6 @@ GET   https://www.dmxapi.cn/api/token/{token_id}    # 读取当前配置，构�
 POST  https://www.dmxapi.cn/api/token/{token_id}/key # 更新后读取完整 API Key
 ```
 
-- 认证：`SYSTEM_TOKEN` + `USER_ID`，详见 [系统令牌与用户 ID](security_token_ID.md)
-
 ## 一、查询要更新的令牌 ID
 
 先列出当前账号下的令牌，从结果中找到要更新的 `token_id`。
@@ -107,7 +105,7 @@ def time_text(value):
         return "永不过期"
     if not value:
         return "无记录"
-    return datetime.fromtimestamp(value).astimezone().strftime("%Y-%m-%d %H:%M:%S %z")
+    return datetime.fromtimestamp(value).astimezone().strftime("%Y-%m-%d %H:%M:%S")
 
 
 response = requests.get(
@@ -201,8 +199,8 @@ API 密钥：<此处会显示完整 API Key>
 消耗额度：1.0000 CNY
 模型限制：无限制
 IP 限制：无限制
-创建时间：2026-07-27 10:00:00 +0800
-最后使用时间：2026-07-27 10:15:00 +0800
+创建时间：2026-07-27 10:00:00
+最后使用时间：2026-07-27 10:15:00
 过期时间：永不过期
 ----------------------------------------
 ```
