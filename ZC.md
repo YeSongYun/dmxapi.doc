@@ -4,7 +4,7 @@
 
 ## 网址
 
-https://www.dmxapi.cn/
+https://www.dmxapi.cn
 
 ## 注册方法
 

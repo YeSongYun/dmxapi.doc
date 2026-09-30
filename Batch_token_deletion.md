@@ -9,7 +9,6 @@
 ## 📌 接口地址
 
 ```
-GET   https://www.dmxapi.cn/api/token/
 POST  https://www.dmxapi.cn/api/token/batch
 ```
 

@@ -38,19 +38,19 @@
 
 <details>
 <summary>我注册了，key 在哪？</summary>
-注册登录 `www.DMXAPI.cn`，点击顶部「工作台」→「令牌」即可查看。
+注册登录 `www.DMXAPI.cn`，点击顶部「工作台」→「API 令牌」即可查看。
 </details>
 
 <details>
 <summary>如何新建令牌 key？</summary>
-注册登录，进入「工作台」→「令牌页面」→ 点击「添加令牌」按钮。
+注册登录，进入「工作台」→「API 令牌」→ 点击右上角「+ 创建 API 密钥」按钮。
 
-<img src="/img/create-key.png" alt="新建令牌" width="560">
+<img src="/img/lingpai_new_02.png" alt="新建令牌" width="560">
 </details>
 
 <details>
 <summary>如何获取 OpenAI / Claude / Gemini 的 Key？</summary>
-Key 就是令牌。注册登录 DMXAPI 后，在左侧「令牌」菜单中点击「添加令牌」，填写一个自定义令牌名称即可。该 key 可用于 GPT 系列、Claude 系列、Gemini 系列模型。
+Key 就是令牌。注册登录 DMXAPI 后，进入「工作台」→「API 令牌」，点击右上角「+ 创建 API 密钥」，填写一个自定义令牌名称即可。该 key 可用于 GPT 系列、Claude 系列、Gemini 系列模型。
 </details>
 
 <details>
