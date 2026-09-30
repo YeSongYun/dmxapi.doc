@@ -24,13 +24,9 @@ https://www.deepseek.com/download/
 
 ### 1. 选择「添加 API Key」
 
-在欢迎界面点击 **添加 API Key**。
-
 ![deepseek-harness](img/deepseek-harness-desktop1.png)
 
 ### 2. 点击「稍后配置」
-
-此处填写的是 DeepSeek 官方密钥，我们暂不填写，直接点击 **稍后配置**，后续使用自定义模型 API 接入 DMXAPI。
 
 ![deepseek-harness](img/deepseek-harness-desktop2.png)
 
@@ -45,9 +41,6 @@ DeepSeek Harness 支持自定义模型 API，下面分别演示 **Chat Completio
 ![deepseek-harness](img/deepseek-harness-desktop3.png)
 
 ### 2. 点击「添加模型提供商」
-
-1. 在设置左侧菜单点击 **模型**
-2. 点击下方的 **+ 添加模型提供商**
 
 ![deepseek-harness](img/deepseek-harness-desktop4.png)
 
