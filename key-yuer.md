@@ -1,6 +1,6 @@
 # 查询令牌余额
 
-填写 DMXAPI API Key、系统访问令牌和用户 ID。脚本会读取令牌并查找匹配项，只显示令牌名称、状态、已用额度、剩余额度。
+填写 DMXAPI API Key、系统访问令牌和用户 ID。脚本会读取令牌并查找匹配项，只显示令牌名称、状态、已用额度、剩余额度和过期时间。
 
 ::: warning 凭据需要属于同一账号
 完整 API Key 只在本地转换为脱敏形式，不会作为查询参数发送。
@@ -9,11 +9,8 @@
 ## 📌 接口地址
 
 ```
-https://www.dmxapi.cn/api/token/
+GET   https://www.dmxapi.cn/api/token/
 ```
-
-- 请求方式：`GET`
-- 认证：`SYSTEM_TOKEN` + `USER_ID`，详见 [系统令牌与用户 ID](security_token_ID.md)
 
 ## Python 示例
 
@@ -35,7 +32,7 @@ headers = {
 
 def time_text(value):
     return "永不过期" if value == -1 else (
-        datetime.fromtimestamp(value).astimezone().strftime("%Y-%m-%d %H:%M:%S %z")
+        datetime.fromtimestamp(value).astimezone().strftime("%Y-%m-%d %H:%M:%S")
         if value else "无记录"
     )
 
