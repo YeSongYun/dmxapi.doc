@@ -8,8 +8,7 @@ Claude Sonnet 5.5（模型名 `claude-sonnet-5-5`）于 2026 年 9 月 28 日发
 
 ::: tip
 - 从 Sonnet 5 升级：按顺序读第一节到第七节。
-- 从 Sonnet 4.6、Sonnet 4.5 或 Haiku 4.5 升级：还要再读第八节。
-- 改完代码后，用第九节的检查清单逐项核对；遇到报错，查第十节。
+- 改完代码后遇到报错，查第八节的报错速查表。
 :::
 
 ::: info 关于本文的示例代码
@@ -169,7 +168,7 @@ curl https://www.dmxapi.cn/v1/messages \
   4. 强制工具调用
   5. `thinking: {"type": "disabled"}`
 
-  前三样在 Sonnet 5 上就已经不能用了，只有从更老的模型升级才会遇到，在第八节讲；后两样是 Sonnet 5.5 新增的限制，在下一节讲。
+  前三样在 Sonnet 5 上就已经不能用了，只有从更老的模型升级才会遇到，对应的报错见第八节；后两样是 Sonnet 5.5 新增的限制，在下一节讲。
 
 ## 四、五个破坏性更新
 
@@ -1339,6 +1338,7 @@ payload = {
             "type": "advisor_20260301",
             "name": "advisor",
             "model": "claude-opus-5-5",  # 顾问写官方模型名
+        }
     ],
     "messages": [
         {"role": "user", "content": "用 Go 写一个支持优雅退出的并发 worker 池，并说明设计思路。"}
@@ -1374,7 +1374,9 @@ response = client.beta.messages.create(
         {
             "type": "advisor_20260301",
             "name": "advisor",
-            "model": "claude-opus-5-5",  # 顾问写官方模型
+            "model": "claude-opus-5-5",  # 顾问写官方模型名
+        }
+    ],
     messages=[
         {"role": "user", "content": "用 Go 写一个支持优雅退出的并发 worker 池，并说明设计思路。"}
     ],
@@ -1881,7 +1883,7 @@ curl https://www.dmxapi.cn/v1/messages \
 拒答没有对应到具体类别时，`category` 为 `null`，这是正常情况。`explanation` 是给人看的说明，文字可能会变，只用来展示，不要拿它做判断。
 
 ::: tip
-- 提示词里如果要求模型“把推理过程写出来”，要删掉，否则容易触发 `reasoning_extraction` 拒答。需要看推理过程时，改用 `"thinking": {"type": "adaptive", "display": "summarized"}`，从 thinking 块里读取思考摘要（示例见第八节第 1 点）。
+- 提示词里如果要求模型“把推理过程写出来”，要删掉，否则容易触发 `reasoning_extraction` 拒答。需要看推理过程时，改用 `"thinking": {"type": "adaptive", "display": "summarized"}`，从 thinking 块里读取思考摘要。
 - 官方还提供了自动回退功能：请求被拒答时，自动换一个模型重试。对 Sonnet 5.5 来说，只有 `cyber` 和 `frontier_llm` 两类会回退到 Sonnet 5，其余三类不会回退。
 :::
 
@@ -2304,7 +2306,7 @@ curl https://www.dmxapi.cn/v1/messages \
 | `tool_choice: type "tool" and "any" are not supported for this model.` | 强制工具调用 | 改用 `auto` 加 strict |
 | ``Invalid `signature` in `thinking` block. The block is bound to a different conversation...`` | 改过对话历史后，又发回了 thinking 块 | 历史只追加；临时可以删掉所有 thinking 块再重试一次 |
 | `'claude-sonnet-5-5' does not support tool types: computer_20251124.` | 用了旧版 computer use 工具 | 换成 `computer_toolset_20260801` |
-| `This model does not support assistant message prefill...` | 用了预填（prefill） | 按用途替换，见第八节第 2 点 |
+| `This model does not support assistant message prefill...` | 用了预填（prefill） | 删掉末尾的 assistant 消息，让对话以 user 消息结尾；要固定输出格式，改用结构化输出（见第四节第 2 点） |
 
 另外还有两种情况也会返回 400，但官方没有公布具体的报错文字：`temperature`、`top_p`、`top_k` 设置了非默认值；advisor 工具用了 Sonnet 5.5 不支持的顾问模型。
 
