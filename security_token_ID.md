@@ -1,4 +1,4 @@
-# 系统令牌的创建和用户 ID 的查找
+# 如何创建系统令牌和查找用户ID
 
 调用平台管理接口时需要两个关键参数：**系统令牌（SYSTEM_TOKEN）** 和 **用户 ID（USER_ID）**。本文演示如何在 DMXAPI 后台获取这两个参数。
 
@@ -13,7 +13,7 @@ https://www.dmxapi.cn/profile
 
 ## 一、创建系统令牌
 
-### 1. 进入访问令牌管理
+### 1. 进入安全与访问
 
 登录 DMXAPI 后进入 **个人资料**，在「安全」卡片中点击 **访问令牌**（生成和管理您的 API 访问令牌）。
 
@@ -34,15 +34,15 @@ https://www.dmxapi.cn/profile
 
 ## 普通令牌管理接口认证头
 
-创建、列表、搜索、更新和删除令牌时，使用下面的认证头：
+创建令牌、获取所有令牌、搜索令牌、更新令牌和删除令牌时，使用下面的认证头：
 
 ```http
 Authorization: Bearer YOUR_SYSTEM_TOKEN
 Dmx-Api-User: YOUR_USER_ID
 ```
 
-其中 `Authorization` 和 `Dmx-Api-User` 用于认证；
-`YOUR_SYSTEM_TOKEN` 和 `YOUR_USER_ID` 分别替换为你自己的系统令牌和用户 ID。
+其中 `Authorization` 和 `Dmx-Api-User` 是请求头的变量名，保持不变；只需将 `YOUR_SYSTEM_TOKEN` 和 `YOUR_USER_ID` 分别替换为你自己的系统令牌和用户 ID。
+
 ## 二、查看用户 ID
 
 点击左侧菜单的 **个人资料**，页面顶部的「用户 ID」即为你的 USER_ID。
@@ -50,5 +50,5 @@ Dmx-Api-User: YOUR_USER_ID
 ![security_token_ID](img/ID.png)
 
 <p align="center">
-  <small>© 2026 DMXAPI 系统令牌的创建和用户 ID 的查找</small>
+  <small>© 2026 DMXAPI 如何创建系统令牌和查找用户ID</small>
 </p>

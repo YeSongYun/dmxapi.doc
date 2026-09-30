@@ -225,7 +225,14 @@ export default defineConfig({
               { text: '缓存创建', link: '/claude-hc' },
               { text: '联网搜索', link: '/claude-serch' },
               { text: 'claude agent sdk', link: '/claude_agent_sdk' },
-              { text: 'Claude-Opus-4.7 使用指南', link: '/claude_opus_4_7' },
+              {
+                text: 'claude 新特性',
+                collapsed: true,
+                items: [
+                  { text: 'Claude-Opus-4.7 使用指南', link: '/claude_opus_4_7' },
+                  { text: 'Claude-Sonnet-5.5-调整与破坏性更新', link: '/claude_sonnet_5_5' },
+                ],
+              },
             ],
           },
           {
