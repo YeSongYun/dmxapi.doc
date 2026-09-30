@@ -1320,6 +1320,7 @@ export default defineConfig({
           { text: 'workbuddy', link: '/workbuddy' },
           { text: 'opencode', link: '/opencode' },
           { text: 'ZCode', link: '/zcode' },
+          { text: 'DeepSeek Harness 桌面端', link: '/deepseek-harness-desktop' },
           {
             text: 'OpenClaw',
             collapsed: true,
