@@ -411,8 +411,6 @@ print(f"完整对话历史已更新到 {HISTORY_PATH}")
 
 ## 返回示例
 
-以下为成功执行后的控制台输出示意，并非本次在线调用结果；实际文件名由运行时间和响应 MIME 类型决定。
-
 ::: code-group
 
 ```text [生成图片]
@@ -426,27 +424,6 @@ print(f"完整对话历史已更新到 {HISTORY_PATH}")
 ```
 
 :::
-
-下面是 `candidates[0].content` 的结构示意。实际响应可能包含更多 `parts`；占位 Base64 和签名不能用于真实请求，脚本会保存服务端返回的完整内容。
-
-```json
-{
-  "role": "model",
-  "parts": [
-    {
-      "text": "已生成图片。",
-      "thoughtSignature": "<TEXT_THOUGHT_SIGNATURE>"
-    },
-    {
-      "inlineData": {
-        "mimeType": "image/png",
-        "data": "<BASE64_IMAGE_DATA>"
-      },
-      "thoughtSignature": "<IMAGE_THOUGHT_SIGNATURE>"
-    }
-  ]
-}
-```
 ---
 
 <p align="center">
