@@ -317,6 +317,16 @@ export default defineConfig({
                 collapsed: true,
                 items: [
                   {
+                    text: 'gemini-nano-banana-2.1',
+                    collapsed: true,
+                    items: [
+                      { text: '文生图', link: '/gemini-nano-banana-2.1' },
+                      { text: '图片编辑', link: '/gemini-nano-banana-2.1-edit' },
+                      { text: '多图融合', link: '/gemini-nano-banana-2.1-images' },
+                      { text: '多轮对话改图', link: '/gemini-nano-banana-2.1-duolun' },
+                    ],
+                  },
+                  {
                 text: 'gemini-3.1-flash-image',
                 collapsed: true,
                 items: [
