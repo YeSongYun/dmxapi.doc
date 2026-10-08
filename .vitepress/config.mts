@@ -1118,16 +1118,15 @@ export default defineConfig({
             text: '🚀全模态模型',
             collapsed: true,
             items: [
-              { text: 'qwen3-omni-flash全模态模型', link: '/qwen3-omni-flash' },
-              // {
-              //   text: 'mimo-v2-omni全模态模型 ',
-              //   collapsed: true,
-              //   items: [
-              //     { text: '视频分析', link: '/mimo-v2-omni-Video_understanding' },
-              //     { text: '图片分析', link: '/mimo-v2-omni-pic_understanding' },
-              //     { text: '音频分析', link: '/mimo-v2-omni-Audio_understanding' },
-              //   ],
-              // },
+              {
+                text: 'qwen3.8-omni-flash全模态模型',
+                collapsed: true,
+                items: [
+                  { text: '文本输入', link: '/qwen3.8-omni-flash-text-input' },
+                  { text: '多模态输入', link: '/qwen3.8-omni-flash-multimodal-input' },
+                  { text: '多轮对话', link: '/qwen3.8-omni-flash-multi-turn-dialogue' },
+                ],
+              },
               {
                 text: 'qwen3.5-omni-plus-all全模态模型',
                 collapsed: true,
@@ -1143,6 +1142,16 @@ export default defineConfig({
                   { text: '多模态组合输入', link: '/qwen3.5-omni-plus-all-multimodal-combined' },
                 ],
               },
+              { text: 'qwen3-omni-flash全模态模型', link: '/qwen3-omni-flash' },
+              // {
+              //   text: 'mimo-v2-omni全模态模型 ',
+              //   collapsed: true,
+              //   items: [
+              //     { text: '视频分析', link: '/mimo-v2-omni-Video_understanding' },
+              //     { text: '图片分析', link: '/mimo-v2-omni-pic_understanding' },
+              //     { text: '音频分析', link: '/mimo-v2-omni-Audio_understanding' },
+              //   ],
+              // },
 
             ],
           },
