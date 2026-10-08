@@ -8,20 +8,16 @@
 - **分辨率**：支持 `1K` / `2K` / `4K`，默认 `1K`，不支持 `512`。
 - **Thinking 思考配置**：支持 `minimal` / `medium` / `high`，默认 `medium`。
 - **搜索能力**：支持 Google 网页搜索和图片搜索。
-
-来源：[Google 官方模型说明](https://ai.google.dev/gemini-api/docs/models/gemini-nano-banana-2.1)。
 :::
 
 ## 接口地址
 
-| 接口 | 请求方式 | URL |
-|------|---------|-----|
-| 生成图片 | POST | `https://www.dmxapi.cn/v1beta/models/gemini-nano-banana-2.1:generateContent` |
-
-示例沿用 DMXAPI 现有 Gemini 原生兼容调用格式；新模型的渠道可用性与参数支持未做在线验证，请以 DMXAPI 控制台为准。
+```
+https://www.dmxapi.cn/v1beta/models/gemini-nano-banana-2.1:generateContent
+```
 
 :::warning 注意
-请妥善保管 DMXAPI API Key，不要将真实密钥提交到公开仓库。使用 SDK 示例前，请更新 `google-genai`，并安装 `Pillow`；HTTP 示例需要 `requests`。
+请妥善保管 DMXAPI API Key，不要将真实密钥提交到公开仓库。使用 SDK 示例前，请更新 `google-genai`
 :::
 
 ## 模型名称
@@ -29,197 +25,366 @@
 ### Gemini Nano Banana 2.1
 
 - **模型名称**：`gemini-nano-banana-2.1`
-- **名称**：Nano Banana 2.1
+- **别名**：Nano Banana 2.1
 - **特点**：支持文生图、图片编辑、多图融合和多轮对话改图。
 - **配置**：支持 1K / 2K / 4K 分辨率及 Thinking 思考等级。
 
-### 与 gemini-3.1-flash-image 的区别
-
-| 对比项 | gemini-3.1-flash-image（Nano Banana 2） | gemini-nano-banana-2.1（Nano Banana 2.1） |
-|--------|------------------------------------------------|-----------------------------------------------|
-| 模型关系 | 前一代模型 | Nano Banana 2 的更新版本 |
-| 输出分辨率 | 512、1K、2K、4K | 1K、2K、4K，不支持 512 |
-| 思考等级 | minimal、high；默认 minimal | minimal、medium、high；默认 medium |
-| 图像质量 | 原有生成与编辑能力 | 改善画质、文字排版、提示遵循和多轮一致性 |
-| 极宽比例 | 支持 1:4、4:1、1:8、8:1 | 修复这些比例在 2K / 4K 下的平铺瑕疵 |
-| 多图参考 | 最多 14 张参考图 | 同样最多 14 张参考图 |
-| 搜索工具 | 网页搜索、图片搜索 | 同样支持网页搜索、图片搜索 |
-
-对比依据：[官方模型说明](https://ai.google.dev/gemini-api/docs/models/gemini-nano-banana-2.1)、[官方图像生成指南](https://ai.google.dev/gemini-api/docs/generate-content/image-generation)。
-
 ## 示例代码
-
-两种写法均请求生成方形图片。SDK 使用下划线参数名，HTTP JSON 使用驼峰参数名；模型名称位于请求路径中，无需在 HTTP 请求体中重复设置 `model`。
 
 ::: code-group
 
 ```python [SDK]
-from datetime import datetime
-from pathlib import Path
+"""
+╔═══════════════════════════════════════════════════════════════════════════════╗
+║                                                                               ║
+║              DMXAPI 文生图工具 (gemini-nano-banana-2.1 · SDK 版)               ║
+║                                                                               ║
+╠═══════════════════════════════════════════════════════════════════════════════╣
+║                                                                               ║
+║  功能说明:                                                                    ║
+║  ────────                                                                     ║
+║    • 使用 google-genai SDK 调用 DMXAPI 的 Gemini 原生兼容接口                 ║
+║    • 根据文字描述生成 AI 图片 (文生图)                                        ║
+║    • 支持 1K / 2K / 4K 分辨率、宽高比配置和思考等级配置                       ║
+║    • 生成的图片自动保存到 output 文件夹                                       ║
+║                                                                               ║
+║  使用模型: gemini-nano-banana-2.1                                             ║
+║                                                                               ║
+╚═══════════════════════════════════════════════════════════════════════════════╝
+"""
 
-from google import genai
-from google.genai import types
+# ══════════════════════════════════════════════════════════════════════════════
+#                                    依赖导入                                   
+# ══════════════════════════════════════════════════════════════════════════════
+from datetime import datetime  # 日期时间处理，用于生成带时间戳的文件名
+from pathlib import Path       # 文件路径处理，用于创建输出目录、保存图片
 
-# DMXAPI 密钥和基础 URL
-API_KEY = "sk-****************************************"
-BASE_URL = "https://www.dmxapi.cn"
+from google import genai        # Google GenAI SDK，用于调用 Gemini 原生接口
+from google.genai import types  # SDK 配置类型: 生成配置 / 图片配置 / 思考配置
+
+# 提示: part.as_image() 依赖 Pillow 保存图片，请先安装依赖: pip install google-genai Pillow
+
+# ══════════════════════════════════════════════════════════════════════════════
+#                                    API 配置                                   
+# ══════════════════════════════════════════════════════════════════════════════
+API_KEY = "sk-****************************************"  # DMXAPI 密钥，请替换为你自己的密钥
+BASE_URL = "https://www.dmxapi.cn"                       # DMXAPI 基础地址，SDK 会自动拼接接口路径
+MODEL_NAME = "gemini-nano-banana-2.1"                    # 模型名称，可按需修改为其他图像模型
+
+# ══════════════════════════════════════════════════════════════════════════════
+#                                创建 API 客户端                                
+# ══════════════════════════════════════════════════════════════════════════════
+# genai.Client 是 SDK 的统一入口，后续所有模型调用都通过它发起
 client = genai.Client(
-    api_key=API_KEY,
-    http_options={"base_url": BASE_URL},
+    api_key=API_KEY,                      # 身份验证: 使用 DMXAPI 密钥
+    http_options={"base_url": BASE_URL},  # 关键配置: 将 SDK 默认的 Google 地址改为 DMXAPI
 )
 
-# 描述需要生成的画面
+# ══════════════════════════════════════════════════════════════════════════════
+#                                  构建请求参数                                 
+# ══════════════════════════════════════════════════════════════════════════════
+# 【必填】图像描述提示词，描述需要生成的画面内容
 prompt = "生成一个美丽的日落风景，色彩丰富，充满艺术感。"
 
-response = client.models.generate_content(
-    # 【model】模型名称
-    model="gemini-nano-banana-2.1",
-    # 【contents】输入文字提示词
-    contents=[prompt],
-    config=types.GenerateContentConfig(
-        # 【response_modalities】返回图片；需要文字时改为 ["TEXT", "IMAGE"]
-        response_modalities=["IMAGE"],
-        image_config=types.ImageConfig(
-            # 【aspect_ratio】输出宽高比，本例为方形
-            aspect_ratio="1:1",
-            # 【image_size】可选 1K / 2K / 4K，默认 1K；不支持 512
-            image_size="1K",
-        ),
-        thinking_config=types.ThinkingConfig(
-            # 【thinking_level】可选 MINIMAL / MEDIUM / HIGH，默认 MEDIUM
-            thinking_level=types.ThinkingLevel.MEDIUM,
-        ),
+# GenerateContentConfig: 一次生成请求的全部配置 (SDK 使用下划线命名)
+config = types.GenerateContentConfig(
+    # response_modalities: 设置返回内容的类型
+    # - ["IMAGE"]: 只返回图片 (本例)
+    # - ["TEXT", "IMAGE"]: 同时返回文字说明和图片
+    response_modalities=["IMAGE"],
+
+    # image_config: 图片输出配置
+    image_config=types.ImageConfig(
+        # aspect_ratio: 设置输出图片的宽高比
+        #
+        # ┌────────────────────────────────────────────────────────────┐
+        # │ gemini-nano-banana-2.1                                     │
+        # ├──────────┬─────────────┬────────┬─────────────┬────────────┤
+        # │ 宽高比   │ 1K 分辨率   │ 1K令牌 │ 2K 分辨率   │ 4K 分辨率  │
+        # ├──────────┼─────────────┼────────┼─────────────┼────────────┤
+        # │ 1:1      │ 1024x1024   │ 1120   │ 2048x2048   │ 4096x4096  │
+        # │ 1:4      │ 512x2048    │ 1120   │ 1024x4096   │ 2048x8192  │
+        # │ 1:8      │ 384x3072    │ 1120   │ 768x6144    │ 1536x12288 │
+        # │ 2:3      │ 848x1264    │ 1120   │ 1696x2528   │ 3392x5056  │
+        # │ 3:2      │ 1264x848    │ 1120   │ 2528x1696   │ 5056x3392  │
+        # │ 3:4      │ 896x1200    │ 1120   │ 1792x2400   │ 3584x4800  │
+        # │ 4:1      │ 2048x512    │ 1120   │ 4096x1024   │ 8192x2048  │
+        # │ 4:3      │ 1200x896    │ 1120   │ 2400x1792   │ 4800x3584  │
+        # │ 4:5      │ 928x1152    │ 1120   │ 1856x2304   │ 3712x4608  │
+        # │ 5:4      │ 1152x928    │ 1120   │ 2304x1856   │ 4608x3712  │
+        # │ 8:1      │ 3072x384    │ 1120   │ 6144x768    │ 12288x1536 │
+        # │ 9:16     │ 768x1376    │ 1120   │ 1536x2752   │ 3072x5504  │
+        # │ 16:9     │ 1376x768    │ 1120   │ 2752x1536   │ 5504x3072  │
+        # │ 21:9     │ 1584x672    │ 1120   │ 3168x1344   │ 6336x2688  │
+        # └──────────┴─────────────┴────────┴─────────────┴────────────┘
+        # 注: 1K/2K/4K令牌分别为1120/1680/3780
+        aspect_ratio="1:1",
+
+        # image_size: 设置输出图片的分辨率
+        # - "1K": 1K 分辨率 (默认值)
+        # - "2K": 2K 分辨率
+        # - "4K": 4K 分辨率
+        # 注意: K 必须大写，不能写成 1k；本模型不支持 512
+        image_size="1K",
     ),
+
+    # thinking_config: 思考等级配置 (思考过程默认启用，无法完全关闭)
+    thinking_config=types.ThinkingConfig(
+        # thinking_level: 生成图片前的思考深度
+        # - ThinkingLevel.MINIMAL: 较少思考，速度最快
+        # - ThinkingLevel.MEDIUM:  均衡模式 (默认值)
+        # - ThinkingLevel.HIGH:    深度思考，复杂画面质量更稳定
+        thinking_level=types.ThinkingLevel.MEDIUM,
+    ),
+
+    # tools: Google 搜索工具（可选）
+    # - 使用实时信息生成图像（如天气预报、股市图表、近期活动等）
+    # 示例: tools=[{"google_search": {}}]
+    #
+    # 本模型同时支持 Image Search（图片搜索）：
+    # tools=[types.Tool(google_search=types.GoogleSearch(
+    #     search_types=types.SearchTypes(
+    #         web_search=types.WebSearch(),
+    #         image_search=types.ImageSearch()
+    #     )
+    # ))]
 )
 
-# 保存最终图片，跳过思考过程中的临时内容
+# ══════════════════════════════════════════════════════════════════════════════
+#                                   主程序执行                                  
+# ══════════════════════════════════════════════════════════════════════════════
+# ┌─────────────────────────────────────────────────────────────────────────┐
+# │ 步骤 1: 创建输出文件夹                                                  │
+# │         检查 output 目录是否存在，不存在则创建                          │
+# └─────────────────────────────────────────────────────────────────────────┘
 output_dir = Path("output")
 output_dir.mkdir(exist_ok=True)
-timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-image_count = 0
 
+# ┌─────────────────────────────────────────────────────────────────────────┐
+# │ 步骤 2: 发送 API 请求                                                   │
+# │         调用 generate_content 方法，传入模型名称、提示词和生成配置      │
+# └─────────────────────────────────────────────────────────────────────────┘
+response = client.models.generate_content(
+    model=MODEL_NAME,   # 【必填】模型名称，使用上面 API 配置区的 MODEL_NAME
+    contents=[prompt],  # 【必填】输入内容，文生图只传文字提示词
+    config=config,      # 上面构建的生成配置
+)
+
+# ┌─────────────────────────────────────────────────────────────────────────┐
+# │ 步骤 3: 解析响应并保存图片                                              │
+# │         遍历返回的每个内容片段，跳过思考内容，保存图片数据              │
+# └─────────────────────────────────────────────────────────────────────────┘
 for part in response.parts or []:
+    # 跳过思考过程中的临时内容，只处理最终结果
     if part.thought:
         continue
+
+    # 文字片段 (仅 response_modalities 包含 TEXT 时返回)
     if part.text is not None:
         print(part.text)
-    elif part.inline_data is not None:
-        image_count += 1
-        filename = output_dir / f"generated_image_{timestamp}_{image_count}.png"
-        part.as_image().save(filename)
-        print(f"图片已保存到 {filename}")
 
-if image_count == 0:
-    print("响应中没有图片，请检查响应内容。")
+    # 图片片段 (inline_data 内嵌图片数据)
+    elif part.inline_data is not None:
+        # 按返回的 MIME 类型确定文件扩展名 (image/jpeg -> jpeg)
+        extension = part.inline_data.mime_type.split("/")[-1]
+
+        # 生成带时间戳的文件名，扩展名与返回的图片格式一致
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        filename = f"output/generated_image_{timestamp}.{extension}"
+
+        # as_image() 取出图片对象，save() 将原始图片字节写入文件
+        part.as_image().save(filename)
+
+        # 输出保存成功的提示信息
+        print(f"图片已保存到 {filename}")
 ```
 
 ```python [request]
-import base64
-from datetime import datetime
-from pathlib import Path
+"""
+╔═══════════════════════════════════════════════════════════════════════════════╗
+║                                                                               ║
+║           DMXAPI 文生图工具 (gemini-nano-banana-2.1 · requests 版)             ║
+║                                                                               ║
+╠═══════════════════════════════════════════════════════════════════════════════╣
+║                                                                               ║
+║  功能说明:                                                                    ║
+║  ────────                                                                     ║
+║    • 使用 requests 库直接调用 DMXAPI 的 Gemini 原生兼容接口                   ║
+║    • 根据文字描述生成 AI 图片 (文生图)                                        ║
+║    • 支持 1K / 2K / 4K 分辨率、宽高比配置和思考等级配置                       ║
+║    • 生成的图片自动保存到 output 文件夹                                       ║
+║                                                                               ║
+║  使用模型: gemini-nano-banana-2.1                                             ║
+║                                                                               ║
+╚═══════════════════════════════════════════════════════════════════════════════╝
+"""
 
-import requests
+# ══════════════════════════════════════════════════════════════════════════════
+#                                    依赖导入                                   
+# ══════════════════════════════════════════════════════════════════════════════
+import requests                # HTTP 请求库，用于调用 API 接口
+import base64                  # Base64 编解码，用于处理图片数据
+from datetime import datetime  # 日期时间处理，用于生成带时间戳的文件名
+from pathlib import Path       # 文件路径处理，用于创建输出目录、保存图片
 
-# DMXAPI 密钥和请求地址
-API_KEY = "sk-****************************************"
-API_URL = "https://www.dmxapi.cn/v1beta/models/gemini-nano-banana-2.1:generateContent"
+# 提示: 请先安装依赖: pip install requests
 
+# ══════════════════════════════════════════════════════════════════════════════
+#                                    API 配置                                   
+# ══════════════════════════════════════════════════════════════════════════════
+API_KEY = "sk-****************************************"  # DMXAPI 密钥，请替换为你自己的密钥
+BASE_URL = "https://www.dmxapi.cn/v1beta"                # DMXAPI 基础地址
+MODEL_NAME = "gemini-nano-banana-2.1"                    # 模型名称，可按需修改为其他图像模型
+
+# 完整的 API 端点由基础地址和模型名称拼接而成，无需手动填写完整地址
+API_URL = f"{BASE_URL}/models/{MODEL_NAME}:generateContent"
+
+# ══════════════════════════════════════════════════════════════════════════════
+#                                HTTP 请求头配置                                
+# ══════════════════════════════════════════════════════════════════════════════
 headers = {
-    "x-goog-api-key": API_KEY,
-    "Content-Type": "application/json",
+    "x-goog-api-key": API_KEY,           # 身份验证: Gemini 原生格式的密钥请求头
+    "Content-Type": "application/json",  # 内容类型: JSON 数据格式
 }
 
+# ══════════════════════════════════════════════════════════════════════════════
+#                                  构建请求参数                                 
+# ══════════════════════════════════════════════════════════════════════════════
 payload = {
+    # 【必填】contents: 对话内容列表，文生图只需一条包含提示词的消息
     "contents": [{
-        # 【parts[].text】描述需要生成的图片
-        "parts": [{"text": "生成一个美丽的日落风景，色彩丰富，充满艺术感。"}],
+        "parts": [
+            # 【必填】parts[].text: 图像描述提示词
+            {"text": "生成一个美丽的日落风景，色彩丰富，充满艺术感。"},
+        ],
     }],
+
+    # generationConfig: 生成配置 (HTTP JSON 使用驼峰命名)
     "generationConfig": {
-        # 【responseModalities】返回图片；需要文字时改为 ["TEXT", "IMAGE"]
+        # responseModalities: 设置返回内容的类型
+        # - ["IMAGE"]: 只返回图片 (本例)
+        # - ["TEXT", "IMAGE"]: 同时返回文字说明和图片
         "responseModalities": ["IMAGE"],
+
+        # imageConfig: 图片输出配置
         "imageConfig": {
-            # 【aspectRatio】输出宽高比，本例为方形
+            # aspectRatio: 设置输出图片的宽高比
+            #
+            # ┌────────────────────────────────────────────────────────────┐
+            # │ gemini-nano-banana-2.1                                     │
+            # ├──────────┬─────────────┬────────┬─────────────┬────────────┤
+            # │ 宽高比   │ 1K 分辨率   │ 1K令牌 │ 2K 分辨率   │ 4K 分辨率  │
+            # ├──────────┼─────────────┼────────┼─────────────┼────────────┤
+            # │ 1:1      │ 1024x1024   │ 1120   │ 2048x2048   │ 4096x4096  │
+            # │ 1:4      │ 512x2048    │ 1120   │ 1024x4096   │ 2048x8192  │
+            # │ 1:8      │ 384x3072    │ 1120   │ 768x6144    │ 1536x12288 │
+            # │ 2:3      │ 848x1264    │ 1120   │ 1696x2528   │ 3392x5056  │
+            # │ 3:2      │ 1264x848    │ 1120   │ 2528x1696   │ 5056x3392  │
+            # │ 3:4      │ 896x1200    │ 1120   │ 1792x2400   │ 3584x4800  │
+            # │ 4:1      │ 2048x512    │ 1120   │ 4096x1024   │ 8192x2048  │
+            # │ 4:3      │ 1200x896    │ 1120   │ 2400x1792   │ 4800x3584  │
+            # │ 4:5      │ 928x1152    │ 1120   │ 1856x2304   │ 3712x4608  │
+            # │ 5:4      │ 1152x928    │ 1120   │ 2304x1856   │ 4608x3712  │
+            # │ 8:1      │ 3072x384    │ 1120   │ 6144x768    │ 12288x1536 │
+            # │ 9:16     │ 768x1376    │ 1120   │ 1536x2752   │ 3072x5504  │
+            # │ 16:9     │ 1376x768    │ 1120   │ 2752x1536   │ 5504x3072  │
+            # │ 21:9     │ 1584x672    │ 1120   │ 3168x1344   │ 6336x2688  │
+            # └──────────┴─────────────┴────────┴─────────────┴────────────┘
+            # 注: 1K/2K/4K令牌分别为1120/1680/3780
             "aspectRatio": "1:1",
-            # 【imageSize】可选 1K / 2K / 4K，默认 1K；不支持 512
+
+            # imageSize: 设置输出图片的分辨率
+            # - "1K": 1K 分辨率 (默认值)
+            # - "2K": 2K 分辨率
+            # - "4K": 4K 分辨率
+            # 注意: K 必须大写，不能写成 1k；本模型不支持 512
             "imageSize": "1K",
         },
+
+        # thinkingConfig: 思考等级配置 (思考过程默认启用，无法完全关闭)
         "thinkingConfig": {
-            # 【thinkingLevel】可选 MINIMAL / MEDIUM / HIGH，默认 MEDIUM
+            # thinkingLevel: 生成图片前的思考深度
+            # - "MINIMAL": 较少思考，速度最快
+            # - "MEDIUM":  均衡模式 (默认值)
+            # - "HIGH":    深度思考，复杂画面质量更稳定
             "thinkingLevel": "MEDIUM",
         },
     },
+
+    # tools: Google 搜索工具（可选）
+    # - 使用实时信息生成图像（如天气预报、股市图表、近期活动等）
+    # "tools": [{"google_search": {}}]
+    #
+    # 本模型同时支持 Image Search（图片搜索）：
+    # "tools": [{"google_search": {"search_types": {"web_search": {}, "image_search": {}}}}]
 }
 
-response = requests.post(API_URL, headers=headers, json=payload)
-response.raise_for_status()
-result = response.json()
-
-# 从 JSON 响应提取图片，按实际 MIME 类型保存
+# ══════════════════════════════════════════════════════════════════════════════
+#                                   主程序执行                                  
+# ══════════════════════════════════════════════════════════════════════════════
+# ┌─────────────────────────────────────────────────────────────────────────┐
+# │ 步骤 1: 创建输出文件夹                                                  │
+# │         检查 output 目录是否存在，不存在则创建                          │
+# └─────────────────────────────────────────────────────────────────────────┘
 output_dir = Path("output")
 output_dir.mkdir(exist_ok=True)
-timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-image_count = 0
 
-for candidate in result.get("candidates", []):
+# ┌─────────────────────────────────────────────────────────────────────────┐
+# │ 步骤 2: 发送 API 请求                                                   │
+# │         向 DMXAPI 发送 POST 请求，地址由 BASE_URL 和 MODEL_NAME 拼接    │
+# └─────────────────────────────────────────────────────────────────────────┘
+response = requests.post(API_URL, headers=headers, json=payload)
+response.raise_for_status()  # 检查 HTTP 状态码，若有错误则抛出异常
+
+# ┌─────────────────────────────────────────────────────────────────────────┐
+# │ 步骤 3: 解析响应并保存图片                                              │
+# │         遍历 candidates 下的每个 part，解码 Base64 图片数据并保存       │
+# └─────────────────────────────────────────────────────────────────────────┘
+result = response.json()
+
+for candidate in result.get("candidates", []):  # 遍历候选结果
     for part in candidate.get("content", {}).get("parts", []):
+        # 跳过思考过程中的临时内容，只处理最终结果
         if part.get("thought"):
             continue
+
+        # 文字片段 (仅 responseModalities 包含 TEXT 时返回)
         if "text" in part:
             print(part["text"])
+
+        # 图片片段 (inlineData 内嵌 Base64 图片数据)
         elif "inlineData" in part:
             image = part["inlineData"]
-            image_count += 1
-            extension = image["mimeType"].split("/")[-1]
-            filename = output_dir / f"generated_image_{timestamp}_{image_count}.{extension}"
-            filename.write_bytes(base64.b64decode(image["data"]))
-            print(f"图片已保存到 {filename}")
 
-if image_count == 0:
-    print("响应中没有图片，请检查响应内容。")
+            # 按返回的 MIME 类型确定文件扩展名 (image/png -> png)
+            extension = image["mimeType"].split("/")[-1]
+
+            # 生成带时间戳的文件名，格式: generated_image_20261008_120000.jpeg
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            filename = f"output/generated_image_{timestamp}.{extension}"
+
+            # 解码 Base64 数据并写入图片文件
+            Path(filename).write_bytes(base64.b64decode(image["data"]))
+
+            # 输出保存成功的提示信息
+            print(f"图片已保存到 {filename}")
 ```
 
 :::
 
 ## 返回示例
 
-以下为成功执行后的控制台输出示意及 HTTP JSON 结构示意，并非本次在线调用结果。图片 Base64 数据和思考签名均已替换为占位内容，不能直接解码使用。
-
 ::: code-group
 
 ```text [SDK]
-图片已保存到 output/generated_image_20261008_120000_1.png
+图片已保存到 output/generated_image_20261008_120000.jpeg
 ```
 
-```json [request]
-{
-  "candidates": [
-    {
-      "content": {
-        "role": "model",
-        "parts": [
-          {
-            "inlineData": {
-              "mimeType": "image/png",
-              "data": "<BASE64_IMAGE_DATA>"
-            },
-            "thoughtSignature": "<THOUGHT_SIGNATURE>"
-          }
-        ]
-      }
-    }
-  ]
-}
+```text [request]
+图片已保存到 output/generated_image_20261008_120000.jpeg
 ```
 
 :::
-
-## 注意事项
-
-- 将 API Key 占位符替换为你自己的 DMXAPI 密钥；生成的图片保存在 `output` 文件夹。
-- `imageSize` 中的 `K` 必须大写，例如 `1K`，不能写成 `1k`；本模型不支持 `512` / `512px`。
-- `imageConfig` 可使用以下宽高比：`1:1`、`1:4`、`4:1`、`1:8`、`8:1`、`2:3`、`3:2`、`3:4`、`4:3`、`4:5`、`5:4`、`9:16`、`16:9`、`21:9`。参数定义见 [官方 ImageConfig](https://ai.google.dev/api/generate-content#ImageConfig)。
-- 思考过程默认启用；`MINIMAL` 表示较少思考，并不代表关闭思考。可按需要选择 `MEDIUM` 或 `HIGH`，详见 [官方思考等级说明](https://ai.google.dev/gemini-api/docs/generate-content/image-generation#thinking-levels)。
-- 本例未启用搜索工具；若需要实时信息或网页图片参考，可参考 [官方搜索接地示例](https://ai.google.dev/gemini-api/docs/generate-content/image-generation#image-search)，并确认所选 DMXAPI 渠道支持相关工具。
 
 ---
 
