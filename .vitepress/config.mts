@@ -436,6 +436,22 @@ export default defineConfig({
               },
 
               {
+                text: '腾讯混元绘图模型',
+                collapsed: true,
+                items: [
+                  {
+                    text: 'hy-image-v3.5-preview',
+                    collapsed: true,
+                    items: [
+                      { text: '文生图', link: '/hy-image-v3.5-preview-text-to-image' },
+                      { text: '图片编辑', link: '/hy-image-v3.5-preview-image-edit' },
+                      { text: '多轮对话', link: '/hy-image-v3.5-preview-multi-turn-dialogue' },
+                    ],
+                  },
+                ],
+              },
+
+              {
                 text: '千问绘图模型',
                 collapsed: true,
                 items: [
