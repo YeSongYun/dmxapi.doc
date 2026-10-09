@@ -93,7 +93,8 @@ payload = {
     #   - 4194304: 2K
     # 传入非枚举中间值时按最近面积归档
     # 该参数最高档位为 2K，需要更高分辨率请改用 size 指定
-    "generate_max_pixels": 4194304,
+    # 注意：与 size 同时传入时以 size 为准；本示例已传 size，故此处注释掉
+    # "generate_max_pixels": 4194304,
 
     # 【resize_max_pixels】(integer, 可选) 输入参考图面积上限（像素数）
     # 原图面积不超过阈值时原样透传；超过阈值时按比例等比缩放到接近阈值后再送入模型
@@ -114,17 +115,11 @@ payload = {
 
 # 本地图片路径 / Data URL 的统一转换逻辑
 
+# 与 API 支持的格式保持一致：png / jpeg / jpg
 IMAGE_MIME_TYPES = {
     ".jpg": "image/jpeg",
     ".jpeg": "image/jpeg",
     ".png": "image/png",
-    ".webp": "image/webp",
-    ".bmp": "image/bmp",
-    ".tif": "image/tiff",
-    ".tiff": "image/tiff",
-    ".gif": "image/gif",
-    ".heic": "image/heic",
-    ".heif": "image/heif",
 }
 
 MAX_IMAGE_SIZE = 20 * 1024 * 1024
@@ -206,15 +201,60 @@ if result.get("data"):
 
 ```json
 {
-  "created": 1789720605,
-  "data": [
+  "assembled_history": [
     {
-      "url": "https://aigc-output-image-file-1326893053.cos.ap-guangzhou.myqcloud.com/xxx/sketch.png?..."
+      "role": "assistant",
+      "content": [
+        { "type": "text", "text": "这是一个需要图片生成的任务，正在调用生成工具。" }
+      ],
+      "reasoning": "用户指令是「把图片转成素描风格」，这是一个明确的风格转换请求。...",
+      "tool_calls": [
+        {
+          "id": "generate@call_0",
+          "type": "function",
+          "function": {
+            "name": "generate",
+            "arguments": "{\"source_image_indices_list\":\"[\\\"eyho\\\"]\",\"recaption\":\"...\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "generate@call_0",
+      "content": [
+        {
+          "type": "image_url",
+          "image_url": {
+            "url": "http://hunyuan-image-result-tob-1258344703.cos.ap-guangzhou.myqcloud.com/text2image2/strategy/upload/20261009/e10fe889c64acdb9dda463536c027806_1791540402903464492_7422.png?..."
+          }
+        }
+      ]
+    },
+    {
+      "role": "assistant",
+      "content": [
+        { "type": "text", "text": "你请求的图片已完成。" }
+      ]
     }
   ],
-  "request_id": "b2d11e18-152c-5ebb-cbf0-c8fcg3cd45cb",
-  "usage": {
-    "total_tokens": 20000
+  "created": 1791540403,
+  "data": [
+    {
+      "width": 1024,
+      "height": 1024,
+      "source": "generate",
+      "tool_call_id": "generate@call_0",
+      "url": "https://aigc-output-image-1326893053.cos.ap-guangzhou.myqcloud.com/1310445046/1310445046-WandImage-23dde8ac184d4336905f5f1ea73d7e8c_0.png?..."
+    }
+  ],
+  "id": "1310445046-WandImage-23dde8ac184d4336905f5f1ea73d7e8c",
+  "model": "HY-Image-3.5-Preview-4090-Tob-v1.2",
+  "object": "image.chat.completion.chunk",
+  "request_id": "b000e261-347e-40bc-8a78-a0b8a13ece65",
+  "round": 0,
+  "tokenhub_usage": {
+    "total_tokens": 15000
   }
 }
 ```

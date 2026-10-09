@@ -73,13 +73,8 @@ payload = {
     #   - 4194304: 2K
     # 传入非枚举中间值时按最近面积归档
     # 该参数最高档位为 2K，需要更高分辨率请改用 size 指定
-    "generate_max_pixels": 4194304,
-
-    # 【resize_max_pixels】(integer, 可选) 输入参考图面积上限（像素数）
-    # 原图面积不超过阈值时原样透传；超过阈值时按比例等比缩放到接近阈值后再送入模型
-    # 用于控制大图（4K/6K）带来的上下文 token 消耗
-    # 不传时默认 1048576（1024x1024）
-    "resize_max_pixels": 1048576,
+    # 注意：与 size 同时传入时以 size 为准；本示例已传 size，故此处注释掉
+    # "generate_max_pixels": 4194304,
 
     # 【footnote】(string, 可选) 业务自定义水印内容
     # 最长 16 个字符（按 utf8.RuneCount 计算，不区分中英文），生成在图片右下角
@@ -123,15 +118,60 @@ if result.get("data"):
 
 ```json
 {
-  "created": 1789720599,
-  "data": [
+  "assembled_history": [
     {
-      "url": "https://aigc-output-image-file-1326893053.cos.ap-guangzhou.myqcloud.com/xxx/main.png?..."
+      "role": "assistant",
+      "content": [
+        { "type": "text", "text": "这需要图片生成，正在调用生成工具。" }
+      ],
+      "reasoning": "画面需要一辆拉力赛车在落日余晖中极速行驶，核心是速度感、环境氛围、光影和赛车的机械质感。...",
+      "tool_calls": [
+        {
+          "id": "generate@call_0",
+          "type": "function",
+          "function": {
+            "name": "generate",
+            "arguments": "{\"source_image_indices_list\":\"[]\",\"recaption\":\"...\"}"
+          }
+        }
+      ]
+    },
+    {
+      "role": "tool",
+      "tool_call_id": "generate@call_0",
+      "content": [
+        {
+          "type": "image_url",
+          "image_url": {
+            "url": "http://hunyuan-image-result-tob-1258344703.cos.ap-guangzhou.myqcloud.com/text2image2/strategy/upload/20261009/cabcdd2527e46c2e99f7e38cd0419aed_1791540400590797695_3367.png?..."
+          }
+        }
+      ]
+    },
+    {
+      "role": "assistant",
+      "content": [
+        { "type": "text", "text": "你请求的图片已完成。" }
+      ]
     }
   ],
-  "request_id": "a1c00d07-041b-4daa-bae0-b7eabf2bc33a",
-  "usage": {
-    "total_tokens": 20000
+  "created": 1791540401,
+  "data": [
+    {
+      "width": 1024,
+      "height": 1024,
+      "source": "generate",
+      "tool_call_id": "generate@call_0",
+      "url": "https://aigc-output-image-1326893053.cos.ap-guangzhou.myqcloud.com/1310445046/1310445046-WandImage-40b4daff58d84d4f8e18af8117b5deeb_0.png?..."
+    }
+  ],
+  "id": "1310445046-WandImage-40b4daff58d84d4f8e18af8117b5deeb",
+  "model": "HY-Image-3.5-Preview-4090-Tob-v1.1",
+  "object": "image.chat.completion.chunk",
+  "request_id": "8b19f456-f1a7-4c3c-a91c-8fce49e8736d",
+  "round": 0,
+  "tokenhub_usage": {
+    "total_tokens": 15000
   }
 }
 ```

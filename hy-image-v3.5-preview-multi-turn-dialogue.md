@@ -115,7 +115,8 @@ payload = {
     #   - 2359296: 1.5K（默认档位）
     #   - 4194304: 2K
     # 传入非枚举中间值时按最近面积归档；该参数最高档位为 2K
-    "generate_max_pixels": 4194304,
+    # 注意：与 size 同时传入时以 size 为准；本示例已传 size，故此处注释掉
+    # "generate_max_pixels": 4194304,
 
     # 【resize_max_pixels】(integer, 可选) 输入参考图面积上限（像素数）
     # 原图面积不超过阈值时原样透传；超过阈值时按比例等比缩放到接近阈值后再送入模型
@@ -135,13 +136,11 @@ payload = {
 
 # 本地图片路径的 Base64 转换逻辑（公网 URL 无需转换）
 
+# 与 API 支持的格式保持一致：png / jpeg / jpg
 IMAGE_MIME_TYPES = {
     ".jpg": "image/jpeg",
     ".jpeg": "image/jpeg",
     ".png": "image/png",
-    ".webp": "image/webp",
-    ".bmp": "image/bmp",
-    ".gif": "image/gif",
 }
 
 MAX_IMAGE_SIZE = 20 * 1024 * 1024
@@ -257,30 +256,20 @@ print(f"\n第一轮上下文已保存：{context_path}")
 
 ```json
 {
-  "created": 1789720599,
-  "data": [
-    {
-      "url": "https://aigc-output-image-file-1326893053.cos.ap-guangzhou.myqcloud.com/xxx/round1.png?..."
-    }
-  ],
-  "request_id": "a1c00d07-041b-4daa-bae0-b7eabf2bc33a",
-  "usage": {
-    "total_tokens": 20000
-  },
   "assembled_history": [
     {
       "role": "assistant",
       "content": [
-        { "type": "text", "text": "为了按要求创建图片，我将使用生成工具。" }
+        { "type": "text", "text": "这个任务需要图片生成，我将调用生成工具。" }
       ],
-      "reasoning": "用户希望给图中主体戴上圣诞小帽，并将整体色调调整为圣诞色...",
+      "reasoning": "这张参考图展示了一组色彩鲜艳的水果，包括橙子、猕猴桃、柠檬和青柠，背景还有一些紫色的物品。...",
       "tool_calls": [
         {
           "id": "generate@call_0",
           "type": "function",
           "function": {
             "name": "generate",
-            "arguments": "{\"recaption\":\"...\"}"
+            "arguments": "{\"source_image_indices_list\":\"[\\\"nrwh\\\"]\",\"recaption\":\"...\"}"
           }
         }
       ]
@@ -292,7 +281,7 @@ print(f"\n第一轮上下文已保存：{context_path}")
         {
           "type": "image_url",
           "image_url": {
-            "url": "http://hunyuan-image-result-tob-1258344703.cos.ap-guangzhou.myqcloud.com/xxx/round1.png?..."
+            "url": "http://hunyuan-image-result-tob-1258344703.cos.ap-guangzhou.myqcloud.com/text2image2/strategy/upload/20261009/71b5ec1ec99afaf71dc9a7a3ba1d7d42_1791540400551614785_8259.png?..."
           }
         }
       ]
@@ -303,7 +292,25 @@ print(f"\n第一轮上下文已保存：{context_path}")
         { "type": "text", "text": "你请求的图片已完成。" }
       ]
     }
-  ]
+  ],
+  "created": 1791540401,
+  "data": [
+    {
+      "width": 1024,
+      "height": 1024,
+      "source": "generate",
+      "tool_call_id": "generate@call_0",
+      "url": "https://aigc-output-image-1326893053.cos.ap-guangzhou.myqcloud.com/1310445046/1310445046-WandImage-81c3ef0e2f114b3aa649b9730791038f_0.png?..."
+    }
+  ],
+  "id": "1310445046-WandImage-81c3ef0e2f114b3aa649b9730791038f",
+  "model": "HY-Image-3.5-Preview-4090-Tob-v1.2",
+  "object": "image.chat.completion.chunk",
+  "request_id": "2c88abfa-0325-4420-972c-892ebd8e2092",
+  "round": 0,
+  "tokenhub_usage": {
+    "total_tokens": 15000
+  }
 }
 ```
 
@@ -555,30 +562,20 @@ if result.get("assembled_history"):
 
 ```json
 {
-  "created": 1789720660,
-  "data": [
-    {
-      "url": "https://aigc-output-image-file-1326893053.cos.ap-guangzhou.myqcloud.com/xxx/round2.png?..."
-    }
-  ],
-  "request_id": "c3e22f29-263d-6fcc-dcg1-d9gdh4de56dc",
-  "usage": {
-    "total_tokens": 20000
-  },
   "assembled_history": [
     {
       "role": "assistant",
       "content": [
-        { "type": "text", "text": "为了按要求创建图片，我将使用生成工具。" }
+        { "type": "text", "text": "这个任务需要生成图片，所以我正在调用生成工具。" }
       ],
-      "reasoning": "用户希望把圣诞小帽换成牛仔帽，并将整体色调调整为西部牛仔风格...",
+      "reasoning": "用户本轮要求将上一轮生成的 img_ntth 中的圣诞小帽换成牛仔帽，并将整体色调调整为西部牛仔风格。...",
       "tool_calls": [
         {
           "id": "generate@call_0",
           "type": "function",
           "function": {
             "name": "generate",
-            "arguments": "{\"recaption\":\"...\"}"
+            "arguments": "{\"source_image_indices_list\":\"[\\\"ntth\\\"]\",\"recaption\":\"...\"}"
           }
         }
       ]
@@ -590,7 +587,7 @@ if result.get("assembled_history"):
         {
           "type": "image_url",
           "image_url": {
-            "url": "http://hunyuan-image-result-tob-1258344703.cos.ap-guangzhou.myqcloud.com/xxx/round2.png?..."
+            "url": "http://hunyuan-image-result-tob-1258344703.cos.ap-guangzhou.myqcloud.com/text2image2/strategy/upload/20261009/f5d3ad520d4addcc01b994d16b40118a_1791540477629303614_2301.png?..."
           }
         }
       ]
@@ -601,7 +598,25 @@ if result.get("assembled_history"):
         { "type": "text", "text": "你请求的图片已完成。" }
       ]
     }
-  ]
+  ],
+  "created": 1791540478,
+  "data": [
+    {
+      "width": 1568,
+      "height": 1472,
+      "source": "generate",
+      "tool_call_id": "generate@call_0",
+      "url": "https://aigc-output-image-1326893053.cos.ap-guangzhou.myqcloud.com/1310445046/1310445046-WandImage-5873bc84b0c74c2c91f4b02086245225_0.png?..."
+    }
+  ],
+  "id": "1310445046-WandImage-5873bc84b0c74c2c91f4b02086245225",
+  "model": "HY-Image-3.5-Preview-4090-Tob-v1.2",
+  "object": "image.chat.completion.chunk",
+  "request_id": "a9bbf473-da73-44a0-92d6-eb92b21e8cad",
+  "round": 0,
+  "tokenhub_usage": {
+    "total_tokens": 15000
+  }
 }
 ```
 
