@@ -452,6 +452,21 @@ export default defineConfig({
               },
 
               {
+                text: '腾讯WAND绘图模型',
+                collapsed: true,
+                items: [
+                  {
+                    text: 'wand-vega-image',
+                    collapsed: true,
+                    items: [
+                      { text: '文生图', link: '/wand-vega-image-text-to-image' },
+                      { text: '图生图', link: '/wand-vega-image-image-to-image' },
+                    ],
+                  },
+                ],
+              },
+
+              {
                 text: '千问绘图模型',
                 collapsed: true,
                 items: [
