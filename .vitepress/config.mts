@@ -1381,6 +1381,7 @@ export default defineConfig({
             ],
           },
           { text: 'Trae', link: '/Trae' },
+          { text: 'Reasonix Studio', link: '/reasonix-studio' },
           { text: 'pi_agent', link: '/pi_agent' },
           { text: 'hermes', link: '/hermes_agent' },
           { text: 'Cursor', link: '/cursor' },
