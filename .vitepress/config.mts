@@ -1305,7 +1305,7 @@ export default defineConfig({
                 items: [
                   // { text: 'Claude code(推荐)', link: '/claude-code' },
                   { text: 'DMXAPI Claude Code 配置工具', link: '/claude-code-new' },
-                  { text: 'cc switch配置', link: '/cc_switch_to_claude_code' },
+                  { text: 'cc switch配置', link: '/claude-code-cli-cc-switch' },
                   // { text: 'cc switch配置claude code', link: '/cc_switch_to_claude code' },
                 ],
               },
@@ -1313,7 +1313,7 @@ export default defineConfig({
                 text: 'Claude Code 桌面端',
                 collapsed: true,
                 items: [
-                  { text: 'cc switch配置', link: '/cc_switch_to_claude_code_desktop' },
+                  { text: 'cc switch配置', link: '/claude-code-desktop-cc-switch' },
                   // { text: 'Claude-Desktop', link: '/claude_code_desktop' },
                 ],
               },
@@ -1328,14 +1328,14 @@ export default defineConfig({
                 collapsed: true,
                 items: [
                   { text: 'config配置文件修改', link: '/codex' },
-                  { text: 'cc switch配置', link: '/cc_switch' },
+                  { text: 'cc switch配置', link: '/cc-switch-codex-cli' },
                 ],
               },
               {
                 text: 'Codex 桌面端',
                 collapsed: true,
                 items: [
-                  { text: 'cc switch配置', link: '/cc_switch_to_codex_desktop' },
+                  { text: 'cc switch配置', link: '/cc-switch-codex-desktop' },
                 ],
               },
             ],
