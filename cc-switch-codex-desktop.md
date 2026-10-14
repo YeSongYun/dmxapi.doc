@@ -12,7 +12,7 @@ CC-Switch 是一款面向开发者的多供应商配置切换工具，可在 Cla
 
 在开始之前，请先完成以下准备：
 
-- - 安装 **Codex 桌面端**：前往 [Codex 官网下载页](https://chatgpt.com/zh-Hans-CN/download/) 下载并安装。
+- 安装 **Codex 桌面端**：前往 [Codex 官网下载页](https://chatgpt.com/zh-Hans-CN/download/) 下载并安装。
 - 下载 **CC Switch** 工具：前往 [CC Switch 官网](https://ccswitch.io/zh/) 下载并安装。
 - 准备一个 DMXAPI 令牌（API Key），可在 [DMXAPI 控制台](https://www.dmxapi.cn/keys) 的「API 令牌」页获取。
 
