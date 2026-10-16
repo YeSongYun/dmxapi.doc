@@ -10,6 +10,10 @@ export default defineConfig({
   //主题设置
   title: "DMXAPI 文档",
   description: "DMXAPI 大模型API接口使用教程文档",
+
+  // Meshy-7.1 暂时下架：页面不参与构建（搜索/直达链接同步隐藏），后期上架时删除此行
+  srcExclude: ['meshy-7.1-*.md'],
+
   vite: {
     ssr: { noExternal: ['@escook/vitepress-theme', 'vitepress'] },
     build: {
@@ -1229,6 +1233,16 @@ export default defineConfig({
             text: '🧊3D大模型',
             collapsed: true,
             items: [
+              // ===== Meshy-7.1 暂时下架（后期上架时恢复此分组并去掉 config.mts 里的 srcExclude 排除）=====
+              // {
+              //   text: 'Meshy-7.1',
+              //   collapsed: true,
+              //   items: [
+              //     { text: '文生3D模型', link: '/meshy-7.1-text-to-3d' },
+              //     { text: '单图生3D模型', link: '/meshy-7.1-image-to-3d' },
+              //     { text: '多图生3D模型', link: '/meshy-7.1-multi-image-to-3d' },
+              //   ],
+              // },
               {
                 text: 'Tripo-P1.0',
                 collapsed: true,

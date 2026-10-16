@@ -37,7 +37,7 @@ import urllib.request
 
 BASE_URL = "https://www.dmxapi.cn"
 API_KEY = "sk-************************************************"  # 请改为你自己的 API Key，避免泄露
-MODEL = "jev-1.13.0"
+MODEL = "jev-1.14.0"
 
 # 客服对话记录，作为共享上下文（state）传给所有问题
 STATE = """
