@@ -235,7 +235,7 @@ except Exception:
       "content": [
         {
           "type": "output_text",
-          "text": "{\"content\":{\"file_url\":\"https://ark-content-generation-cn-beijing.tos-cn-beijing.volces.com/doubao-seed3d-2-0/doubao-seed3d-2-0-02178117159741000000000000000000000ffffac19272e1ed196.zip?X-Tos-Algorithm=TOS4-HMAC-SHA256\\u0026X-Tos-Credential=AKLTYWJkZTExNjA1ZDUyNDc3YzhjNTM5OGIyNjBhNDcyOTQ%2F20260611%2Fcn-beijing%2Ftos%2Frequest\\u0026X-Tos-Date=20260611T095916Z\\u0026X-Tos-Expires=86400\\u0026X-Tos-Signature=1c5ffe4304ab049e4825f2da3adff09958aa127464d92d28f7725f50b232a6af\\u0026X-Tos-SignedHeaders=host\"},\"id\":\"cgt-20260611175315-tjsbh\",\"model\":\"doubao-seed3d-2-0-260328\",\"status\":\"succeeded\"}"
+          "text": "{\"content\":{\"file_url\":\"https://ark-content-generation-cn-beijing.tos-cn-beijing.volces.com/doubao-seed3d-2-0/doubao-seed3d-2-0-02178117159741000000000000000000000ffffac19272e1ed196.zip?X-Tos-Algorithm=TOS4-HMAC-SHA256\\u0026X-Tos-Credential=YOUR_ACCESS_KEY_ID%2F20260611%2Fcn-beijing%2Ftos%2Frequest\\u0026X-Tos-Date=20260611T095916Z\\u0026X-Tos-Expires=86400\\u0026X-Tos-Signature=1c5ffe4304ab049e4825f2da3adff09958aa127464d92d28f7725f50b232a6af\\u0026X-Tos-SignedHeaders=host\"},\"id\":\"cgt-20260611175315-tjsbh\",\"model\":\"doubao-seed3d-2-0-260328\",\"status\":\"succeeded\"}"
         }
       ]
     }

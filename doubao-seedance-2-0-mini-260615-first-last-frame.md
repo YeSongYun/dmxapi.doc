@@ -267,7 +267,7 @@ except Exception as e:
       "content": [
         {
           "type": "output_text",
-          "text": "{\"content\":{\"video_url\":\"https://ark-acg-cn-beijing.tos-cn-beijing.volces.com/doubao-seedance-2-0-mini/02178746310700000000000000000000000ffffac1834d5e08c2.mp4?X-Tos-Algorithm=TOS4-HMAC-SHA256\\u0026X-Tos-Credential=AKLTYWJkZTExNjA1ZDUyNDc3YzhjNTM5OGIyNjBhNDcyOTQ%2F20260820%2Fcn-beijing%2Ftos%2Frequest\\u0026X-Tos-Date=20260820T061507Z\\u0026X-Tos-Expires=86400\\u0026X-Tos-Signature=c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e5f60718293a4b5c6d7e8f90a1b2\\u0026X-Tos-SignedHeaders=host\"},\"id\":\"cgt-20260820141507-hj3vn\",\"model\":\"doubao-seedance-2-0-mini-260615\",\"status\":\"succeeded\"}"
+          "text": "{\"content\":{\"video_url\":\"https://ark-acg-cn-beijing.tos-cn-beijing.volces.com/doubao-seedance-2-0-mini/02178746310700000000000000000000000ffffac1834d5e08c2.mp4?X-Tos-Algorithm=TOS4-HMAC-SHA256\\u0026X-Tos-Credential=YOUR_ACCESS_KEY_ID%2F20260820%2Fcn-beijing%2Ftos%2Frequest\\u0026X-Tos-Date=20260820T061507Z\\u0026X-Tos-Expires=86400\\u0026X-Tos-Signature=c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e5f60718293a4b5c6d7e8f90a1b2\\u0026X-Tos-SignedHeaders=host\"},\"id\":\"cgt-20260820141507-hj3vn\",\"model\":\"doubao-seedance-2-0-mini-260615\",\"status\":\"succeeded\"}"
         }
       ]
     }
@@ -285,7 +285,7 @@ except Exception as e:
   }
 }
 
-视频链接: https://ark-acg-cn-beijing.tos-cn-beijing.volces.com/doubao-seedance-2-0-mini/02178746310700000000000000000000000ffffac1834d5e08c2.mp4?X-Tos-Algorithm=TOS4-HMAC-SHA256&X-Tos-Credential=AKLTYWJkZTExNjA1ZDUyNDc3YzhjNTM5OGIyNjBhNDcyOTQ%2F20260820%2Fcn-beijing%2Ftos%2Frequest&X-Tos-Date=20260820T061507Z&X-Tos-Expires=86400&X-Tos-Signature=c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e5f60718293a4b5c6d7e8f90a1b2&X-Tos-SignedHeaders=host
+视频链接: https://ark-acg-cn-beijing.tos-cn-beijing.volces.com/doubao-seedance-2-0-mini/02178746310700000000000000000000000ffffac1834d5e08c2.mp4?X-Tos-Algorithm=TOS4-HMAC-SHA256&X-Tos-Credential=YOUR_ACCESS_KEY_ID%2F20260820%2Fcn-beijing%2Ftos%2Frequest&X-Tos-Date=20260820T061507Z&X-Tos-Expires=86400&X-Tos-Signature=c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e5f60718293a4b5c6d7e8f90a1b2&X-Tos-SignedHeaders=host
 ```
 
 <p align="center">

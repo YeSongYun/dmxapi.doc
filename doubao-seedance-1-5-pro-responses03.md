@@ -273,7 +273,7 @@ else:
 ## 🎈返回示例
 ```json
 [██████████████████████████████████████████████████] 100%
-视频地址: https://ark-content-generation-cn-beijing.tos-cn-beijing.volces.com/doubao-seedance-1-5-pro/02176883311311600000000000000000000ffffac1824ca8b2d99.mp4?X-Tos-Algorithm=TOS4-HMAC-SHA256&X-Tos-Credential=AKLTYWJkZTExNjA1ZDUyNDc3YzhjNTM5OGIyNjBhNDcyOTQ%2F20260119%2Fcn-beijing%2Ftos%2Frequest&X-Tos-Date=20260119T143315Z&X-Tos-Expires=86400&X-Tos-Signature=2716a0486867829c52aa2cacea4b01c3d6ff53160948a920d87257b021569570&X-Tos-SignedHeaders=host
+视频地址: https://ark-content-generation-cn-beijing.tos-cn-beijing.volces.com/doubao-seedance-1-5-pro/02176883311311600000000000000000000ffffac1824ca8b2d99.mp4?X-Tos-Algorithm=TOS4-HMAC-SHA256&X-Tos-Credential=YOUR_ACCESS_KEY_ID%2F20260119%2Fcn-beijing%2Ftos%2Frequest&X-Tos-Date=20260119T143315Z&X-Tos-Expires=86400&X-Tos-Signature=2716a0486867829c52aa2cacea4b01c3d6ff53160948a920d87257b021569570&X-Tos-SignedHeaders=host
 ```
 
 ---

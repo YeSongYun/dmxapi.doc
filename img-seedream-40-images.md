@@ -220,7 +220,7 @@ print(f"响应内容:\n{json.dumps(response.json(), indent=2, ensure_ascii=False
 {
   "data": [
     {
-      "url": "https://ark-content-generation-v2-cn-beijing.tos-cn-beijing.volces.com/doubao-seedream-4-0/02176311548150626ff44d90c6057cfc4f6ecfe19e30ebff21435_0.jpeg?X-Tos-Algorithm=TOS4-HMAC-SHA256&X-Tos-Credential=AKLTYWJkZTExNjA1ZDUyNDc3YzhjNTM5OGIyNjBhNDcyOTQ%2F20251114%2Fcn-beijing%2Ftos%2Frequest&X-Tos-Date=20251114T101825Z&X-Tos-Expires=86400&X-Tos-Signature=aea63330eb1c219418ec9afa48ffd8c0bbf386bb937d0c148eeaa934d94e77d1&X-Tos-SignedHeaders=host"
+      "url": "https://ark-content-generation-v2-cn-beijing.tos-cn-beijing.volces.com/doubao-seedream-4-0/02176311548150626ff44d90c6057cfc4f6ecfe19e30ebff21435_0.jpeg?X-Tos-Algorithm=TOS4-HMAC-SHA256&X-Tos-Credential=YOUR_ACCESS_KEY_ID%2F20251114%2Fcn-beijing%2Ftos%2Frequest&X-Tos-Date=20251114T101825Z&X-Tos-Expires=86400&X-Tos-Signature=aea63330eb1c219418ec9afa48ffd8c0bbf386bb937d0c148eeaa934d94e77d1&X-Tos-SignedHeaders=host"
     }
   ],
   "created": 1763115505,

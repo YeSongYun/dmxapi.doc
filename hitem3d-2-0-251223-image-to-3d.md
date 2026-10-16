@@ -262,7 +262,7 @@ else:
       "content": [
         {
           "type": "output_text",
-          "text": "{\"content\":{\"file_url\":\"https://ark-common-storage-prod-cn-beijing.tos-cn-beijing.volces.com/ark-async-gateway/hitem3d-2-0/cgt-20260611224507-4fj62/02178118910836000000000000000000000ffffac1921d078a6f7.glb?X-Tos-Algorithm=TOS4-HMAC-SHA256\\u0026X-Tos-Credential=AKLTYWJkZTExNjA1ZDUyNDc3YzhjNTM5OGIyNjBhNDcyOTQ%2F20260611%2Fcn-beijing%2Ftos%2Frequest\\u0026X-Tos-Date=20260611T145809Z\\u0026X-Tos-Expires=604800\\u0026X-Tos-Signature=4dd1dc98d12781ab445e80517fa61ef4c4d5f45ae9b87f73bcf2defbde79986f\\u0026X-Tos-SignedHeaders=host\"},\"id\":\"cgt-20260611224507-4fj62\",\"model\":\"hitem3d-2-0-251223\",\"status\":\"succeeded\"}"
+          "text": "{\"content\":{\"file_url\":\"https://ark-common-storage-prod-cn-beijing.tos-cn-beijing.volces.com/ark-async-gateway/hitem3d-2-0/cgt-20260611224507-4fj62/02178118910836000000000000000000000ffffac1921d078a6f7.glb?X-Tos-Algorithm=TOS4-HMAC-SHA256\\u0026X-Tos-Credential=YOUR_ACCESS_KEY_ID%2F20260611%2Fcn-beijing%2Ftos%2Frequest\\u0026X-Tos-Date=20260611T145809Z\\u0026X-Tos-Expires=604800\\u0026X-Tos-Signature=4dd1dc98d12781ab445e80517fa61ef4c4d5f45ae9b87f73bcf2defbde79986f\\u0026X-Tos-SignedHeaders=host\"},\"id\":\"cgt-20260611224507-4fj62\",\"model\":\"hitem3d-2-0-251223\",\"status\":\"succeeded\"}"
         }
       ]
     }
