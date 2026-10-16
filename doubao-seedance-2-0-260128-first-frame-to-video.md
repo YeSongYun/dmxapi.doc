@@ -245,7 +245,7 @@ except Exception as e:
       "content": [
         {
           "type": "output_text",
-          "text": "{\"content\":{\"video_url\":\"https://ark-acg-cn-beijing.tos-cn-beijing.volces.com/doubao-seedance-2-0/02177520001006000000000000000000000ffffac181cba4c76c3.mp4?X-Tos-Algorithm=TOS4-HMAC-SHA256\\u0026X-Tos-Credential=AKLTYWJkZTExNjA1ZDUyNDc3YzhjNTM5OGIyNjBhNDcyOTQ%2F20260403%2Fcn-beijing%2Ftos%2Frequest\\u0026X-Tos-Date=20260403T070939Z\\u0026X-Tos-Expires=86400\\u0026X-Tos-Signature=b5e95645d33723917482057752dcf8343674e26644f4073e499d25d64d888425\\u0026X-Tos-SignedHeaders=host\"},\"id\":\"cgt-20260403150532-lvbsj\",\"model\":\"doubao-seedance-2-0-260128\",\"status\":\"succeeded\"}"
+          "text": "{\"content\":{\"video_url\":\"https://ark-acg-cn-beijing.tos-cn-beijing.volces.com/doubao-seedance-2-0/02177520001006000000000000000000000ffffac181cba4c76c3.mp4?X-Tos-Algorithm=TOS4-HMAC-SHA256\\u0026X-Tos-Credential=YOUR_ACCESS_KEY_ID%2F20260403%2Fcn-beijing%2Ftos%2Frequest\\u0026X-Tos-Date=20260403T070939Z\\u0026X-Tos-Expires=86400\\u0026X-Tos-Signature=b5e95645d33723917482057752dcf8343674e26644f4073e499d25d64d888425\\u0026X-Tos-SignedHeaders=host\"},\"id\":\"cgt-20260403150532-lvbsj\",\"model\":\"doubao-seedance-2-0-260128\",\"status\":\"succeeded\"}"
         }
       ]
     }
@@ -263,7 +263,7 @@ except Exception as e:
   }
 }
 
-视频链接: https://ark-acg-cn-beijing.tos-cn-beijing.volces.com/doubao-seedance-2-0/02177520001006000000000000000000000ffffac181cba4c76c3.mp4?X-Tos-Algorithm=TOS4-HMAC-SHA256&X-Tos-Credential=AKLTYWJkZTExNjA1ZDUyNDc3YzhjNTM5OGIyNjBhNDcyOTQ%2F20260403%2Fcn-beijing%2Ftos%2Frequest&X-Tos-Date=20260403T070939Z&X-Tos-Expires=86400&X-Tos-Signature=b5e95645d33723917482057752dcf8343674e26644f4073e499d25d64d888425&X-Tos-SignedHeaders=host
+视频链接: https://ark-acg-cn-beijing.tos-cn-beijing.volces.com/doubao-seedance-2-0/02177520001006000000000000000000000ffffac181cba4c76c3.mp4?X-Tos-Algorithm=TOS4-HMAC-SHA256&X-Tos-Credential=YOUR_ACCESS_KEY_ID%2F20260403%2Fcn-beijing%2Ftos%2Frequest&X-Tos-Date=20260403T070939Z&X-Tos-Expires=86400&X-Tos-Signature=b5e95645d33723917482057752dcf8343674e26644f4073e499d25d64d888425&X-Tos-SignedHeaders=host
 ```
 
 <p align="center">

@@ -227,7 +227,7 @@ print(f"响应内容:\n{json.dumps(response.json(), indent=2, ensure_ascii=False
 {
   "data": [
     {
-      "url": "https://ark-content-generation-v2-cn-beijing.tos-cn-beijing.volces.com/doubao-seedream-4-0/021763112157214c761c9ca33f29b7756881c00fb9ff258fc098c_0.jpeg?X-Tos-Algorithm=TOS4-HMAC-SHA256&X-Tos-Credential=AKLTYWJkZTExNjA1ZDUyNDc3YzhjNTM5OGIyNjBhNDcyOTQ%2F20251114%2Fcn-beijing%2Ftos%2Frequest&X-Tos-Date=20251114T092247Z&X-Tos-Expires=86400&X-Tos-Signature=df2b93af2f9f1d65c3308c8e0445920ea658dd44486682fee3f6421630c80627&X-Tos-SignedHeaders=host"
+      "url": "https://ark-content-generation-v2-cn-beijing.tos-cn-beijing.volces.com/doubao-seedream-4-0/021763112157214c761c9ca33f29b7756881c00fb9ff258fc098c_0.jpeg?X-Tos-Algorithm=TOS4-HMAC-SHA256&X-Tos-Credential=YOUR_ACCESS_KEY_ID%2F20251114%2Fcn-beijing%2Ftos%2Frequest&X-Tos-Date=20251114T092247Z&X-Tos-Expires=86400&X-Tos-Signature=df2b93af2f9f1d65c3308c8e0445920ea658dd44486682fee3f6421630c80627&X-Tos-SignedHeaders=host"
     }
   ],
   "created": 1763112167,
@@ -492,7 +492,7 @@ print(f"响应内容:\n{json.dumps(response.json(), indent=2, ensure_ascii=False
 {
   "data": [
     {
-      "url": "https://ark-content-generation-v2-cn-beijing.tos-cn-beijing.volces.com/doubao-seedream-4-0/021763113082954c761c9ca33f29b7756881c00fb9ff258f980e3_0.jpeg?X-Tos-Algorithm=TOS4-HMAC-SHA256&X-Tos-Credential=AKLTYWJkZTExNjA1ZDUyNDc3YzhjNTM5OGIyNjBhNDcyOTQ%2F20251114%2Fcn-beijing%2Ftos%2Frequest&X-Tos-Date=20251114T093830Z&X-Tos-Expires=86400&X-Tos-Signature=ad851d1b3fd804fc39bf00b13a80ee7964786e5883edc9c6547dbc74ffcd7b54&X-Tos-SignedHeaders=host"
+      "url": "https://ark-content-generation-v2-cn-beijing.tos-cn-beijing.volces.com/doubao-seedream-4-0/021763113082954c761c9ca33f29b7756881c00fb9ff258f980e3_0.jpeg?X-Tos-Algorithm=TOS4-HMAC-SHA256&X-Tos-Credential=YOUR_ACCESS_KEY_ID%2F20251114%2Fcn-beijing%2Ftos%2Frequest&X-Tos-Date=20251114T093830Z&X-Tos-Expires=86400&X-Tos-Signature=ad851d1b3fd804fc39bf00b13a80ee7964786e5883edc9c6547dbc74ffcd7b54&X-Tos-SignedHeaders=host"
     }
   ],
   "created": 1763113110,
