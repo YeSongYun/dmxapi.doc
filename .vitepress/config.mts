@@ -472,6 +472,22 @@ export default defineConfig({
                 collapsed: true,
                 items: [
                   {
+                    text: 'qwen-image-2.1-pro',
+                    collapsed: true,
+                    items: [
+                      { text: '文生图', link: '/qwen-image-2.1-pro-text-to-image' },
+                      { text: '图生图', link: '/qwen-image-2.1-pro-image-to-image' },
+                    ],
+                  },
+                  {
+                    text: 'qwen-image-2.1-turbo',
+                    collapsed: true,
+                    items: [
+                      { text: '文生图', link: '/qwen-image-2.1-turbo-text-to-image' },
+                      { text: '图生图', link: '/qwen-image-2.1-turbo-image-to-image' },
+                    ],
+                  },
+                  {
                     text: 'qwen-image-3.0-pro',
                     collapsed: true,
                     items: [
