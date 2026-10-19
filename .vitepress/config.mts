@@ -1146,6 +1146,7 @@ export default defineConfig({
             text: '🔍搜索模型',
             collapsed: true,
             items: [
+              { text: 'DeepSeek 网页搜索与抓取', link: '/deepseek-search-fetch' },
               {
                 text: 'Perplexity Sonar 系列 ',
                 collapsed: true,
