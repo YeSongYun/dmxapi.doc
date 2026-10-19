@@ -72,6 +72,14 @@ payload = {
     # 默认值: true
     "should_texture": False,
 
+    # 【enable_pbr】(boolean, 可选) 是否生成 PBR 纹理
+    # true: 生成 metallic、roughness、normal 等 PBR 纹理
+    # false: 只生成基础颜色纹理
+    # 注意: Meshy 7.1 不生成 emission 发光贴图
+    # 仅 should_texture=true 时有效
+    # 默认值: false
+    "enable_pbr": False,
+
     # 【texture_resolution】(string, 可选) 基础颜色贴图分辨率
     # 可选值: "2k"(2048²) / "4k"(4096²) / "8k"(8192²)
     # 默认值: "2k"
@@ -179,10 +187,11 @@ except ValueError as error:
         f"网关返回的不是 JSON：HTTP {response.status_code}，响应内容={preview!r}"
     ) from error
 
-# 提取任务 ID（dmx-api 返回 task_id，兼容 Meshy 原生 result 字段）
-task_id = result.get("task_id") or result.get("result")
+# 提取 DMXAPI 任务 ID（查询接口只认 task_id）
+# result 是 Meshy 原生 UUID，用于本文查询接口会返回 404，不要把它当作 task_id
+task_id = result.get("task_id")
 if not task_id:
-    raise RuntimeError(f"Meshy 返回中没有任务 ID：{result}")
+    raise RuntimeError(f"DMXAPI 返回中没有 task_id：{result}")
 
 # 格式化输出 JSON 响应
 # - indent=2: 缩进 2 空格，便于阅读
@@ -232,12 +241,11 @@ BASE_URL = "https://www.dmxapi.cn"
 # 获取方式: 登录 DMXAPI 官网 -> 个人中心 -> API 密钥管理
 API_KEY = "sk-******************************************"
 
-# 任务类型
-# 可选值: image_to_3d(单图生成 3D)
-TASK_TYPE = "image_to_3d"
-
-# 填写创建任务接口返回的任务 ID
+# 填写创建任务接口返回的 task_id
+# 查询接口只认 task_id；result 是 Meshy 原生 UUID，用于查询会返回 404
 TASK_ID = "task_9DdN3kVyoPC0zmhmjN46p1OoSiaAcFL1"
+
+query_url = f"{BASE_URL}/meshy/v1/image-to-3d/{TASK_ID}"
 
 # 最长等待时间：1 小时
 MAX_WAIT_SECONDS = 60 * 60
@@ -253,12 +261,6 @@ headers = {
 # ═══════════════════════════════════════════════════════════════
 # 💬 步骤3: 配置查询与轮询逻辑
 # ═══════════════════════════════════════════════════════════════
-
-def get_query_url(task_type, task_id):
-    """根据任务类型生成 Meshy 查询地址。"""
-    if task_type == "image_to_3d":
-        return f"{BASE_URL}/meshy/v1/image-to-3d/{task_id}"
-    raise ValueError(f"不支持的任务类型：{task_type}")
 
 def read_json_response(response):
     """读取网关 JSON；若返回 HTML/纯文本，输出状态和响应摘要。"""
@@ -286,9 +288,8 @@ def get_retry_delay(response):
 # 📤 步骤4: 轮询查询并输出结果
 # ═══════════════════════════════════════════════════════════════
 
-def wait_for_task(task_type, task_id):
+def wait_for_task(query_url):
     """轮询任务，直到任务成功、失败、取消或超时。"""
-    query_url = get_query_url(task_type, task_id)
     started_at = time.monotonic()
 
     while True:
@@ -353,7 +354,7 @@ def wait_for_task(task_type, task_id):
         time.sleep(get_retry_delay(response))
 
 # 开始轮询
-final_task = wait_for_task(TASK_TYPE, TASK_ID)
+final_task = wait_for_task(query_url)
 ```
 
 ## 返回示例
