@@ -64,7 +64,7 @@ payload = {
 
     # 【duration】(int, 可选) 视频时长参数，单位秒。
     # 取值范围为 3-16 秒，默认值为 5。
-    "duration": 5,
+    "duration": 3,
 
     # 【resolution】(string, 可选) 视频分辨率。
     # 可选值: "540p" / "720p" / "1080p" / "2K" / "4K"；默认值为 "720p"。
@@ -111,7 +111,7 @@ response = requests.post(url, headers=headers, json=payload)
 print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 ```
 
-## 返回示例
+## 提交任务 返回示例
 
 ```json
 {
@@ -183,7 +183,7 @@ task_type = "image_to_video"
 # 要查询的任务 ID
 # - 此 ID 由创建任务时返回（提交任务响应中的 task_id）
 # - 请替换为您实际的任务 ID
-task_id = "task_wZhEYTE1tF5Y6Dl4csO5IHwwUT1mG7Pa"
+task_id = "task_pkjN1B75d05lhK3AZOG3NVNtVIoPPgWG"
 
 # 轮询配置
 # - poll_interval: 每次查询的间隔时间（秒）
@@ -294,11 +294,11 @@ with output_path.open("wb") as output_file:
 print(f"💾 视频已保存到: {output_path}")
 ```
 
-## 返回示例
+## 查询与下载 返回示例
 
-查询接口返回示例：
+轮询过程控制台输出：
 
-```json
+```text
 ============================================================
 🚀 开始轮询查询任务状态...
 ============================================================
@@ -309,13 +309,18 @@ print(f"💾 视频已保存到: {output_path}")
 当前状态: processing，10 秒后再次查询...
 当前状态: processing，10 秒后再次查询...
 ✅ 视频生成完成！
+```
+
+任务成功后查询接口返回：
+
+```json
 {
   "creations": [
     {
-      "cover_url": "https://prod-ss-vidu.s3.oss-cn-beijing.aliyuncs.com/infer_64/tasks/26/1021/15/1010509713235800064/creation-01/cover.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=LTAI5t9wejmA3ETdEwa19PH5%2F20261021%2Fcn-beijing%2Fs3%2Faws4_request&X-Amz-Date=20261021T151853Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&response-cache-control=max-age%3D86400&x-id=GetObject&X-Amz-Signature=d5943ab5b443d514466bc4ae24bb58520e575bfaad55e0e4e678c97de706f6a0",
+      "cover_url": "https://prod-ss-vidu.s3.oss-cn-beijing.aliyuncs.com/infer_64/tasks/26/1021/15/1010509713235800064/creation-01/cover.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=***&X-Amz-Date=20261021T151853Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&x-id=GetObject&X-Amz-Signature=***",
       "id": "1010510211993063424",
-      "url": "https://prod-ss-vidu.s3.oss-cn-beijing.aliyuncs.com/infer_64/tasks/26/1021/15/1010509713235800064/creation-01/video.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=LTAI5t9wejmA3ETdEwa19PH5%2F20261021%2Fcn-beijing%2Fs3%2Faws4_request&X-Amz-Date=20261021T151853Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&response-cache-control=max-age%3D86400&response-content-disposition=attachment%3Bfilename%3Dgeneral-4-2026-10-21T15%253A18%253A44Z.mp4&x-id=GetObject&X-Amz-Signature=43275076f155d3dc1938238812b28281ab532b24591ba1931384fa8d33aed06c",
-      "watermarked_url": "https://prod-ss-vidu.s3.oss-cn-beijing.aliyuncs.com/infer_64/tasks/26/1021/15/1010509713235800064/creation-01/watermarked.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=LTAI5t9wejmA3ETdEwa19PH5%2F20261021%2Fcn-beijing%2Fs3%2Faws4_request&X-Amz-Date=20261021T151853Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&response-cache-control=max-age%3D86400&response-content-disposition=attachment%3Bfilename%3Dgeneral-4-2026-10-21T15%253A18%253A44Z.mp4&x-id=GetObject&X-Amz-Signature=37f3ec2f4470853bd58a19304e9738242a0b43e9f073040777e146377ec59884"
+      "url": "https://prod-ss-vidu.s3.oss-cn-beijing.aliyuncs.com/infer_64/tasks/26/1021/15/1010509713235800064/creation-01/video.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=***&X-Amz-Date=20261021T151853Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&x-id=GetObject&X-Amz-Signature=***",
+      "watermarked_url": "https://prod-ss-vidu.s3.oss-cn-beijing.aliyuncs.com/infer_64/tasks/26/1021/15/1010509713235800064/creation-01/watermarked.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=***&X-Amz-Date=20261021T151853Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&x-id=GetObject&X-Amz-Signature=***"
     }
   ],
   "err_code": "",
@@ -323,12 +328,13 @@ print(f"💾 视频已保存到: {output_path}")
   "payload": "",
   "state": "success"
 }
-💾 视频已保存到: viduq4_outputs\image_to_video_task_pkjN1B75d05lhK3AZOG3NVNtVIoPPgWG.mp4
 ```
 
+视频产物下载保存：
 
-### 返回字段说明
-
+```text
+💾 视频已保存到: viduq4_outputs/image_to_video_task_pkjN1B75d05lhK3AZOG3NVNtVIoPPgWG.mp4
+```
 
 <p align="center">
   <small>© 2026 DMXAPI Vidu Q4 Preview 图生视频</small>

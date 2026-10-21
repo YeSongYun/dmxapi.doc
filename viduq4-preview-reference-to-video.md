@@ -65,7 +65,7 @@ payload = {
     # 【sounds】(array, 可选) 参考音频。
     # 支持上传 0~3 个音频，模型将以传入的音频作为参考生成具备主体一致的视频。
     # 每个参考音频时长范围 3-12 秒；音频支持 mp3 格式；每个音频文件大小不超过 50MB。
-    # 使用 Base64 时，HTTP POST body 不超过 20MB，且编码需要包含适当的内容类型字符串，例如 data:video/mp3;base64,{base64_encode}。
+    # 使用 Base64 时，HTTP POST body 不超过 20MB，且编码需要包含适当的内容类型字符串，例如 data:audio/mpeg;base64,{base64_encode}。
     # 官方示例: ["reference_sound_url1", "reference_sound_url2", "reference_sound_url3"]
     "sounds": [],
 
@@ -75,7 +75,7 @@ payload = {
 
     # 【duration】(int, 可选) 视频时长参数，单位秒。
     # 取值范围为 3-16 秒，默认值为 5。
-    "duration": 5,
+    "duration": 3,
 
     # 【aspect_ratio】(string, 可选) 视频比例参数。
     # 可选值: "1:1" / "9:16" / "16:9" / "3:4" / "4:3"；默认值为 "16:9"。
@@ -83,7 +83,7 @@ payload = {
 
     # 【resolution】(string, 可选) 视频分辨率参数。
     # 可选值: "540p" / "720p" / "1080p" / "2K" / "4K"；默认值为 "720p"。
-    "resolution": "720p",
+    "resolution": "540p",
 
     # 【seed】(int, 可选) 随机种子。
     # 默认不传或传 0 时，会使用随机数替代；手动设置时使用指定种子。
@@ -99,7 +99,7 @@ payload = {
     "callback_url": "",
 
     # 【watermark】(bool, 可选) 是否添加水印。
-    # true 表示添加水印，false 表示不添加水印；官方说明目前水印内容固定，内容由 AI 生成，默认不添加。
+    # true 表示添加水印，false 表示不添加水印；默认值为 true；官方说明目前水印内容固定，内容由 AI 生成。
     "watermark": False,
 
     # 【wm_position】(int, 可选) 水印位置。
@@ -122,7 +122,7 @@ response = requests.post(url, headers=headers, json=payload)
 print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 ```
 
-## 返回示例
+## 提交任务 返回示例
 
 ```json
 {
@@ -147,6 +147,7 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
   "wm_url": ""
 }
 ```
+
 ## 查询任务并下载视频 示例代码
 
 ```python
@@ -195,7 +196,7 @@ task_type = "reference_to_video"
 # 要查询的任务 ID
 # - 此 ID 由创建任务时返回（提交任务响应中的 task_id）
 # - 请替换为您实际的任务 ID
-task_id = "task_Xw5yl5qhh2IzIuO1BviIPdiXoysqFisu"
+task_id = "task_gM0h4M3I3IeHbax73wBKtHI4kDtNO7Vd"
 
 # 轮询配置
 # - poll_interval: 每次查询的间隔时间（秒）
@@ -306,22 +307,27 @@ with output_path.open("wb") as output_file:
 print(f"💾 视频已保存到: {output_path}")
 ```
 
-## 返回示例
+## 查询与下载 返回示例
 
-查询接口返回示例：
+轮询过程控制台输出：
 
-```json
+```text
 ============================================================
 🚀 开始轮询查询任务状态...
 ============================================================
 当前状态: processing，10 秒后再次查询...
 ✅ 视频生成完成！
+```
+
+任务成功后查询接口返回：
+
+```json
 {
   "creations": [
     {
-      "cover_url": "https://prod-ss-vidu.s3.oss-cn-beijing.aliyuncs.com/infer_60/tasks/26/1021/15/1010511147364802560/creation-01/cover.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=LTAI5t9wejmA3ETdEwa19PH5%2F20261021%2Fcn-beijing%2Fs3%2Faws4_request&X-Amz-Date=20261021T152523Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&response-cache-control=max-age%3D86400&x-id=GetObject&X-Amz-Signature=de59674030b3ceeb7ec0bfce9a92919da150c9d25e89cfe037cf2e65bc832312",
+      "cover_url": "https://prod-ss-vidu.s3.oss-cn-beijing.aliyuncs.com/infer_60/tasks/26/1021/15/1010511147364802560/creation-01/cover.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=***&X-Amz-Date=20261021T152523Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&x-id=GetObject&X-Amz-Signature=***",
       "id": "1010511803899203584",
-      "url": "https://prod-ss-vidu.s3.oss-cn-beijing.aliyuncs.com/infer_60/tasks/26/1021/15/1010511147364802560/creation-01/video.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=LTAI5t9wejmA3ETdEwa19PH5%2F20261021%2Fcn-beijing%2Fs3%2Faws4_request&X-Amz-Date=20261021T152523Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&response-cache-control=max-age%3D86400&response-content-disposition=attachment%3Bfilename%3Dgeneral-4-2026-10-21T15%253A25%253A03Z.mp4&x-id=GetObject&X-Amz-Signature=488f3711b2033cec19d706ed589adc4355b563d4d942b29bcdf517bb755c6a63",
+      "url": "https://prod-ss-vidu.s3.oss-cn-beijing.aliyuncs.com/infer_60/tasks/26/1021/15/1010511147364802560/creation-01/video.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=***&X-Amz-Date=20261021T152523Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&x-id=GetObject&X-Amz-Signature=***",
       "watermarked_url": ""
     }
   ],
@@ -330,7 +336,12 @@ print(f"💾 视频已保存到: {output_path}")
   "payload": "",
   "state": "success"
 }
-💾 视频已保存到: viduq4_outputs\reference_to_video_task_gM0h4M3I3IeHbax73wBKtHI4kDtNO7Vd.mp4
+```
+
+视频产物下载保存：
+
+```text
+💾 视频已保存到: viduq4_outputs/reference_to_video_task_gM0h4M3I3IeHbax73wBKtHI4kDtNO7Vd.mp4
 ```
 
 <p align="center">

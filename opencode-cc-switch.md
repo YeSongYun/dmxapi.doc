@@ -42,7 +42,7 @@ CC-Switch 是一款面向开发者的多供应商配置切换工具，可在 Cla
 - ① 点击左侧的 **OpenCode** 选项卡
 - ② 点击右上角橙色 **「添加供应商」** 按钮
 
-![cc_switch_opencode](img/opencode-cc-switch2.png)
+![cc_switch_opencode](img/opencode-cc-switch1.png)
 
 ### 步骤 2：选择预设供应商 DMXAPI
 
@@ -51,7 +51,7 @@ CC-Switch 是一款面向开发者的多供应商配置切换工具，可在 Cla
 - ① 在搜索栏中搜索 **DMXAPI**
 - ② 选择 **DMXAPI** 预设
 
-![cc_switch_opencode](img/opencode-cc-switch1.png)
+![cc_switch_opencode](img/opencode-cc-switch2.png)
 
 ### 步骤 3：填写供应商信息
 
@@ -74,7 +74,7 @@ CC-Switch 是一款面向开发者的多供应商配置切换工具，可在 Cla
 
 在「模型配置」区点击 **「选择模型」**，打开模型选择弹窗：
 
-![cc_switch_opencode](img/opencode-cc-switch5.png)
+![cc_switch_opencode](img/opencode-cc-switch4.png)
 
 在弹窗中按编号依次操作：
 
@@ -82,7 +82,7 @@ CC-Switch 是一款面向开发者的多供应商配置切换工具，可在 Cla
 - ② 勾选要使用的模型（可重复搜索勾选多个模型，也可以点击 **「手动添加」** 逐条添加）
 - ③ 点击右下角的 **「应用」**
 
-![cc_switch_opencode](img/opencode-cc-switch4.png)
+![cc_switch_opencode](img/opencode-cc-switch5.png)
 
 ### 步骤 5：预览模型并保存
 
@@ -105,30 +105,30 @@ CC-Switch 是一款面向开发者的多供应商配置切换工具，可在 Cla
 
 ## 启动演示
 
-#### 1、打开终端，输入 opencode 启动
+### 1、打开终端，输入 opencode 启动
 
 ![cc_switch_opencode](img/opencode-cc-switch8.png)
 > 打开终端，输入 `opencode` 后回车启动 OpenCode。
 
-#### 2、输入 /model 切换模型
+### 2、输入 /model 切换模型
 
 ![cc_switch_opencode](img/opencode-cc-switch9.png)
 > 在输入框中输入 `/model`，回车打开模型选择列表。
 
-#### 3、选择 DMXAPI 中配置的模型
+### 3、选择 DMXAPI 中配置的模型
 
 ![cc_switch_opencode](img/opencode-cc-switch10.png)
 > 在模型列表的 **DMXAPI** 分组下，选择您刚才配置的模型（如 `glm-5.3-flash`）。
 
-#### 4、确认模型并输入对话
+### 4、确认模型并输入对话
 
-![cc_switch_opencode](img/opencode-cc-switch12.png)
+![cc_switch_opencode](img/opencode-cc-switch11.png)
 > ① 查看底部状态栏，确认当前模型已切换为 DMXAPI 配置的模型（如 `glm-5.3-flash  DMXAPI`）
 > ② 在对话框中输入"hi"，回车发送
 
-#### 5、模型响应成功，可以开始使用了
+### 5、模型响应成功，可以开始使用了
 
-![cc_switch_opencode](img/opencode-cc-switch11.png)
+![cc_switch_opencode](img/opencode-cc-switch12.png)
 
 <p align="center">
   <small>© 2026 DMXAPI CC Switch 配置 OpenCode 教程</small>
