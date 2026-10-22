@@ -118,6 +118,7 @@ export default defineConfig({
               { text: '开票教程', link: '/fapiao' },
               { text: '余额警告教程', link: '/yve-jg' },
               { text: '重置密码教程', link: '/forget-password' },
+              { text: '系统访问令牌教程', link: '/system-key' },
               { text: '获得 Base url', link: '/baseurl' },
               { text: '支持官方SDK', link: '/sdk' },
              
