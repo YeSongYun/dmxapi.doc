@@ -26,7 +26,7 @@
 
 创建令牌属于敏感操作，需先验证身份：在「安全验证」弹窗中输入账号密码，点击「验证」。
 
-![system-key](img/system-key4.png)
+![system-key](img/system-key3.png)
 
 ### 4. 复制并保存令牌
 
@@ -36,7 +36,7 @@
 令牌仅在创建时显示一次，关闭弹窗后无法再次查看完整令牌，如有遗失只能重新创建。
 :::
 
-![system-key](img/system-key3.png)
+![system-key](img/system-key4.png)
 
 ### 5. 查看已创建的令牌
 

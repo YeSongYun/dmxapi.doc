@@ -35,7 +35,7 @@ https://www.dmxapi.cn/profile
 
 创建令牌属于敏感操作，在「安全验证」弹窗中输入账号密码，点击「验证」。
 
-![security_token_ID](img/system-key4.png)
+![security_token_ID](img/system-key3.png)
 
 ### 4. 复制系统访问令牌
 
@@ -45,7 +45,7 @@ https://www.dmxapi.cn/profile
 令牌仅在创建时显示一次，关闭弹窗后无法再次查看完整令牌，请立即复制并妥善保管，不要与他人分享。如有遗失，可在令牌列表中撤销后重新创建。
 :::
 
-![security_token_ID](img/system-key3.png)
+![security_token_ID](img/system-key4.png)
 
 :::tip 提示
 令牌的编辑、访问记录查看、撤销等管理操作及更详细的图文步骤，见 [系统访问令牌教程](/system-key)。
