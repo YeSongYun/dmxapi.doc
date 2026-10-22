@@ -815,13 +815,21 @@ export default defineConfig({
                   // { text: 'viduq2-pro（首尾帧）', link: '/viduq2-pro' },
                   // { text: 'viduq2（多图参考）', link: '/vidu-ptv' },
                   {
+                    text: 'viduq4-preview',
+                    collapsed: true,
+                    items: [
+                      { text: '图生视频', link: '/viduq4-preview-image-to-video' },
+                      { text: '参考生视频', link: '/viduq4-preview-reference-to-video' },
+                    ],
+                  },
+                  {
                     text: 'viduq3-pro',
                     collapsed: true,
                     items: [
                       { text: '文生视频', link: '/viduq3-pro-text-to-video' },
                       { text: '图生视频', link: '/viduq3-pro-image-to-video' },
                       { text: '首尾帧生视频', link: '/viduq3-pro-start-end-to-video' },
-                      
+
                     ],
                   },
                   {
@@ -1395,7 +1403,14 @@ export default defineConfig({
             ],
           },
           { text: 'workbuddy', link: '/workbuddy' },
-          { text: 'opencode', link: '/opencode' },
+          {
+            text: 'opencode CLI',
+            collapsed: true,
+            items: [
+              { text: 'DMXAPI opencode 配置工具', link: '/opencode' },
+              { text: 'cc switch配置', link: '/opencode-cc-switch' },
+            ],
+          },
           { text: 'ZCode', link: '/zcode' },
           { text: 'DeepSeek Harness 桌面端', link: '/deepseek-harness-desktop' },
           {
