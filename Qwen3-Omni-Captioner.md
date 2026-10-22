@@ -1,25 +1,25 @@
-# qwen3-omni-30b-a3b-captioner 音频理解 API 文档
+# qwen3.8-omni-flash 音频理解（STT）API 文档
 
-Qwen3-Omni-Captioner是以通义千问3-Omni为基座的开源模型，无需任何提示，自动为复杂语音、环境声、音乐、影视声效等生成精准、全面的描述，能识别说话人的情绪、音乐元素（如风格、乐器）、敏感信息等，适用于音频内容分析、安全审核、意图识别、音频剪辑等多个领域。
+qwen3.8-omni-flash 是通义千问全模态模型，具备强大的音频理解能力：通过文本提示词指定任务，可将语音精准转写为文字（STT），同时能描述环境声、音乐元素（如风格、乐器）、说话人情绪等音频内容，适用于语音转写、会议纪要、音频内容分析、安全审核、意图识别等多个领域。
 
 ## 📍 请求地址
 
-```
+```text
 https://www.dmxapi.cn/v1/chat/completions
 ```
 
 ## 🎯 模型名称
 
-`qwen3-omni-30b-a3b-captioner` 
+`qwen3.8-omni-flash`
 
 ## 💻 音频理解URL 调用示例
 
 ```python
 # ============================================================================
-#                    Qwen3-Omni 音频理解示例 (URL方式)
+#                    qwen3.8-omni-flash 音频理解示例 (URL方式)
 # ============================================================================
-# 功能说明：通过URL方式上传音频文件，使用Qwen3-Omni模型进行音频内容理解
-# 模型名称：qwen3-omni-30b-a3b-captioner
+# 功能说明：通过URL方式上传音频文件，使用qwen3.8-omni-flash模型进行音频内容理解
+# 模型名称：qwen3.8-omni-flash
 # ============================================================================
 
 import requests
@@ -41,7 +41,7 @@ headers = {
 # ----------------------------------------------------------------------------
 data = {
     # 指定使用的模型
-    "model": "qwen3-omni-30b-a3b-captioner",
+    "model": "qwen3.8-omni-flash",
 
     # 消息列表
     "messages": [
@@ -49,11 +49,18 @@ data = {
             "role": "user",
             "content": [
                 {
+                    # 文本提示词：指定音频处理任务（如转写为文字）
+                    "type": "text",
+                    "text": "请将这段音频转写为文字，并描述音频中的环境声音。"
+                },
+                {
                     # 音频输入类型
                     "type": "input_audio",
                     "input_audio": {
                         # 音频文件URL地址（支持公网可访问的音频链接）
-                        "data": "https://help-static-aliyun-doc.aliyuncs.com/file-manage-files/zh-CN/20240916/xvappi/装修噪音.wav"
+                        "data": "https://help-static-aliyun-doc.aliyuncs.com/file-manage-files/zh-CN/20240916/xvappi/装修噪音.wav",
+                        # 音频格式（支持 wav、mp3 等）
+                        "format": "wav"
                     }
                 }
             ]
@@ -68,13 +75,49 @@ response = requests.post(url, headers=headers, json=data)
 print(response.json())
 ```
 
+### 📥 返回示例
+
+```json
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "**音频转写：**\n哎呀，这样我还怎么安静工作啊\n\n**环境声音描述：**\n背景中有非常清晰且规律的金属敲击声（像是锤打铁器或施工的声音），声音响亮且持续，对说话人造成了明显的干扰。",
+        "reasoning_content": "The user wants the audio transcribed and the background environment described.\n\n1.  **Transcription:** I hear a male voice speaking in Mandarin Chinese. He says, \"哎呀，这样我还怎么安静工作啊\" (Aiya, how can I work quietly like this?).\n2.  **Environment Sound:** There is a very distinct, rhythmic metallic clanking sound in the background. It sounds like someone is hammering metal or working with tools nearby. It's loud and repetitive.\n\nCombining these into the final response.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1792657756,
+  "id": "chatcmpl-35486176-6b26-9b4d-968c-a5a599d5659f",
+  "model": "qwen3.8-omni-flash",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 165,
+    "completion_tokens_details": {
+      "reasoning_tokens": 109,
+      "text_tokens": 56
+    },
+    "prompt_tokens": 111,
+    "prompt_tokens_details": {
+      "audio_tokens": 44,
+      "cached_tokens": 0,
+      "text_tokens": 67
+    },
+    "total_tokens": 276
+  }
+}
+```
+
 ## 🚗 音频理解URL（流式输出）调用示例
 ```python
 # ============================================================================
-#              Qwen3-Omni 音频理解示例 (URL方式 - 流式输出)
+#              qwen3.8-omni-flash 音频理解示例 (URL方式 - 流式输出)
 # ============================================================================
 # 功能说明：通过URL方式上传音频，使用流式输出实时获取模型响应
-# 模型名称：qwen3-omni-30b-a3b-captioner
+# 模型名称：qwen3.8-omni-flash
 # ============================================================================
 
 import requests
@@ -100,7 +143,7 @@ headers = {
 # ----------------------------------------------------------------------------
 data = {
     # 指定使用的模型
-    "model": "qwen3-omni-30b-a3b-captioner",
+    "model": "qwen3.8-omni-flash",
 
     # 消息列表
     "messages": [
@@ -108,10 +151,17 @@ data = {
             "role": "user",
             "content": [
                 {
+                    # 文本提示词：指定音频处理任务（如转写为文字）
+                    "type": "text",
+                    "text": "请将这段音频转写为文字，并描述音频中的环境声音。"
+                },
+                {
                     "type": "input_audio",      # 音频输入类型
                     "input_audio": {
                         # 音频文件URL地址
-                        "data": "https://help-static-aliyun-doc.aliyuncs.com/file-manage-files/zh-CN/20240916/xvappi/%E8%A3%85%E4%BF%AE%E5%99%AA%E9%9F%B3.wav"
+                        "data": "https://help-static-aliyun-doc.aliyuncs.com/file-manage-files/zh-CN/20240916/xvappi/%E8%A3%85%E4%BF%AE%E5%99%AA%E9%9F%B3.wav",
+                        # 音频格式（支持 wav、mp3 等）
+                        "format": "wav"
                     }
                 }
             ]
@@ -243,16 +293,36 @@ if __name__ == "__main__":
     main()
 ```
 
+### 📥 返回示例（实测输出）
+
+```text
+开始请求...
+**音频转写：**
+哎呀，这样我还怎么安静工作啊
+
+**环境声音描述：**
+背景中有非常清晰且规律的金属敲击声（类似锤击或工具碰撞的声音），这种噪音很大且持续不断，显然是说话者抱怨无法安静工作的原因。
+
+==================================================
+统计信息:
+  总耗时: 5.23秒
+  首Token延迟: 4.17秒
+  输入Tokens: 111
+  输出Tokens: 179
+  总Tokens: 290
+  输出速度: 34.23 tokens/秒
+```
+
 
 
 ## 🚀音频理解本地（base64）
 
 ```python
 # ============================================================================
-#              Qwen3-Omni 音频理解示例 (本地文件 - Base64方式)
+#              qwen3.8-omni-flash 音频理解示例 (本地文件 - Base64方式)
 # ============================================================================
 # 功能说明：读取本地音频文件，转换为Base64编码后发送给模型进行理解
-# 模型名称：qwen3-omni-30b-a3b-captioner
+# 模型名称：qwen3.8-omni-flash
 # 适用场景：本地音频文件处理、无公网URL的音频分析
 # ============================================================================
 
@@ -312,7 +382,7 @@ headers = {
 # ----------------------------------------------------------------------------
 data = {
     # 指定使用的模型
-    "model": "qwen3-omni-30b-a3b-captioner",
+    "model": "qwen3.8-omni-flash",
 
     # 消息列表
     "messages": [
@@ -320,9 +390,15 @@ data = {
             "role": "user",
             "content": [
                 {
+                    # 文本提示词：指定音频处理任务（如转写为文字）
+                    "type": "text",
+                    "text": "请将这段音频转写为文字，并描述音频中的环境声音。"
+                },
+                {
                     "type": "input_audio",      # 音频输入类型
                     "input_audio": {
-                        "data": audio_data      # Base64编码的音频数据
+                        "data": audio_data,     # Base64编码的音频数据
+                        "format": "wav"         # 音频格式（支持 wav、mp3 等）
                     }
                 }
             ]
@@ -337,17 +413,45 @@ response = requests.post(url, headers=headers, json=data)
 print(response.json())
 ```
 
-## 📚 阿里官方网站
+### 📥 返回示例
 
+```json
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "**转写文本：**\n哎呀，这样我还怎么安静工作啊\n\n**环境声音描述：**\n音频背景中充满了持续且响亮的金属敲击声（像是锤击金属的声音），节奏很快且重复，听起来像是附近的施工或打铁作业，严重干扰了说话者的工作环境。",
+        "reasoning_content": "The user wants the audio transcribed and the environmental sounds described.\n\n1.  **Transcription:** I hear a male voice speaking in Mandarin Chinese. He says, \"哎呀，这样我还怎么安静工作啊\" (Aiya, zheyang wo hai zenme anjing gongzuo a). This translates to something like \"Oh come on, how am I supposed to work quietly like this?\"\n2.  **Environmental Sound:** Throughout the clip, there is a very distinct, rhythmic metallic clanking or hammering sound. It sounds like someone is hitting metal with a hammer, possibly construction work or blacksmithing nearby. The sound is loud and repetitive.\n\nCombining these observations into the final response.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1792657848,
+  "id": "chatcmpl-5eaa2d7f-e48d-9a19-bc8b-d93e378e378d",
+  "model": "qwen3.8-omni-flash",
+  "object": "chat.completion",
+  "usage": {
+    "completion_tokens": 212,
+    "completion_tokens_details": {
+      "reasoning_tokens": 148,
+      "text_tokens": 64
+    },
+    "prompt_tokens": 111,
+    "prompt_tokens_details": {
+      "audio_tokens": 44,
+      "cached_tokens": 0,
+      "text_tokens": 67
+    },
+    "total_tokens": 323
+  }
+}
 ```
-https://help.aliyun.com/zh/model-studio/qwen3-omni-captioner
 
-```
 
----
 
 <p align="center">
-
-  <small>© 2026 DMXAPI qwen3-omni-30b-a3b-captioner音频理解 </small>
+  <small>© 2026 DMXAPI qwen3.8-omni-flash 音频理解（STT）</small>
 
 </p>
