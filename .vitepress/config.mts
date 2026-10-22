@@ -1037,7 +1037,7 @@ export default defineConfig({
               // { text: 'STT模型 whisper', link: '/opneai-stt' },
               { text: 'TTS模型 mimo-v2-tts', link: '/mimo-v2-tts' },
               { text: 'STT模型 gpt-4o-transcribe', link: '/gpt-4o-transcribe' },
-              { text: 'STT模型 Qwen3-Omni-Captioner', link: '/Qwen3-Omni-Captioner' },
+              { text: 'STT模型 qwen3.8-omni-flash', link: '/Qwen3-Omni-Captioner' },
               
               {
                 text: 'Minimax 声音克隆 ',
