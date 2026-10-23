@@ -129,6 +129,7 @@ export default defineConfig({
                 items: [
                   { text: '计费规则', link: '/jijia' },
                   { text: '豆包计费明细', link: '/usage-tokens' },
+                  // { text: '豆包 Seedance 2.x 计费明细', link: '/doubao-seedance-2-billing' },
                   { text: 'vidu计费规则', link: '/viduJF' },
                 ],
               },
