@@ -1258,6 +1258,16 @@ export default defineConfig({
             collapsed: true,
             items: [
               {
+                text: 'Neural4D-2.5',
+                collapsed: true,
+                items: [
+                  { text: '文生3D模型', link: '/neural4d-2.5-text-to-3d' },
+                  { text: '单图生3D模型', link: '/neural4d-2.5-image-to-3d' },
+                  { text: '批量图生3D模型', link: '/neural4d-2.5-batch-image-to-3d' },
+                  { text: '多视图生3D模型', link: '/neural4d-2.5-multi-view-to-3d' },
+                ],
+              },
+              {
                 text: 'Meshy-7.1',
                 collapsed: true,
                 items: [
