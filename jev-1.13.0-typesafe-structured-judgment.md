@@ -14,6 +14,8 @@ https://www.dmxapi.cn/typesafe/v1/systemone
 
 ## 🎯 模型名称
 
+- `jev-latest`
+- `jev-1.14.0`
 - `jev-1.13.0`
 
 ## 🧩 问题类型说明

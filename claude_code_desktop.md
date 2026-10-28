@@ -41,10 +41,7 @@ Claude Code Desktop 是 Anthropic 推出的桌面端 AI 编程助手，支持通
 | Gateway API Key | 你的 DMXAPI 令牌，可在工作台 → API 令牌处获取 |
 | Model ID | Claude Code 专区中的模型 ID，如 `claude-opus-4-7-cc` |
 
-> **Gateway Base URL 说明：**
-> - cn 站用户：`https://www.dmxapi.cn`
-> - com 站用户：`https://www.dmxapi.com`
-> - SSVIP 站用户：`https://ssvip.dmxapi.com`
+> **Gateway Base URL 说明**：填写 `https://www.dmxapi.cn`。
 
 ![填写 Gateway 与模型信息](./img/claude_des05.png)
 

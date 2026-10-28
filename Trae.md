@@ -25,10 +25,7 @@ Trae 是一款 AI 驱动的编程工作台（IDE / 编码助手），内置 Buil
 ### 类型一：OpenAI Chat Completions 格式（适用于 GPT、Qwen、DeepSeek 等模型）
 
 - **API 格式**：选择 `OpenAI Chat Completions 格式`
-- **自定义请求地址**（Trae 自动补全 `/chat/completions`）：
-  - cn 站：`https://www.dmxapi.cn/v1`
-  - com 站：`https://www.dmxapi.com/v1`
-  - ssvip 站：`https://ssvip.dmxapi.com/v1`
+- **自定义请求地址**（Trae 自动补全 `/chat/completions`）：`https://www.dmxapi.cn/v1`
 - **模型 ID** 示例：`gpt-5.5`
 
 ![trae](./img/trae02.png)
@@ -36,10 +33,7 @@ Trae 是一款 AI 驱动的编程工作台（IDE / 编码助手），内置 Buil
 ### 类型二：Anthropic Messages 格式（适用于 Claude 系列模型）
 
 - **API 格式**：选择 `Anthropic Messages 格式`
-- **自定义请求地址**（Trae 自动补全 `/v1/messages`）：
-  - cn 站：`https://www.dmxapi.cn`
-  - com 站：`https://www.dmxapi.com`
-  - ssvip 站：`https://ssvip.dmxapi.com`
+- **自定义请求地址**（Trae 自动补全 `/v1/messages`）：`https://www.dmxapi.cn`
 - **模型 ID** 示例：`claude-opus-4-7`
 
 ![trae](./img/trae03.png)

@@ -20,10 +20,7 @@
 
 ## 第三步 填写 API 地址和 Key
 
-- **自定义请求地址**：根据您所使用的站点填写
-  - cn 站：`https://www.dmxapi.cn`
-  - com 站：`https://www.dmxapi.com`
-  - ssvip 站：`https://ssvip.dmxapi.com`
+- **自定义请求地址**：`https://www.dmxapi.cn`
 - API 密钥：填入您的 DMXAPI 令牌 
 - 点击加号手动添加模型 
 

@@ -44,7 +44,7 @@ https://chatboxai.app/zh
 ![chatbox](img\cb.03.jpg)
 #### 第四步 输入KEY和URL
 ::: warning
-key和url请在DMXAPI官网获取，cn站、com站、vip站、ssvip站之间互相独立，key不能共用，请分别对应填写。
+key和url请在DMXAPI官网获取。
 :::
 ![chatbox](img\cb.04.jpg)
 #### 第五步 点击新建按钮添加新模型
@@ -78,10 +78,7 @@ key和url请在DMXAPI官网获取，cn站、com站、vip站、ssvip站之间互�
 进入新建好的提供方详情页，按图中四个红色标注依次完成配置：
 
 1. **填入 DMXAPI 令牌**：将你在 DMXAPI 工作台获取的令牌（`sk-` 开头）粘贴到「API 密钥」输入框。
-2. **填写正确的 API 主机**：根据你使用的站点填写对应地址，cn 站、com 站、ssvip 站互相独立，密钥与地址必须一一对应。
-   - cn 站：`https://www.dmxapi.cn/v1`
-   - com 站：`https://www.dmxapi.com/v1`
-   - ssvip 站：`https://ssvip.dmxapi.com/v1`
+2. **填写正确的 API 主机**：填写 `https://www.dmxapi.cn/v1`，API 密钥与站点地址必须对应。
 3. **打开「改善网络兼容性」开关**，提升请求成功率与稳定性。
 4. **添加需要的模型**：点击「+ 新建」，输入模型 ID（例如 `claude-opus-4-7`、`claude-sonnet-4-6` 等）。
 
@@ -106,10 +103,7 @@ API 路径保持默认 `/messages` 即可，无需修改。
 进入新建好的提供方详情页，按图中三个红色标注依次完成配置：
 
 1. **填入 DMXAPI 令牌**：将你在 DMXAPI 工作台获取的令牌（`sk-` 开头）粘贴到「API 密钥」输入框。
-2. **填写正确的 API 主机**（注意 Gemini 模式不需要带 `/v1`）：
-   - cn 站：`https://www.dmxapi.cn`
-   - com 站：`https://www.dmxapi.com`
-   - ssvip 站：`https://ssvip.dmxapi.com`
+2. **填写正确的 API 主机**（注意 Gemini 模式不需要带 `/v1`）：填写 `https://www.dmxapi.cn`。
 3. **打开「改善网络兼容性」开关**，提升请求成功率与稳定性。
 
 ::: warning

@@ -50,9 +50,6 @@
 
 使用 OpenAI Python SDK 时，请确认 Base URL 设置为 `https://www.dmxapi.cn/v1`。
 
-- com 站请设置为 `https://www.dmxapi.com/v1`
-- ssvip 站请设置为 `https://ssvip.dmxapi.com/v1`
-
 ### 如何在 Python 中直接填写 API Key？
 
 ```python

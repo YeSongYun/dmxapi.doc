@@ -14,13 +14,7 @@ OpenClaw 需要至少添加 1 个模型才能正常工作。在「自定义模�
 
 - **provider**：填写 `dmxapi`
 
-- **base_url**：根据你的账号类型填写对应地址：
-
-  | 账号类型 | base_url |
-  |---------|---------|
-  | cn站用户 | `https://www.dmxapi.cn/v1` |
-  | com站用户 | `https://www.dmxapi.com/v1` |
-  | ssvip站用户 | `https://ssvip.dmxapi.com` |
+- **base_url**：填写 `https://www.dmxapi.cn/v1`
 
 - **api**：根据所配置的模型类型选择协议：
   - OpenAI 模型、Gemini 模型及其他兼容 OpenAI 格式的模型 → 填写 `openai-completions`
@@ -53,13 +47,7 @@ OpenClaw 需要至少添加 1 个模型才能正常工作。在「自定义模�
 }
 ```
 
-- **base_url**：根据你的账号类型填写对应地址：
-
-  | 账号类型 | base_url |
-  |---------|---------|
-  | cn站用户 | `https://www.dmxapi.cn/v1` |
-  | com站用户 | `https://www.dmxapi.com/v1` |
-  | ssvip站用户 | `https://ssvip.dmxapi.com` |
+- **base_url**：填写 `https://www.dmxapi.cn/v1`
 
 - **api_key**：填写你的 DMXAPI 密钥，可在 DMXAPI 工作台 → API 令牌页面获取。
 

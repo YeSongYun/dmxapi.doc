@@ -38,10 +38,7 @@ CodeBuddy 是腾讯推出的 AI 编程助手，其 **Agent 模式**支持自主�
 | ② API 密钥 | 您的 DMXAPI 令牌，可在工作台 → API 令牌处获取 |
 | ③ 模型名称 | 填写要使用的模型 ID，如 `gpt-5.5`，可在模型价格页查询 |
 
-> **接口地址说明：**
-> - cn站用户：`https://www.dmxapi.cn/v1/chat/completions`
-> - com站用户：`https://www.dmxapi.com/v1/chat/completions`
-> - SSVIP站 用户：`https://ssvip.dmxapi.cn/v1/chat/completions`
+> **接口地址说明**：`https://www.dmxapi.cn/v1/chat/completions`
 
 ![codebuddy](./img/codebuddy04.png)
 

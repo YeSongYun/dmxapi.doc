@@ -32,10 +32,7 @@ CC-Switch 是一款面向开发者的多供应商配置切换工具，可在 Cla
 在配置表单中按编号填写：
 
 - ① **API Key**：填写你的 DMXAPI 令牌
-- ② **请求地址**：根据所在站点选择对应地址
-  - cn 站：`https://www.dmxapi.cn`
-  - com 站：`https://www.dmxapi.com`
-  - ssvip 站：`https://ssvip.dmxapi.com`
+- ② **请求地址**：`https://www.dmxapi.cn`
 
 ![cc_switch_desktop](img/cc-desktop3.png)
 

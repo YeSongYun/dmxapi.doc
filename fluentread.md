@@ -6,13 +6,7 @@ Fluent Read（流畅阅读）是一款开源的沉浸式浏览器翻译插件，
 
 打开 Fluent Read 插件设置页，将**翻译服务**切换为**自定义接口 ⭐**，然后在**访问令牌**处填入您的 DMXAPI Key，并在**自定义接口**处填入对应的接口地址。
 
-> **接口地址说明（按注册站点选择）**
->
-> | 站点 | 接口地址 |
-> |---|---|
-> | cn 站 | `https://www.dmxapi.cn/v1/chat/completions` |
-> | com 站 | `https://www.dmxapi.com/v1/chat/completions` |
-> | ssvip 站 | `https://ssvip.dmxapi.com/v1/chat/completions` |
+> **接口地址说明**：`https://www.dmxapi.cn/v1/chat/completions`
 
 ![配置接口与令牌](./img/fluent_read01.png)
 

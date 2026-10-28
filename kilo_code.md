@@ -20,14 +20,11 @@ Kilo Code 是一款运行在 VSCode 中的开源 AI 编程助手，可以帮助�
 在"编辑提供商"页面中填写以下信息：
 
 - **提供商 ID / 显示名称**：自定义即可，如 `dmxapi`
-- **基础 URL**：根据您所使用的站点填写
-  - cn 站用户填写 `https://www.dmxapi.cn/v1`
-  - com 站用户填写 `https://www.dmxapi.com/v1`
-  - ssvip 站用户填写 `https://ssvip.dmxapi.com/v1`
+- **基础 URL**：填写 `https://www.dmxapi.cn/v1`
 - **API 密钥**：填入您的 DMXAPI 密钥
 
 ::: warning
-cn 站、com 站、ssvip 站之间互相独立，key 不能共用，请按您使用的站点分别对应填写。
+DMXAPI 各站点之间互相独立，key 不能共用，请确保基础 URL 与 API 密钥属于同一站点。
 :::
 
 ![kilo_code](./img/kilocode03.png)
