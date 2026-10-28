@@ -2,24 +2,11 @@
 
 ## 🌐 DMXAPI 站点介绍
 
-DMXAPI 提供三个不同的服务站点：
+DMXAPI 提供以下服务站点：
 
-| 站点 | 域名 | 计价方式 | 折扣 | 说明 |
-|------|------|----------|------|------|
-| 🌍 **国际站** | `www.dmxapi.com` | 美金计价 | 主流模型 6.8 折 | 打折渠道 |
-| 🇨🇳 **国内站** | `www.dmxapi.cn` | 人民币计价 | 主流模型 6.8 折 | 打折渠道 |
-| 💎 **SSVIP站** | `ssvip.dmxapi.com` | 美金计价 | 原价无折扣 | 高级服务 |
-
-## 🔑 令牌与域名配套关系
-
-> ⚠️ **重要提醒**：令牌必须与对应的域名配套使用
-
-| 站点类型 | 对应 Base URL |
-|----------|---------------|
-| COM 站令牌 | `https://www.dmxapi.com` |
-| CN 站令牌 | `https://www.dmxapi.cn` |
-| SSVIP 站令牌 | `https://ssvip.dmxapi.com` |
-
+| 站点 | 域名 | 计价方式 |
+|------|------|----------|
+| 🇨🇳 **国内站** | `www.dmxapi.cn` | 人民币计价 |
 
 ## 常用接口(OpenAI格式)
 
@@ -47,7 +34,7 @@ DMXAPI 提供三个不同的服务站点：
 `https://www.dmxapi.cn/v1/messages`
 
 ::: tip Claude 原生格式说明
-- 适用于需要使用 Anthropic Claude 原生 SDK 或原生 API 格式的场景
+- 适用于需要使用 Anthropic 原生 SDK 或原生 API 格式的场景
 - 请求头需设置 `x-api-key` 为你的 DMXAPI 密钥
 - 支持 Claude 全系列模型，如 `claude-sonnet-4-20250514`、`claude-opus-4-20250514` 等
 :::
@@ -57,9 +44,9 @@ DMXAPI 提供三个不同的服务站点：
 将域名与接口路径组合，得到完整的 API 地址：
 
 ```text
-https://www.dmxapi.com/v1/chat/completions
+https://www.dmxapi.cn/v1/chat/completions
 https://www.dmxapi.cn/v1/embeddings
-https://ssvip.dmxapi.com/v1/images/generations
+https://www.dmxapi.cn/v1/images/generations
 ```
 
 ## ⚙️ 第三方应用配置
@@ -67,9 +54,7 @@ https://ssvip.dmxapi.com/v1/images/generations
 在各类第三方应用中，通常使用以下 Base URL：
 
 ```text
-https://www.dmxapi.com/v1
 https://www.dmxapi.cn/v1
-https://ssvip.dmxapi.com/v1
 ```
 
 > 💡 **配置提示**：在 Claude Code 等部分应用中，仅需配置域名即可，无需添加 `/v1` 路径。

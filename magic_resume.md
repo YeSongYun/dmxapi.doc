@@ -10,11 +10,7 @@
 
 ## 🔑 第二步：填写 API Key 与自定义接口
 
-在 **API Key** 处填入你的 DMXAPI Key，在 **自定义接口** 处填入对应站点的接口地址。所有支持的模型名称可在 [DMXAPI 模型列表](https://www.dmxapi.cn/rmb) 中查看。
-
-| 站点 | 接口地址 |
-|---|---|
-| cn 站 | `https://www.dmxapi.cn/v1` |
+在 **API Key** 处填入你的 DMXAPI Key，在 **自定义接口** 处填入接口地址 `https://www.dmxapi.cn/v1`。所有支持的模型名称可在 [DMXAPI 模型列表](https://www.dmxapi.cn/rmb) 中查看。
 
 ![填写 API Key 与自定义接口](./img/magic_V02.png)
 

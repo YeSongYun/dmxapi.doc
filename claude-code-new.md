@@ -232,7 +232,7 @@ curl -fsSL https://cnb.cool/dmxapi/dmxapi_claude_code/-/git/raw/main/install.cmd
 
 #### 3、填写 Base URL
 ![claude-code](img/claude-code-new10.png)
-> 填入 API 服务器地址：cn 站填写 `https://www.dmxapi.cn`，com 站填写 `https://www.dmxapi.com`，ssvip 站填写 `https://ssvip.dmxapi.com`。
+> 填入 API 服务器地址：`https://www.dmxapi.cn`。
 
 #### 4、填写 Auth Token
 ![claude-code](img/claude-code-new11.png)

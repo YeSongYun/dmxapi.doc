@@ -139,7 +139,7 @@ providers:                                    # 所有自定义 provider 都放�
 
 | 字段 | 必填 | 说明 |
 |---|---|---|
-| `baseUrl` | ✅ | 接入地址，**只写到 `/v1`**。国内站 `https://www.dmxapi.cn/v1`，国际站 `https://www.dmxapi.com/v1`。⚠️ 不要写成 `.../v1/chat/completions`，omp 会自动追加，写多了路径会重复报 404 |
+| `baseUrl` | ✅ | 接入地址，**只写到 `/v1`**。国内站 `https://www.dmxapi.cn/v1`。⚠️ 不要写成 `.../v1/chat/completions`，omp 会自动追加，写多了路径会重复报 404 |
 | `apiKey` | ✅ | DMXAPI 后台生成的 `sk-` 密钥 |
 | `authHeader` | 建议 | `true` 时以 `Authorization: Bearer <key>` 发送鉴权头（DMXAPI 需要） |
 | `disableStrictTools` | 建议 | `true`。中转平台走 Anthropic 接口时通常必须关掉 strict 校验，否则请求被拒 |

@@ -2,7 +2,7 @@
 
 ## 常见问题汇总
 这个页面整理了最常见的API使用问题，90%的问题都能解决。
-http://qa.dmxapi.cn
+- [常见问题汇总](https://www.dmxapi.cn/dmxapi/iframe/842f36fb-5d48-4b19-be72-217bb063a458) 
 
 
 ## 问题自查方法

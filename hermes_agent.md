@@ -57,11 +57,7 @@ hermes setup
 
 ### 第三步：填写 API Base URL
 
-根据您的账号类型填写对应的接口地址：
-
-- **cn 站用户**：`https://www.dmxapi.cn/v1`
-- **com 站用户**：`https://www.dmxapi.com/v1`
-- **ssvip 站用户**：`https://ssvip.dmxapi.com/v1`
+接口地址填写：`https://www.dmxapi.cn/v1`
 
 ![hermes](img/hermes05.png)
 
