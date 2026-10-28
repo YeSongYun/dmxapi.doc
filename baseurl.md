@@ -4,18 +4,9 @@
 
 DMXAPI 提供以下服务站点：
 
-| 站点 | 域名 | 计价方式 | 折扣 | 说明 |
-|------|------|----------|------|------|
-| 🇨🇳 **国内站** | `www.dmxapi.cn` | 人民币计价 | 主流模型 6.8 折 | 打折渠道 |
-
-## 🔑 令牌与域名配套关系
-
-> ⚠️ **重要提醒**：令牌必须与对应的域名配套使用
-
-| 站点类型 | 对应 Base URL |
-|----------|---------------|
-| CN 站令牌 | `https://www.dmxapi.cn` |
-
+| 站点 | 域名 | 计价方式 |
+|------|------|----------|
+| 🇨🇳 **国内站** | `www.dmxapi.cn` | 人民币计价 |
 
 ## 常用接口(OpenAI格式)
 
@@ -53,7 +44,9 @@ DMXAPI 提供以下服务站点：
 将域名与接口路径组合，得到完整的 API 地址：
 
 ```text
+https://www.dmxapi.cn/v1/chat/completions
 https://www.dmxapi.cn/v1/embeddings
+https://www.dmxapi.cn/v1/images/generations
 ```
 
 ## ⚙️ 第三方应用配置

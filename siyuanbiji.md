@@ -21,7 +21,7 @@
 
 ::: warning 💡 填写 API 密钥、模型名称和基础地址后保存配置   
   - 模型名称必须与 [DMXAPI 模型列表](https://www.dmxapi.cn/rmb) 完全一致
-  - **CN 站用户**：API 基础地址填写 `https://www.dmxapi.cn/v1`
+  - API 基础地址填写 `https://www.dmxapi.cn/v1`
 :::
 ![siyuan](./img/siyuan03.png)
 

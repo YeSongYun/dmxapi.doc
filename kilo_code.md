@@ -23,10 +23,6 @@ Kilo Code 是一款运行在 VSCode 中的开源 AI 编程助手，可以帮助�
 - **基础 URL**：填写 `https://www.dmxapi.cn/v1`
 - **API 密钥**：填入您的 DMXAPI 密钥
 
-::: warning
-DMXAPI 各站点之间互相独立，key 不能共用，请确保基础 URL 与 API 密钥属于同一站点。
-:::
-
 ![kilo_code](./img/kilocode03.png)
 
 ## 第四步 添加模型并提交

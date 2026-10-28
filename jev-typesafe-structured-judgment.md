@@ -1,6 +1,6 @@
-# jev-1.13.0 TypeSafe 结构化判研 API 使用文档
+# jev TypeSafe 结构化判研 API 使用文档
 
-jev-1.13.0 是通过 DMXAPI TypeSafe 接口调用的结构化判研模型：把一段文本（如客服工单对话）作为共享上下文 `state`，一次请求同时提出多个问题，每个问题指定 3 种类型之一——choice（从给定选项中单选）、score（按档位评分）、noul（是 / 否判断），模型直接返回选中项、概率分布与置信度等机器可读的结构化结果，无需再解析自由文本。适合工单分级、满意度评估、意图识别等需要把自然语言对话转成可编程判定结果的场景。
+jev 是通过 DMXAPI TypeSafe 接口调用的结构化判研模型：把一段文本（如客服工单对话）作为共享上下文 `state`，一次请求同时提出多个问题，每个问题指定 3 种类型之一——choice（从给定选项中单选）、score（按档位评分）、noul（是 / 否判断），模型直接返回选中项、概率分布与置信度等机器可读的结构化结果，无需再解析自由文本。适合工单分级、满意度评估、意图识别等需要把自然语言对话转成可编程判定结果的场景。
 
 ## 📍 请求地址
 
@@ -92,7 +92,7 @@ def call_typesafe(state, questions, model=MODEL):
     url = BASE_URL.rstrip("/") + "/typesafe/v1/systemone"
     payload = json.dumps(
         {
-            # 【model】(string) 模型名称，固定为 "jev-1.13.0"
+            # 【model】(string) 模型名称，可选值："jev-latest" / "jev-1.14.0" / "jev-1.13.0"
             "model": model,
             # 【state】(string) 共享上下文，本例为客服工单对话记录，所有问题都基于这段文本判断
             "state": state,
@@ -177,7 +177,7 @@ if __name__ == "__main__":
       "type": "choice"
     }
   },
-  "model": "jev-1.13.0",
+  "model": "jev-1.14.0",
   "usage": {
     "input_tokens": 715,
     "output_tokens": 72
@@ -187,5 +187,5 @@ if __name__ == "__main__":
 
 ---
 <p align="center">
-  <small>© 2026 DMXAPI jev-1.13.0 TypeSafe 结构化判研</small>
+  <small>© 2026 DMXAPI jev TypeSafe 结构化判研</small>
 </p>

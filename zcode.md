@@ -62,8 +62,7 @@ ZCode 的"API 格式"提供三种选项，分别对应 DMXAPI 的三种接入格
 在添加供应商界面依次填写：
 
 - **名称**：自定义供应商名称，例如 `DMXAPI-Chat`
-- **Base URL**（Chat / Responses 格式需带 `/v1`）：
-  - cn 站：`https://www.dmxapi.cn/v1`
+- **Base URL**（Chat / Responses 格式需带 `/v1`）：`https://www.dmxapi.cn/v1`
 - **API Key**：填写您的 DMXAPI 密钥
 - **API 格式**：选择 **Chat Completions（/chat/completions）**
 
@@ -103,8 +102,7 @@ ZCode 的"API 格式"提供三种选项，分别对应 DMXAPI 的三种接入格
 如需 Responses 格式，再次 **添加供应商**，按下图配置：
 
 - **名称**：例如 `DMXAPI-Responses`
-- **Base URL**（需带 `/v1`）：
-  - cn 站：`https://www.dmxapi.cn/v1`
+- **Base URL**（需带 `/v1`）：`https://www.dmxapi.cn/v1`
 - **API Key**：填写您的 DMXAPI 密钥
 - **API 格式**：选择 **Responses（/responses）**
 - **模型列表**：添加模型，例如 `gpt-5.5`
@@ -118,8 +116,7 @@ ZCode 的"API 格式"提供三种选项，分别对应 DMXAPI 的三种接入格
 如需 Anthropic 格式，再次 **添加供应商**，按下图配置：
 
 - **名称**：例如 `DMXAPI-Anthropic`
-- **Base URL**（Anthropic 格式 **不需要** 带 `/v1`）：
-  - cn 站：`https://www.dmxapi.cn`
+- **Base URL**（Anthropic 格式 **不需要** 带 `/v1`）：`https://www.dmxapi.cn`
 - **API Key**：填写您的 DMXAPI 密钥
 - **API 格式**：选择 **Anthropic Messages（/v1/messages）**
 - **模型列表**：添加模型，例如 `kimi-k2.7-code-cc`

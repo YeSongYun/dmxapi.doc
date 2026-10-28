@@ -13,8 +13,7 @@ Cherry Studio 支持为同一服务商下的不同模型分别设置对话协议
 ### 第三步 填写提供商信息
 1. 填写提供商名称，例如 `DMXAPI-CN`  
 2. 填写您的 DMXAPI 令牌  
-3. 在端点设置的 OpenAI 一栏填入 API 地址，根据您注册的站点选择：
-   - cn 站：`https://www.dmxapi.cn`
+3. 在端点设置的 OpenAI 一栏填入 API 地址：`https://www.dmxapi.cn`
 ![](img/cherry-studio-new3.png)
 ### 第四步 填写其他协议端点
 向下滚动，在 **Anthropic**、**OpenAI Responses**、**Gemini** 三栏中填入与上一步相同的 API 地址，随后点击 **添加**。
