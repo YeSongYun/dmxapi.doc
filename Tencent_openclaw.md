@@ -14,7 +14,9 @@ OpenClaw 需要至少添加 1 个模型才能正常工作。在「自定义模�
 
 - **provider**：填写 `dmxapi`
 
-- **base_url**：填写 `https://www.dmxapi.cn`（只填到域名即可，协议路径由 OpenClaw 自动追加，不要带 `/v1`，否则路径会重复拼接）
+- **base_url**：按模型类型填写（需与下方的 `api` 协议匹配）：
+  - OpenAI 模型、Gemini 模型及其他兼容 OpenAI 格式的模型 → 填写 `https://www.dmxapi.cn/v1`
+  - Claude 模型 → 填写 `https://www.dmxapi.cn`（不要带 `/v1`，Claude 协议会自动补 `/v1/messages`，带上 `/v1` 会拼成 `/v1/v1/messages` 而报 404）
 
 - **api**：根据所配置的模型类型选择协议：
   - OpenAI 模型、Gemini 模型及其他兼容 OpenAI 格式的模型 → 填写 `openai-completions`
@@ -35,7 +37,7 @@ OpenClaw 需要至少添加 1 个模型才能正常工作。在「自定义模�
 ```json
 {
   "provider": "dmxapi",
-  "base_url": "https://www.dmxapi.cn",
+  "base_url": "https://www.dmxapi.cn/v1",
   "api": "openai-completions",
   "api_key": "your-api-key-here",
   "model": [
@@ -47,7 +49,9 @@ OpenClaw 需要至少添加 1 个模型才能正常工作。在「自定义模�
 }
 ```
 
-- **base_url**：填写 `https://www.dmxapi.cn`（只填到域名即可，协议路径由 OpenClaw 自动追加，不要带 `/v1`，否则路径会重复拼接）
+- **base_url**：与下方 `api` 协议保持一致：
+  - 填写 `openai-completions` → 填写 `https://www.dmxapi.cn/v1`
+  - 填写 `anthropic-messages` → 填写 `https://www.dmxapi.cn`（不要带 `/v1`，否则会拼成 `/v1/v1/messages` 而报 404）
 
 - **api_key**：填写你的 DMXAPI 密钥，可在 DMXAPI 工作台 → API 令牌页面获取。
 
