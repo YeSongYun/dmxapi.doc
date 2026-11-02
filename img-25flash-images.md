@@ -18,111 +18,6 @@ https://www.dmxapi.cn/v1beta/models/gemini-2.5-flash-image:generateContent
 
 ::: code-group
 
-```python [SDK]
-"""
-DMXAPI Gemini 2.5 Flash Image 多图融合示例
-使用 Google Gemini API 将多张图像融合生成新图像，并保存到本地 output 文件夹
-"""
-
-from google import genai
-from google.genai import types
-from PIL import Image
-import os
-from datetime import datetime
-
-# ============================================================================
-# 配置部分
-# ============================================================================
-
-# DMXAPI 密钥和基础 URL
-api_key = "sk-*********************************************"  # 替换为你的 DMXAPI 密钥
-BASE_URL = "https://www.dmxapi.cn"
-
-INPUT_IMAGE_PATHS = [
-    "output/generated_image_20251121_170850.png",  # 替换为你的图片路径
-    "test/example.jpg",
-]
-
-# 创建 Gemini 客户端
-client = genai.Client(api_key=api_key, http_options={'base_url': BASE_URL})
-
-# ============================================================================
-# 多图融合提示词
-# ============================================================================
-
-# 读取所有要融合的图像
-images = [Image.open(path) for path in INPUT_IMAGE_PATHS]
-
-# 定义多图融合的提示词
-prompt = (
-    "让第二张图的计算器在第一张图中吃饭"
-)
-
-# ============================================================================
-# 调用 DMXAPI 融合图像
-# ============================================================================
-
-response = client.models.generate_content(
-    # 模型名称
-    model="gemini-2.5-flash-image",
-
-    contents=[prompt] + images,
-
-    # 生成配置
-    config=types.GenerateContentConfig(
-        # image_config: 图像配置选项
-        image_config=types.ImageConfig(
-            # aspect_ratio: 设置输出图片的宽高比（注意：使用下划线命名）
-            #
-            # ┌──────────┬─────────────┬────────┐
-            # │ 宽高比    │ 分辨率      │ 令牌    │
-            # ├──────────┼─────────────┼────────┤
-            # │ 1:1      │ 1024x1024   │ 1290   │
-            # │ 2:3      │ 832x1248    │ 1290   │
-            # │ 3:2      │ 1248x832    │ 1290   │
-            # │ 3:4      │ 864x1184    │ 1290   │
-            # │ 4:3      │ 1184x864    │ 1290   │
-            # │ 4:5      │ 896x1152    │ 1290   │
-            # │ 5:4      │ 1152x896    │ 1290   │
-            # │ 9:16     │ 768x1344    │ 1290   │
-            # │ 16:9     │ 1344x768    │ 1290   │
-            # │ 21:9     │ 1536x672    │ 1290   │
-            # └──────────┴─────────────┴────────┘
-            #
-            aspect_ratio="16:9",
-        ),
-    )
-)
-
-# ============================================================================
-# 处理响应并保存融合后的图像
-# ============================================================================
-
-for part in response.parts:
-    # 处理文本响应（如果有）
-    if part.text is not None:
-        print(part.text)
-
-    # 处理图像响应
-    elif part.inline_data is not None:
-        # 确保 output 文件夹存在
-        os.makedirs("output", exist_ok=True)
-
-        # 生成带时间戳的文件名
-        # 格式: fused_image_20250121_143052.png (年月日_时分秒)
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        filename = f"output/fused_image_{timestamp}.png"
-
-        # 将响应数据转换为 PIL Image 对象
-        image = part.as_image()
-
-        # 保存图像到文件
-        image.save(filename)
-
-        # 输出保存成功的提示信息
-        print(f"融合后的图片已保存到 {filename}")
-```
-
 ```python [request]
 """
 ================================================================
@@ -277,20 +172,125 @@ except ValueError as e:
     print(f"数据解析错误: {e}")
 ```
 
+```python [SDK]
+"""
+DMXAPI Gemini 2.5 Flash Image 多图融合示例
+使用 Google Gemini API 将多张图像融合生成新图像，并保存到本地 output 文件夹
+"""
+
+from google import genai
+from google.genai import types
+from PIL import Image
+import os
+from datetime import datetime
+
+# ============================================================================
+# 配置部分
+# ============================================================================
+
+# DMXAPI 密钥和基础 URL
+api_key = "sk-*********************************************"  # 替换为你的 DMXAPI 密钥
+BASE_URL = "https://www.dmxapi.cn"
+
+INPUT_IMAGE_PATHS = [
+    "output/generated_image_20251121_170850.png",  # 替换为你的图片路径
+    "test/example.jpg",
+]
+
+# 创建 Gemini 客户端
+client = genai.Client(api_key=api_key, http_options={'base_url': BASE_URL})
+
+# ============================================================================
+# 多图融合提示词
+# ============================================================================
+
+# 读取所有要融合的图像
+images = [Image.open(path) for path in INPUT_IMAGE_PATHS]
+
+# 定义多图融合的提示词
+prompt = (
+    "让第二张图的计算器在第一张图中吃饭"
+)
+
+# ============================================================================
+# 调用 DMXAPI 融合图像
+# ============================================================================
+
+response = client.models.generate_content(
+    # 模型名称
+    model="gemini-2.5-flash-image",
+
+    contents=[prompt] + images,
+
+    # 生成配置
+    config=types.GenerateContentConfig(
+        # image_config: 图像配置选项
+        image_config=types.ImageConfig(
+            # aspect_ratio: 设置输出图片的宽高比（注意：使用下划线命名）
+            #
+            # ┌──────────┬─────────────┬────────┐
+            # │ 宽高比    │ 分辨率      │ 令牌    │
+            # ├──────────┼─────────────┼────────┤
+            # │ 1:1      │ 1024x1024   │ 1290   │
+            # │ 2:3      │ 832x1248    │ 1290   │
+            # │ 3:2      │ 1248x832    │ 1290   │
+            # │ 3:4      │ 864x1184    │ 1290   │
+            # │ 4:3      │ 1184x864    │ 1290   │
+            # │ 4:5      │ 896x1152    │ 1290   │
+            # │ 5:4      │ 1152x896    │ 1290   │
+            # │ 9:16     │ 768x1344    │ 1290   │
+            # │ 16:9     │ 1344x768    │ 1290   │
+            # │ 21:9     │ 1536x672    │ 1290   │
+            # └──────────┴─────────────┴────────┘
+            #
+            aspect_ratio="16:9",
+        ),
+    )
+)
+
+# ============================================================================
+# 处理响应并保存融合后的图像
+# ============================================================================
+
+for part in response.parts:
+    # 处理文本响应（如果有）
+    if part.text is not None:
+        print(part.text)
+
+    # 处理图像响应
+    elif part.inline_data is not None:
+        # 确保 output 文件夹存在
+        os.makedirs("output", exist_ok=True)
+
+        # 生成带时间戳的文件名
+        # 格式: fused_image_20250121_143052.png (年月日_时分秒)
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        filename = f"output/fused_image_{timestamp}.png"
+
+        # 将响应数据转换为 PIL Image 对象
+        image = part.as_image()
+
+        # 保存图像到文件
+        image.save(filename)
+
+        # 输出保存成功的提示信息
+        print(f"融合后的图片已保存到 {filename}")
+```
+
 :::
 
 ## 返回示例
 
 ::: code-group
 
-```json [SDK]
-融合后的图片已保存到 output/fused_image_20251210_111850.png
-```
-
 ```json [request]
 请求成功!
 ============================================================
 图片已保存到: output/fused_image_20251208_154602.png
+```
+
+```json [SDK]
+融合后的图片已保存到 output/fused_image_20251210_111850.png
 ```
 
 :::
