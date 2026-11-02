@@ -1257,6 +1257,7 @@ export default defineConfig({
             text: '🧊3D大模型',
             collapsed: true,
             items: [
+              /* 暂时隐藏：Neural4D-2.5（保留配置与 .md 文件，删除本块注释即可恢复）
               {
                 text: 'Neural4D-2.5',
                 collapsed: true,
@@ -1267,6 +1268,7 @@ export default defineConfig({
                   { text: '多视图生3D模型', link: '/neural4d-2.5-multi-view-to-3d' },
                 ],
               },
+              */
               {
                 text: 'Meshy-7.1',
                 collapsed: true,
