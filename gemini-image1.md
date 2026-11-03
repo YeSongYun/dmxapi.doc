@@ -2,7 +2,9 @@
 
 ## 📋 概述
 
-该 API 允许用户通过url传输图片并获取 AI 生成的详细描述,支持多种图片格式（JPEG、PNG、WEBP、HEIC、HEIF 等）。
+本示例使用 `gemini-3.8-flash` 分析网络图片。代码先下载图片，再通过内联图片数据发送给模型；REST 和 SDK 示例均使用 JPEG 图片。
+
+运行前安装依赖（`pip install requests google-genai`），填写 DMXAPI 密钥，并确保图片 URL 可访问。
 
 ## 🌐 请求地址
 
@@ -22,7 +24,7 @@
 ╠══════════════════════════════════════════════════════════════════════════════╣
 ║  功能说明：调用 Gemini 模型分析网络图片                                         ║
 ║  API 提供商：DMXAPI                                                           ║
-║  模型版本：Gemini 2.5 Flash                                                   ║
+║  模型版本：Gemini 3.8 Flash                                                   ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 """
 import requests
@@ -33,8 +35,8 @@ import base64
 # ═══════════════════════════════════════════════════════════════════════════════
 GEMINI_API_KEY = "sk-**************************************************"  # DMXAPI 访问令牌
 BASE_URL = "https://www.dmxapi.cn/v1beta"                               # API 基础地址
-IMG_URL = "https://www.w3.org/People/mimasa/test/imgformat/img/w3c_home.bmp"                              # 待分析图片 URL
-MODEL = "gemini-3.1-pro-preview"                                              # Gemini 模型版本
+IMG_URL = "https://goo.gle/instrument-img"                            # 待分析 JPEG 图片 URL
+MODEL = "gemini-3.8-flash"                                            # Gemini 模型版本
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # 🔧 工具函数
@@ -154,6 +156,8 @@ if __name__ == "__main__":
 ```
 ## 📤 返回示例
 
+以下为 REST 输出格式示意，实际描述以所下载的图片和模型响应为准。
+
 ### 成功响应
 ```json
 📸 正在分析图片: https://goo.gle/instrument-img
@@ -207,7 +211,7 @@ Gemini 图片分析示例
 使用DMXAPI 代理服务分析网络图片内容
 功能说明:
 - 从网络 URL 下载图片
-- 使用 Gemini 2.5 Flash 模型分析图片内容
+- 使用 Gemini 3.8 Flash 模型分析图片内容
 - 通过 DMXAPI 代理访问 Gemini API
 """
 from google import genai
@@ -230,7 +234,9 @@ BASE_URL = "https://www.dmxapi.cn"  # DMXAPI 基础地址
 image_path = "https://goo.gle/instrument-img"  #(可换成自己图片的url图片地址)
 
 # 下载图片并获取字节数据
-image_bytes = requests.get(image_path).content
+image_response = requests.get(image_path, timeout=30)
+image_response.raise_for_status()
+image_bytes = image_response.content
 
 # 将图片字节转换为 Gemini API 所需的 Part 对象
 image = types.Part.from_bytes(
@@ -252,10 +258,10 @@ client = genai.Client(
 # 图片分析
 # ============================================================================
 
-# 调用 Gemini 2.5 Flash 模型分析图片
+# 调用 Gemini 3.8 Flash 模型分析图片
 # contents 参数包含提示词和图片对象
 response = client.models.generate_content(
-    model="gemini-2.5-flash",
+    model="gemini-3.8-flash",
     contents=["解释这个图片的具体内容", image],
 )
 
@@ -269,6 +275,8 @@ print(response.text)
 ```
 
 ## 📤 返回示例
+
+以下为 SDK 输出格式示意，实际描述以所下载的图片和模型响应为准。
 
 ### 成功响应
 ```json

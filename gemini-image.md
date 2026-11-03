@@ -2,7 +2,9 @@
 
 ## 📋 概述
 
-该 API 允许用户上传本地图片并获取 AI 生成的详细描述,支持多种图片格式（JPEG、PNG、WEBP、HEIC、HEIF 等）。
+本示例使用 `gemini-3.8-flash` 分析本地图片，分别演示 REST 流式响应和 Google GenAI SDK 调用。示例使用 JPEG；更换图片格式时请同步修改 MIME 类型。
+
+运行前安装依赖（`pip install requests google-genai`），填写 DMXAPI 密钥，并准备 `test/example.jpg`。
 
 ## 🌐 请求地址
 
@@ -25,7 +27,7 @@
     支持流式响应，实时获取分析结果
 
 API 提供商：DMXAPI
-使用模型：gemini-2.5-flash
+使用模型：gemini-3.8-flash
 ================================================================================
 """
 
@@ -37,7 +39,7 @@ import json
 # ==============================================================================
 # 配置参数区域
 # ==============================================================================
-MODEL = "gemini-2.5-flash"                                      # AI 模型名称
+MODEL = "gemini-3.8-flash"                                      # AI 模型名称
 API_KEY = "sk-******************************************"       # API 密钥
 BASE_URL = "https://www.dmxapi.cn/v1beta"                       # DMXAPI 基础地址
 
@@ -116,7 +118,7 @@ def call_gemini_api_stream(image_path=DEFAULT_IMAGE_PATH, prompt_text=DEFAULT_PR
     # 步骤 4: 发送请求并处理流式响应
     # --------------------------------------------------------------------------
     try:
-        response = requests.post(url, headers=headers, json=payload, stream=False)
+        response = requests.post(url, headers=headers, json=payload, stream=True, timeout=(10, 120))
         response.raise_for_status()
 
         full_text = ""
@@ -127,9 +129,9 @@ def call_gemini_api_stream(image_path=DEFAULT_IMAGE_PATH, prompt_text=DEFAULT_PR
             if line:
                 line_str = line.decode('utf-8')
 
-                # SSE 数据行以 "data: " 开头
-                if line_str.startswith('data: '):
-                    json_str = line_str[6:]                     # 去掉 "data: " 前缀
+                # SSE 冒号后的空格可省略
+                if line_str.startswith('data:'):
+                    json_str = line_str[5:].strip()
 
                     try:
                         data = json.loads(json_str)
@@ -139,7 +141,7 @@ def call_gemini_api_stream(image_path=DEFAULT_IMAGE_PATH, prompt_text=DEFAULT_PR
                             for candidate in data['candidates']:
                                 if 'content' in candidate and 'parts' in candidate['content']:
                                     for part in candidate['content']['parts']:
-                                        if 'text' in part:
+                                        if 'text' in part and not part.get('thought'):
                                             text_chunk = part['text']
                                             print(text_chunk, end='', flush=True)
                                             full_text += text_chunk
@@ -175,6 +177,8 @@ if __name__ == "__main__":
 ```
 ## 📤 返回示例
 
+以下为流式输出格式示意，实际描述取决于输入图片。
+
 ### 成功响应
 ```json
 === 流式响应开始 ===
@@ -199,7 +203,7 @@ if __name__ == "__main__":
 =================================================
 DMXAPI Gemini 图像分析示例（SDK）
 =================================================
-模型: gemini-2.5-flash
+模型: gemini-3.8-flash
 =================================================
 """
 
@@ -228,7 +232,7 @@ client = genai.Client(
 # 3. 调用 Gemini API 分析图片
 # ============================================
 response = client.models.generate_content(
-    model='gemini-2.5-flash',
+    model='gemini-3.8-flash',
     contents=[
         # 将图片转换为 API 可接受的格式
         types.Part.from_bytes(
@@ -250,6 +254,8 @@ print(response.text)
 
 
 ## 📤 返回示例
+
+以下为 SDK 文本输出格式示意，实际描述取决于输入图片。
 
 ### 成功响应
 ```json

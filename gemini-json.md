@@ -1,5 +1,9 @@
 # Gemini 原生格式 JSON 格式化输出 API 文档
 
+本示例通过 DMXAPI 调用 `gemini-3.8-flash`，使用 `responseMimeType` 和 `responseSchema` 约束输出。结构化 JSON 位于响应的 `candidates[].content.parts[].text` 字符串中，需要再用 `json.loads` 解析。
+
+运行前安装 `requests`（`pip install requests`），并填写 DMXAPI 密钥。
+
 ## 📌 请求地址
 
 ```
@@ -21,7 +25,7 @@ import json
 # API配置部分
 # ============================================================
 api_key = "sk-*****************************************"  # 在这里填写你的DMX API Key
-model = "gemini-2.5-flash"  # 使用的模型名称
+model = "gemini-3.8-flash"  # 使用的模型名称
 url = f"https://www.dmxapi.cn/v1beta/models/{model}:generateContent?key={api_key}"
 
 # ============================================================
@@ -55,6 +59,7 @@ payload = {
                         "items": {"type": "STRING"}  # 每个配料为字符串
                     }
                 },
+                "required": ["recipeName", "ingredients"],
                 # 属性顺序
                 "propertyOrdering": ["recipeName", "ingredients"]
             }
@@ -66,12 +71,22 @@ payload = {
 # 发送请求并输出结果
 # ============================================================
 headers = {"Content-Type": "application/json"}  # 设置请求头
-response = requests.post(url, headers=headers, data=json.dumps(payload))  # 发送POST请求
-print(response.text)  # 打印返回结果
+response = requests.post(url, headers=headers, json=payload, timeout=(10, 120))
+response.raise_for_status()
+result = response.json()
+text = "".join(
+    part.get("text", "")
+    for part in result["candidates"][0]["content"]["parts"]
+    if not part.get("thought")
+)
+recipes = json.loads(text)
+print(json.dumps(recipes, indent=2, ensure_ascii=False))
 
 ```
 
 ## 📤 返回示例
+
+以下展示 API 原始响应结构，已省略部分字段；上方脚本实际打印解析后的早餐数组。示例文本与用量仅用于说明格式。
 ```json
 {
   "candidates": [
@@ -107,9 +122,7 @@ print(response.text)  # 打印返回结果
     ],
     "thoughtsTokenCount": 1589
   },
-  "modelVersion": "gemini-2.5-flash",
-  "createTime": "2025-11-11T10:50:07.711171Z",
-  "responseId": "3xQTaYO0K4Le998Pj_Pz2AE"
+  "modelVersion": "gemini-3.8-flash"
 }
 ```
 ---

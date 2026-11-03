@@ -1,15 +1,21 @@
-# Gemini 语音转文本 API 文档
+# Gemini 音频分析与转写 API 文档
 
 ## ✨ 简介
-使用 Gemini 模型将音频文件翻译成英文，支持多种格式 MIME类型（WAV、 MP3、 AIFF、AAC、OGG Vorbis、FLAC等）。
+本示例通过 Google GenAI SDK 和 DMXAPI 调用 `gemini-3.8-flash` 分析本地音频。可以通过提示词要求转写、翻译或概述内容；下方代码演示音频内容分析，不会固定翻译成英文。
+
+运行前安装 SDK（`pip install -U google-genai`），填写 DMXAPI 密钥，并准备 `test/11.mp3`。音频格式与 `mime_type` 必须匹配，例如 MP3 使用 `audio/mpeg`、WAV 使用 `audio/wav`。
+
+:::tip 验证音频内容
+建议先使用有清晰人声、内容已知的录音验证转写。本次测试中，合成语音可正确识别订单号和金额，但 3 秒纯音输入返回了“未提供音频”的回答。HTTP 200 不代表声音识别正确；纯音、静音等非语音内容需单独验证。
+:::
 
 ## 📡 接口地址
 
 | 服务类型 | 接口地址 | 说明 |
 |---------|---------|------|
-| 音频翻译 | `https://www.dmxapi.cn` | 详细描述音频内容 |
+| 音频分析 | `https://www.dmxapi.cn` | 使用 SDK 分析本地音频 |
 
-## 🎯 Python 音频翻译示例
+## 🎯 Python 音频分析示例
 
 ### 代码示例
 ```python
@@ -47,12 +53,12 @@ client = genai.Client(api_key=api_key, http_options={'base_url': BASE_URL})
 # 5. 发送音频分析请求
 # ============================================================
 response = client.models.generate_content(
-    model='gemini-2.5-flash',  # 使用 Gemini 2.5 Flash 模型
+    model='gemini-3.8-flash',  # 使用 Gemini 3.8 Flash 模型
     contents=[
         '分析音频内容',  # 文本提示：要求描述音频内容
         types.Part.from_bytes(  # 将音频字节数据转换为 API 可接受的格式
             data=audio_bytes,  # 音频文件的二进制数据
-            mime_type='audio/mp3',  # 指定音频文件的 MIME 类型
+            mime_type='audio/mpeg',  # MP3 文件的 MIME 类型
         )
     ]
 )
@@ -64,6 +70,8 @@ print(response.text)  # 打印 Gemini 返回的音频描述文本
 ```
 
 ### 📊 返回示例
+
+以下为输出格式示意，实际转写或分析内容取决于输入音频与提示词。
 ```json
 DMX API 一个 key，使用全球大模型。
 
@@ -94,12 +102,11 @@ DMX API 一个 key，使用全球大模型。
 - **安全提醒**: 请妥善保管 API 密钥,切勿泄露或提交到公共代码仓库
 
 
-## 📊 音频的技术详情
- - Gemini 将每秒的音频表示为 32 个令牌；例如，一分钟的音频表示为 1,920 个令牌。
- - Gemini 可以“理解”非语音内容，例如鸟鸣或警笛。
- - 单个问题中音频数据的支持时长上限为 9.5 小时。Gemini 不限制单个问题中的音频文件数量；不过，单个问题中的所有音频文件总时长不得超过 9.5 小时。
- - Gemini 会将音频文件下采样为 16 Kbps 的数据分辨率。
- - 如果音频源包含多个声道，Gemini 会将这些声道合并为一个声道。
+## 📊 音频输入说明
+
+- 本示例将完整音频读入内存并以内联数据发送，建议先使用较短音频验证。
+- 修改提示词可分别演示语音转写、翻译、声音识别或内容摘要。
+- 文件大小、时长、token 计费与预处理方式以 `gemini-3.8-flash` 当前服务说明和响应中的用量为准。
 
 ---
 

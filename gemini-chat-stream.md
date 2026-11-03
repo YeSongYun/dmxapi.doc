@@ -1,9 +1,11 @@
 # Gemini 原生格式流式输出 API 文档
 
+使用 `gemini-3.8-flash` 的 `streamGenerateContent` 接口，以 SSE 格式逐步接收文本。运行前安装 `requests`（`pip install requests`），填写 DMXAPI 密钥；`stream=True` 用于边接收边处理响应。
+
 ## 📌 接口地址
 
 ```
-https://www.dmxapi.cn/v1beta/models/{model}:generateContent
+https://www.dmxapi.cn/v1beta/models/{model}:streamGenerateContent?alt=sse
 ```
 
 ## 💻 请求示例 (Python)
@@ -27,7 +29,7 @@ import requests
 # ==============================================================================
 # 配置参数区域
 # ==============================================================================
-model = "gemini-2.5-flash"  # 使用的 AI 模型名称
+model = "gemini-3.8-flash"  # 使用的 AI 模型名称
 API_KEY = "sk-*****************************************"  # 你的 API 密钥
 
 # 构建完整的 API 请求 URL
@@ -54,7 +56,7 @@ headers = {"Content-Type": "application/json"}
 # ==============================================================================
 # 发送 POST 请求到 API 端点
 # stream=True：启用流式响应，可以实时接收数据块，而不是等待全部完成
-response = requests.post(url, headers=headers, data=payload, stream=True)
+response = requests.post(url, headers=headers, data=payload, stream=True, timeout=(10, 120))
 
 # 检查响应状态码
 if response.status_code != 200:
@@ -95,10 +97,9 @@ def parse_sse_response(response):
         if not line or line.strip() == "":
             continue
             
-        # SSE 格式的数据行以 'data: ' 开头
-        if line.startswith('data: '):
-            # 提取 'data: ' 后面的 JSON 内容（去掉前 6 个字符）
-            json_str = line[6:].strip()
+        # SSE 数据行以 'data:' 开头，冒号后的空格可省略
+        if line.startswith('data:'):
+            json_str = line[5:].strip()
             
             # 跳过空数据或 [DONE] 标记
             if not json_str or json_str == '[DONE]':
@@ -118,7 +119,7 @@ def parse_sse_response(response):
                         # 遍历内容的各个部分（parts）
                         for part in candidate['content']['parts']:
                             # 如果当前部分包含文本内容
-                            if 'text' in part:
+                            if 'text' in part and not part.get('thought'):
                                 text = part['text']
                                 full_text += text  # 累积到完整文本中
                                 # 实时输出文本片段
@@ -144,6 +145,8 @@ result_text = parse_sse_response(response)
 ```
 
 ## 📤 返回示例
+
+以下为文本输出格式示意，实际内容与分块数量以本次请求为准。
 
 ```text
 细雨绵绵，笼罩着古老的石桥，青苔在岁月的侵蚀下，愈发显得斑驳。桥下溪水潺潺，带着泥土的清香，缓缓流淌，倒映着岸边摇曳的垂柳。柳枝低垂，轻抚水面，泛起层层涟漪，仿佛在低声细语。

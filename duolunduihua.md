@@ -2,7 +2,9 @@
 
 ## 📋 概述
 
-本文档介绍如何使用 Gemini API 进行多轮对话。
+本文档介绍如何通过 DMXAPI 使用 `gemini-3.8-flash` 进行多轮对话。REST 调用需要按顺序传入 `user` / `model` 历史消息；SDK 的 `chat` 会话会自动维护历史。
+
+运行前安装依赖（`pip install requests google-genai`）并填写 DMXAPI 密钥。示例中的日期是显式给定的上下文，不代表模型能读取当前日期；真实多轮请求应保留模型返回的完整 `content`，包括可能出现的 `thoughtSignature`。
 
 
 ## 🌐 请求地址
@@ -21,7 +23,7 @@ https://www.dmxapi.cn/v1beta/models/{model}:generateContent
 #   Gemini API 多轮对话示例
 #
 #   功能说明：演示如何使用 Gemini API 进行多轮对话
-#   模型版本：gemini-2.5-flash
+#   模型版本：gemini-3.8-flash
 #   接口类型：REST API (POST 请求)
 #
 # ================================================================
@@ -36,7 +38,7 @@ import json
 # API 端点地址
 # - 使用 generateContent 接口生成对话内容
 # - v1beta 表示测试版本接口
-url = "https://www.dmxapi.cn/v1beta/models/gemini-2.5-flash:generateContent"
+url = "https://www.dmxapi.cn/v1beta/models/gemini-3.8-flash:generateContent"
 
 # 请求头配置
 # - Authorization: 令牌认证方式
@@ -83,7 +85,8 @@ data = {
 # - url: API 端点
 # - headers: 请求头（含认证信息）
 # - json: 自动将 dict 转为 JSON 格式
-response = requests.post(url, headers=headers, json=data)
+response = requests.post(url, headers=headers, json=data, timeout=(10, 120))
+response.raise_for_status()
 
 # 格式化输出 JSON 响应
 # - indent=2: 缩进 2 空格，便于阅读
@@ -98,7 +101,7 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 #   Gemini API 多轮对话示例 (SDK 版本)
 #
 #   功能说明：使用 Google GenAI SDK 进行多轮对话
-#   模型版本：gemini-2.5-flash
+#   模型版本：gemini-3.8-flash
 #   接口类型：Python SDK (google-genai)
 #
 #   优势：相比 REST API，SDK 自动管理对话历史，代码更简洁
@@ -119,7 +122,7 @@ from google import genai
 
 client = genai.Client(
     api_key="sk-*****************************************",
-    http_options={"api_version": "v1beta", "base_url": "https://www.dmxapi.cn"}
+    http_options={"api_version": "v1beta", "base_url": "https://www.dmxapi.cn", "timeout": 120000}
 )
 
 # --------------------------------
@@ -130,7 +133,7 @@ client = genai.Client(
 # - model: 指定使用的模型
 # - 会话对象会自动维护对话历史，无需手动管理
 
-chat = client.chats.create(model="gemini-2.5-flash")
+chat = client.chats.create(model="gemini-3.8-flash")
 
 # --------------------------------
 #   3. 进行多轮对话
@@ -142,7 +145,7 @@ print(response.text)
 
 # 第二轮对话：基于上下文提问
 # - 模型会记住之前的对话内容
-# - 能够理解 "my house" 指的是前面提到的房子
+# - 根据前面给定的日期回答“明天是几号”
 response = chat.send_message("明天是几号")
 print(response.text)
 
@@ -165,6 +168,8 @@ for message in chat.get_history():
 
 
 ## 📤 返回示例
+
+以下为响应格式示意，示例日期来自对话上下文，用量不代表本次实测。
 
 ### 成功响应
 
@@ -203,8 +208,7 @@ for message in chat.get_history():
       }
     ]
   },
-  "modelVersion": "gemini-2.5-flash",
-  "responseId": "awNOaYKaHebfjMcP-dyd4Ao"
+  "modelVersion": "gemini-3.8-flash"
 }
 ```
 ```json[SDK]

@@ -2,7 +2,9 @@
 
 ## 功能概述
 
-通过 Gemini API 的工具调用功能，您可以让 AI 模型实时访问 Google 搜索引擎，获取最新的互联网信息来回答问题。这使得模型不再局限于训练数据的知识截止日期，能够提供实时、准确的信息。
+本示例通过 DMXAPI 调用 `gemini-3.8-flash`，使用 Google Search 工具查询互联网信息。模型会根据问题决定是否调用搜索；应结合 `grounding_metadata` 中的来源核对答案，而不是仅凭返回文本判断已联网。
+
+运行前安装 SDK（`pip install -U google-genai`），设置环境变量 `GEMINI_API_KEY` 或替换示例中的密钥占位符。
 
 ## 接口地址
 
@@ -64,11 +66,11 @@ config = types.GenerateContentConfig(
 # ============================================================
 
 # 调用 Gemini API 生成内容
-# model: 使用 gemini-2.5-flash 模型
+# model: 使用 gemini-3.8-flash 模型
 # contents: 用户的问题（查询上海天气）
 # config: 包含 Google 搜索工具的配置
 response = client.models.generate_content(
-    model="gemini-2.5-flash",
+    model="gemini-3.8-flash",
     contents="今天上海的天气怎么样?",
     config=config,
 )
@@ -80,11 +82,20 @@ response = client.models.generate_content(
 # 打印模型生成的回答
 # 模型会先通过 Google 搜索获取实时天气信息，然后生成回答
 print(response.text)
+
+# 输出搜索来源；未返回来源时，不将回答视为已验证的联网结果
+metadata = response.candidates[0].grounding_metadata if response.candidates else None
+if metadata and metadata.grounding_chunks:
+    for chunk in metadata.grounding_chunks:
+        if chunk.web:
+            print(f"来源: {chunk.web.title} {chunk.web.uri}")
+else:
+    print("本次响应未返回搜索来源，请核对工具调用情况。")
 ```
 
 ## 返回示例
 
-模型会自动通过 Google 搜索获取实时信息，然后生成结构化的回答：
+以下为输出格式示意，日期和天气不是本次实测数据；实际答案与搜索来源以当次响应为准：
 
 ```json
 今天（2025年11月20日）上海天气晴朗，气温在7°C到15°C之间。
@@ -110,8 +121,8 @@ print(response.text)
    - 不要将包含密钥的代码提交到公共代码仓库
 
 2. **模型选择**：
-   - `gemini-2.5-flash`：速度快，适合一般查询
-   - `gemini-2.5-pro`：更强大，适合复杂任务
+   - 本文统一使用 `gemini-3.8-flash`
+   - Google Search 的可用性以当前模型通道及响应中的来源信息为准
 
 3. **查询优化**：
    - 提出明确、具体的问题以获得更准确的结果

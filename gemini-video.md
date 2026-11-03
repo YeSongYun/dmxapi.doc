@@ -1,5 +1,7 @@
 # Gemini API 视频分析接口文档
 
+本示例使用 `gemini-3.8-flash` 分析本地 MP4 视频，通过 `inlineData` 发送 Base64 视频数据。运行前安装 `requests`（`pip install requests`），填写 DMXAPI 密钥，并将 `VIDEO_PATH` 指向实际文件；较大的视频会增加上传时间和请求体大小。
+
 ## 📌 接口地址
 
 ```
@@ -32,7 +34,7 @@ import requests
 # 配置参数
 # ========================================
 
-model = "gemini-2.5-flash"          # AI 模型名称，支持视频分析
+model = "gemini-3.8-flash"          # 本示例使用的模型
 API_URL = f"https://www.dmxapi.cn/v1beta/models/{model}:generateContent"
 API_KEY = "sk-*****************************************"  # 请替换为您自己的 DMXAPI 密钥
 VIDEO_PATH = "test/example.mp4"      # 视频文件路径
@@ -138,7 +140,8 @@ def analyze_video():
             API_URL,
             headers=headers,
             params={"key": API_KEY},
-            json=payload
+            json=payload,
+            timeout=(10, 180)
         )
         
         # 检查 HTTP 状态码
@@ -154,8 +157,11 @@ def analyze_video():
             candidate = result["candidates"][0]
             
             if "content" in candidate and "parts" in candidate["content"]:
-                # 提取 AI 生成的文本内容
-                text_content = candidate["content"]["parts"][0].get("text", "")
+                # 合并所有非思考文本，跳过仅含签名的部分
+                text_content = "".join(
+                    part.get("text", "") for part in candidate["content"]["parts"]
+                    if not part.get("thought")
+                )
                 
                 # 显示分析结果
                 print("\n" + "=" * 50)
@@ -188,7 +194,7 @@ def analyze_video():
         print(f"\n❌ 请求失败: {e}")
         
         # 显示详细的错误信息
-        if hasattr(e, 'response') and e.response:
+        if e.response is not None:
             print(f"状态码: {e.response.status_code}")
             print(f"响应: {e.response.text}")
 
@@ -216,6 +222,8 @@ if __name__ == "__main__":
 ```
 
 ## ✅ 返回示例
+
+以下为输出格式示意，实际分析内容与用量取决于输入视频。
 
 ```json
 ==================================================

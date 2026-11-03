@@ -2,7 +2,9 @@
 
 ## 📋 概述
 
-本文档介绍如何使用 Gemini API 进行非流式文本生成对话。
+本文档介绍如何通过 DMXAPI 使用 `gemini-3.8-flash` 进行非流式文本生成。请求使用 Gemini 原生的 `contents` / `parts` 结构，完整回答在请求完成后一次返回。
+
+运行前安装 `requests`（`pip install requests`），并将代码中的 API 密钥占位符替换为自己的 DMXAPI 密钥。
 
 
 ## 🌐 请求地址
@@ -15,7 +17,7 @@ https://www.dmxapi.cn/v1beta/models/{model}:generateContent
 
 | 参数 | 说明 | 示例 |
 |------|------|------|
-| `{model}` | Gemini 模型版本 | `gemini-2.5-flash` |
+| `{model}` | Gemini 模型版本 | `gemini-3.8-flash` |
 
 
 
@@ -41,9 +43,9 @@ import json
 # API 配置信息
 # ========================================
 prompt = "Hi, 你是谁？"  # 用户提示词 - 可在此处修改你想问的问题
-model = "gemini-2.5-flash"  # 使用的 Gemini 模型版本
+model = "gemini-3.8-flash"  # 使用的 Gemini 模型版本
 API_KEY = "sk-*****************************************"  # 替换为你的 DMXAPI 密钥
-API_URL = f"https://www.dmxapi.cn/v1beta/models/{model}:generateContent?key={API_KEY}"  # DMXAPI gemini 请求地址
+API_URL = f"https://www.dmxapi.cn/v1beta/models/{model}:generateContent"  # 密钥通过 params 传入一次
 
 
 def generate_text(prompt):
@@ -80,7 +82,8 @@ def generate_text(prompt):
             API_URL,
             headers=headers,
             params={"key": API_KEY},
-            json=payload
+            json=payload,
+            timeout=(10, 120)
         )
         
         # 检查 HTTP 请求是否成功（状态码 2xx）
@@ -94,7 +97,7 @@ def generate_text(prompt):
         print(f"❌ 请求失败: {e}")
         
         # 如果存在响应对象，打印详细的错误信息
-        if e.response:
+        if e.response is not None:
             print(f"📊 状态码: {e.response.status_code}")
             print(f"📄 响应内容: {e.response.text}")
         
@@ -125,6 +128,8 @@ if __name__ == "__main__":
 
 
 ## 📤 返回示例
+
+以下为响应结构示意，已省略部分字段；文本和用量不代表本次模型实测结果。
 
 ### 成功响应
 
@@ -197,9 +202,7 @@ if __name__ == "__main__":
     ],
     "thoughtsTokenCount": 28
   },
-  "modelVersion": "gemini-2.5-flash",
-  "createTime": "2025-11-11T08:22:12.483945Z",
-  "responseId": "NPISaenEHYqWsbwPn7GC4QI"
+  "modelVersion": "gemini-3.8-flash"
 }
 --------------------------------------------------
 ```

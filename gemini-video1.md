@@ -2,7 +2,9 @@
 
 ## 📋 概述
 
-该 API 允许用户通过视频的网络地址（`fileUri`）传输视频并获取 AI 生成的详细分析结果，无需将视频下载到本地，适合分析已经托管在网络上的视频文件。
+本示例通过 DMXAPI 调用 `gemini-3.8-flash`，使用 `fileData.fileUri` 传入网络视频地址。客户端无需下载视频，服务端需要能够访问该直链；实际支持情况取决于当前模型通道和媒体来源。
+
+运行前安装 `requests`（`pip install requests`），填写 DMXAPI 密钥，并确认 `VIDEO_URL` 可公开访问。
 
 ## 🌐 请求地址
 
@@ -23,7 +25,7 @@ https://www.dmxapi.cn/v1beta/models/{model}:generateContent
 ╠══════════════════════════════════════════════════════════════════════════════╣
 ║  功能说明：调用 Gemini 模型分析网络视频（通过 fileUri 传入视频地址）              ║
 ║  API 提供商：DMXAPI                                                           ║
-║  模型版本：gemini-3.5-flash-ssvip                                             ║
+║  模型版本：gemini-3.8-flash                                                   ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
 """
 import requests
@@ -34,7 +36,7 @@ import json
 # ═══════════════════════════════════════════════════════════════════════════════
 API_KEY = "sk-**************************************************"          # DMXAPI 访问令牌
 BASE_URL = "https://www.dmxapi.cn/v1beta"                               # API 基础地址
-MODEL = "gemini-3.5-flash-ssvip"                                        # Gemini 模型版本
+MODEL = "gemini-3.8-flash"                                             # Gemini 模型版本
 VIDEO_URL = "https://doc.dmxapi.cn/0_fenxiang/aa.mp4"                   # 待分析视频 URL（网络地址）
 PROMPT = "分析视频内容"                                            # 分析提示词
 
@@ -133,6 +135,8 @@ if __name__ == "__main__":
 
 ## 📤 返回示例
 
+以下为输出格式示意，实际分析以视频内容和当次响应为准。
+
 ### 成功响应
 ```json
 🎬 正在分析视频: https://doc.dmxapi.cn/0_fenxiang/aa.mp4
@@ -177,7 +181,7 @@ if __name__ == "__main__":
 
 | 参数 | 类型 | 说明 |
 |------|------|------|
-| `MODEL` | string | Gemini 模型版本，如 `gemini-3.5-flash-ssvip` |
+| `MODEL` | string | Gemini 模型版本，本示例为 `gemini-3.8-flash` |
 | `VIDEO_URL` | string | 视频的网络地址，通过 `fileData.fileUri` 传入 |
 | `mimeType` | string | 视频的 MIME 类型，如 `video/mp4` |
 | `PROMPT` | string | 分析提示词，用于指定分析任务 |
