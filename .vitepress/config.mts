@@ -104,7 +104,7 @@ export default defineConfig({
       },
       {
         text: 'API调用',
-        collapsed: true,
+        collapsed: false,
         items: [
           { text: '欢迎使用', link: '/jichu' },
           {
@@ -1025,6 +1025,40 @@ export default defineConfig({
             text: '🔊️音频模型 TTS & STT',
             collapsed: true,
             items: [
+              /* 暂时隐藏：MOSS API（保留配置与 .md 文件，删除本块注释即可恢复）
+              {
+                text: 'MOSS API',
+                link: '/moss-api',
+                collapsed: true,
+                items: [
+                  {
+                    text: '1. 语音转文字',
+                    collapsed: true,
+                    items: [
+                      { text: '音频 URL 转文字', link: '/moss-audio-url-to-text' },
+                      { text: '本地音频转文字', link: '/moss-local-audio-to-text' },
+                      { text: '上传文件并使用 file_id 转文字', link: '/moss-file-id-to-text' },
+                    ],
+                  },
+                  {
+                    text: '2. 音色生成',
+                    collapsed: true,
+                    items: [
+                      { text: '创建音色', link: '/moss-create-voice' },
+                      { text: '音色生成', link: '/moss-voice-generation' },
+                    ],
+                  },
+                  {
+                    text: '3. 文字转语音',
+                    collapsed: true,
+                    items: [
+                      { text: '单人朗读', link: '/moss-single-speaker-tts' },
+                      { text: '多人对话', link: '/moss-multi-speaker-tts' },
+                    ],
+                  },
+                ],
+              },
+              */
               // { text: 'TTS模型Gemini系列', link: '/gemini-2.5-pro-preview-tts' },
               { text: 'TTS模型 MinMax-speech', link: '/minimax-speech' },
               {
@@ -1255,12 +1289,11 @@ export default defineConfig({
 
           {
             text: '🧊3D大模型',
-            collapsed: true,
+            collapsed: false,
             items: [
-              /* 暂时隐藏：Neural4D-2.5（保留配置与 .md 文件，删除本块注释即可恢复）
               {
                 text: 'Neural4D-2.5',
-                collapsed: true,
+                collapsed: false,
                 items: [
                   { text: '文生3D模型', link: '/neural4d-2.5-text-to-3d' },
                   { text: '单图生3D模型', link: '/neural4d-2.5-image-to-3d' },
@@ -1268,7 +1301,6 @@ export default defineConfig({
                   { text: '多视图生3D模型', link: '/neural4d-2.5-multi-view-to-3d' },
                 ],
               },
-              */
               {
                 text: 'Meshy-7.1',
                 collapsed: true,
