@@ -95,22 +95,20 @@ else:
 
 ## 返回示例
 
-以下为输出格式示意，日期和天气不是本次实测数据；实际答案与搜索来源以当次响应为准：
+以下为 **2026-11-03** 使用 `gemini-3.8-flash` 的实测输出（HTTP 200），对应[测试记录](/reports/gemini-3.8-flash-2026-11-03/results.json)中的 `gemini-internet-1`。展示当次回答及返回的搜索来源，省略 SDK 运行警告；其中日期与天气是测试时返回的内容，不能当作现在的实时天气。
 
-```json
-今天（2025年11月20日）上海天气晴朗，气温在7°C到15°C之间。
+```text
+今天（11月3日，周二）上海的天气情况如下：
 
-具体天气情况如下：
-*   **当前**: 部分多云，气温11°C，体感温度11°C，湿度约为47%。
-*   **今天白天**: 晴朗。
-*   **今晚**: 晴朗，有5%的降雨概率。
-*   **风力**: 西北风3-4级。
-*   **空气质量**: 良好到轻度污染，首要污染物为PM2.5。
+* **天气状况**：白天以**多云到阴**为主，夜间转为**阴有阵雨或小到中雨**。
+* **气温**：全天气温大致在 **15℃ ～ 20℃** 之间，当前夜间气温约 **16℃ ~ 17℃**，体感较为凉爽。
+* **湿度与风向**：湿度较高（约 75%～85%），风力较小。
 
-未来几天的天气预报：
-*   **11月21日（周五）**: 晴朗，气温7°C到16°C，西北风3-4级。
-*   **11月22日（周六）**: 白天晴朗，夜间晴转局部多云，气温10°C到17°C，有5%的降雨概率。
-*   **11月23日（周日）**: 白天大部分晴朗，夜间大部分多云，气温11°C到20°C，夜间有10%的降雨概率。
+**出行提示**：
+夜间降水概率较高，若晚间有外出需求建议备好雨具；早晚体感偏凉，可搭配夹克、薄外套或针织衫穿着。
+来源: Weather information for , CN https://www.google.com/search?q=weather+in+,+CN
+来源: weather.com.cn https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGajs9yz8seSSlIz2gNukmKSlEyKi13wIi7KX1Etsw988MKDZMKV6J4ib-Jrj7kavATmu-XKCjFLJEH18Lqtmb8bNrCvWjMw63ydtHvlfAqa8RP4oM9LWNAntn9Wh2ObS1zqwwF_hhUClLeEbjT
+来源: weathernews.com https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGW2l8mJcn7f6_e6-tIir1-_mNcrNds3HZ869Sm-eW6KTBnXYXBUWYg06CMPb7SobN7mmEY__p3wNJAeOo49JRgxPKTSMN5JvEneU5-L4hmMMLLIiKWhaRemWb17t1JXCYxkc-ja24Bmr9vy9Upo2xZaARF7ANyOqXNUFsXQY8sAi95xSLjYHDxSJvZdXyHcD7s
 ```
 
 ## 注意事项

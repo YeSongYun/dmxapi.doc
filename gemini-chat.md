@@ -129,16 +129,11 @@ if __name__ == "__main__":
 
 ## 📤 返回示例
 
-以下为响应结构示意，已省略部分字段；文本和用量不代表本次模型实测结果。
+以下为 **2026-11-03** 使用 `gemini-3.8-flash` 的实测响应 JSON（HTTP 200），对应[测试记录](/reports/gemini-3.8-flash-2026-11-03/results.json)中的 `gemini-chat-1`。已去除控制台提示；`thoughtSignature` 在保存记录中以 `[OMITTED]` 省略，文本及用量保留当次返回值。
 
 ### 成功响应
 
 ```json
-==================================================
-🚀 Gemini API 文本生成测试
-==================================================
-✅ 请求成功！API 响应结果：
---------------------------------------------------
 {
   "candidates": [
     {
@@ -146,48 +141,19 @@ if __name__ == "__main__":
         "role": "model",
         "parts": [
           {
-            "text": "你好！我是一个大型语言模型，由 Google 训练。"
+            "text": "你好！我是 Gemini，是由 Google 训练的大型语言模型。\n\n你可以把我当成你的个人智能助手。无论你是想查找信息、解答疑问、撰写文章、翻译语言，还是构思创意、编写代码，我都可以为你提供帮助。\n\n今天有什么我可以帮你的吗？",
+            "thoughtSignature": "[OMITTED]"
           }
         ]
       },
-      "finishReason": "STOP",
-      "safetyRatings": [
-        {
-          "category": "HARM_CATEGORY_HATE_SPEECH",
-          "probability": "NEGLIGIBLE",
-          "probabilityScore": 5.7630864e-06,
-          "severity": "HARM_SEVERITY_NEGLIGIBLE",
-          "severityScore": 0.033027172
-        },
-        {
-          "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
-          "probability": "NEGLIGIBLE",
-          "probabilityScore": 5.4859487e-07,
-          "severity": "HARM_SEVERITY_NEGLIGIBLE",
-          "severityScore": 0.0122974515
-        },
-        {
-          "category": "HARM_CATEGORY_HARASSMENT",
-          "probability": "NEGLIGIBLE",
-          "probabilityScore": 1.3191487e-05,
-          "severity": "HARM_SEVERITY_NEGLIGIBLE"
-        },
-        {
-          "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
-          "probability": "NEGLIGIBLE",
-          "probabilityScore": 2.6473836e-07,
-          "severity": "HARM_SEVERITY_NEGLIGIBLE",
-          "severityScore": 0.02153945
-        }
-      ],
-      "avgLogprobs": -0.6024571932279147
+      "finishReason": "STOP"
     }
   ],
   "usageMetadata": {
     "promptTokenCount": 5,
-    "candidatesTokenCount": 13,
-    "totalTokenCount": 46,
-    "trafficType": "PROVISIONED_THROUGHPUT",
+    "candidatesTokenCount": 62,
+    "totalTokenCount": 342,
+    "trafficType": "ON_DEMAND",
     "promptTokensDetails": [
       {
         "modality": "TEXT",
@@ -197,14 +163,16 @@ if __name__ == "__main__":
     "candidatesTokensDetails": [
       {
         "modality": "TEXT",
-        "tokenCount": 13
+        "tokenCount": 62
       }
     ],
-    "thoughtsTokenCount": 28
+    "thoughtsTokenCount": 275,
+    "cost": "¥0.006292"
   },
-  "modelVersion": "gemini-3.8-flash"
+  "modelVersion": "gemini-3.8-flash",
+  "createTime": "2026-11-03T13:42:46.616405Z",
+  "responseId": "1uTpatXPJdnhsbwPw86S4Ac"
 }
---------------------------------------------------
 ```
 
 

@@ -127,42 +127,46 @@ if __name__ == "__main__":
 
 ## ✅ 返回示例
 
-以下为输出格式示意，摘要内容与用量随输入 PDF 和模型响应变化。
+以下为 **2026-11-03** 使用 `gemini-3.8-flash` 分析[测试 PDF](/reports/gemini-3.8-flash-2026-11-03/fixture.pdf)的实测响应（HTTP 200），对应[测试记录](/reports/gemini-3.8-flash-2026-11-03/results.json)中的 `gemini-pdf-1`。测试时将代码中的本地文件路径替换为该 PDF；它包含 Q1=120、Q2=180、总收入=300、增长率=50%。以下只保留响应 JSON，`thoughtSignature` 已在记录中省略。
 
 ```json
-============================================================
-📚 PDF 智能总结工具 - 基于 Gemini API
-============================================================
-📄 正在读取 PDF 文件...
-🔧 正在构造 API 请求数据...
-🚀 正在调用 Gemini API...
-✅ API 调用成功！以下是总结结果：
-============================================================
 {
   "candidates": [
     {
       "content": {
-        "role": "model",
         "parts": [
           {
-            "text": "这份PDF的核心内容是**来自《圣经》箴言书23:4-5节的经文翻译**。该经文警示人们不要过度追求财富，因为财富是短暂的，会像鹰一样飞走。PDF提供了包括英语、俄语、亚美尼亚语、西班牙语、加泰罗尼亚语、法语、德语、简体中文、印地语、葡萄牙语、日语、韩语、意大利语、土耳其语和越南语在内的多种语言版本。"
+            "text": "**DMXAPI 测试报告核心要点：**\n\n* **项目名称**：Gemini 3.8 Flash\n* **Q1 收入**：120\n* **Q2 收入**：180\n* **总收入**：300\n* **增长率**：50%",
+            "thoughtSignature": "[OMITTED]"
           }
-        ]
+        ],
+        "role": "model"
       },
       "finishReason": "STOP",
-      "index": 0,
-      "safetyRatings": []
+      "index": 0
     }
   ],
   "usageMetadata": {
-    "promptTokenCount": 789,
-    "candidatesTokenCount": 110,
-    "totalTokenCount": 899,
-    "thoughtsTokenCount": 0,
-    "promptTokensDetails": null
-  }
+    "promptTokenCount": 548,
+    "candidatesTokenCount": 69,
+    "totalTokenCount": 715,
+    "promptTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 532
+      },
+      {
+        "modality": "TEXT",
+        "tokenCount": 16
+      }
+    ],
+    "thoughtsTokenCount": 98,
+    "serviceTier": "standard",
+    "cost": "¥0.005148"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "1uTparW8AuKC1sgP9PTkMQ"
 }
-============================================================
 ```
 
 
