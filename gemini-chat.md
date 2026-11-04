@@ -2,11 +2,9 @@
 
 ## 📋 概述
 
-本文档介绍如何使用 Gemini API 进行非流式文本生成对话。
-
+本文档介绍如何通过 DMXAPI 使用 `gemini-3.8-flash` 进行非流式文本生成。
 
 ## 🌐 请求地址
-
 ```
 https://www.dmxapi.cn/v1beta/models/{model}:generateContent
 ```
@@ -15,7 +13,7 @@ https://www.dmxapi.cn/v1beta/models/{model}:generateContent
 
 | 参数 | 说明 | 示例 |
 |------|------|------|
-| `{model}` | Gemini 模型版本 | `gemini-2.5-flash` |
+| `{model}` | Gemini 模型版本 | `gemini-3.8-flash` |
 
 
 
@@ -41,9 +39,9 @@ import json
 # API 配置信息
 # ========================================
 prompt = "Hi, 你是谁？"  # 用户提示词 - 可在此处修改你想问的问题
-model = "gemini-2.5-flash"  # 使用的 Gemini 模型版本
+model = "gemini-3.8-flash"  # 使用的 Gemini 模型版本
 API_KEY = "sk-*****************************************"  # 替换为你的 DMXAPI 密钥
-API_URL = f"https://www.dmxapi.cn/v1beta/models/{model}:generateContent?key={API_KEY}"  # DMXAPI gemini 请求地址
+API_URL = f"https://www.dmxapi.cn/v1beta/models/{model}:generateContent"  # 密钥通过 params 传入一次
 
 
 def generate_text(prompt):
@@ -80,7 +78,8 @@ def generate_text(prompt):
             API_URL,
             headers=headers,
             params={"key": API_KEY},
-            json=payload
+            json=payload,
+            timeout=(10, 120)
         )
         
         # 检查 HTTP 请求是否成功（状态码 2xx）
@@ -94,7 +93,7 @@ def generate_text(prompt):
         print(f"❌ 请求失败: {e}")
         
         # 如果存在响应对象，打印详细的错误信息
-        if e.response:
+        if e.response is not None:
             print(f"📊 状态码: {e.response.status_code}")
             print(f"📄 响应内容: {e.response.text}")
         
@@ -126,14 +125,7 @@ if __name__ == "__main__":
 
 ## 📤 返回示例
 
-### 成功响应
-
 ```json
-==================================================
-🚀 Gemini API 文本生成测试
-==================================================
-✅ 请求成功！API 响应结果：
---------------------------------------------------
 {
   "candidates": [
     {
@@ -141,48 +133,19 @@ if __name__ == "__main__":
         "role": "model",
         "parts": [
           {
-            "text": "你好！我是一个大型语言模型，由 Google 训练。"
+            "text": "你好！我是 Gemini，是由 Google 训练的大型语言模型。\n\n你可以把我当成你的个人智能助手。无论你是想查找信息、解答疑问、撰写文章、翻译语言，还是构思创意、编写代码，我都可以为你提供帮助。\n\n今天有什么我可以帮你的吗？",
+            "thoughtSignature": "[OMITTED]"
           }
         ]
       },
-      "finishReason": "STOP",
-      "safetyRatings": [
-        {
-          "category": "HARM_CATEGORY_HATE_SPEECH",
-          "probability": "NEGLIGIBLE",
-          "probabilityScore": 5.7630864e-06,
-          "severity": "HARM_SEVERITY_NEGLIGIBLE",
-          "severityScore": 0.033027172
-        },
-        {
-          "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
-          "probability": "NEGLIGIBLE",
-          "probabilityScore": 5.4859487e-07,
-          "severity": "HARM_SEVERITY_NEGLIGIBLE",
-          "severityScore": 0.0122974515
-        },
-        {
-          "category": "HARM_CATEGORY_HARASSMENT",
-          "probability": "NEGLIGIBLE",
-          "probabilityScore": 1.3191487e-05,
-          "severity": "HARM_SEVERITY_NEGLIGIBLE"
-        },
-        {
-          "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
-          "probability": "NEGLIGIBLE",
-          "probabilityScore": 2.6473836e-07,
-          "severity": "HARM_SEVERITY_NEGLIGIBLE",
-          "severityScore": 0.02153945
-        }
-      ],
-      "avgLogprobs": -0.6024571932279147
+      "finishReason": "STOP"
     }
   ],
   "usageMetadata": {
     "promptTokenCount": 5,
-    "candidatesTokenCount": 13,
-    "totalTokenCount": 46,
-    "trafficType": "PROVISIONED_THROUGHPUT",
+    "candidatesTokenCount": 62,
+    "totalTokenCount": 342,
+    "trafficType": "ON_DEMAND",
     "promptTokensDetails": [
       {
         "modality": "TEXT",
@@ -192,35 +155,17 @@ if __name__ == "__main__":
     "candidatesTokensDetails": [
       {
         "modality": "TEXT",
-        "tokenCount": 13
+        "tokenCount": 62
       }
     ],
-    "thoughtsTokenCount": 28
+    "thoughtsTokenCount": 275,
+    "cost": "¥0.006292"
   },
-  "modelVersion": "gemini-2.5-flash",
-  "createTime": "2025-11-11T08:22:12.483945Z",
-  "responseId": "NPISaenEHYqWsbwPn7GC4QI"
+  "modelVersion": "gemini-3.8-flash",
+  "createTime": "2026-11-03T13:42:46.616405Z",
+  "responseId": "1uTpatXPJdnhsbwPw86S4Ac"
 }
---------------------------------------------------
 ```
-
-
-
-## 📊 响应字段说明
-
-| 字段 | 类型 | 说明 |
-|------|------|------|
-| `candidates` | Array | 生成的候选响应列表 |
-| `candidates[].content.parts[].text` | String | AI 生成的文本内容 |
-| `candidates[].finishReason` | String | 完成原因(如 `STOP`) |
-| `candidates[].safetyRatings` | Array | 安全性评级信息 |
-| `usageMetadata.promptTokenCount` | Integer | 输入提示的 token 数量 |
-| `usageMetadata.candidatesTokenCount` | Integer | 生成内容的 token 数量 |
-| `usageMetadata.totalTokenCount` | Integer | 总 token 数量 |
-| `modelVersion` | String | 使用的模型版本 |
-
-
-
 ## 🔑 获取 API Key
 
 访问 [DMXAPI 官网](https://www.dmxapi.cn) 注册并获取您的 API 密钥。

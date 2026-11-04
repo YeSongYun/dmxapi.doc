@@ -1,17 +1,11 @@
 # Gemini 联网搜索工具调用 API 使用方法
-
 ## 功能概述
-
-通过 Gemini API 的工具调用功能，您可以让 AI 模型实时访问 Google 搜索引擎，获取最新的互联网信息来回答问题。这使得模型不再局限于训练数据的知识截止日期，能够提供实时、准确的信息。
-
+本示例通过 DMXAPI 调用 `gemini-3.8-flash`，使用 Google Search 工具查询互联网信息。模型会根据问题决定是否调用搜索；应结合 `grounding_metadata` 中的来源核对答案，而不是仅凭返回文本判断已联网。
 ## 接口地址
-
 ```
 https://www.dmxapi.cn/v1beta/models/{model}:generateContent
 
 ```
-
-
 ## 示例代码
 ```python
 """
@@ -64,11 +58,11 @@ config = types.GenerateContentConfig(
 # ============================================================
 
 # 调用 Gemini API 生成内容
-# model: 使用 gemini-2.5-flash 模型
+# model: 使用 gemini-3.8-flash 模型
 # contents: 用户的问题（查询上海天气）
 # config: 包含 Google 搜索工具的配置
 response = client.models.generate_content(
-    model="gemini-2.5-flash",
+    model="gemini-3.8-flash",
     contents="今天上海的天气怎么样?",
     config=config,
 )
@@ -80,26 +74,31 @@ response = client.models.generate_content(
 # 打印模型生成的回答
 # 模型会先通过 Google 搜索获取实时天气信息，然后生成回答
 print(response.text)
+
+# 输出搜索来源；未返回来源时，不将回答视为已验证的联网结果
+metadata = response.candidates[0].grounding_metadata if response.candidates else None
+if metadata and metadata.grounding_chunks:
+    for chunk in metadata.grounding_chunks:
+        if chunk.web:
+            print(f"来源: {chunk.web.title} {chunk.web.uri}")
+else:
+    print("本次响应未返回搜索来源，请核对工具调用情况。")
 ```
 
 ## 返回示例
 
-模型会自动通过 Google 搜索获取实时信息，然后生成结构化的回答：
+```text
+今天（11月3日，周二）上海的天气情况如下：
 
-```json
-今天（2025年11月20日）上海天气晴朗，气温在7°C到15°C之间。
+* **天气状况**：白天以**多云到阴**为主，夜间转为**阴有阵雨或小到中雨**。
+* **气温**：全天气温大致在 **15℃ ～ 20℃** 之间，当前夜间气温约 **16℃ ~ 17℃**，体感较为凉爽。
+* **湿度与风向**：湿度较高（约 75%～85%），风力较小。
 
-具体天气情况如下：
-*   **当前**: 部分多云，气温11°C，体感温度11°C，湿度约为47%。
-*   **今天白天**: 晴朗。
-*   **今晚**: 晴朗，有5%的降雨概率。
-*   **风力**: 西北风3-4级。
-*   **空气质量**: 良好到轻度污染，首要污染物为PM2.5。
-
-未来几天的天气预报：
-*   **11月21日（周五）**: 晴朗，气温7°C到16°C，西北风3-4级。
-*   **11月22日（周六）**: 白天晴朗，夜间晴转局部多云，气温10°C到17°C，有5%的降雨概率。
-*   **11月23日（周日）**: 白天大部分晴朗，夜间大部分多云，气温11°C到20°C，夜间有10%的降雨概率。
+**出行提示**：
+夜间降水概率较高，若晚间有外出需求建议备好雨具；早晚体感偏凉，可搭配夹克、薄外套或针织衫穿着。
+来源: Weather information for , CN https://www.google.com/search?q=weather+in+,+CN
+来源: weather.com.cn https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGajs9yz8seSSlIz2gNukmKSlEyKi13wIi7KX1Etsw988MKDZMKV6J4ib-Jrj7kavATmu-XKCjFLJEH18Lqtmb8bNrCvWjMw63ydtHvlfAqa8RP4oM9LWNAntn9Wh2ObS1zqwwF_hhUClLeEbjT
+来源: weathernews.com https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGW2l8mJcn7f6_e6-tIir1-_mNcrNds3HZ869Sm-eW6KTBnXYXBUWYg06CMPb7SobN7mmEY__p3wNJAeOo49JRgxPKTSMN5JvEneU5-L4hmMMLLIiKWhaRemWb17t1JXCYxkc-ja24Bmr9vy9Upo2xZaARF7ANyOqXNUFsXQY8sAi95xSLjYHDxSJvZdXyHcD7s
 ```
 
 ## 注意事项
@@ -110,8 +109,8 @@ print(response.text)
    - 不要将包含密钥的代码提交到公共代码仓库
 
 2. **模型选择**：
-   - `gemini-2.5-flash`：速度快，适合一般查询
-   - `gemini-2.5-pro`：更强大，适合复杂任务
+   - 本文统一使用 `gemini-3.8-flash`
+   - Google Search 的可用性以当前模型通道及响应中的来源信息为准
 
 3. **查询优化**：
    - 提出明确、具体的问题以获得更准确的结果

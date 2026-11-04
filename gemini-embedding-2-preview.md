@@ -1,5 +1,11 @@
 # gemini-embedding-2-preview 多模态嵌入 API 使用文档
 
+:::info 模型说明
+本页保留专用的 `gemini-embedding-2-preview` 模型。其他 Gemini 生成与分析示例已统一为 `gemini-3.8-flash`，但向量化使用 `embedContent` / `batchEmbedContents` 接口并返回数值向量，不能直接替换为生成模型。
+
+若返回 HTTP 503、`model_not_found` 或“当前分组无可用渠道”，请先确认密钥所在分组已开通该嵌入模型；修改成 `gemini-3.8-flash` 不能解决嵌入通道不可用的问题。
+:::
+
 `gemini-embedding-2-preview` 是 Google 推出的新一代多模态嵌入模型，支持将文本、图片、音频、视频和 PDF 文档转化为高维浮点向量，最高支持 3072 维输出，输入 token 上限达 8192。单次请求可将多模态内容聚合为统一向量，也可通过 `batchEmbedContents` 端点批量处理多个独立请求。输出向量自动归一化，可直接用于语义检索、相似度比较、聚类分析等下游任务，无需手动处理截断后的向量。
 
 
@@ -57,27 +63,14 @@ print(response.text)
 
 ### 返回示例
 
+**2026-11-03 实测未通过，HTTP 503**。以下为当次测试的实际错误响应；当前测试 Key 所在分组无可用渠道，没有返回文本向量。
+
 ```json
 {
-  "embedding": {
-    "values": [
-      -0.02061161,
-      0.0036372687,
-      -0.036011722,
-      0.0017922518,
-      "...",
-      -0.0039523887,
-      -0.006603699
-    ]
-  },
-  "usageMetadata": {
-    "promptTokenCount": 5,
-    "promptTokenDetails": [
-      {
-        "modality": "TEXT",
-        "tokenCount": 5
-      }
-    ]
+  "error": {
+    "code": "model_not_found",
+    "message": "分组 default 下模型 gemini-embedding-2-preview 无可用渠道（distributor） (request id: 20261103133656994976396c14228f5elVqweVA)",
+    "type": "dmx_api_error"
   }
 }
 ```
@@ -236,29 +229,13 @@ except Exception as e:
 
 ### 返回示例
 
-```json
-{
-  "embedding": {
-    "values": [
-      -0.02061161,
-      0.0036372687,
-      -0.036011722,
-      0.0017922518,
-      "...",
-      -0.0039523887,
-      -0.006603699
-    ]
-  },
-  "usageMetadata": {
-    "promptTokenCount": 258,
-    "promptTokenDetails": [
-      {
-        "modality": "IMAGE",
-        "tokenCount": 258
-      }
-    ]
-  }
-}
+**2026-11-03 实测未通过，HTTP 503**。以下为当次测试的实际控制台输出；本次未返回图片向量。
+
+```text
+请求失败，HTTP 状态码异常
+状态码: 503
+响应内容:
+{"error":{"code":"model_not_found","message":"分组 default 下模型 gemini-embedding-2-preview 无可用渠道（distributor） (request id: 20261103133657881098255c14228f5mf0Aixv6)","type":"dmx_api_error"}}
 ```
 
 ## 音频嵌入
@@ -362,8 +339,17 @@ except Exception as e:
 ```
 
 ### 返回示例
+
+**2026-11-03 实测未通过，HTTP 503**。以下为当次测试的实际错误响应；本次未返回音频向量。
+
 ```json
-[0.020162337, 0.008672163, -0.0054970523, -0.021474715, 0.024371188, "...", -0.11284455, -0.0032555202, -0.05529588, -0.031505797, -0.0021848765]
+{
+  "error": {
+    "code": "model_not_found",
+    "message": "分组 default 下模型 gemini-embedding-2-preview 无可用渠道（distributor） (request id: 20261103133658706588048c14228f5bZXP7PlN)",
+    "type": "dmx_api_error"
+  }
+}
 ```
 
 ## 视频嵌入
@@ -484,8 +470,16 @@ except Exception as e:
 
 ### 返回示例
 
+**2026-11-03 实测未通过，HTTP 503**。以下为当次测试的实际错误响应；本次未返回视频向量。
+
 ```json
-[-0.00907308, -0.0031938262, -0.012869417, 0.017437436, 0.0018481556, "...", 0.0033451857, 0.0148743065, 0.001180565, -0.01527782, 0.011965878]
+{
+  "error": {
+    "code": "model_not_found",
+    "message": "分组 default 下模型 gemini-embedding-2-preview 无可用渠道（distributor） (request id: 20261103133659504274432c14228f5pKrvxKoJ)",
+    "type": "dmx_api_error"
+  }
+}
 ```
 
 ## 文档嵌入（PDF）
@@ -594,8 +588,16 @@ except Exception as e:
 ```
 ### 返回示例
 
+**2026-11-03 实测未通过，HTTP 503**。以下为当次测试的实际错误响应；本次未返回 PDF 向量。
+
 ```json
-[-0.015046478, -0.012107705, 0.019650083, 0.019790899, -0.009216446, "...", 0.014029637, -0.026796512, 0.0048678913, -0.14775057, -0.017756993]
+{
+  "error": {
+    "code": "model_not_found",
+    "message": "分组 default 下模型 gemini-embedding-2-preview 无可用渠道（distributor） (request id: 20261103133700323416494c14228f5C1358PCJ)",
+    "type": "dmx_api_error"
+  }
+}
 ```
 
 ## 多模态聚合嵌入
@@ -705,19 +707,16 @@ except Exception as e:
 
 ### 返回示例
 
+**2026-11-03 实测未通过，HTTP 503**。以下为当次测试的实际错误响应；本次未返回多模态聚合向量。
+
 ```json
-[
-  0.0013523658,
-  0.021081012,
-  -0.029354148,
-  -0.014817241,
-  "...",
-  -0.0031636902,
-  -0.014405388,
-  -0.016576933,
-  0.017439118,
-  -0.0037106818
-]
+{
+  "error": {
+    "code": "model_not_found",
+    "message": "分组 default 下模型 gemini-embedding-2-preview 无可用渠道（distributor） (request id: 20261103133701129020675c14228f5pkLbLUz4)",
+    "type": "dmx_api_error"
+  }
+}
 ```
 
 ## 批量嵌入（batchEmbedContents）
@@ -846,15 +845,16 @@ except Exception as e:
 
 ### 返回示例
 
+**2026-11-03 实测未通过，HTTP 503**。以下为当次测试的实际错误响应；`batchEmbedContents` 本次未返回批量向量。
+
 ```json
-[
-  {
-    "values": [-0.0031602306, 0.0048682704, -0.0020779748, -0.026615573, "...", -0.025207799, 0.00014415888, -0.028636824, -0.011688847]
-  },
-  {
-    "values": [0.0013523658, 0.021081012, -0.029354148, -0.014817241, "...", -0.014405388, -0.016576933, 0.017439118, -0.0037106818]
+{
+  "error": {
+    "code": "model_not_found",
+    "message": "分组 default 下模型 gemini-embedding-2-preview 无可用渠道（distributor） (request id: 20261103133701981108077c14228f5ftdHrMJH)",
+    "type": "dmx_api_error"
   }
-]
+}
 ```
 
 <p align="center">

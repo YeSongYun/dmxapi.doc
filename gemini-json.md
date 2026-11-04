@@ -1,5 +1,7 @@
 # Gemini 原生格式 JSON 格式化输出 API 文档
 
+本示例通过 DMXAPI 调用 `gemini-3.8-flash`，使用 `responseMimeType` 和 `responseSchema` 约束输出。结构化 JSON 位于响应的 `candidates[].content.parts[].text` 字符串中，需要再用 `json.loads` 解析。
+
 ## 📌 请求地址
 
 ```
@@ -21,7 +23,7 @@ import json
 # API配置部分
 # ============================================================
 api_key = "sk-*****************************************"  # 在这里填写你的DMX API Key
-model = "gemini-2.5-flash"  # 使用的模型名称
+model = "gemini-3.8-flash"  # 使用的模型名称
 url = f"https://www.dmxapi.cn/v1beta/models/{model}:generateContent?key={api_key}"
 
 # ============================================================
@@ -55,6 +57,7 @@ payload = {
                         "items": {"type": "STRING"}  # 每个配料为字符串
                     }
                 },
+                "required": ["recipeName", "ingredients"],
                 # 属性顺序
                 "propertyOrdering": ["recipeName", "ingredients"]
             }
@@ -66,51 +69,75 @@ payload = {
 # 发送请求并输出结果
 # ============================================================
 headers = {"Content-Type": "application/json"}  # 设置请求头
-response = requests.post(url, headers=headers, data=json.dumps(payload))  # 发送POST请求
-print(response.text)  # 打印返回结果
+response = requests.post(url, headers=headers, json=payload, timeout=(10, 120))
+response.raise_for_status()
+result = response.json()
+text = "".join(
+    part.get("text", "")
+    for part in result["candidates"][0]["content"]["parts"]
+    if not part.get("thought")
+)
+recipes = json.loads(text)
+print(json.dumps(recipes, indent=2, ensure_ascii=False))
 
 ```
 
 ## 📤 返回示例
+
 ```json
-{
-  "candidates": [
-    {
-      "content": {
-        "role": "model",
-        "parts": [
-          {
-            "text": "[\n  {\n    \"recipeName\": \"豆浆油条 (Soy Milk and Fried Dough Stick)\",\n    \"ingredients\": [\n      \"豆浆 (Soy Milk): 200ml\",\n      \"油条 (Fried Dough Stick): 1根\",\n      \"白糖 (Sugar, optional): 适量\"\n    ]\n  },\n  {\n    \"recipeName\": \"皮蛋瘦肉粥 (Preserved Egg and Lean Pork Congee)\",\n    \"ingredients\": [\n      \"大米 (Rice): 1/2杯\",\n      \"清水 (Water): 6-8杯\",\n      \"猪瘦肉 (Lean Pork): 100克\",\n      \"皮蛋 (Preserved Egg): 1-2个\",\n      \"姜丝 (Shredded Ginger): 3-5片\",\n      \"葱花 (Chopped Green Onion): 1棵\",\n      \"盐 (Salt): 1/2茶匙\",\n      \"白胡椒粉 (White Pepper): 少许\",\n      \"香油 (Sesame Oil): 几滴\"\n    ]\n  },\n  {\n    \"recipeName\": \"煎饼果子 (Jianbing Guozi - Chinese Savory Crepe)\",\n    \"ingredients\": [\n      \"绿豆面粉 (Mung Bean Flour): 50克\",\n      \"小麦面粉 (Wheat Flour): 50克\",\n      \"清水 (Water): 200毫升\",\n      \"鸡蛋 (Egg): 1个\",\n      \"葱花 (Chopped Scallions): 1棵\",\n      \"香菜 (Cilantro): 少量\",\n      \"甜面酱 (Sweet Bean Paste): 1汤匙\",\n      \"辣椒酱 (Chili Sauce, optional): 1茶匙\",\n      \"薄脆 (Crispy Cracker) 或 油条 (Youtiao): 1片/根\",\n      \"食用油 (Cooking Oil): 少量\"\n    ]\n  },\n  {\n    \"recipeName\": \"小笼包 (Xiaolongbao - Soup Dumplings)\",\n    \"ingredients\": [\n      \"猪肉馅 (Pork Mince): 200 克\",\n      \"猪皮冻 (Gelatinous Broth/Aspic): 100克 (切丁)\",\n      \"姜末 (Grated Ginger): 1汤匙\",\n      \"葱花 (Chopped Green Onion): 2汤匙\",\n      \"生抽 (Light Soy Sauce): 1汤匙\",\n      \"料酒 (Shaoxing Wine): 1汤 匙\",\n      \"香油 (Sesame Oil): 1茶匙\",\n      \"盐 (Salt): 1/2茶匙\",\n      \"白胡椒粉 (White Pepper): 少许\",\n      \"小笼包皮 (Dumpling Wrappers): 20-25张\",\n      \"香醋 (Black Vinegar): 适量 (蘸食)\",\n      \"姜丝 (Shredded Ginger): 适量 (蘸食)\"\n    ]\n  }\n]"
-          }
-        ]
-      },
-      "finishReason": "STOP",
-      "avgLogprobs": -0.71212544698201252
-    }
-  ],
-  "usageMetadata": {
-    "promptTokenCount": 28,
-    "candidatesTokenCount": 668,
-    "totalTokenCount": 2285,
-    "trafficType": "ON_DEMAND",
-    "promptTokensDetails": [
-      {
-        "modality": "TEXT",
-        "tokenCount": 28
-      }
-    ],
-    "candidatesTokensDetails": [
-      {
-        "modality": "TEXT",
-        "tokenCount": 668
-      }
-    ],
-    "thoughtsTokenCount": 1589
+[
+  {
+    "recipeName": "皮蛋瘦肉粥",
+    "ingredients": [
+      "大米 100克",
+      "猪瘦肉 80克",
+      "皮蛋 2个",
+      "姜丝 5克",
+      "葱花 5克",
+      "食盐 3克",
+      "清水 1000毫升"
+    ]
   },
-  "modelVersion": "gemini-2.5-flash",
-  "createTime": "2025-11-11T10:50:07.711171Z",
-  "responseId": "3xQTaYO0K4Le998Pj_Pz2AE"
-}
+  {
+    "recipeName": "煎饼果子",
+    "ingredients": [
+      "绿豆面 50克",
+      "面粉 30克",
+      "水 150毫升",
+      "鸡蛋 1个",
+      "薄脆 1张",
+      "甜面酱 10克",
+      "葱花 5克",
+      "熟黑芝麻 2克"
+    ]
+  },
+  {
+    "recipeName": "鲜肉小馄饨",
+    "ingredients": [
+      "馄饨皮 30张",
+      "猪肉馅 150克",
+      "生抽 10毫升",
+      "香油 5毫升",
+      "食盐 2克",
+      "紫菜 2克",
+      "虾皮 5克",
+      "葱花 5克",
+      "高汤 500毫升"
+    ]
+  },
+  {
+    "recipeName": "自制油条",
+    "ingredients": [
+      "中筋面粉 250克",
+      "鸡蛋 1个",
+      "无铝泡打粉 4克",
+      "小苏打 2克",
+      "食盐 3克",
+      "温水 130毫升",
+      "植物油 500毫升（炸制耗约30毫升）"
+    ]
+  }
+]
 ```
 ---
 

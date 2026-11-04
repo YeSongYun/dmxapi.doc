@@ -2,9 +2,7 @@
 
 ## 📖 功能介绍
 
-通过调用 Gemini API 对 PDF 文档进行智能内容总结,支持多页文档的完整解析和提取。
-
-
+本示例通过 DMXAPI 调用 `gemini-3.8-flash`，将本地 PDF 编码为 Base64 后放入 `inlineData`，根据提示词总结文档内容。
 
 ## 💻 Python 调用示例
 
@@ -21,7 +19,7 @@ import requests
 import json
 
 # ==================== API 配置 ====================
-API_URL = "https://www.dmxapi.cn/v1beta/models/gemini-2.5-flash:generateContent"  #DMXAPI Gemini API 端点
+API_URL = "https://www.dmxapi.cn/v1beta/models/gemini-3.8-flash:generateContent"  # DMXAPI Gemini API 端点
 API_KEY = "sk-*****************************************"  # 你的 DMXAPI 密钥（请妥善保管）
 PDF_PATH = "test/example.pdf"  # 待处理的 PDF 文件路径
 
@@ -93,7 +91,8 @@ def summarize_pdf():
             API_URL,
             headers=headers,
             params={"key": API_KEY},  # 通过 URL 参数传递 API 密钥
-            json=payload  # 将 payload 序列化为 JSON 并发送
+            json=payload,  # 将 payload 序列化为 JSON 并发送
+            timeout=(10, 120)
         )
         
         # 检查响应状态，如果不是 2xx 则抛出异常
@@ -108,7 +107,7 @@ def summarize_pdf():
     except requests.exceptions.RequestException as e:
         # 捕获所有请求相关的异常
         print(f"❌ API 请求失败: {e}")
-        if e.response:
+        if e.response is not None:
             # 如果有响应对象，输出详细错误信息
             print(f"📋 错误详情: {e.response.text}")
 
@@ -125,39 +124,43 @@ if __name__ == "__main__":
 ## ✅ 返回示例
 
 ```json
-============================================================
-📚 PDF 智能总结工具 - 基于 Gemini API
-============================================================
-📄 正在读取 PDF 文件...
-🔧 正在构造 API 请求数据...
-🚀 正在调用 Gemini API...
-✅ API 调用成功！以下是总结结果：
-============================================================
 {
   "candidates": [
     {
       "content": {
-        "role": "model",
         "parts": [
           {
-            "text": "这份PDF的核心内容是**来自《圣经》箴言书23:4-5节的经文翻译**。该经文警示人们不要过度追求财富，因为财富是短暂的，会像鹰一样飞走。PDF提供了包括英语、俄语、亚美尼亚语、西班牙语、加泰罗尼亚语、法语、德语、简体中文、印地语、葡萄牙语、日语、韩语、意大利语、土耳其语和越南语在内的多种语言版本。"
+            "text": "**DMXAPI 测试报告核心要点：**\n\n* **项目名称**：Gemini 3.8 Flash\n* **Q1 收入**：120\n* **Q2 收入**：180\n* **总收入**：300\n* **增长率**：50%",
+            "thoughtSignature": "[OMITTED]"
           }
-        ]
+        ],
+        "role": "model"
       },
       "finishReason": "STOP",
-      "index": 0,
-      "safetyRatings": []
+      "index": 0
     }
   ],
   "usageMetadata": {
-    "promptTokenCount": 789,
-    "candidatesTokenCount": 110,
-    "totalTokenCount": 899,
-    "thoughtsTokenCount": 0,
-    "promptTokensDetails": null
-  }
+    "promptTokenCount": 548,
+    "candidatesTokenCount": 69,
+    "totalTokenCount": 715,
+    "promptTokensDetails": [
+      {
+        "modality": "IMAGE",
+        "tokenCount": 532
+      },
+      {
+        "modality": "TEXT",
+        "tokenCount": 16
+      }
+    ],
+    "thoughtsTokenCount": 98,
+    "serviceTier": "standard",
+    "cost": "¥0.005148"
+  },
+  "modelVersion": "gemini-3.8-flash",
+  "responseId": "1uTparW8AuKC1sgP9PTkMQ"
 }
-============================================================
 ```
 
 
@@ -176,7 +179,7 @@ if __name__ == "__main__":
 
 ## ⚠️ 注意事项
 
-1. **文件大小限制**: 支持不超过 50MB 或 1,000 页的 PDF 文件
+1. **文件大小限制**: 本示例将整个 PDF 以内联数据发送；请先使用较小文件验证，大文件需结合 DMXAPI 当前请求体限制分批处理
 2. **支持格式**: 仅支持标准 PDF 格式文档
 3. **API 密钥安全**: 不要在公开代码中暴露 API 密钥
 4. **错误处理**: 建议添加完善的异常处理机制

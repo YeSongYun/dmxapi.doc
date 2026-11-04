@@ -1,9 +1,11 @@
 # Gemini 原生格式流式输出 API 文档
 
+使用 `gemini-3.8-flash` 的 `streamGenerateContent` 接口，以 SSE 格式逐步接收文本。
+
 ## 📌 接口地址
 
 ```
-https://www.dmxapi.cn/v1beta/models/{model}:generateContent
+https://www.dmxapi.cn/v1beta/models/{model}:streamGenerateContent?alt=sse
 ```
 
 ## 💻 请求示例 (Python)
@@ -27,7 +29,7 @@ import requests
 # ==============================================================================
 # 配置参数区域
 # ==============================================================================
-model = "gemini-2.5-flash"  # 使用的 AI 模型名称
+model = "gemini-3.8-flash"  # 使用的 AI 模型名称
 API_KEY = "sk-*****************************************"  # 你的 API 密钥
 
 # 构建完整的 API 请求 URL
@@ -54,7 +56,7 @@ headers = {"Content-Type": "application/json"}
 # ==============================================================================
 # 发送 POST 请求到 API 端点
 # stream=True：启用流式响应，可以实时接收数据块，而不是等待全部完成
-response = requests.post(url, headers=headers, data=payload, stream=True)
+response = requests.post(url, headers=headers, data=payload, stream=True, timeout=(10, 120))
 
 # 检查响应状态码
 if response.status_code != 200:
@@ -95,10 +97,9 @@ def parse_sse_response(response):
         if not line or line.strip() == "":
             continue
             
-        # SSE 格式的数据行以 'data: ' 开头
-        if line.startswith('data: '):
-            # 提取 'data: ' 后面的 JSON 内容（去掉前 6 个字符）
-            json_str = line[6:].strip()
+        # SSE 数据行以 'data:' 开头，冒号后的空格可省略
+        if line.startswith('data:'):
+            json_str = line[5:].strip()
             
             # 跳过空数据或 [DONE] 标记
             if not json_str or json_str == '[DONE]':
@@ -118,7 +119,7 @@ def parse_sse_response(response):
                         # 遍历内容的各个部分（parts）
                         for part in candidate['content']['parts']:
                             # 如果当前部分包含文本内容
-                            if 'text' in part:
+                            if 'text' in part and not part.get('thought'):
                                 text = part['text']
                                 full_text += text  # 累积到完整文本中
                                 # 实时输出文本片段
@@ -146,17 +147,10 @@ result_text = parse_sse_response(response)
 ## 📤 返回示例
 
 ```text
-细雨绵绵，笼罩着古老的石桥，青苔在岁月的侵蚀下，愈发显得斑驳。桥下溪水潺潺，带着泥土的清香，缓缓流淌，倒映着岸边摇曳的垂柳。柳枝低垂，轻抚水面，泛起层层涟漪，仿佛在低声细语。
+好的，小巴为您生成了下面这段约300字的内容：
 
-远处山峦叠嶂，云雾缭绕，宛如仙境。山顶偶有几缕阳光穿透云层，洒落在翠绿的林间，点缀出斑斓的光影。鸟儿在枝头欢快地鸣唱，歌声清脆悦耳，为这寂静的山谷增添了几分生机。
-
-一条蜿蜒的小径，穿梭于林荫之间，铺满了落叶。踩上去沙沙作响，仿佛在演奏着一曲秋日的乐章。小径尽头是一座古朴的茅屋，屋顶青瓦，墙壁土坯，炊烟袅袅，弥漫着淡淡的饭菜香。
-
-屋前有一片菜地，绿油油的蔬菜长势喜人，沾着晶莹的露珠。一位老农佝偻着身躯，在地里辛勤劳作，额头布满汗珠，却依旧乐此不疲。他眼神中透着满足，仿佛从这片土地中找到了生命的真谛。
-
-日暮时分，夕阳西下，将天边染成了绚烂的橘红色。晚霞映照着远山，为这片宁静的田园披上了一层神秘而温柔的面纱。一切都显得那么和谐，那么美好，让人心生向往，流连忘返。
+微风穿过静谧的森林，树叶沙沙作响，像是在低声诉说着古老的秘密。阳光透过稀疏的云层，斑驳地洒在青石板铺成的小径上。一只蓝色的飞鸟掠过清澈见底的溪流，惊起了停在水草尖上的蜻蜓。远处的山峦在晨雾中若隐若现，轮廓柔和得宛如一幅未干的水墨画。街角的旧书店悄悄推开了木门，风铃发出清脆的声响，混合着咖啡与旧纸张的香气。时间在这里放慢了脚步，让人忘却了喧嚣。生活总在不经意间展现温柔，或许是一朵破土而出的野花，或许是一抹黄昏时的晚霞。只要静下心倾听，平凡的瞬间都藏着独特的诗意，默默治愈着疲惫的灵魂，给平淡的日子镀上一层温暖的光晕。
 ```
-
 ---
 
 <p align="center">

@@ -11,6 +11,9 @@ export default defineConfig({
   title: "DMXAPI 文档",
   description: "DMXAPI 大模型API接口使用教程文档",
 
+  // 本地验证资料不生成页面；向量文档暂时隐藏，正文保留便于恢复。
+  srcExclude: ['output/**', 'test/**', 'gemini-embedding-2-preview.md'],
+
   vite: {
     ssr: { noExternal: ['@escook/vitepress-theme', 'vitepress'] },
     build: {
@@ -212,9 +215,9 @@ export default defineConfig({
               { text: 'json输出', link: '/gemini-json' },
                 { text: '多轮对话', link: '/duolunduihua' },
               { text: '联网搜索', link: '/gemini-internet' },
-              { text: 'Gemini 3 开发者指南', link: '/gemini-3' },
-              { text: 'Gemini 3 思考总结', link: '/gemini3-thinking-summary' },
-              { text: '多模态向量化', link: '/gemini-embedding-2-preview' },
+              { text: 'Gemini 3.8 Flash 开发者指南', link: '/gemini-3' },
+              { text: 'Gemini 3.8 Flash 思考总结', link: '/gemini3-thinking-summary' },
+              // { text: '多模态向量化', link: '/gemini-embedding-2-preview' },
             ],
           },
           {
@@ -1172,7 +1175,7 @@ export default defineConfig({
               { text: '阿里 text-embedding-v4', link: '/emb-text-embedding-v4' },
               { text: 'OpenAi 向量模型', link: '/embedding' },
               { text: 'doubao-embedding-vision-251215', link: '/doubao-embedding-vision-251215' },
-              { text: 'gemini-embedding-2-preview', link: '/gemini-embedding-2-preview' },
+              // { text: 'gemini-embedding-2-preview', link: '/gemini-embedding-2-preview' },
             ],
           },
           

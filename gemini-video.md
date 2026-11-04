@@ -1,5 +1,6 @@
 # Gemini API 视频分析接口文档
 
+本示例使用 `gemini-3.8-flash` 分析本地 MP4 视频，通过 `inlineData` 发送 Base64 视频数据。
 ## 📌 接口地址
 
 ```
@@ -32,7 +33,7 @@ import requests
 # 配置参数
 # ========================================
 
-model = "gemini-2.5-flash"          # AI 模型名称，支持视频分析
+model = "gemini-3.8-flash"          # 本示例使用的模型
 API_URL = f"https://www.dmxapi.cn/v1beta/models/{model}:generateContent"
 API_KEY = "sk-*****************************************"  # 请替换为您自己的 DMXAPI 密钥
 VIDEO_PATH = "test/example.mp4"      # 视频文件路径
@@ -138,7 +139,8 @@ def analyze_video():
             API_URL,
             headers=headers,
             params={"key": API_KEY},
-            json=payload
+            json=payload,
+            timeout=(10, 180)
         )
         
         # 检查 HTTP 状态码
@@ -154,8 +156,11 @@ def analyze_video():
             candidate = result["candidates"][0]
             
             if "content" in candidate and "parts" in candidate["content"]:
-                # 提取 AI 生成的文本内容
-                text_content = candidate["content"]["parts"][0].get("text", "")
+                # 合并所有非思考文本，跳过仅含签名的部分
+                text_content = "".join(
+                    part.get("text", "") for part in candidate["content"]["parts"]
+                    if not part.get("thought")
+                )
                 
                 # 显示分析结果
                 print("\n" + "=" * 50)
@@ -188,7 +193,7 @@ def analyze_video():
         print(f"\n❌ 请求失败: {e}")
         
         # 显示详细的错误信息
-        if hasattr(e, 'response') and e.response:
+        if e.response is not None:
             print(f"状态码: {e.response.status_code}")
             print(f"响应: {e.response.text}")
 
@@ -217,7 +222,7 @@ if __name__ == "__main__":
 
 ## ✅ 返回示例
 
-```json
+```text
 ==================================================
 🎬 Gemini 视频分析工具启动
 ==================================================
@@ -227,14 +232,21 @@ if __name__ == "__main__":
 ==================================================
 📊 视频分析结果
 ==================================================
-这段视频的开头显示了一只白色的鸟在黑暗的背景中飞翔。它很快变成了蓝色背景中的一只鸟，俯冲到蓝色背景中的水面上。这只鸟潜入水中，露出了水下正在迁徙的一大群鱼。随后，一群白色的鸟潜入水中，露出了另一大群鱼。在这之后，一群海豚在捕食 那些鱼。这又引发了一群鲨鱼吃鱼。最后，在视频的结尾，一条鲸鱼从水里跳出来。
+该视频内容较为简洁且画面静止，主要包含以下内容：
+
+1. **左上方文字**：黑色的英文文本 **“DMXAPI TEST”**。
+2. **中心几何图形**（从左至右并排排列）：
+   - 一个**红色圆形**
+   - 一个**蓝色正方形**
+   - 一个**绿色三角形**
+3. **背景**：纯白色背景。
 
 ==================================================
 📈 使用统计
 ==================================================
-总 Token 数:  13391
-提示 Token 数: 13285
-回复 Token 数: 106
+总 Token 数:  414
+提示 Token 数: 208
+回复 Token 数: 90
 ==================================================
 ✅ 分析完成
 ==================================================
