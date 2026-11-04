@@ -72,6 +72,7 @@ export default defineConfig({
         items: [
           { text: '系统令牌&用户ID', link: '/security_token_ID' },
           { text: '余额查询', link: '/yuer' },
+          { text: '单请求消费（cost）', link: '/dmxapi-cost' },
           // {
           //   text: '余额不足预警',
           //   collapsed: true,
