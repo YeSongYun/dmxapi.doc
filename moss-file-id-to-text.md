@@ -6,6 +6,12 @@ description: 分两步演示 MOSS 文件上传与 file_id 转写，分别提供�
 
 通过 DMXAPI 的 MOSS 接口，先上传本地音频或视频取得 `file_id`，再使用该标识获取识别文字。本文提供两个可独立运行的示例：第一部分上传文件并输出文件标识；第二部分填写该标识并执行转写。已有可用 `file_id` 时，可以直接使用第二部分。
 
+::: warning file_id 转写实测异常（2026-11-04）
+本次实测中，两次文件上传均返回 HTTP 200，但响应中的 `file_id` 与 `id` 相同，都是 `task_...`。将返回的 `file_id` 原样传入转写接口，首次调用、稍后重试及重新上传后的调用均返回 HTTP 404：外层错误码为 `task_not_found`，内层错误码为 `file_not_found`。
+
+当前测试环境的上传后转写链路尚未通过，需要服务端排查返回的文件标识及其解析。相同音频已通过[本地音频转文字](./moss-local-audio-to-text.md)实测，也可使用[音频 URL 转文字](./moss-audio-url-to-text.md)。下方保留调用代码及历史成功响应，便于接口修复后复测。
+:::
+
 ## 接口地址
 
 | 步骤 | 请求方式 | URL | 请求体类型 |
@@ -44,32 +50,59 @@ from pathlib import Path
 import requests
 
 # ===============================================================
-# 步骤1：配置上传接口和本地路径
+# 步骤1：配置 API 连接信息
 # ===============================================================
-upload_url = "https://www.dmxapi.cn/moss-speech/v1/files"
+
+# DMXAPI 网关的 MOSS 文件上传接口地址
+url = "https://www.dmxapi.cn/moss-speech/v1/files"
+
+# DMXAPI API Key（请替换为您自己的密钥；这里只放占位值）
 api_key = "YOUR_DMXAPI_API_KEY"
-input_path = Path("input/audio.wav")
-upload_result_path = Path("outputs/moss_file_upload_result.json")
-request_timeout = 1000  # 客户端请求超时时间，单位：秒
+
+# 要上传的本地音频或视频文件路径，单文件最大 512 MB
+input_path = Path(r"C:\Users\Y\Desktop\马尾辫\audio_demo_video_multispeaker_02(1).m4a")
+
+# 上传结果保存路径
+output_path = Path("moss_file_upload_result.json")
+
+# 请求超时时间，单位：秒
+request_timeout = 1000
 
 # ===============================================================
-# 步骤2：配置请求头和上传参数
+# 步骤2：配置请求头
 # ===============================================================
+
 headers = {
-    "Authorization": f"Bearer {api_key}",
-    "Accept": "application/json",
-    # 不手动设置 Content-Type，由 requests 生成 multipart boundary
-}
-form_data = {
-    "purpose": "transcription",
+    # multipart/form-data 的 Content-Type 由 requests 自动生成，不能手动固定 boundary
+    "Authorization": f"Bearer {api_key}",  # DMXAPI 网关鉴权
+    "Accept": "application/json",  # 文件上传接口返回 JSON
 }
 
 # ===============================================================
-# 步骤3：上传文件，保存响应并打印 file_id
+# 步骤3：配置请求参数
 # ===============================================================
+
+form_data = {
+    # 【purpose】(string, 必填) 文件用途；音频文件使用官方值 audio
+    "purpose": "audio",
+}
+
+
+def print_result(result):
+    """格式化输出上传接口返回的 JSON。"""
+    print(json.dumps(result, indent=2, ensure_ascii=False))
+
+
+def save_result(result, output_path):
+    """保存成功的上传结果。"""
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_text(json.dumps(result, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    print("output_path:", output_path.resolve())
+
+
 def main():
     if not api_key.strip() or api_key == "YOUR_DMXAPI_API_KEY":
-        raise RuntimeError("请先在代码顶部的 api_key 中填写您的 DMXAPI API Key。")
+        raise RuntimeError("请先在步骤1配置区填写真实的 api_key。")
     if not input_path.is_file():
         raise RuntimeError(f"找不到输入文件：{input_path.resolve()}")
     if input_path.stat().st_size > 512 * 1024 * 1024:
@@ -78,52 +111,51 @@ def main():
     mime_type = mimetypes.guess_type(input_path.name)[0] or "application/octet-stream"
     with input_path.open("rb") as input_file:
         response = requests.post(
-            upload_url,
+            url,
             headers=headers,
             data=form_data,
             files={"file": (input_path.name, input_file, mime_type)},
             timeout=request_timeout,
         )
 
+    header_request_id = response.headers.get("x-request-id", "")
     print("status_code:", response.status_code)
-    request_id = response.headers.get("x-request-id") or response.headers.get("request-id")
-    if request_id:
-        print("request_id:", request_id)
+    if header_request_id:
+        print("header_request_id:", header_request_id)
 
     try:
         result = response.json()
     except ValueError as error:
-        raise RuntimeError(
-            f"文件上传接口返回的不是 JSON：HTTP {response.status_code}"
-        ) from error
-    print(json.dumps(result, indent=2, ensure_ascii=False))
+        raise RuntimeError("文件上传接口返回的不是 JSON。") from error
+
+    print_result(result)
 
     if not response.ok:
-        raise RuntimeError(f"MOSS 文件上传失败：HTTP {response.status_code}")
-    if not isinstance(result, dict):
-        raise RuntimeError("文件上传响应不是 JSON 对象。")
+        request_id_detail = f"，request_id={header_request_id}" if header_request_id else ""
+        raise RuntimeError(
+            f"MOSS 文件上传请求失败：HTTP {response.status_code}{request_id_detail}"
+        )
 
     file_id = result.get("file_id") or result.get("id")
     if not isinstance(file_id, str) or not file_id.strip():
         raise RuntimeError("文件上传成功响应中没有 file_id 或 id。")
-
-    upload_result_path.parent.mkdir(parents=True, exist_ok=True)
-    upload_result_path.write_text(
-        json.dumps(result, indent=2, ensure_ascii=False) + "\n",
-        encoding="utf-8",
-    )
-    print("output_path:", upload_result_path.resolve())
+    if file_id.startswith("task_"):
+        raise RuntimeError(
+            "网关返回的是公开 task_id，不是 MOSS 文件 file_id；"
+            "请先更新 moss-speech 插件到 2.4.4 或更高版本。"
+        )
     print("file_id:", file_id)
-    print("请将上述文件标识复制到第二部分的 payload[\"file_id\"] 中。")
+    save_result(result, output_path)
 
 
 if __name__ == "__main__":
     main()
+
 ```
 
 ## 上传返回示例
 
-以下为测试环境上传 `audio.wav` 后的实际返回；该文件由音色生成示例的试听音频转换得到。
+以下为历史成功测试中上传 `audio.wav` 后的实际返回，用于说明响应结构；当前实测异常见页首说明。该文件由音色生成示例的试听音频转换得到。
 
 ```json
 {
@@ -240,7 +272,7 @@ if __name__ == "__main__":
 ```
 ## 转写返回示例
 
-以下为测试环境使用第一步返回的 `file_id`，按上方 `response_format="json"` 配置执行转写的实际返回。
+以下为历史成功测试中使用第一步返回的 `file_id`，按上方 `response_format="json"` 配置执行转写的实际返回；本次复测未获得该成功结果，详见页首说明。
 
 ```json
 {
