@@ -111,19 +111,19 @@ except requests.exceptions.RequestException as e:
     "input_tokens_details": null,
     "claude_cache_creation_5_m_tokens": 0,
     "claude_cache_creation_1_h_tokens": 0,
-    "cost": "¥0.00062"
+    "cost": "¥0.000620"
   }
 }
 ```
 
 ## `cost` 字段说明
 
-示例中的 **`"cost": "¥0.00062"` 表示本次请求消费 0.00062 元人民币**。
+示例中的 **`"cost": "¥0.00062"` 表示本次请求消费 0.000620 元人民币**。
 | 项目 | 说明 |
 | --- | --- |
 | 字段路径 | `usage.cost`，即返回 JSON 中 `usage` 对象下的 `cost` |
 | 数据类型 | 字符串（`string`），包含货币符号和金额 |
-| 示例值 | `"¥0.00062"` |
+| 示例值 | `"¥0.000620"` |
 | 货币单位 | 人民币元（CNY），`¥` 为货币符号 |
 | 金额范围 | 当前这一次模型请求的消费金额 |
 
