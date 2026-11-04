@@ -18,6 +18,7 @@ MOSS API 通过 DMXAPI 提供语音转文字、音色创建与生成、文字转
 
 普通转写使用 `moss-transcribe-1.0`。启用说话人分离、非空热词列表，或选择 `diarized_json` 输出时，使用 `moss-transcribe-diarize-pro`。
 
+
 ## 2. 音色生成
 
 先获得可复用的 `voice_id`，再用于单人朗读或多人对话。
@@ -40,19 +41,6 @@ MOSS API 通过 DMXAPI 提供语音转文字、音色创建与生成、文字转
 
 单人 Flash 模型支持 `language` 参数和 `[pause 0.1s]` 至 `[pause 10.0s]` 的停顿标记。切换至 Pro 时，需删除该参数并移除停顿标记。
 
-## 接入准备
-
-1. 在 DMXAPI 获取 [API Key](/lingpai)，并将各篇示例中的 `YOUR_DMXAPI_API_KEY` 替换为实际密钥。
-2. 安装 Python 依赖：
-
-   ```bash
-   python -m pip install requests
-   ```
-
-3. 按所选指南填写音频 URL、本地文件路径或音色标识，保存 Python 代码后运行。
-
-各接口统一使用 `Authorization: Bearer <API_KEY>` 鉴权，均同步返回各自的结果，无需轮询任务状态。文件上传返回的是文件标识，需要继续调用转写接口才能获得文字。
-
 ## 接口速查
 
 下表路径均以 `https://www.dmxapi.cn` 为前缀，请求方式均为 `POST`。
@@ -73,13 +61,6 @@ MOSS API 通过 DMXAPI 提供语音转文字、音色创建与生成、文字转
 - 转写请求中的 `file`、`url`、`audio_url`、`file_id` 四种输入互斥，每次只提交一种。
 - 上传文件时由 `requests` 自动生成 multipart 的 `Content-Type` 与 boundary。
 :::
-
-## 返回与计费说明
-
-转写接口可返回 JSON 或纯文本；音色与语音合成示例会读取音色标识或音频地址。各篇文档中的返回示例均为字段示意，占位 ID 和音频链接不能直接用于请求。响应字段以接口实际返回为准，示例中的参数取值不代表服务端默认值。
-
-各项功能的价格与计费规则以 [DMXAPI 模型价格](https://www.dmxapi.cn/rmb) 为准。示例中的 `timeout` / `request_timeout` 是客户端等待时间，不表示音频时长上限。
-
 <p align="center">
   <small>© 2026 DMXAPI MOSS API</small>
 </p>

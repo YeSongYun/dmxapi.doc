@@ -101,9 +101,10 @@ def main():
     if not isinstance(result, dict):
         raise RuntimeError("创建音色响应的 JSON 顶层不是对象。")
 
-    voice_id = result.get("id") or result.get("voice_id")
+    # voice_id 才是后续合成使用的音色标识；id 是本次请求的任务标识。
+    voice_id = result.get("voice_id")
     if not isinstance(voice_id, str) or not voice_id.strip():
-        raise RuntimeError("创建音色成功，但响应中没有有效的 id/voice_id")
+        raise RuntimeError("创建音色成功，但响应中没有有效的 voice_id")
 
     output_json_path.parent.mkdir(parents=True, exist_ok=True)
     output_json_path.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -116,6 +117,9 @@ if __name__ == "__main__":
 ```
 
 ## 返回示例
+
+后续单人朗读或多人对话请使用响应中的 `voice_id`；`id` 是本次请求的任务标识，不能当作音色标识填写。
+
 ```json
 {
   "created_at": 1793681094,

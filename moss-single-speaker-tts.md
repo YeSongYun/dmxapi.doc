@@ -18,6 +18,7 @@ description: 使用 MOSS Flash 或 Pro 模型和指定 voice_id 进行单人朗�
 | `moss-tts-1.5-flash` | 本例使用；支持 `language` 及 `[pause 0.1s]` 至 `[pause 10.0s]` 的停顿标记 |
 | `moss-tts-1.0-pro` | 单人朗读模型；不支持上述 `language` 参数和停顿标记 |
 切换为 `moss-tts-1.0-pro` 时，请删除 `language` 参数，并从 `input` 中移除 Flash 专用的停顿标记。
+|[MOSS 音色库](https://create.moss.cn/voice/library)|音色库中包含了 MOSS 语音模型所使用的音色，音色 ID 可用于 `voice_id` 参数|
 ## 单人朗读示例代码
 
 ```python

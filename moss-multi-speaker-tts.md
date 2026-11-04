@@ -7,6 +7,10 @@ description: 使用 moss-ttsd-1.0 为多个说话人配置音色并合成对话�
 | 接口 | 请求方式 | URL |
 |---|---|---|
 | 多人对话语音合成 | POST | `https://www.dmxapi.cn/moss-speakers/v1/audio/speech` |
+
+| 音色库 | 用途与差异 |
+|---|---|
+|[MOSS 音色库](https://create.moss.cn/voice/library)|MOSS 音色库中包含了 MOSS 语音模型所使用的音色，音色 ID 可用于 `voice_id` 参数||
 :::warning
 请妥善保管您的 API Key！下方示例直接在代码的 `api_key` 变量中填写密钥，请将占位值替换为您自己的 API Key，不要公开分享包含真实密钥的代码。
 :::

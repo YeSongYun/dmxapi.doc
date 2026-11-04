@@ -1028,7 +1028,6 @@ export default defineConfig({
             text: '🔊️音频模型 TTS & STT',
             collapsed: true,
             items: [
-              /* 暂时隐藏：MOSS API（保留配置与 .md 文件，删除本块注释即可恢复）
               {
                 text: 'MOSS API',
                 link: '/moss-api',
@@ -1061,7 +1060,6 @@ export default defineConfig({
                   },
                 ],
               },
-              */
               // { text: 'TTS模型Gemini系列', link: '/gemini-2.5-pro-preview-tts' },
               { text: 'TTS模型 MinMax-speech', link: '/minimax-speech' },
               {
