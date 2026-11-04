@@ -3,17 +3,12 @@
 ## 📋 概述
 
 本文档介绍如何通过 DMXAPI 使用 `gemini-3.8-flash` 进行多轮对话。REST 调用需要按顺序传入 `user` / `model` 历史消息；SDK 的 `chat` 会话会自动维护历史。
-
-运行前安装依赖（`pip install requests google-genai`）并填写 DMXAPI 密钥。示例中的日期是显式给定的上下文，不代表模型能读取当前日期；真实多轮请求应保留模型返回的完整 `content`，包括可能出现的 `thoughtSignature`。
-
-
 ## 🌐 请求地址
 
 ```
 https://www.dmxapi.cn/v1beta/models/{model}:generateContent
 
 ```
-
 ## 💻 Python 示例代码
 
 ::: code-group
@@ -168,10 +163,6 @@ for message in chat.get_history():
 
 
 ## 📤 返回示例
-
-以下为 **2026-11-03** 使用 `gemini-3.8-flash` 的实测结果（HTTP 200），对应[测试记录](/reports/gemini-3.8-flash-2026-11-03/results.json)中的 `duolunduihua-1`（Requests）与 `duolunduihua-2`（SDK）。回复中的 2025-12-27 来自代码指定的对话日期，不是测试当天的“明天”。Requests 展示保存的响应 JSON，其中签名已省略；SDK 展示实际打印的两轮回答及历史。
-
-### 成功响应
 
 ::: code-group
 

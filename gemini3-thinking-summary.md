@@ -1,188 +1,246 @@
 # Gemini 3.8 Flash 思考总结
 
-本文通过 DMXAPI 调用 `gemini-3.8-flash`，演示如何分别读取思考总结与最终回答。思考总结是模型返回的摘要，不是完整的内部思考过程；启用参数后是否返回摘要仍取决于模型和当次请求。
+Gemini 3.8 Flash 可以在生成最终回答时返回**思考摘要**。通过 `include_thoughts=True` 请求摘要，再根据每个 Part 的 `thought` 标记，将摘要与最终答案分开显示。
 
-运行前安装最新 SDK：`pip install -U google-genai`，并填写 DMXAPI 密钥。
 
-## 功能说明
+## 先分清三个概念
 
-- **SDK 启用方式**：设置 `thinking_config=types.ThinkingConfig(include_thoughts=True)`。
-- **REST 对应字段**：`generationConfig.thinkingConfig.includeThoughts: true`，注意与 Python 字段命名的区别。
-- **访问方式**：遍历响应的 `parts`，通过 `part.thought` 区分思考总结与最终回答，并跳过没有文本的部分。
-- **非流式**：一次读取返回的摘要与回答。**流式**：分别累计摘要增量与回答增量。
+| 概念 | 用途 | 是否直接展示 |
+| --- | --- | --- |
+| 思考等级 `thinking_level` | 控制模型投入的推理资源 | 作为应用配置 |
+| 思考摘要 `thought=true` 的文本 Part | 提供模型返回的推理概要 | 可单独展示为摘要 |
+| 思考签名 `thought_signature` / `thoughtSignature` | 在后续请求中保留推理与工具调用上下文 | 原样保存和回传，不作为正文展示 |
 
-`thoughtSignature` 用于后续请求保留上下文，与可阅读的思考总结不同。只收到签名不代表收到了摘要；需要继续对话时应保留完整响应内容。
+思考摘要是模型提供的概要，不是完整内部推理过程。摘要文本与最终回答应分别保存；没有摘要文本，也不能据此判断模型没有进行思考。
 
-## 非流式调用示例
+`include_thoughts=False` 只是不请求返回摘要，不会关闭模型的思考能力。签名也不依赖摘要是否显示：即使界面只显示最终答案，多轮对话仍应保留完整响应内容。
+
+## 选择思考等级并请求摘要
+
+3.8 Flash 支持以下三个等级，默认是 `medium`：
+
+| 等级 | 建议场景 |
+| --- | --- |
+| `low` | 简单判断、内容整理、需要较快响应的交互 |
+| `medium` | 常规代码分析、业务推理、多步骤处理 |
+| `high` | 困难数学、复杂规划、需要更多推理的任务 |
+
+`minimal` 不受 3.8 Flash 支持，会返回错误。使用 `thinking_level`，不要照搬 Gemini 2.5 的 `thinking_budget` 配置。
+
+SDK 与 REST 的字段名称不同：
+
+| 含义 | Python SDK | REST 请求体 |
+| --- | --- | --- |
+| 思考配置 | `config.thinking_config` | `generationConfig.thinkingConfig` |
+| 思考等级 | `thinking_level` | `thinkingLevel` |
+| 返回摘要 | `include_thoughts` | `includeThoughts` |
+| 思考 token 数 | `usage_metadata.thoughts_token_count` | `usageMetadata.thoughtsTokenCount` |
+
+以下 JSON 是**请求配置片段**，并不是服务返回示例：
+
+```json
+{
+  "generationConfig": {
+    "thinkingConfig": {
+      "thinkingLevel": "medium",
+      "includeThoughts": true
+    },
+    "maxOutputTokens": 8192
+  }
+}
+```
+
+## 非流式：一次取回摘要与最终答案
+
+安装依赖，并在运行代码的终端中设置 `DMXAPI_API_KEY`。环境变量设置方式见[开发者指南](/gemini-3#安装依赖并设置密钥)。
+
+
+
+### Python SDK
+
+不要只读取 `response.text` 来寻找摘要，应遍历 `response.candidates[0].content.parts`，按 `part.thought` 分流。
 
 ```python
+import os
 from google import genai
 from google.genai import types
 
-API_KEY = "sk-******************************************"
-BASE_URL = "https://www.dmxapi.cn"
-
 client = genai.Client(
-    api_key=API_KEY,
-    http_options={"base_url": BASE_URL, "timeout": 120000}
+    api_key=os.environ["DMXAPI_API_KEY"],
+    http_options=types.HttpOptions(
+        base_url="https://www.dmxapi.cn",
+        api_version="v1beta",
+        timeout=120_000,
+    ),
 )
-
 response = client.models.generate_content(
     model="gemini-3.8-flash",
-    contents="9.11 和 9.8 哪个大？请解释你的推理过程。",
+    contents="比较 9.11 和 9.8 的大小，并给出简短理由。",
     config=types.GenerateContentConfig(
-        thinking_config=types.ThinkingConfig(include_thoughts=True)
+        thinking_config=types.ThinkingConfig(
+            thinking_level="medium",
+            include_thoughts=True,
+        ),
+        max_output_tokens=8192,
     ),
 )
 
-thoughts = ""
-answer = ""
-if not response.candidates or not response.candidates[0].content:
-    raise RuntimeError("响应中没有候选内容，请检查安全拦截或服务返回信息。")
+if not response.candidates:
+    raise RuntimeError(f"未返回候选内容：{response.prompt_feedback}")
+candidate = response.candidates[0]
+parts = candidate.content.parts or [] if candidate.content else []
+summary = "".join(part.text or "" for part in parts if part.thought)
+answer = "".join(part.text or "" for part in parts if not part.thought)
 
-for part in response.candidates[0].content.parts or []:
-    if not part.text:
-        continue
-    if part.thought:
-        thoughts += part.text
-    else:
-        answer += part.text
-
-print("💭 思考总结:")
-print(thoughts or "本次未返回思考总结。")
-if not answer:
-    raise RuntimeError("本次未返回最终回答。")
-print("\n✅ 最终回答:")
+print("=== 思考摘要 ===")
+print(summary or "本次未返回可显示的思考摘要。")
+if not answer.strip():
+    raise RuntimeError(f"未返回最终答案，finish_reason={candidate.finish_reason}")
+print("\n=== 最终答案 ===")
 print(answer)
+print("\n结束原因：", candidate.finish_reason)
+
+usage = response.usage_metadata
+if usage:
+    print("思考 tokens：", usage.thoughts_token_count)
+    print("回答 tokens：", usage.candidates_token_count)
+    print("总 tokens：", usage.total_token_count)
 ```
 
-### 返回示例
+摘要可能使用与最终答案不同的语言，也可能为空。应用应保留模型实际返回的内容，不要在未返回摘要时自行生成一段文字并标为模型思考。
 
-以下为 **2026-11-03** 使用 `gemini-3.8-flash` 的非流式实测输出（HTTP 200），对应[测试记录](/reports/gemini-3.8-flash-2026-11-03/results.json)中的 `gemini3-thinking-summary-1`。保留当次英文思考摘要和中文最终回答，仅省略 SDK 运行警告。
+### REST / Requests
 
-```text
-💭 思考总结:
-**My Thought Process on Comparing Decimal Numbers**
-
-Okay, here's how I'm breaking down this comparison of $9.11$ and $9.8$. First, I need to clearly state which number is larger and then provide a rigorous explanation.
-
-My initial instinct is to acknowledge the common pitfall – the one where people mistakenly assume $9.11$ is bigger because 11 is greater than 8. It's crucial to address this immediately. This misconception stems from treating the numbers after the decimal point as whole integers, which is fundamentally incorrect. We're dealing with fractional parts, powers of ten, remember?
-
-Now for the mathematical approach. It's a structured, step-by-step comparison:
-
-*   **Step 1:** Compare the integer parts. Both numbers have an integer part of 9, so they are equal.
-
-*   **Step 2:** Move to the first decimal place, the tenths place. $9.11$ has a 1 in the tenths place, and $9.8$ has an 8. Since $8 > 1$, we can confidently conclude that $9.8 > 9.11$. We don't even need to go further.
-
-I'll also frame an alternative explanation, which is helpful to illustrate the concept. This involves "padding" with zeros to make the decimal places equivalent. We can rewrite $9.8$ as $9.80$. Now, comparing $9.80$ and $9.11$, it's easy to see that 80 hundredths is greater than 11 hundredths, so $9.80 > 9.11$.
-
-For the final output, I'll provide a concise, direct answer: $9.8$ is larger. Then, I'll offer two distinct explanations: one using the place value method (the standard mathematical approach we already discussed) and another using the "equal length" method (padding with zeros) for easier visualization. And, of course, I must address that common misconception. This way, I'm anticipating that people think it is larger.
-
-Finally, because I know the user is expert in their field, I can re-state the answer in Chinese so they can see that it holds up. I'll make sure the explanations are clear, polite, and educational.
-
-In short: 9.8 is larger, because the tenths place (8 vs. 1) is greater. Alternatively, we can see that 9.80 (80/100) is greater than 9.11 (11/100). The most common mistake is to think that 11 > 8, but this is wrong because the decimal notation is not just regular numbers, but fractions.
-
-
-
-
-✅ 最终回答:
-**9.8 比 9.11 大。**
-
-以下是详细的推理过程：
-
-### 方法一：按数位从高到低比较（标准数学方法）
-
-比较两个小数的大小时，应从最高位（最左边）开始依次向右比较：
-
-1. **比较整数部分：**
-   * $9.11$ 的整数部分是 **9**
-   * $9.8$ 的整数部分也是 **9**
-   * 两者整数部分相同，因此需要比较小数部分。
-
-2. **比较十分位（小数点后第一位）：**
-   * $9.11$ 的十分位是 **1**（表示 1 个 0.1）
-   * $9.8$ 的十分位是 **8**（表示 8 个 0.1）
-   * 因为 $8 > 1$，所以此时就已经可以得出结论：**$9.8 > 9.11$**。
-   * *注：不需要再去看百分位上的数字，因为十分位的权重大于百分位。*
-
----
-
-### 方法二：补齐数位比较（更直观的方法）
-
-为了更直观地对比，我们可以通过在末尾添“0”，把两个小数化成相同的小数位数：
-
-* $9.11$ 保持不变（两位小数）
-* $9.8$ 可以写成 **$9.80$**（在末尾添 0，数值不变）
-
-现在对比 $9.80$ 和 $9.11$：
-* 可以理解为比较 **9块8毛（9.80元）** 和 **9块1毛1（9.11元）**。
-* 显然，80 个百分之一（0.80）大于 11 个百分之一（0.11）。
-* 因此，**$9.8 > 9.11$**。
-
----
-
-### 为什么容易有人觉得 9.11 更大？（常见误区）
-人们常犯的错误是将小数部分当成独立的“整数”来看，误以为 $11 > 8$ 所以 $9.11 > 9.8$。另外，在**软件版本号**（例如：Version 9.11 是第 11 个更新，晚于第 8 个更新 Version 9.8）或**日期/章节命名**中，点号只是分隔符而非数学小数点，但在**纯数学领域**，$9.8$ 始终大于 $9.11$。
-```
-
-## 流式调用示例
-
-:::warning 实测限制（2026-11-03）
-该示例首轮返回了思考摘要和最终答案；后续复测分别出现未返回摘要、读取超时，因此本次报告将其标为未通过，不能保证稳定获得流式摘要。需要思考摘要时，可先使用本页已通过实测的非流式示例。详情见[实测报告](/gemini-3.8-flash-test-report)。
-:::
+REST 的正文和摘要位于 `candidates[0].content.parts`，通过 `thought` 布尔值区分。只有签名而没有 `text` 的 Part 不应被打印为 `None`。
 
 ```python
+import os
+import requests
+
+response = requests.post(
+    "https://www.dmxapi.cn/v1beta/models/gemini-3.8-flash:generateContent",
+    headers={"x-goog-api-key": os.environ["DMXAPI_API_KEY"]},
+    json={
+        "contents": [{
+            "role": "user",
+            "parts": [{"text": "比较 9.11 和 9.8 的大小，并给出简短理由。"}],
+        }],
+        "generationConfig": {
+            "thinkingConfig": {
+                "thinkingLevel": "medium",
+                "includeThoughts": True,
+            },
+            "maxOutputTokens": 8192,
+        },
+    },
+    timeout=(10, 120),
+)
+response.raise_for_status()
+data = response.json()
+candidates = data.get("candidates") or []
+if not candidates:
+    raise RuntimeError(f"未返回候选内容：{data.get('promptFeedback')}")
+
+candidate = candidates[0]
+parts = (candidate.get("content") or {}).get("parts") or []
+summary = "".join(part.get("text", "") for part in parts if part.get("thought"))
+answer = "".join(part.get("text", "") for part in parts if not part.get("thought"))
+
+print("=== 思考摘要 ===")
+print(summary or "本次未返回可显示的思考摘要。")
+if not answer.strip():
+    raise RuntimeError(f"未返回最终答案，finishReason={candidate.get('finishReason')}")
+print("\n=== 最终答案 ===")
+print(answer)
+print("\n结束原因：", candidate.get("finishReason"))
+print("Token 用量：", data.get("usageMetadata", {}))
+```
+
+## 流式：按 Part 分流并检查结束状态
+
+流式摘要可能分多次返回。不要假设“第一个 chunk 是摘要，其余全部是答案”，也不要因为某个 chunk 没有文本就停止读取。
+
+下面的示例按接收顺序显示内容，同时分别累积摘要和答案。最终只有正常结束且存在答案时，才将整次请求视为完成。
+
+```python
+import os
 from google import genai
 from google.genai import types
 
-API_KEY = "sk-******************************************"
-BASE_URL = "https://www.dmxapi.cn"
-
 client = genai.Client(
-    api_key=API_KEY,
-    http_options={"base_url": BASE_URL, "timeout": 120000}
+    api_key="sk--------------------------------",
+    http_options=types.HttpOptions(
+        base_url="https://www.dmxapi.cn",
+        api_version="v1beta",
+        timeout=120_000,
+    ),
+)
+stream = client.models.generate_content_stream(
+    model="gemini-3.8-flash",
+    contents="比较 9.11 和 9.8 的大小，并给出简短理由。",
+    config=types.GenerateContentConfig(
+        thinking_config=types.ThinkingConfig(
+            thinking_level="medium",
+            include_thoughts=True,
+        ),
+        max_output_tokens=8192,
+    ),
 )
 
-thoughts = ""
-answer = ""
-for chunk in client.models.generate_content_stream(
-    model="gemini-3.8-flash",
-    contents="9.11 和 9.8 哪个大？请解释你的推理过程。",
-    config=types.GenerateContentConfig(
-        thinking_config=types.ThinkingConfig(include_thoughts=True)
-    )
-):
-    if not chunk.candidates or not chunk.candidates[0].content:
+summary_parts = []
+answer_parts = []
+active_section = None
+finish_reason = None
+usage = None
+
+for chunk in stream:
+    if chunk.usage_metadata:
+        usage = chunk.usage_metadata
+    if not chunk.candidates:
         continue
-    for part in chunk.candidates[0].content.parts or []:
+    candidate = chunk.candidates[0]
+    if candidate.finish_reason:
+        finish_reason = candidate.finish_reason.value
+    parts = candidate.content.parts or [] if candidate.content else []
+    for part in parts:
         if not part.text:
-            continue
-        if part.thought:
-            if not thoughts:
-                print("💭 思考总结（流式）:")
-            print(part.text, end="", flush=True)
-            thoughts += part.text
-        else:
-            if not answer:
-                print("\n\n✅ 最终回答（流式）:")
-            print(part.text, end="", flush=True)
-            answer += part.text
+            continue  # 此处只处理显示文本，不用于构造下一轮历史
+        section = "思考摘要" if part.thought else "最终答案"
+        target = summary_parts if part.thought else answer_parts
+        target.append(part.text)
+        if section != active_section:
+            print(f"\n=== {section} ===")
+            active_section = section
+        print(part.text, end="", flush=True)
 
-if not thoughts:
-    print("\n本次未返回思考总结。")
-if not answer:
-    raise RuntimeError("本次未返回最终回答。")
-print("\n流式调用完成！")
+print()
+summary = "".join(summary_parts)
+answer = "".join(answer_parts)
+if not answer.strip():
+    raise RuntimeError(f"流式请求没有返回最终答案，finish_reason={finish_reason}")
+if finish_reason != "STOP":
+    raise RuntimeError(f"流式结果未正常完成，finish_reason={finish_reason}")
+if not summary:
+    print("本次未返回可显示的思考摘要。")
+print("结束原因：", finish_reason)
+if usage:
+    print("思考 tokens：", usage.thoughts_token_count)
+    print("回答 tokens：", usage.candidates_token_count)
 ```
 
-### 返回示例
+## 常见问题
 
-以下为 **2026-11-03** 最终一次流式实测捕获的异常，取自[测试记录](/reports/gemini-3.8-flash-2026-11-03/results.json)中 `gemini3-thinking-summary-2` 的 `error` 字段。该次调用约 **120.346 秒**后读取超时，未收到思考摘要或最终回答；这是测试器记录的异常摘要，不是服务返回的 JSON 或成功输出。
+| 现象 | 处理方式 |
+| --- | --- |
+| 有最终答案，但没有摘要 | 确认 `include_thoughts=True`、字段层级正确，并遍历全部 Part；仍无摘要时按实际结果显示 |
+| `minimal` 报错 | 改为 `low`、`medium` 或 `high` |
+| 想关闭思考 | 3.8 Flash 没有关闭思考的等级；需要较低开销时使用 `low` |
+| 摘要有内容，最终答案为空 | 检查结束原因、输出预算和请求是否中断；摘要不能替代答案 |
+| `MAX_TOKENS` | 结合实际用量增大输出上限，或降低思考等级、缩小任务 |
+| 流式过程中没有文本 | 继续读取元数据和结束状态，避免丢掉只有签名或用量的块 |
+| 多轮或工具调用返回 400 | 检查完整历史、调用标识、函数名与思考签名是否原样保留 |
+| SDK 读取超时 | 记录异常与已收到的部分结果，检查客户端等待时间和渠道状态 |
 
-```text
-ReadTimeout: The read operation timed out
-```
-
-:::tip 验证方法
-接口成功返回最终回答，只能说明生成请求可用。验证思考总结功能还需要检查 `thought=True` 的文本是否实际出现；若没有，应记录为“未返回摘要”，不能仅凭 HTTP 成功判定该功能已验证。
-:::
+<p align="center">
+  <small>© 2026 DMXAPI Gemini 3.8 Flash 思考总结</small>
+</p>

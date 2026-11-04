@@ -4,10 +4,6 @@
 
 本示例通过 DMXAPI 调用 `gemini-3.8-flash`，将本地 PDF 编码为 Base64 后放入 `inlineData`，根据提示词总结文档内容。
 
-运行前安装 `requests`（`pip install requests`），填写 DMXAPI 密钥，并将 `PDF_PATH` 指向实际存在的 PDF 文件。
-
-
-
 ## 💻 Python 调用示例
 
 ```python
@@ -126,8 +122,6 @@ if __name__ == "__main__":
 
 
 ## ✅ 返回示例
-
-以下为 **2026-11-03** 使用 `gemini-3.8-flash` 分析[测试 PDF](/reports/gemini-3.8-flash-2026-11-03/fixture.pdf)的实测响应（HTTP 200），对应[测试记录](/reports/gemini-3.8-flash-2026-11-03/results.json)中的 `gemini-pdf-1`。测试时将代码中的本地文件路径替换为该 PDF；它包含 Q1=120、Q2=180、总收入=300、增长率=50%。以下只保留响应 JSON，`thoughtSignature` 已在记录中省略。
 
 ```json
 {

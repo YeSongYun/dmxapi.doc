@@ -63,7 +63,7 @@ print(response.text)
 
 ### 返回示例
 
-**2026-11-03 实测未通过，HTTP 503**。以下为[测试记录](/reports/gemini-3.8-flash-2026-11-03/results.json)中 `gemini-embedding-2-preview-1` 的实际错误响应；当前测试 Key 所在分组无可用渠道，没有返回文本向量。
+**2026-11-03 实测未通过，HTTP 503**。以下为当次测试的实际错误响应；当前测试 Key 所在分组无可用渠道，没有返回文本向量。
 
 ```json
 {
@@ -229,7 +229,7 @@ except Exception as e:
 
 ### 返回示例
 
-**2026-11-03 实测未通过，HTTP 503**。以下为[测试记录](/reports/gemini-3.8-flash-2026-11-03/results.json)中 `gemini-embedding-2-preview-2` 的实际控制台输出；本次未返回图片向量。
+**2026-11-03 实测未通过，HTTP 503**。以下为当次测试的实际控制台输出；本次未返回图片向量。
 
 ```text
 请求失败，HTTP 状态码异常
@@ -340,7 +340,7 @@ except Exception as e:
 
 ### 返回示例
 
-**2026-11-03 实测未通过，HTTP 503**。以下为[测试记录](/reports/gemini-3.8-flash-2026-11-03/results.json)中 `gemini-embedding-2-preview-3` 的实际错误响应；本次未返回音频向量。
+**2026-11-03 实测未通过，HTTP 503**。以下为当次测试的实际错误响应；本次未返回音频向量。
 
 ```json
 {
@@ -470,7 +470,7 @@ except Exception as e:
 
 ### 返回示例
 
-**2026-11-03 实测未通过，HTTP 503**。以下为[测试记录](/reports/gemini-3.8-flash-2026-11-03/results.json)中 `gemini-embedding-2-preview-4` 的实际错误响应；本次未返回视频向量。
+**2026-11-03 实测未通过，HTTP 503**。以下为当次测试的实际错误响应；本次未返回视频向量。
 
 ```json
 {
@@ -588,7 +588,7 @@ except Exception as e:
 ```
 ### 返回示例
 
-**2026-11-03 实测未通过，HTTP 503**。以下为[测试记录](/reports/gemini-3.8-flash-2026-11-03/results.json)中 `gemini-embedding-2-preview-5` 的实际错误响应；本次未返回 PDF 向量。
+**2026-11-03 实测未通过，HTTP 503**。以下为当次测试的实际错误响应；本次未返回 PDF 向量。
 
 ```json
 {
@@ -707,7 +707,7 @@ except Exception as e:
 
 ### 返回示例
 
-**2026-11-03 实测未通过，HTTP 503**。以下为[测试记录](/reports/gemini-3.8-flash-2026-11-03/results.json)中 `gemini-embedding-2-preview-6` 的实际错误响应；本次未返回多模态聚合向量。
+**2026-11-03 实测未通过，HTTP 503**。以下为当次测试的实际错误响应；本次未返回多模态聚合向量。
 
 ```json
 {
@@ -845,7 +845,7 @@ except Exception as e:
 
 ### 返回示例
 
-**2026-11-03 实测未通过，HTTP 503**。以下为[测试记录](/reports/gemini-3.8-flash-2026-11-03/results.json)中 `gemini-embedding-2-preview-7` 的实际错误响应；`batchEmbedContents` 本次未返回批量向量。
+**2026-11-03 实测未通过，HTTP 503**。以下为当次测试的实际错误响应；`batchEmbedContents` 本次未返回批量向量。
 
 ```json
 {

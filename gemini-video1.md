@@ -4,7 +4,7 @@
 
 本示例通过 DMXAPI 调用 `gemini-3.8-flash`，使用 `fileData.fileUri` 传入网络视频地址。客户端无需下载视频，服务端需要能够访问该直链；实际支持情况取决于当前模型通道和媒体来源。
 
-运行前安装 `requests`（`pip install requests`），填写 DMXAPI 密钥，并确认 `VIDEO_URL` 可公开访问。
+
 
 ## 🌐 请求地址
 
@@ -135,9 +135,6 @@ if __name__ == "__main__":
 
 ## 📤 返回示例
 
-以下为 **2026-11-03** 使用 `gemini-3.8-flash` 分析代码中视频地址的实测回答正文（HTTP 200），对应[测试记录](/reports/gemini-3.8-flash-2026-11-03/results.json)中的 `gemini-video1-1`。已去除控制台进度提示和装饰边框。
-
-### 成功响应
 
 ```text
 这段视频是一个结合了**漫威《复仇者联盟》元素**与**AI数字人/图像生成技术**的创意宣传短片。具体内容分析如下：

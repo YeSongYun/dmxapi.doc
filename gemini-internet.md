@@ -1,19 +1,11 @@
 # Gemini 联网搜索工具调用 API 使用方法
-
 ## 功能概述
-
 本示例通过 DMXAPI 调用 `gemini-3.8-flash`，使用 Google Search 工具查询互联网信息。模型会根据问题决定是否调用搜索；应结合 `grounding_metadata` 中的来源核对答案，而不是仅凭返回文本判断已联网。
-
-运行前安装 SDK（`pip install -U google-genai`），设置环境变量 `GEMINI_API_KEY` 或替换示例中的密钥占位符。
-
 ## 接口地址
-
 ```
 https://www.dmxapi.cn/v1beta/models/{model}:generateContent
 
 ```
-
-
 ## 示例代码
 ```python
 """
@@ -94,8 +86,6 @@ else:
 ```
 
 ## 返回示例
-
-以下为 **2026-11-03** 使用 `gemini-3.8-flash` 的实测输出（HTTP 200），对应[测试记录](/reports/gemini-3.8-flash-2026-11-03/results.json)中的 `gemini-internet-1`。展示当次回答及返回的搜索来源，省略 SDK 运行警告；其中日期与天气是测试时返回的内容，不能当作现在的实时天气。
 
 ```text
 今天（11月3日，周二）上海的天气情况如下：

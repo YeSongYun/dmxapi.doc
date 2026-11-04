@@ -3,7 +3,6 @@
 ## ✨ 简介
 本示例通过 Google GenAI SDK 和 DMXAPI 调用 `gemini-3.8-flash` 分析本地音频。可以通过提示词要求转写、翻译或概述内容；下方代码演示音频内容分析，不会固定翻译成英文。
 
-运行前安装 SDK（`pip install -U google-genai`），填写 DMXAPI 密钥，并准备 `test/11.mp3`。音频格式与 `mime_type` 必须匹配，例如 MP3 使用 `audio/mpeg`、WAV 使用 `audio/wav`。
 
 :::tip 验证音频内容
 建议先使用有清晰人声、内容已知的录音验证转写。本次测试中，合成语音可正确识别订单号和金额，但 3 秒纯音输入返回了“未提供音频”的回答。HTTP 200 不代表声音识别正确；纯音、静音等非语音内容需单独验证。
@@ -71,7 +70,6 @@ print(response.text)  # 打印 Gemini 返回的音频描述文本
 
 ### 📊 返回示例
 
-以下为 **2026-11-03** 使用 `gemini-3.8-flash` 的实测回答正文（HTTP 200），对应[测试记录](/reports/gemini-3.8-flash-2026-11-03/results.json)中的 `gemini-stt-1`。测试时将本地音频路径替换为[合成语音 MP3](/reports/gemini-3.8-flash-2026-11-03/fixture.mp3)，其中包含订单号 427 和金额 180 美元。
 
 ```text
 这段音频是一段英文系统/合成语音（TTS），主要包含以下信息：

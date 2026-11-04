@@ -1,7 +1,6 @@
 # Gemini API 视频分析接口文档
 
-本示例使用 `gemini-3.8-flash` 分析本地 MP4 视频，通过 `inlineData` 发送 Base64 视频数据。运行前安装 `requests`（`pip install requests`），填写 DMXAPI 密钥，并将 `VIDEO_PATH` 指向实际文件；较大的视频会增加上传时间和请求体大小。
-
+本示例使用 `gemini-3.8-flash` 分析本地 MP4 视频，通过 `inlineData` 发送 Base64 视频数据。
 ## 📌 接口地址
 
 ```
@@ -222,8 +221,6 @@ if __name__ == "__main__":
 ```
 
 ## ✅ 返回示例
-
-以下为 **2026-11-03** 使用 `gemini-3.8-flash` 的实测控制台输出（HTTP 200），对应[测试记录](/reports/gemini-3.8-flash-2026-11-03/results.json)中的 `gemini-video-1`。测试时将本地视频路径替换为[3 秒合成 MP4](/reports/gemini-3.8-flash-2026-11-03/fixture.mp4)，画面包含 DMXAPI TEST 文字、红圆、蓝方和绿三角。
 
 ```text
 ==================================================

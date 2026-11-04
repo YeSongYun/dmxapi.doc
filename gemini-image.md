@@ -3,12 +3,7 @@
 ## 📋 概述
 
 本示例使用 `gemini-3.8-flash` 分析本地图片，分别演示 REST 流式响应和 Google GenAI SDK 调用。示例使用 JPEG；更换图片格式时请同步修改 MIME 类型。
-
-运行前安装依赖（`pip install requests google-genai`），填写 DMXAPI 密钥，并准备 `test/example.jpg`。
-
 ## 🌐 请求地址
-
-
 | 服务类型 | 接口地址 | 说明 |
 |---------|---------|------|
 |图片解析 | `https://www.dmxapi.cn` |SDK |
@@ -177,10 +172,6 @@ if __name__ == "__main__":
 ```
 ## 📤 返回示例
 
-以下为 **2026-11-03** 使用 `gemini-3.8-flash` 的实测流式回答正文（HTTP 200），对应[测试记录](/reports/gemini-3.8-flash-2026-11-03/results.json)中的 `gemini-image-1`。测试时将本地图片路径替换为[合成测试 JPEG](/reports/gemini-3.8-flash-2026-11-03/fixture.jpg)，其内容是 DMXAPI TEST 文字、红圆、蓝方和绿三角。
-
-### 成功响应
-
 ```text
 这是一张背景为白色的简洁图形测试图片，主要包含以下内容：
 
@@ -195,8 +186,6 @@ if __name__ == "__main__":
 
 整体画面风格极简，三个图形分别对应了红、绿、蓝（RGB）三种经典基色，看起来像是一个用于程序、显示或API接口的色彩与图形渲染测试用例。
 ```
-
-
 ## 💻 Python 示例代码（SDK）
 
 ```python
@@ -255,10 +244,6 @@ print(response.text)
 
 
 ## 📤 返回示例
-
-以下为 **2026-11-03** 使用 `gemini-3.8-flash` 的 SDK 实测回答正文（HTTP 200），对应[测试记录](/reports/gemini-3.8-flash-2026-11-03/results.json)中的 `gemini-image-2`，使用与上方相同的[合成测试 JPEG](/reports/gemini-3.8-flash-2026-11-03/fixture.jpg)。
-
-### 成功响应
 
 ```text
 这张图片是一个非常简洁的标准测试图（Test Pattern），整体包含以下几个维度的信息：

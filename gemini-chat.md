@@ -2,13 +2,9 @@
 
 ## 📋 概述
 
-本文档介绍如何通过 DMXAPI 使用 `gemini-3.8-flash` 进行非流式文本生成。请求使用 Gemini 原生的 `contents` / `parts` 结构，完整回答在请求完成后一次返回。
-
-运行前安装 `requests`（`pip install requests`），并将代码中的 API 密钥占位符替换为自己的 DMXAPI 密钥。
-
+本文档介绍如何通过 DMXAPI 使用 `gemini-3.8-flash` 进行非流式文本生成。
 
 ## 🌐 请求地址
-
 ```
 https://www.dmxapi.cn/v1beta/models/{model}:generateContent
 ```
@@ -129,10 +125,6 @@ if __name__ == "__main__":
 
 ## 📤 返回示例
 
-以下为 **2026-11-03** 使用 `gemini-3.8-flash` 的实测响应 JSON（HTTP 200），对应[测试记录](/reports/gemini-3.8-flash-2026-11-03/results.json)中的 `gemini-chat-1`。已去除控制台提示；`thoughtSignature` 在保存记录中以 `[OMITTED]` 省略，文本及用量保留当次返回值。
-
-### 成功响应
-
 ```json
 {
   "candidates": [
@@ -174,24 +166,6 @@ if __name__ == "__main__":
   "responseId": "1uTpatXPJdnhsbwPw86S4Ac"
 }
 ```
-
-
-
-## 📊 响应字段说明
-
-| 字段 | 类型 | 说明 |
-|------|------|------|
-| `candidates` | Array | 生成的候选响应列表 |
-| `candidates[].content.parts[].text` | String | AI 生成的文本内容 |
-| `candidates[].finishReason` | String | 完成原因(如 `STOP`) |
-| `candidates[].safetyRatings` | Array | 安全性评级信息 |
-| `usageMetadata.promptTokenCount` | Integer | 输入提示的 token 数量 |
-| `usageMetadata.candidatesTokenCount` | Integer | 生成内容的 token 数量 |
-| `usageMetadata.totalTokenCount` | Integer | 总 token 数量 |
-| `modelVersion` | String | 使用的模型版本 |
-
-
-
 ## 🔑 获取 API Key
 
 访问 [DMXAPI 官网](https://www.dmxapi.cn) 注册并获取您的 API 密钥。

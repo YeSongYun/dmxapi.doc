@@ -4,17 +4,12 @@
 
 本示例使用 `gemini-3.8-flash` 分析网络图片。代码先下载图片，再通过内联图片数据发送给模型；REST 和 SDK 示例均使用 JPEG 图片。
 
-运行前安装依赖（`pip install requests google-genai`），填写 DMXAPI 密钥，并确保图片 URL 可访问。
-
 ## 🌐 请求地址
 
 | 服务类型 | 接口地址 | 说明 |
 |---------|---------|------|
 |图片解析 | `https://www.dmxapi.cn` |SDK |
 |图片解析 | `https://www.dmxapi.cn/v1beta` ||
-
-
-
 ## 💻 Python 示例代码
 
 ```python
@@ -155,9 +150,6 @@ if __name__ == "__main__":
 
 ```
 ## 📤 返回示例
-
-以下为 2026-11-03 REST 实测结果（已移除进度信息和边框），测试 ID：`gemini-image1-1`，HTTP 200。输入图片：`https://goo.gle/instrument-img`。测试记录：[results.json](/reports/gemini-3.8-flash-2026-11-03/results.json)。
-
 ### 实测回答正文
 ```text
 这张图片展示的是一台极其庞大且精密的**大型管风琴（或高级电子/数字管风琴）的演奏台（Console）**。
@@ -279,8 +271,6 @@ print(response.text)
 ```
 
 ## 📤 返回示例
-
-以下为 2026-11-03 SDK 实测结果，测试 ID：`gemini-image1-2`，HTTP 200。输入图片：`https://goo.gle/instrument-img`。测试记录：[results.json](/reports/gemini-3.8-flash-2026-11-03/results.json)。
 
 ### 实测回答正文
 ```text

@@ -2,8 +2,6 @@
 
 本示例通过 DMXAPI 调用 `gemini-3.8-flash`，使用 `responseMimeType` 和 `responseSchema` 约束输出。结构化 JSON 位于响应的 `candidates[].content.parts[].text` 字符串中，需要再用 `json.loads` 解析。
 
-运行前安装 `requests`（`pip install requests`），并填写 DMXAPI 密钥。
-
 ## 📌 请求地址
 
 ```
@@ -85,8 +83,6 @@ print(json.dumps(recipes, indent=2, ensure_ascii=False))
 ```
 
 ## 📤 返回示例
-
-以下为 **2026-11-03** 使用 `gemini-3.8-flash` 的实测输出（HTTP 200），对应[测试记录](/reports/gemini-3.8-flash-2026-11-03/results.json)中的 `gemini-json-1`。这里展示上方脚本实际打印的、从响应正文解析出的早餐数组。
 
 ```json
 [
