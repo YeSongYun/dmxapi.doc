@@ -1,5 +1,10 @@
+/// <reference types="vitepress/client" />
+
 // 1. 导入第三方主题
 import Theme from '@escook/vitepress-theme'
+import { onContentUpdated, type Theme as VitePressTheme } from 'vitepress'
+import { nextTick, onBeforeUnmount } from 'vue'
+import type ViewerInstance from 'viewerjs'
 // 2. 导入配套的 CSS 样式（此步骤不能省略）
 import '@escook/vitepress-theme/style.css'
 // 3. 引入 Viewer.js 的样式
@@ -8,21 +13,30 @@ import 'viewerjs/dist/viewer.css'
 // 4. 扩展主题：使用 Viewer.js 作为图片查看器（支持滚轮缩放 & 弹窗）
 export default {
   extends: Theme,
-  enhanceApp({ router }: { router: any }) {
+  setup() {
     if (typeof window === 'undefined') return
 
-    let viewerInstance: any
+    let viewerInstance: ViewerInstance | null = null
+    let initVersion = 0
+    let disposed = false
+
+    const destroyViewer = () => {
+      viewerInstance?.destroy()
+      viewerInstance = null
+    }
 
     const initViewer = async () => {
+      if (disposed) return
+
+      const version = ++initVersion
+      destroyViewer()
+      await nextTick()
       const { default: Viewer } = await import('viewerjs')
 
-      // 销毁旧实例，避免重复绑定
-      if (viewerInstance) {
-        try { viewerInstance.destroy() } catch (e) {}
-        viewerInstance = null
-      }
+      // 快速切页或组件卸载后，不再创建过期的查看器。
+      if (disposed || version !== initVersion) return
 
-      const container = document.querySelector('.vp-doc') as HTMLElement | null
+      const container = document.querySelector<HTMLElement>('.vp-doc')
       if (!container) return
 
       // 初始化 Viewer：点击图片弹窗展示，滚轮缩放
@@ -51,8 +65,12 @@ export default {
       })
     }
 
-    // 首次进入 & 路由变更后都初始化
-    initViewer()
-    router.onAfterRouteChanged = () => initViewer()
+    // 在正文挂载或更新后绑定，覆盖首次加载、页面切换和热更新。
+    onContentUpdated(initViewer)
+    onBeforeUnmount(() => {
+      disposed = true
+      initVersion++
+      destroyViewer()
+    })
   }
-}
+} satisfies VitePressTheme

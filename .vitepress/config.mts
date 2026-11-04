@@ -1475,6 +1475,7 @@ export default defineConfig({
           { text: 'pi_agent', link: '/pi_agent' },
           { text: 'hermes', link: '/hermes_agent' },
           { text: 'Cursor', link: '/cursor' },
+          { text: 'Octop', link: '/octop' },
           { text: '沉浸式翻译', link: '/chenjinshifanyi' },
           { text: 'cc switch余额查询', link: '/cc-switch-balance-query' },
           { text: 'n8n', link: '/n8n' },
