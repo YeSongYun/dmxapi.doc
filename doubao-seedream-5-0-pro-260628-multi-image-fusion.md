@@ -1,6 +1,6 @@
 # doubao-seedream-5-0-pro-260628 多图融合 API 使用文档
 
-基于字节跳动豆包 Doubao Seedream 5.0 Pro 模型的多图融合接口，通过 `/v1/responses` 端点同步调用，根据多张参考图片（2~10 张）与文本提示词融合生成单张图片，可将不同图片中的人物、服装、场景等元素自然组合到同一画面（如为图 1 的人物换上图 2 的服装）。参考图以数组形式传入，支持 URL 或 Base64 编码，兼容 jpeg、png、webp、bmp、tiff、gif、heic、heif 共 8 种格式，单张大小最高 30MB；输出尺寸支持 `1K`/`2K` 分辨率档位与精确宽高像素值两种控制方式，输出格式可选 `png`/`jpeg`。
+基于字节跳动豆包 Doubao Seedream 5.0 Pro 模型的多图融合接口，通过 `/v1/responses` 端点同步调用，根据多张参考图片（2~10 张）与文本提示词融合生成单张图片，可将不同图片中的人物、服装、场景等元素自然组合到同一画面（如为图 1 的人物换上图 2 的服装）。参考图以数组形式传入，支持 URL 或 Base64 编码，兼容 jpeg、png、webp、bmp、tiff、gif、heic、heif 共 8 种格式，单张大小最高 30MB；输出尺寸支持 `1K`/`1.5K`/`2K` 分辨率档位与精确宽高像素值两种控制方式，输出格式可选 `png`/`jpeg`。
 
 ## 接口地址
 
@@ -74,14 +74,20 @@ payload = {
       "https://ark-project.tos-cn-beijing.volces.com/doc_image/seedream4_5_imagesToimage_2.png"
     ],
 
-    # 【size】(string, 可选) 指定生成图像的尺寸信息，默认值 1024x1024
+    # 【size】(string, 可选) 指定生成图像的尺寸信息，默认值 2K
     # 支持以下两种方式，不可混用:
-    #   - 指定宽高像素值（宽x高）: 总像素取值范围 [1280x720(921600), 2048x2048(4194304)]，
+    #   - 指定宽高像素值（宽x高）: 总像素取值范围 [1280x720(921600), 2048x2048x1.1025(4624220)]，
     #     宽高比取值范围 [1/16, 16]，需同时满足（有效示例: "2048x1024"）
-    #   - 指定分辨率档位: 可选值 "1K" / "2K"，并在提示词中用自然语言描述图片宽高比、
+    #   - 指定分辨率档位: 可选值 "1K" / "1.5K" / "2K"，并在提示词中用自然语言描述图片宽高比、
     #     图片形状或图片用途，最终由模型判断生成图片的大小
     #     （如 2K 档位: 1:1 对应 2048x2048、16:9 对应 2848x1600）
     "size": "2K",
+
+    # 【optimize_prompt_options】(object, 可选) 提示词优化配置，默认值 {"mode": "standard"}
+    # mode 可选值:
+    #   - "standard": 标准模式，生成内容的质量更高，耗时较长
+    #   - "fast": 快速模式，生成耗时更短，效果略低于标准模式（对生成时延敏感的业务推荐使用）
+    "optimize_prompt_options": {"mode": "standard"},
 
     # 【output_format】(string, 可选) 指定生成图像的文件格式，默认值 jpeg
     # 可选值: "png" / "jpeg"
@@ -116,13 +122,14 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 
 ```json
 {
-  "model": "doubao-seedream-5-0-pro",
-  "created": 1783570849,
+  "model": "doubao-seedream-5-0-pro-260628",
+  "created": 1793892845,
   "data": [
     {
-      "url": "https://ark-acg-cn-beijing.tos-cn-beijing.volces.com/doubao-seedream-5-0-pro/cc3c949d5...Signature=1244c881217968d7140ad7e5c94efae4fd2f35fd77e7e49f736794e1c8966599&X-Tos-SignedHeaders=host",
+      "url": "https://ark-acg-cn-beijing.tos-cn-beijing.volces.com/doubao-seedream-5-0-pro/5955e66a651ae14ee6ab17801382bcdb6c77fa180018298397120/Image/2112844032/021793892810081af77c6bdcb28310871ba6ee41ea156a66e5595.png?X-Tos-Algorithm=TOS4-HMAC-SHA256&X-Tos-Credential=AKLTYWJkZTExNjA1ZDUyNDc3YzhjNTM5OGIyNjBhNDcyOTQ%2F20261105%2Fcn-beijing%2Ftos%2Frequest&X-Tos-Date=20261105T153405Z&X-Tos-Expires=86400&X-Tos-Signature=ead0263efd947d44178c8a3c27810befed7d1e6312ef4f2a6afe804e5cc92776&X-Tos-SignedHeaders=host",
       "size": "2048x2048",
-      "output_format": "png"
+      "output_format": "png",
+      "background": "opaque"
     }
   ],
   "usage": {
@@ -134,7 +141,8 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
     "output_tokens": 6200,
     "output_tokens_details": {
       "reasoning_tokens": 0
-    }
+    },
+    "cost": "¥0.62"
   }
 }
 ```

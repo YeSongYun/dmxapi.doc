@@ -1,6 +1,6 @@
 # doubao-seedream-5-0-pro-260628 图生图 API 使用文档
 
-基于字节跳动豆包 Doubao Seedream 5.0 Pro 模型的图生图接口，通过 `/v1/responses` 端点同步调用，根据单张参考图片与文本提示词生成单张图片，可在保持原图主体结构的同时完成材质替换、光影调整、风格转换等精细编辑。参考图支持 URL 或 Base64 编码传入，兼容 jpeg、png、webp、bmp、tiff、gif、heic、heif 共 8 种格式，单张大小最高 30MB；输出尺寸支持 `1K`/`2K` 分辨率档位与精确宽高像素值两种控制方式，输出格式可选 `png`/`jpeg`。
+基于字节跳动豆包 Doubao Seedream 5.0 Pro 模型的图生图接口，通过 `/v1/responses` 端点同步调用，根据单张参考图片与文本提示词生成单张图片，可在保持原图主体结构的同时完成材质替换、光影调整、风格转换等精细编辑。参考图支持 URL 或 Base64 编码传入，兼容 jpeg、png、webp、bmp、tiff、gif、heic、heif 共 8 种格式，单张大小最高 30MB；输出尺寸支持 `1K`/`1.5K`/`2K` 分辨率档位与精确宽高像素值两种控制方式，输出格式可选 `png`/`jpeg`；输入带透明通道的图片时，可通过 `background` 参数输出透明背景图片。
 
 ## 接口地址
 
@@ -69,18 +69,34 @@ payload = {
     #     而非对宽度或高度的单独限制）
     "image": "https://ark-project.tos-cn-beijing.volces.com/doc_image/seedream4_5_imageToimage.png",
 
-    # 【size】(string, 可选) 指定生成图像的尺寸信息，默认值 1024x1024
+    # 【size】(string, 可选) 指定生成图像的尺寸信息，默认值 2K
     # 支持以下两种方式，不可混用:
-    #   - 指定宽高像素值（宽x高）: 总像素取值范围 [1280x720(921600), 2048x2048(4194304)]，
+    #   - 指定宽高像素值（宽x高）: 总像素取值范围 [1280x720(921600), 2048x2048x1.1025(4624220)]，
     #     宽高比取值范围 [1/16, 16]，需同时满足（有效示例: "2048x1024"）
-    #   - 指定分辨率档位: 可选值 "1K" / "2K"，并在提示词中用自然语言描述图片宽高比、
+    #   - 指定分辨率档位: 可选值 "1K" / "1.5K" / "2K"，并在提示词中用自然语言描述图片宽高比、
     #     图片形状或图片用途，最终由模型判断生成图片的大小
     #     （如 2K 档位: 1:1 对应 2048x2048、16:9 对应 2848x1600）
     "size": "2K",
 
+    # 【optimize_prompt_options】(object, 可选) 提示词优化配置，默认值 {"mode": "standard"}
+    # mode 可选值:
+    #   - "standard": 标准模式，生成内容的质量更高，耗时较长
+    #   - "fast": 快速模式，生成耗时更短，效果略低于标准模式（对生成时延敏感的业务推荐使用）
+    "optimize_prompt_options": {"mode": "standard"},
+
     # 【output_format】(string, 可选) 指定生成图像的文件格式，默认值 jpeg
     # 可选值: "png" / "jpeg"
     "output_format": "png",
+
+    # 【background】(string, 可选) 图片透明通道，默认值 opaque
+    # 可选值:
+    #   - "opaque": 不透明背景模式，生成常规的实体背景图
+    #   - "transparent": 透明背景模式，输出带透明背景的图
+    # 使用 "transparent" 时需注意:
+    #   - 仅支持输入 1 张带透明通道的图片（如带透明背景的 png），
+    #     传入不支持透明通道的格式（如 jpeg）将报错
+    #   - 输出图为 png，若同时将 output_format 设为 "jpeg" 将报错
+    # "background": "transparent",
 
     # 【response_format】(string, 可选) 指定生成图像的返回格式，默认值 url
     # 可选值:
@@ -111,13 +127,14 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 
 ```json
 {
-  "model": "doubao-seedream-5-0-pro",
-  "created": 1783570459,
+  "model": "doubao-seedream-5-0-pro-260628",
+  "created": 1793893577,
   "data": [
     {
-      "url": "https://ark-acg-cn-beijing.tos-cn-beijing.volces.com/doubao-seedream-5-0-pro/e2d793a7c828...9fbd2d80252942cd4c&X-Tos-SignedHeaders=host",
+      "url": "https://ark-acg-cn-beijing.tos-cn-beijing.volces.com/doubao-seedream-5-0-pro/8c2f2bf7d3ecc17bb8dd5a1be6a62bdac36bc6329515398397120/Image/2112844032/0217938935159236cb63cadb26a6eb1a5dd8bb71cce3d7fb2f2c8.png?X-Tos-Algorithm=TOS4-HMAC-SHA256&X-Tos-Credential=AKLTYWJkZTExNjA1ZDUyNDc3YzhjNTM5OGIyNjBhNDcyOTQ%2F20261105%2Fcn-beijing%2Ftos%2Frequest&X-Tos-Date=20261105T154617Z&X-Tos-Expires=86400&X-Tos-Signature=de3d8b7e31b645ecfcf60b60703d5014cc52433bd6ae36955de4803e630eaa4c&X-Tos-SignedHeaders=host",
       "size": "2048x2048",
-      "output_format": "png"
+      "output_format": "png",
+      "background": "opaque"
     }
   ],
   "usage": {
@@ -129,7 +146,8 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
     "output_tokens": 6000,
     "output_tokens_details": {
       "reasoning_tokens": 0
-    }
+    },
+    "cost": "¥0.6"
   }
 }
 ```
