@@ -119,13 +119,13 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
   "created_at": "2026-10-21T15:16:45.141567466Z",
   "duration": 3,
   "images": [
-    "https://prod-ss-images.s3.cn-northwest-1.amazonaws.com.cn/vidu-maas/template/image2video.png"
+    "https://cdn.jsdelivr.net/gh/opencv/opencv/samples/data/fruits.jpg"
   ],
   "is_rec": true,
   "meta_data": "",
   "model": "viduq4-preview",
   "payload": "",
-  "prompt": "The astronaut waved and the camera moved up.",
+  "prompt": "以原图水果为主体，生成一段3秒的高清写实视频。镜头快速缓慢推进，水果轻微旋转，阳光在表面自然流动，突出水果鲜艳的色彩和真实纹理。保持水果外观不变，画面稳定流畅。",
   "resolution": "540p",
   "seed": 549159144,
   "state": "created",
