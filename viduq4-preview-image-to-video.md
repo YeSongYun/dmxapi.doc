@@ -51,12 +51,12 @@ payload = {
     # 官方限制: 只支持输入 1 张图；图片格式支持 png、jpeg、jpg、webp；图片大小不超过 50 MB。
     # 使用 Base64 时，HTTP POST body 不超过 20 MB，且编码需要包含适当的内容类型字符串，例如 data:image/png;base64,{base64_encode}。
     "images": [
-        "https://prod-ss-images.s3.cn-northwest-1.amazonaws.com.cn/vidu-maas/template/image2video.png"
+        "https://cdn.jsdelivr.net/gh/opencv/opencv/samples/data/fruits.jpg"
     ],
 
     # 【prompt】(string, 可选) 生成视频的文本描述。
     # 字符长度不能超过 20000 个字符。
-    "prompt": "The astronaut waved and the camera moved up.",
+    "prompt": "以原图水果为主体，生成一段3秒的高清写实视频。镜头快速缓慢推进，水果轻微旋转，阳光在表面自然流动，突出水果鲜艳的色彩和真实纹理。保持水果外观不变，画面稳定流畅。",
 
     # 【is_rec】(bool, 可选) 是否启用提示词扩写模式。
     # true 表示启用扩写，false 表示不启用；默认值为 true。
@@ -119,13 +119,13 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
   "created_at": "2026-10-21T15:16:45.141567466Z",
   "duration": 3,
   "images": [
-    "https://prod-ss-images.s3.cn-northwest-1.amazonaws.com.cn/vidu-maas/template/image2video.png"
+    "https://cdn.jsdelivr.net/gh/opencv/opencv/samples/data/fruits.jpg"
   ],
   "is_rec": true,
   "meta_data": "",
   "model": "viduq4-preview",
   "payload": "",
-  "prompt": "The astronaut waved and the camera moved up.",
+  "prompt": "以原图水果为主体，生成一段3秒的高清写实视频。镜头快速缓慢推进，水果轻微旋转，阳光在表面自然流动，突出水果鲜艳的色彩和真实纹理。保持水果外观不变，画面稳定流畅。",
   "resolution": "540p",
   "seed": 549159144,
   "state": "created",

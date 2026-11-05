@@ -251,6 +251,14 @@ export default defineConfig({
                 collapsed: true,
                 items: [
                   {
+                    text: 'gpt-image-2.6',
+                    collapsed: true,
+                    items: [
+                      { text: '文生图', link: '/gpt-image-2.6-text-to-image' },
+                      { text: '图片编辑', link: '/gpt-image-2.6-image-edit' }
+                    ],
+                  },
+                  {
                     text: 'gpt-image-2.5',
                     collapsed: true,
                     items: [
