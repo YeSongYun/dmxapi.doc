@@ -122,13 +122,13 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 ```json
 {
   "model": "doubao-seedream-5-0-flash-260915",
-  "created": 1793955322,
+  "created": 1793956453,
   "data": [
     {
-      "url": "https://ark-acg-cn-beijing.tos-cn-beijing.volces.com/doubao-seedream-5-0-flash/9acf165fd380ba62c536505d365d82f88c3686773203559397120/Image/2112844032/0217939553023776863c88f28d563d505635c26ab083df561fca9.png?X-Tos-Algorithm=TOS4-HMAC-SHA256&X-Tos-Credential=AKLTYWJkZTExNjA1ZDUyNDc3YzhjNTM5OGIyNjBhNDcyOTQ%2F20261106%2Fcn-beijing%2Ftos%2Frequest&X-Tos-Date=20261106T085520Z&X-Tos-Expires=86400&X-Tos-Signature=db1506b8a88163dbfd092ccd9df268914cd6845ee0600d27a428393a2f75b6da&X-Tos-SignedHeaders=host",
+      "url": "https://ark-acg-cn-beijing.tos-cn-beijing.volces.com/doubao-seedream-5-0-flash/f5268c28d85f525d60c8d1f2891ac8932557d4579234659397120/Image/2112844032/0217939564329754d7552398ca1982f1d8c06d525f58d82c8625f.png?X-Tos-Algorithm=TOS4-HMAC-SHA256&X-Tos-Credential=AKLTYWJkZTExNjA1ZDUyNDc3YzhjNTM5OGIyNjBhNDcyOTQ%2F20261106%2Fcn-beijing%2Ftos%2Frequest&X-Tos-Date=20261106T091413Z&X-Tos-Expires=86400&X-Tos-Signature=89cdb8e485f90be40cf0ee1df228c4dd11c395db111918eeb1d745ed7d6a4553&X-Tos-SignedHeaders=host",
       "size": "2048x2048",
       "output_format": "png",
-      "background": "opaque"
+      "background": "transparent"
     }
   ],
   "usage": {
