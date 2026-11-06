@@ -299,6 +299,16 @@ export default defineConfig({
                     ],
                   },
                   {
+                    text: 'doubao-seedream-5-0-flash-260915',
+                    collapsed: true,
+                    items: [
+                      { text: '文生图', link: '/doubao-seedream-5-0-flash-260915-text-to-image' },
+                      { text: '图生图', link: '/doubao-seedream-5-0-flash-260915-image-to-image' },
+                      { text: '多图融合', link: '/doubao-seedream-5-0-flash-260915-multi-image-fusion' },
+                      { text: '图层拆分', link: '/doubao-seedream-5-0-flash-260915-layer-decomposition' },
+                    ],
+                  },
+                  {
                     text: 'doubao-seedream-5.0-lite',
                     collapsed: true,
                     items: [
