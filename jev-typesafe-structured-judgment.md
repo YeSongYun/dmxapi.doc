@@ -17,7 +17,9 @@ https://www.dmxapi.cn/typesafe/v1/systemone
 - `jev-latest`
 - `jev-1.14.0`
 - `jev-1.13.0`
-
+- `perplexity/pplx-decider-v1.2`
+- `perplexity/pplx-decider-flash-v1.2`
+- `microsoft/microsoft-decision-1`
 ## 🧩 问题类型说明
 
 `questions` 中的每个问题通过 `type` 指定类型，不同类型对 `criteria` 的要求不同：
