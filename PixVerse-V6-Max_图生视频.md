@@ -319,41 +319,22 @@ if __name__ == "__main__":
 
 ## 返回示例
 
-以下两个状态均来自同一任务的实际 GET 查询，HTTP 状态码均为 `200`。`queued` / `in_progress` 表示仍需等待，`completed` 表示任务完成。
-
-::: code-group
-
-```json [任务处理中]
+```json
+status_code: 200
+任务处理中（status=in_progress），20 秒后继续查询。
+status_code: 200
+任务处理中（status=in_progress），20 秒后继续查询。
+status_code: 200
+任务已完成，完整结果如下：
 {
-  "background": true,
-  "completed_at": null,
-  "created_at": 1793965279,
+  "created_at": 1794195555,
   "error": null,
-  "id": "resp_dZ5r4taSAqfOlOAaArjp854mLgMSCjmD",
-  "incomplete_details": null,
-  "metadata": {
-    "retrieval_path": "/v1/responses/resp_dZ5r4taSAqfOlOAaArjp854mLgMSCjmD",
-    "task_id": "task_dZ5r4taSAqfOlOAaArjp854mLgMSCjmD",
-    "task_status": "in_progress"
-  },
-  "model": "v6-max",
-  "object": "response",
-  "output": [],
-  "status": "in_progress",
-  "usage": null
-}
-```
-
-```json [任务完成]
-{
-  "created_at": 1793965279,
-  "error": null,
-  "id": "resp_dZ5r4taSAqfOlOAaArjp854mLgMSCjmD",
+  "id": "resp_LMw8xRN899mNE0yURxTeYmopzVwrs7HH",
   "incomplete_details": null,
   "instructions": null,
   "metadata": {
-    "retrieval_path": "/v1/responses/resp_dZ5r4taSAqfOlOAaArjp854mLgMSCjmD",
-    "task_id": "task_dZ5r4taSAqfOlOAaArjp854mLgMSCjmD",
+    "retrieval_path": "/v1/responses/resp_LMw8xRN899mNE0yURxTeYmopzVwrs7HH",
+    "task_id": "task_LMw8xRN899mNE0yURxTeYmopzVwrs7HH",
     "task_status": "completed",
     "vendor": "pixverse-v6-max"
   },
@@ -364,13 +345,13 @@ if __name__ == "__main__":
       "content": [
         {
           "annotations": [],
-          "id": "content_task_dZ5r4taSAqfOlOAaArjp854mLgMSCjmD_0_0",
+          "id": "content_task_LMw8xRN899mNE0yURxTeYmopzVwrs7HH_0_0",
           "logprobs": [],
-          "text": "<video controls src=\"https://media.pixverseai.cn/pixverse%2Fmp4%2Fmedia%2Fweb%2Fori%2F7f7e0b1e-2c20-4087-9740-1679a51ee873_seed637594755.mp4\"></video>",
+          "text": "<video controls src=\"https://media.pixverseai.cn/pixverse%2Fmp4%2Fmedia%2Fweb%2Fori%2F7d207995-fb73-482c-a45e-ff397a075a18_seed1806102537.mp4\"></video>",
           "type": "output_text"
         }
       ],
-      "id": "item_task_dZ5r4taSAqfOlOAaArjp854mLgMSCjmD_0",
+      "id": "item_task_LMw8xRN899mNE0yURxTeYmopzVwrs7HH_0",
       "role": "assistant",
       "status": "completed",
       "type": "message"
