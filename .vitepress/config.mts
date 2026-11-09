@@ -877,12 +877,11 @@ export default defineConfig({
                   { text: '音频上传', link: '/paiwo-audio-upload' },
                   { text: '视频上传', link: '/paiwo-video-upload' },
                   {
-                    text: 'paiwo-v5.6',
+                    text: 'v6-max',
                     collapsed: true,
                     items: [
-                      { text: '文生视频', link: '/paiwo-v5.6-ttv' },
-                      { text: '图生视频', link: '/paiwo-v5.6-itv' },
-                      { text: '首尾帧生成视频', link: '/paiwo-v5.6-itv2' },
+                      { text: '文生视频', link: '/PixVerse-V6-Max_文生视频' },
+                      { text: '图生视频', link: '/PixVerse-V6-Max_图生视频' },
                     ],
                   },
                   {
@@ -893,6 +892,15 @@ export default defineConfig({
                       { text: '图生视频', link: '/pixverse-v6-img-to-video' },
                       { text: '首尾帧生成视频', link: '/pixverse-v6-first-last-frame' },
                       { text: '视频延长', link: '/pixverse-v6-video-extend' },
+                    ],
+                  },
+                  {
+                    text: 'paiwo-v5.6',
+                    collapsed: true,
+                    items: [
+                      { text: '文生视频', link: '/paiwo-v5.6-ttv' },
+                      { text: '图生视频', link: '/paiwo-v5.6-itv' },
+                      { text: '首尾帧生成视频', link: '/paiwo-v5.6-itv2' },
                     ],
                   },
                   {
