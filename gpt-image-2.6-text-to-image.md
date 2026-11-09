@@ -71,10 +71,11 @@ payload = {
     "size": "1024x1024",
 
     # 【output_format】(string, 可选) 指定输出文件格式
-    # 可选值: "png"(默认) / "jpeg" / "webp" / "gif"(2.6 新增动图，两款模型均已实测可用)
+    # 可选值: "png"(默认) / "jpeg" / "webp" / "gif"(2.6 新增动图，两款模型均已实测可用) / "svg"(上游 2.6 支持矢量输出，当前渠道是否开放以实测为准)
     # 若选择 jpeg 或 webp，可再配合 output_compression 调整压缩率
     # GIF 仅支持文生图，不支持 output_compression、stream、partial_images、prompt_rewriter
-    # GIF 请在 prompt 中描述动作与循环方式；实测返回真实多帧 GIF，而非静态图片误
+    # SVG 同样仅支持文生图，且要求 n=1，不支持 stream、partial_images、prompt_rewriter、output_compression
+    # GIF 请在 prompt 中描述动作与循环方式；实测返回真实多帧 GIF，而非静态图片
     "output_format": "png",
 
     # 【quality】(string, 可选) 生成图像的质量等级
