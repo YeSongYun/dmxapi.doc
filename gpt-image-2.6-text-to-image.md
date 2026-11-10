@@ -13,8 +13,10 @@
 
 | 模型 ID | 官方定位 | 使用选择 |
 |------|------|------|
-| `gpt-image-2.6-sunburst` | 以图像质量为重点的基础模型 | 更关注最终画面质量时选用 |
-| `gpt-image-2.6-flare` | 以生成速度为重点的小模型 | 更关注生成速度时选用 |
+| `gpt-image-2.6-sunburst-ssvip` | 原价模型稳定性高 | 更关注最终编辑效果与细节时选用 |
+| `gpt-image-2.6-flare-ssvip` | 原价模型稳定性高 | 更关注编辑速度时选用 |
+| `gpt-image-2.6-sunburst` | 以图像质量为重点的基础模型 | 更关注最终编辑效果与细节时选用 |
+| `gpt-image-2.6-flare` | 以生成速度为重点的小模型 | 更关注编辑速度时选用 |
 
 ## 文生图示例代码
 
@@ -39,7 +41,6 @@ headers = {
 # 新特性备注基于 2026-11-05 对 DMXAPI 两款 2.6 模型的实际请求结果
 payload = {
     # 【model】(string, 必填) 使用的图像生成模型名称
-    # 本文档对应 GPT Image 2.6 系列，两款模型均可用于文生图
     # 可选值:
     #   "gpt-image-2.6-sunburst"  (以图像质量为重点的基础模型，示例默认)
     #   "gpt-image-2.6-flare"     (以生成速度为重点的小模型)
@@ -65,18 +66,34 @@ payload = {
     #   "3840x2160"  (4K/横版16:9)
     #   "2160x3840"  (4K/竖版9:16)
     # 自定义约束: 宽高必须都是 16 的倍数；长短边比不能超过 3:1
-    # 2K/4K 及尺寸上限沿用 2.5 文档作为参考，实际以 2.6 渠道支持为准:
     #   最大边长 <= 3840px；总像素在 655,360 到 8,294,400 之间
-    # GIF 的 size 使用 auto 可让 API 在模型的限制范围内选择帧尺寸
+    # GIF 的 size 是每一帧的尺寸，官方示例为 512x512；帧数、帧尺寸和 n 必须同时落在模型限制与总像素预算内
+    # 使用 auto 可让 API 在 GIF 限制范围内选择帧尺寸
     "size": "1024x1024",
 
     # 【output_format】(string, 可选) 指定输出文件格式
-    # 可选值: "png"(默认) / "jpeg" / "webp" / "gif"(2.6 新增动图，两款模型均已实测可用) / "svg"(上游 2.6 支持矢量输出，当前渠道是否开放以实测为准)
+    # 可选值: "png"(默认) / "jpeg" / "webp" / "gif"(2.6 动画，文生图和图片编辑都支持) / "svg"(仅文生图)
     # 若选择 jpeg 或 webp，可再配合 output_compression 调整压缩率
-    # GIF 仅支持文生图，不支持 output_compression、stream、partial_images、prompt_rewriter
-    # SVG 同样仅支持文生图，且要求 n=1，不支持 stream、partial_images、prompt_rewriter、output_compression
-    # GIF 请在 prompt 中描述动作与循环方式；实测返回真实多帧 GIF，而非静态图片
+    # GIF 不支持 streaming、partial images、mask、output_compression
+    # SVG 仅支持文生图，要求 n=1；不支持 streaming、partial images、prompt_rewriter、output_compression
+    # 官方规则：渠道开启 SVG model selection 时必须传 svg.model，未开启时不要传 svg 对象
+    # 当前渠道已开启，只传 output_format=svg 会返回 400，参数为 svg.model
+    # svg.model 是编写 SVG 的语言模型，顶层 model 只生成参考图
+    # GIF 请在 prompt 中描述主体、动作与循环方式
     "output_format": "png",
+
+    # 【svg】(object) output_format 为 svg 时由 main() 自动补上，不必手写
+    # 需要换作者模型时再取消注释；reasoning.effort 可选：none / minimal / low / medium / high / xhigh / max
+    # "svg": {"model": "gpt-6.1-sol", "reasoning": {"effort": "low"}},
+
+    # 【frame_count】(integer, 可选) 仅 output_format 为 gif 时使用
+    # 取值范围: 2 <= x <= 16，省略时默认 9
+    # "frame_count": 9,
+
+    # 【frame_duration_ms】(integer, 可选) 仅 output_format 为 gif 时使用
+    # 指南范围: 20 <= x <= 2000，按 10ms 取整，默认 200
+    # API reference 另将编码延迟上限记为 655350ms
+    # "frame_duration_ms": 200,
 
     # 【quality】(string, 可选) 生成图像的质量等级
     # 可选值:
@@ -89,7 +106,7 @@ payload = {
     "quality": "high",
 
     # 【complexity】(string, 可选) 2.6 新增：为控制渲染前的规划投入
-    # 上游说明的可选值:
+    # 可选值:
     #   "low"       (较少规划，适合简单构图与快速迭代)
     #   "medium"    (中等规划投入)
     #   "high"      (更多规划，适合复杂布局与多条件提示词，默认值)
@@ -116,8 +133,15 @@ payload = {
 
 
 def main():
+    body = dict(payload)
+    # 当前渠道开启了 SVG model selection。只改 output_format 时自动补上实测可用的作者模型，避免 400。
+    if str(body.get("output_format", "png")).lower() == "svg":
+        body.setdefault("svg", {"model": "gpt-6.1-sol", "reasoning": {"effort": "low"}})
+    else:
+        body.pop("svg", None)
+
     # 发起同步请求；图片生成耗时较长，timeout 给足
-    response = requests.post(url, headers=headers, json=payload, timeout=1000)
+    response = requests.post(url, headers=headers, json=body, timeout=1000)
     print("status:", response.status_code)
     response.raise_for_status()
 

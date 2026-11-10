@@ -12,6 +12,8 @@
 ## 模型名称
 | 模型 ID | 官方定位 | 使用选择 |
 |------|------|------|
+| `gpt-image-2.6-sunburst-ssvip` | 原价模型稳定性高 | 更关注最终编辑效果与细节时选用 |
+| `gpt-image-2.6-flare-ssvip` | 原价模型稳定性高 | 更关注编辑速度时选用 |
 | `gpt-image-2.6-sunburst` | 以图像质量为重点的基础模型 | 更关注最终编辑效果与细节时选用 |
 | `gpt-image-2.6-flare` | 以生成速度为重点的小模型 | 更关注编辑速度时选用 |
 
@@ -28,9 +30,10 @@ import requests
 
 # 图片文件配置：可使用一张或多张图片作为参考图
 # 支持 本地文件路径 / 公网 URL，自动识别；多图可继续添加列表项
-# 本项是示例脚本的客户端配置，不是 API 参数
+# 官方输入为 png、webp 或 jpg，单张小于 50MB，最多 16 张；不要上传 GIF 或 SVG
+# 编辑可以输出 GIF，但参考图必须是静图
 image_paths = [
-    r"C:\path\to\reference-image.jpg",
+    r"C:\Users\Y\Desktop\马尾辫\小狗.png",
     # "https://your-cdn.example.com/reference-image.png",
 ]
 
@@ -39,7 +42,7 @@ markup_path = None
 
 # API 配置
 url = "https://www.dmxapi.cn/v1/images/edits"
-api_key = "sk-*****************************************"  # 在引号内粘贴完整 API 令牌
+api_key = "sk-=========================================="  # 在引号内粘贴完整 API 令牌
 
 # 请求头：只放 Bearer 鉴权
 # multipart/form-data 的 Content-Type 与 boundary 由 requests 自动生成，不要手动指定 JSON 请求头
@@ -50,7 +53,6 @@ headers = {
 # 请求参数（multipart 普通字段，通过 data=payload 发送）
 payload = {
     # 【model】(string, 必填) 使用的图像编辑模型名称
-    # 本文档对应 GPT Image 2.6 系列，两款模型均可用于图片编辑
     # 可选值:
     #   "gpt-image-2.6-sunburst"  (以图像质量为重点的基础模型，示例默认)
     #   "gpt-image-2.6-flare"     (以生成速度为重点的小模型)
@@ -59,7 +61,7 @@ payload = {
     # 【prompt】(string, 必填) 描述希望模型如何编辑输入图片
     # GPT image 系列模型最大长度 32000 字符
     # 可同时说明"要修改什么"和"要保留什么"，编辑结果越接近预期
-    "prompt": "把图里的小猫换成小马",
+    "prompt": "在原图的基础上，将小狗的毛发颜色改为金黄色，保持背景不变，确保小狗的表情自然。",
 
     # 【n】(integer, 可选) 单次请求生成图像的张数（控制输出张数，与输入图数量无关）
     # 取值范围: [1, 10]，默认值为 1
@@ -76,14 +78,26 @@ payload = {
     #   "3840x2160"  (4K/横版16:9)
     #   "2160x3840"  (4K/竖版9:16)
     # 自定义约束: 宽高必须都是 16 的倍数；长短边比不能超过 3:1
+    # 2K/4K 及尺寸上限沿用 2.5 文档作为参考，实际以 2.6 渠道支持为准:
     #   最大边长 <= 3840px；总像素在 655,360 到 8,294,400 之间
-    "size": "1024x1024",
+    # 输出 GIF 时，size 是每一帧的尺寸；帧数、帧尺寸和 n 必须同时落在模型限制与总像素预算内
+    "size": "auto",
 
     # 【output_format】(string, 可选) 指定输出文件格式
-    # 可选值: "png"(默认) / "jpeg"(延迟更低) / "webp"(更高压缩率)
+    # 可选值: "png"(默认) / "jpeg"(延迟更低) / "webp"(更高压缩率) / "gif"(动画输出)
     # 若选择 jpeg 或 webp，可再配合 output_compression 调整压缩率；落盘扩展名随该值变化
-    # 图片编辑不支持 SVG/GIF 输出；文生图已实测 GIF 可用
-    "output_format": "png",
+    # 编辑不支持 SVG 输出，也不接受 SVG 或 GIF 作为输入；GIF 输出要用静图做参考
+    # GIF 不支持 streaming、partial images、mask、output_compression，且需要账号有 GIF preview 权限
+    "output_format": "gif",
+
+    # 【frame_count】(integer, 可选) 仅 output_format 为 gif 时使用
+    # 取值范围: 2 <= x <= 16，省略时默认 9
+     "frame_count": 9,
+
+    # 【frame_duration_ms】(integer, 可选) 仅 output_format 为 gif 时使用
+    # 指南范围: 20 <= x <= 2000，按 10ms 取整，默认 200
+    # API reference 另将编码延迟上限记为 655350ms
+    # "frame_duration_ms": 200,
 
     # 【quality】(string, 可选) 生成图像的质量等级
     # 可选值:
@@ -112,7 +126,7 @@ payload = {
 
     # 【moderation】(string, 可选) 内容审核强度
     # 可选值: "auto"(默认) / "low"(更宽松，不表示关闭审核)
-    # "moderation": "low",
+    "moderation": "low",
 
     # 【background】(string, 可选) 输出图像的背景模式
     # 可选值:
@@ -166,7 +180,7 @@ def main():
         # 以下为上游要求，不能据此认定当前渠道已支持；确认支持前保持 markup_path = None
         # 宽高须与第一张输入图应用方向信息后的尺寸一致，不是与输出 size 一致
         # 必须包含透明像素；标注图不超过 50MB，且标注图和第一张输入图均不超过 16,777,216 像素
-        # 不可与 mask 或 prompt_rewriter 同时使用；2.5 同样支持该参数
+        # 不可与 mask 同时使用；2.5 与 2.6 均支持该参数
         if markup_path:
             markup_file = Path(markup_path)
             if markup_file.suffix.lower() != ".png":
