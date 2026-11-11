@@ -134,11 +134,6 @@ payload = {
 
 def main():
     body = dict(payload)
-    # 当前渠道开启了 SVG model selection。只改 output_format 时自动补上实测可用的作者模型，避免 400。
-    if str(body.get("output_format", "png")).lower() == "svg":
-        body.setdefault("svg", {"model": "gpt-6.1-sol", "reasoning": {"effort": "low"}})
-    else:
-        body.pop("svg", None)
 
     # 发起同步请求；图片生成耗时较长，timeout 给足
     response = requests.post(url, headers=headers, json=body, timeout=1000)

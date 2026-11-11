@@ -925,6 +925,23 @@ export default defineConfig({
                   },
                   */
                   {
+                    text: 'kling-4.0',
+                    collapsed: true,
+                    items: [
+                      { text: '文生视频', link: '/kling-4.0-text-to-video' },
+                      { text: '图生视频', link: '/kling-4.0-image-to-video' },
+                      { text: '全能参考生视频', link: '/kling-4.0-omni-video' },
+                      {
+                        text: '主体管理',
+                        collapsed: true,
+                        items: [
+                          { text: '图片主体创建', link: '/kling-4.0-custom-element-image' },
+                          { text: '视频主体创建', link: '/kling-4.0-custom-element-video' },
+                        ],
+                      },
+                    ],
+                  },
+                  {
                     text: 'kling-v3',
                     collapsed: true,
                     items: [
