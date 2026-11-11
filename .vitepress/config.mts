@@ -2,6 +2,28 @@ import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 
+// VitePress 会在当前页命中某个分组时把 collapsed 改成 false。
+// 文档要求侧栏默认全部折叠，只在用户点击后展开。
+function keepSidebarCollapsedByDefault() {
+  return {
+    name: 'keep-sidebar-collapsed-by-default',
+    enforce: 'pre' as const,
+    transform(code: string, id: string) {
+      const normalized = id.replace(/\\/g, '/')
+      if (!normalized.includes('/vitepress/dist/client/theme-default/composables/sidebar.js')) {
+        return null
+      }
+      const pattern =
+        /watchPostEffect\(\(\) => \{\s*;\s*\(isActiveLink\.value \|\| hasActiveLink\.value\) && \(collapsed\.value = false\);\s*\}\);/
+      if (!pattern.test(code)) return null
+      return code.replace(
+        pattern,
+        '/* 当前页所在分组保持配置里的 collapsed，不因命中链接而自动展开 */'
+      )
+    }
+  }
+}
+
 // 第三方主题：https://www.escook.cn/index.php/2024/05/06/escook-vitepress-theme-doc/
 
 // 主题设置：https://vitepress.dev/reference/default-theme-config
@@ -15,6 +37,7 @@ export default defineConfig({
   srcExclude: ['output/**', 'test/**', 'gemini-embedding-2-preview.md'],
 
   vite: {
+    plugins: [keepSidebarCollapsedByDefault()],
     ssr: { noExternal: ['@escook/vitepress-theme', 'vitepress'] },
     build: {
       chunkSizeWarningLimit: 2048
@@ -1335,11 +1358,11 @@ export default defineConfig({
 
           {
             text: '🧊3D大模型',
-            collapsed: false,
+            collapsed: true,
             items: [
               {
                 text: 'Neural4D-2.5',
-                collapsed: false,
+                collapsed: true,
                 items: [
                   { text: '文生3D模型', link: '/neural4d-2.5-text-to-3d' },
                   { text: '单图生3D模型', link: '/neural4d-2.5-image-to-3d' },
