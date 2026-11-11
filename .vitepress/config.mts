@@ -1324,11 +1324,11 @@ export default defineConfig({
 
           {
             text: '🧊3D大模型',
-            collapsed: false,
+            collapsed: true,
             items: [
               {
                 text: 'Neural4D-2.5',
-                collapsed: false,
+                collapsed: true,
                 items: [
                   { text: '文生3D模型', link: '/neural4d-2.5-text-to-3d' },
                   { text: '单图生3D模型', link: '/neural4d-2.5-image-to-3d' },
