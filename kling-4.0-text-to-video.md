@@ -207,7 +207,6 @@ status: 200
   "request_id": "202611110433057709831968268d9d6j38xZuRl"
 }
 ```
-`outputs[].url` 是成片地址。计费使用的输出时长看 `usage.output_duration`，单位秒。生成结果保留 30 天。
 <p align="center">
   <small>© 2026 DMXAPI Kling-4.0 文生视频</small>
 </p>
