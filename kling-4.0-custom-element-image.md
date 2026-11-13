@@ -8,8 +8,8 @@
 
 | 接口 | 请求方式 | URL |
 |------|---------|-----|
-| 提交任务 | POST | `https://www.dmxapi.cn/kling-4-0/v1/general/advanced-custom-elements` |
-| 查询主体 | GET | `https://www.dmxapi.cn/kling-4-0/v1/general/advanced-custom-elements/{task_id}` |
+| 提交任务 | POST | `https://www.dmxapi.cn/v1/general/advanced-custom-elements` |
+| 查询主体 | GET | `https://www.dmxapi.cn/v1/general/advanced-custom-elements/{task_id}` |
 
 :::warning
 请妥善保管您的 API Key！严禁将密钥泄露给他人、硬编码到代码中或提交到公开的代码仓库。如果怀疑密钥已泄露，请立即前往 DMXAPI 官网重新生成。
@@ -31,7 +31,7 @@ import json
 
 # DMXAPI Kling 4.0 图片主体创建接口
 # 与视频主体创建是同一个地址，用 reference_type 区分
-url = "https://www.dmxapi.cn/kling-4-0/v1/general/advanced-custom-elements"
+url = "https://www.dmxapi.cn/v1/general/advanced-custom-elements"
 
 # DMXAPI 密钥 (请替换为您自己的密钥)
 # 获取方式: 登录 DMXAPI 官网 -> 个人中心 -> API 密钥管理
@@ -134,7 +134,7 @@ task_id = "task_LdsX7XEpIpOiu6rBHEDFEDOgXwsuXq5G"
 
 # DMXAPI Kling 4.0 主体任务查询接口
 # 图片主体和视频主体共用此接口，task_id 写在路径最后
-url = f"https://www.dmxapi.cn/kling-4-0/v1/general/advanced-custom-elements/{task_id}"
+url = f"https://www.dmxapi.cn/v1/general/advanced-custom-elements/{task_id}"
 
 # DMXAPI 密钥 (请替换为您自己的密钥)
 api_key = "sk-***********************************************"

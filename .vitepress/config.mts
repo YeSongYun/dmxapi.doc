@@ -1089,6 +1089,24 @@ export default defineConfig({
                 ],
               },
 
+              {
+                text: 'Agnes视频模型',
+                collapsed: true,
+                items: [
+                  {
+                    text: 'agnes-video-2.5',
+                    collapsed: true,
+                    items: [
+                      { text: '文生视频', link: '/agnes-video-2.5_Text-to-Video' },
+                      { text: '首尾帧生视频', link: '/agnes-video-2.5_First-Last_Frame' },
+                      { text: '图片参考', link: '/agnes-video-2.5_Image_Reference' },
+                      { text: '图片与音频参考', link: '/agnes-video-2.5_Image_and_Audio_Reference' },
+                      { text: '视频参考', link: '/agnes-video-2.5_Video_Reference' },
+                    ],
+                  },
+                ],
+              },
+
               { text: '更多视频模型正在赶来...', link: '/video-more' },
             ],
           },
