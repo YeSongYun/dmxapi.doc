@@ -31,7 +31,7 @@ import json
 
 # DMXAPI Kling 4.0 视频主体创建接口
 # 与图片主体创建是同一个地址，用 reference_type 区分
-url = "https://www.dmxapi.cn/general/advanced-custom-elements"
+url = "https://www.dmxapi.cn/v1/general/advanced-custom-elements"
 
 # DMXAPI 密钥 (请替换为您自己的密钥)
 # 获取方式: 登录 DMXAPI 官网 -> 个人中心 -> API 密钥管理
