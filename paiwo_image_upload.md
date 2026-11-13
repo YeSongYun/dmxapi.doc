@@ -17,7 +17,7 @@ https://www.dmxapi.cn/v1/responses
 | 模型 | 适用范围 |
 |------|----------|
 | `paiwo-picture` | paiwo-v5.6 图生视频 / 首尾帧 |
-| `pixverse-picture` | PixVerse-V6、PixVerse-C1 图生视频 / 首尾帧 / 参考 |
+| `pixverse-picture` | v6-max、PixVerse-V6、PixVerse-C1 图生视频 / 首尾帧 / 参考 |
 
 ::: warning 选对上传模型（用错会报 701009）
 两个上传模型的 `img_id` **互不通用**，请按下表选用与生成模型配套的上传模型；用错会报 `701009 (You can only query your own generated or uploaded content)`。
@@ -25,7 +25,7 @@ https://www.dmxapi.cn/v1/responses
 | 你要用的生成模型 | 用这个上传模型 |
 |---|---|
 | `paiwo-v5.6-itv`、`paiwo-v5.6-itv2`（v5.6 图生视频 / 首尾帧） | `paiwo-picture` |
-| `PixVerse-V6`、`PixVerse-C1`（图生视频 / 首尾帧 / 参考） | `pixverse-picture` |
+|  `v6-max`、 `PixVerse-V6`、`PixVerse-C1`（图生视频 / 首尾帧 / 参考） | `pixverse-picture` |
 :::
 
 ## 支持的参数
@@ -64,7 +64,7 @@ response = requests.post(url, headers=headers, json=payload)
 print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 ```
 
-```python [pixverse-picture（V6 / C1）]
+```python [pixverse-picture（v6-max/V6 / C1）]
 import requests
 import json
 import base64
@@ -83,7 +83,7 @@ with open(image_path, "rb") as f:
     image_base64 = base64.b64encode(f.read()).decode("utf-8")
 
 payload = {
-    "model": "pixverse-picture",   # 用于 PixVerse-V6 / PixVerse-C1
+    "model": "pixverse-picture",   # 用于 v6-max/ PixVerse-V6 / PixVerse-C1
     "input": image_base64,
 }
 
@@ -119,7 +119,7 @@ response = requests.post(url, headers=headers, json=payload)
 print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 ```
 
-```python [pixverse-picture（V6 / C1）]
+```python [pixverse-picture（v6-max/V6 / C1）]
 import requests
 import json
 
