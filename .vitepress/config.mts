@@ -1584,6 +1584,7 @@ export default defineConfig({
               { text: '腾讯云openclaw', link: '/Tencent_openclaw' },
             ],
           },
+          { text: 'Magpie', link: '/magpie' },
           { text: 'Trae', link: '/Trae' },
           { text: 'Reasonix Studio', link: '/reasonix-studio' },
           { text: 'pi_agent', link: '/pi_agent' },
