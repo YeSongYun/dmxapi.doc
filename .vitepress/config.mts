@@ -308,49 +308,6 @@ export default defineConfig({
                 ],
               },
               {
-                text: '豆包即梦绘图模型',
-                collapsed: true,
-                items: [
-                  {
-                    text: 'doubao-seedream-5-0-pro-260628',
-                    collapsed: true,
-                    items: [
-                      { text: '文生图', link: '/doubao-seedream-5-0-pro-260628-text-to-image' },
-                      { text: '图生图', link: '/doubao-seedream-5-0-pro-260628-image-to-image' },
-                      { text: '多图融合', link: '/doubao-seedream-5-0-pro-260628-multi-image-fusion' },
-                    ],
-                  },
-                  {
-                    text: 'doubao-seedream-5.0-lite',
-                    collapsed: true,
-                    items: [
-                      { text: '文生图', link: '/doubao-seedream-5.0-lite-t2i' },
-                      { text: '图片编辑', link: '/doubao-seedream-5.0-lite-img-edit' },
-                      { text: '多图融合', link: '/doubao-seedream-5.0-lite-Multi-image-fusion' },
-                    ],
-                  },
-                  {
-                    text: 'doubao-seedream-4-5-251128',
-                    collapsed: true,
-                    items: [
-                      { text: '文生图', link: '/img-seedream-45-t2i' },
-                      { text: '图生图', link: '/img-seedream-45-i2i' },
-                      { text: '多图融合', link: '/img-seedream-45-images' },
-                    ],
-                  },
-                  {
-                    text: 'doubao-seedream-4-0-250828',
-                    collapsed: true,
-                    items: [
-                      { text: '文生图', link: '/img-seedream-40-t2i' },
-                      { text: '图生图', link: '/img-seedream-40-i2i' },
-                      { text: '多图融合', link: '/img-seedream-40-images' },
-                    ],
-                  },
-                ],
-              },
-
-              {
                 text: 'Gemini绘图模型',
                 collapsed: true,
                 items: [
@@ -425,6 +382,65 @@ export default defineConfig({
                 
               },
               
+              {
+                text: '豆包即梦绘图模型',
+                collapsed: true,
+                items: [
+                  {
+                    text: 'doubao-seedream-5-0-pro-260628',
+                    collapsed: true,
+                    items: [
+                      { text: '文生图', link: '/doubao-seedream-5-0-pro-260628-text-to-image' },
+                      { text: '图生图', link: '/doubao-seedream-5-0-pro-260628-image-to-image' },
+                      { text: '多图融合', link: '/doubao-seedream-5-0-pro-260628-multi-image-fusion' },
+                    ],
+                  },
+                  {
+                    text: 'doubao-seedream-5.0-lite',
+                    collapsed: true,
+                    items: [
+                      { text: '文生图', link: '/doubao-seedream-5.0-lite-t2i' },
+                      { text: '图片编辑', link: '/doubao-seedream-5.0-lite-img-edit' },
+                      { text: '多图融合', link: '/doubao-seedream-5.0-lite-Multi-image-fusion' },
+                    ],
+                  },
+                  {
+                    text: 'doubao-seedream-4-5-251128',
+                    collapsed: true,
+                    items: [
+                      { text: '文生图', link: '/img-seedream-45-t2i' },
+                      { text: '图生图', link: '/img-seedream-45-i2i' },
+                      { text: '多图融合', link: '/img-seedream-45-images' },
+                    ],
+                  },
+                  {
+                    text: 'doubao-seedream-4-0-250828',
+                    collapsed: true,
+                    items: [
+                      { text: '文生图', link: '/img-seedream-40-t2i' },
+                      { text: '图生图', link: '/img-seedream-40-i2i' },
+                      { text: '多图融合', link: '/img-seedream-40-images' },
+                    ],
+                  },
+                ],
+              },
+
+              {
+                text: 'MiniMax绘图模型',
+                collapsed: true,
+                items: [
+                  {
+                    text: 'MiniMax-H3-Image',
+                    collapsed: true,
+                    items: [
+                      { text: '文生图', link: '/MiniMax-H3-Image_Text_to_image' },
+                      { text: '图片编辑', link: '/MiniMax-H3-Image_Image_editing' },
+                      { text: '提示词增强', link: '/MiniMax-H3-Image_Prompt_enhancement' },
+                    ],
+                  },
+                ],
+              },
+
               //  { text: '百度绘图模型', link: '/baidu'},
 
                
