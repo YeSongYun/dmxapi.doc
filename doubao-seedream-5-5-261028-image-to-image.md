@@ -169,7 +169,7 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
   "model": "doubao-seedream-5-5-261028",
   "usage": {
     "generated_images": 1,
-    "input_images": 1,
+    "input_images": 2,
     "output_tokens": 16384,
     "total_tokens": 16384,
     "cost": "¥0.28"
