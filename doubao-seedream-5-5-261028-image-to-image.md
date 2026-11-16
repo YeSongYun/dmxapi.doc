@@ -178,5 +178,5 @@ print(json.dumps(response.json(), indent=2, ensure_ascii=False))
 ```
 
 <p align="center">
-  <small>© 2026 DMXAPI doubao-seedream-5-5-261028 图生图（2 张参考图）</small>
+  <small>© 2026 DMXAPI doubao-seedream-5-5-261028 图生图 </small>
 </p>
