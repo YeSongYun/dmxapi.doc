@@ -1171,6 +1171,10 @@ export default defineConfig({
                   },
                 ],
               },
+              {
+                text: 'VUI Labs api',
+                link: '/luna-tts-1.5-text-to-speech',
+              },
               // { text: 'TTS模型Gemini系列', link: '/gemini-2.5-pro-preview-tts' },
               { text: 'TTS模型 MinMax-speech', link: '/minimax-speech' },
               {
