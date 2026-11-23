@@ -210,7 +210,6 @@ else:
     raise TimeoutError("视频任务在 600 秒内没有结束")
 
 print("status:", response.status_code)
-print("request_id:", result.get("request_id", "未返回") if isinstance(result, dict) else "未返回")
 print(json.dumps(result, indent=2, ensure_ascii=False))
 
 # 成功时，视频地址在 data[0].outputs 里 type 为 video 的 url
