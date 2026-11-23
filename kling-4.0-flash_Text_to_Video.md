@@ -1,6 +1,6 @@
 # kling-4.0-flash 文生视频 API 使用文档
 
-基于可灵 Kling 4.0 Flash 的文生视频接口，通过 DMXAPI 网关以异步任务方式调用。只提交文本提示词，不接收参考图、参考视频或主体。Flash 只支持 720p，时长为 3～20 的整数秒，画面宽高比支持 21:9、16:9、9:16、1:1、4:3、3:4（默认 16:9）。提交后立即返回任务号 `data.id`，再用视频任务查询取结果。成功后视频地址在 `data[0].video_url`
+基于可灵 Kling 4.0 Flash 的文生视频接口，通过 DMXAPI 网关以异步任务方式调用。只提交文本提示词，不接收参考图、参考视频或主体。Flash 只支持 720p，时长为 3～20 的整数秒，画面宽高比支持 21:9、16:9、9:16、1:1、4:3、3:4（默认 16:9）。提交后，用返回的任务号调用下方查询接口。成功后视频地址在 `data[0].video_url`。
 
 ## 接口地址
 
@@ -92,13 +92,20 @@ result = response.json()
 print(json.dumps(result, indent=2, ensure_ascii=False))
 response.raise_for_status()
 
-# 返回里的 data.id 是视频任务号，data 是对象，不是数组，填到视频任务查询脚本的 task_ids 里查询结果。
+# 本页返回示例的任务号在 data[0].id。若 data 为对象，则取 data.id。
+data = result.get("data")
+task = data[0] if isinstance(data, list) and data else data
+if not isinstance(task, dict) or not task.get("id"):
+    raise ValueError("提交响应中缺少视频任务号")
+task_id = task["id"]
+print("task_id:", task_id)
 ```
 
 ## 返回示例
 
+HTTP 200
+
 ```json
-status: 200
 {
   "code": 0,
   "data": [
@@ -145,7 +152,7 @@ headers = {
 # ===============================================================
 
 params = {
-    # 【task_ids】(string，必填) 视频任务号，填文生视频、图生视频或全能参考提交后返回的 data.id
+    # 【task_ids】(string，必填) 视频任务号，填上方提交示例得到的 task_id
     #   官网支持用逗号一次查多个；网关一次只能查一个任务号
     #   主体任务号不能在这里查
     "task_ids": "task_S2CSAGsA0kg0xacxIiDGNgqiHGxsn3EL",

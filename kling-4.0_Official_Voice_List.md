@@ -49,7 +49,7 @@ headers = {
 params = {
     # 【pageNum】(int，可选) 页码，取值 1～1000，默认 1
     "pageNum": 1,
-    # 【pageSize】(int，可选) 每页数量，取值 1～500，默认 30
+    # 【pageSize】(int，可选) 每页数量，取值 1～1000，默认 30
     "pageSize": 30,
 }
 

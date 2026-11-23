@@ -108,7 +108,13 @@ result = response.json()
 print(json.dumps(result, indent=2, ensure_ascii=False))
 response.raise_for_status()
 
-# 返回里的 data.id 是视频任务号，data 是对象，不是数组，填到视频任务查询脚本的 task_ids 里查询结果。
+# 本页返回示例的任务号在 data[0].id。若 data 为对象，则取 data.id。
+data = result.get("data")
+task = data[0] if isinstance(data, list) and data else data
+if not isinstance(task, dict) or not task.get("id"):
+    raise ValueError("提交响应中缺少视频任务号")
+task_id = task["id"]
+print("task_id:", task_id)
 ```
 
 ## 返回示例
@@ -116,15 +122,15 @@ response.raise_for_status()
 ```json
 {
   "code": 0,
-  "message": "SUCCEED",
-  "request_id": "example-request-id",
-  "data": {
-    "id": "task_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-    "status": "submitted",
-    "message": "",
-    "create_time": 1781080778802,
-    "update_time": 1781080778802
-  }
+  "data": [
+    {
+      "create_time": 1781080778802,
+      "id": "task_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "status": "submitted",
+      "update_time": 1781080778802
+    }
+  ],
+  "message": "SUCCEED"
 }
 ```
 
@@ -160,7 +166,7 @@ headers = {
 # ===============================================================
 
 params = {
-    # 【task_ids】(string，必填) 视频任务号，填文生视频、图生视频或全能参考提交后返回的 data.id
+    # 【task_ids】(string，必填) 视频任务号，填上方提交示例得到的 task_id
     #   官网支持用逗号一次查多个；网关一次只能查一个任务号
     #   主体任务号不能在这里查
     "task_ids": "task_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
