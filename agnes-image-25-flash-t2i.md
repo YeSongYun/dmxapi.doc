@@ -1,6 +1,6 @@
 # Agnes Image 2.5 Flash 文生图 API 文档
 
-用文字生成一张图片。适合需要安排多个视觉元素的场景，例如在一张早市插画中分别指定前景的水果摊、中景的行人和远处的渔船。
+用文字生成一张图片。适合需要安排多个视觉元素的场景，例如在一张早市插画中分别指定前景的水果摊、中景的商贩和远处的渔船。
 
 ## 📌 接口地址
 
@@ -18,7 +18,9 @@ POST https://www.dmxapi.cn/v1/images/generations
 | `prompt` | string | 是 | 描述要生成的画面，可指定主体、背景、光线和构图。 |
 | `size` | string | 是 | 输出尺寸档位，支持 `1K`、`2K`、`3K`、`4K`。 |
 | `ratio` | string | 否 | 与尺寸档位搭配使用，默认 `1:1`。所有可选比例见下方的[输出尺寸表](#output-sizes)。 |
-| `extra_body.response_format` | string | 否 | 填 `url` 返回图片链接，填 `b64_json` 返回 Base64 图像数据。两种取值都写在 `extra_body` 对象中。 |
+| `extra_body.response_format` | string | 否 | 填 `url` 返回图片链接，填 `b64_json` 返回 Base64 图像数据。 |
+
+`extra_body` 里的字段不要写到请求体顶层。出图可能需要数秒到几十秒，客户端超时建议设在 60 至 360 秒之间，示例使用 180 秒。
 
 ## 💻 Python 示例代码
 

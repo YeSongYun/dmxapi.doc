@@ -21,6 +21,8 @@ POST https://www.dmxapi.cn/v1/images/generations
 | `extra_body.image` | string[] | 是 | 单图编辑也使用数组，其中放一张图片的公开 HTTPS 链接或带 MIME 类型的 Base64 Data URI。 |
 | `extra_body.response_format` | string | 否 | 填 `url` 返回图片链接，填 `b64_json` 返回 Base64 图像数据。 |
 
+`extra_body` 里的字段不要写到请求体顶层。出图可能需要数秒到几十秒，客户端超时建议设在 60 至 360 秒之间，示例使用 180 秒。
+
 ## 💻 Python 示例代码
 
 安装 `requests`（`python -m pip install requests`），并在运行脚本的终端设置环境变量 `DMXAPI_API_KEY`。第一个示例使用公开的水果照片，第二个示例读取当前目录的 `fruits.jpg`。两种输入方式均可搭配任一返回格式。
