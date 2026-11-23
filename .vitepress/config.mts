@@ -983,19 +983,38 @@ export default defineConfig({
                     ],
                   },
                   */
+                  // 文档链接已在侧栏第 6 层（VitePress 上限），下面三个分组里不要再加子分组。
                   {
-                    text: 'kling-4.0',
+                    text: 'kling-4.0 系列',
                     collapsed: true,
                     items: [
-                      { text: '文生视频', link: '/kling-4.0-text-to-video' },
-                      { text: '图生视频', link: '/kling-4.0-image-to-video' },
-                      { text: '全能参考生视频', link: '/kling-4.0-omni-video' },
                       {
-                        text: '主体管理',
+                        text: 'kling-4.0',
                         collapsed: true,
                         items: [
-                          { text: '图片主体创建', link: '/kling-4.0-custom-element-image' },
-                          { text: '视频主体创建', link: '/kling-4.0-custom-element-video' },
+                          { text: '文生视频', link: '/kling-4.0_Text_to_Video' },
+                          { text: '图生视频', link: '/kling-4.0_Image_to_Video' },
+                          { text: '全能参考生视频', link: '/kling-4.0_Omni_Video' },
+                          { text: '音色创建', link: '/kling-4.0_Custom_Voice' },
+                          { text: '官方音色列表', link: '/kling-4.0_Official_Voice_List' },
+                        ],
+                      },
+                      {
+                        text: 'kling-4.0-flash',
+                        collapsed: true,
+                        items: [
+                          { text: '文生视频', link: '/kling-4.0-flash_Text_to_Video' },
+                          { text: '图生视频', link: '/kling-4.0-flash_Image_to_Video' },
+                          { text: '全能参考生视频', link: '/kling-4.0-flash_Omni_Video' },
+                        ],
+                      },
+                      {
+                        text: '公用资产（主体/音色）',
+                        collapsed: true,
+                        items: [
+                          { text: '图片主体创建', link: '/kling-4.0_Image_Element_Create' },
+                          { text: '视频主体创建', link: '/kling-4.0_Video_Element_Create' },
+                          { text: '官方主体列表', link: '/kling-4.0_Official_Element_List' },
                         ],
                       },
                     ],
