@@ -639,6 +639,14 @@ export default defineConfig({
                 collapsed: true,
                 items: [
                   {
+                    text: 'agnes-image-2.5-flash',
+                    collapsed: true,
+                    items: [
+                      { text: '文生图', link: '/agnes-image-25-flash-t2i' },
+                      { text: '图生图', link: '/agnes-image-25-flash-i2i' },
+                    ],
+                  },
+                  {
                     text: 'agnes-image-2.1-flash',
                     collapsed: true,
                     items: [
