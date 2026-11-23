@@ -13,7 +13,9 @@ https://www.dmxapi.cn/v1/images/generations
 ```
 
 ## 🎨 模型列表
-`doubao-seedream-4-0-250828`
+
+- `doubao-seedream-4-0-250828`
+- `doubao-seedream-4-0-20260415`
 
 ## 💻 Python 调用示例
 
@@ -60,7 +62,7 @@ data = {
     # ▸ 基础配置
     # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-    "model": "doubao-seedream-4-0-250828",  # 使用的模型名称
+    "model": "doubao-seedream-4-0-250828",  # 使用的模型名称，可选：doubao-seedream-4-0-250828、doubao-seedream-4-0-20260415
 
     # ────────────────────────────────────────────────────────────────────────
     # 【参数】prompt - 图像生成提示词
