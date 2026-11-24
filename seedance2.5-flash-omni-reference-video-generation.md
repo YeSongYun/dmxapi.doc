@@ -66,7 +66,7 @@ image_source = "https://help-static-aliyun-doc.aliyuncs.com/file-manage-files/zh
 # 参考视频。
 # 参考视频可填公网视频 URL 或 asset://<ASSET_ID>。
 # 支持 MP4 或 MOV，视频编码为 H.264/AVC 或 H.265/HEVC。带音轨时，MP4 支持 AAC、MP3，MOV 还支持 PCM。
-# 帧率 24–60 FPS，单段 4–30 秒，每段不超过 200 MB。一次最多 5 段，所有输入视频合计不超过 30 秒。
+# 帧率 24–60 FPS，单段 2–30 秒（视频编辑任务要求 4–30 秒），每段不超过 200 MB。一次最多 5 段，所有输入视频合计不超过 30 秒。
 # 输入分辨率可为 480p、720p、1080p、4K。宽和高各为 300–6000 像素，宽/高为 0.4–2.5。
 # 每帧总像素数（宽×高）为 407696–8847360，包含上下限。Flash 的输出分辨率在 payload 的 resolution 中选择。
 # 待编辑的原片含真人人脸时，可用本人认证、授权后入库的视频，在 video_url.url 填该视频的 asset://<ASSET_ID>。
