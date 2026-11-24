@@ -231,6 +231,8 @@ if result["status"] != "succeeded":
 }
 ```
 
+<!--@include: /.vitepress/includes/seedance-2-5-flash-artifacts.md-->
+
 <p align="center">
   <small>© 2026 DMXAPI doubao-seedance-2-5-flash 文生视频</small>
 </p>
