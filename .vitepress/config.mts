@@ -727,6 +727,18 @@ export default defineConfig({
                     ],
                   },
                   {
+                    text: 'doubao-seedance-2-5-flash',
+                    collapsed: true,
+                    items: [
+                      { text: '文生视频', link: '/seedance2.5-flash-text-to-video' },
+                      { text: '首帧图生视频', link: '/seedance2.5-flash-first-frame-image-to-video' },
+                      { text: '首尾帧生视频', link: '/seedance2.5-flash-first-last-frame-to-video' },
+                      { text: '视频编辑', link: '/seedance2.5-flash-instruction-video-editing' },
+                      { text: '视频延长', link: '/seedance2.5-flash-video-extension' },
+                      { text: '全模态参考生视频', link: '/seedance2.5-flash-omni-reference-video-generation' },
+                    ],
+                  },
+                  {
                     text: 'seedance 2.0-mini',
                     collapsed: true,
                     items: [
