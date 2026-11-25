@@ -1,5 +1,5 @@
 ---
-outline: [2, 3]
+outline: 2
 ---
 
 # AnySearch 垂直搜索 tag 速查表
@@ -23,9 +23,9 @@ outline: [2, 3]
 
 内容来自能力发现接口 2026 年 11 月 25 日的实际返回（能力定义版本 19），参数说明已译成中文。AnySearch 会不定期增减 `tag` 和参数，如果这里查不到，或者按这里填写后返回 400，请调用能力发现接口获取最新定义，以接口返回为准。
 
-## tag 索引 {#index}
+## tag 索引 {#index .ignore-header}
 
-先按领域找到你要的 `tag`，点进去看它的参数。页面目录里也列出了每个 `tag`，可以直接跳转。
+在页面目录中选择领域，或点击下表中的 `tag` 直接查看它的参数。
 
 | 领域 | tag |
 |------|------|
@@ -47,7 +47,7 @@ outline: [2, 3]
 | `film` 影音 | [`film.torrent`](#tag-film-torrent) |
 | `gaming` 游戏 | [`gaming.esports`](#tag-gaming-esports)、[`gaming.store`](#tag-gaming-store) |
 
-## general（通用搜索） {#domain-general}
+## general<span class="ignore-header">（通用搜索）</span> {#domain-general}
 
 通用网页搜索。
 
@@ -57,7 +57,7 @@ outline: [2, 3]
 
 这个 tag 没有额外参数，搜索时只填 `tag`，不用填 `params`。
 
-## resource（图片素材） {#domain-resource}
+## resource<span class="ignore-header">（图片素材）</span> {#domain-resource}
 
 图片搜索：专业摄影、SVG、插画和矢量图。
 
@@ -67,7 +67,7 @@ outline: [2, 3]
 
 这个 tag 没有额外参数，搜索时只填 `tag`，不用填 `params`。
 
-## social_media（社交媒体） {#domain-social-media}
+## social_media<span class="ignore-header">（社交媒体）</span> {#domain-social-media}
 
 社交媒体信息搜索。
 
@@ -81,7 +81,7 @@ outline: [2, 3]
 | `keyword` | 可选 | 搜索关键词，优先级高于 `query`。例如 `AI large models`、`Python developer`、`Musk` |
 | `region` | 可选 | 地区过滤，仅 `type=weibo_hot` 时生效。例如 `Beijing`、`Shanghai`、`Guangdong` |
 
-## finance（金融） {#domain-finance}
+## finance<span class="ignore-header">（金融）</span> {#domain-finance}
 
 股票、外汇、加密货币、大宗商品、ETF、期货行情，以及财经新闻、基本面、宏观数据、选股、财经日历。
 
@@ -149,7 +149,7 @@ outline: [2, 3]
 | `sector` | 可选 | GICS 行业，仅 `type=stock` 时使用。可选值：`Technology`、`Healthcare`、`Financial Services`、`Consumer Cyclical`、`Consumer Defensive`、`Industrials`、`Energy`、`Basic Materials`、`Communication Services`、`Real Estate`、`Utilities` |
 | `country` | 可选 | ISO 3166-1 两位国家代码，仅 `type=stock` 时使用，例如 `US`、`JP`、`GB`、`DE`、`CN`、`HK`。注意：按公司注册地过滤，不是按交易所所在地 |
 
-## academic（学术） {#domain-academic}
+## academic<span class="ignore-header">（学术）</span> {#domain-academic}
 
 学术论文、生物医学文献、预印本、引用关系、数据集。
 
@@ -228,7 +228,7 @@ Zenodo、Dryad、Figshare 上的科研数据集、开源代码和科研软件。
 | `schools` | 可选 | 院校名称，多个值用英文逗号分隔；与结果中的院校匹配 |
 | `research_areas` | 可选 | 研究方向，多个值用英文逗号分隔；与结果中的研究方向匹配 |
 
-## legal（法律） {#domain-legal}
+## legal<span class="ignore-header">（法律）</span> {#domain-legal}
 
 法院案例、法律法规、立法跟踪。
 
@@ -299,7 +299,7 @@ Zenodo、Dryad、Figshare 上的科研数据集、开源代码和科研软件。
 | `database_id` | 可选 | 数据源专用的数据库标识 |
 | `resource_kind` | 可选 | 法规资源种类。可选值：`rules`、`resources`、`all` |
 
-## health（医疗健康） {#domain-health}
+## health<span class="ignore-header">（医疗健康）</span> {#domain-health}
 
 药品信息、临床试验、公共卫生统计。
 
@@ -323,7 +323,7 @@ Zenodo、Dryad、Figshare 上的科研数据集、开源代码和科研软件。
 
 这个 tag 没有额外参数，搜索时只填 `tag`，不用填 `params`。
 
-## business（商业） {#domain-business}
+## business<span class="ignore-header">（商业）</span> {#domain-business}
 
 企业工商信息、商务联系人、招聘职位、国际贸易数据。
 
@@ -371,7 +371,7 @@ Zenodo、Dryad、Figshare 上的科研数据集、开源代码和科研软件。
 | `location` | 可选 | 贸易伙伴国名称，例如 `China`、`United States` |
 | `type` | 可选 | 数据类型：`GlobalBilateralTrade`（全球双边贸易）、`USImportExport`（美国进出口） |
 
-## security（网络安全） {#domain-security}
+## security<span class="ignore-header">（网络安全）</span> {#domain-security}
 
 恶意样本扫描、威胁情报、背景噪声识别、CVE 漏洞。
 
@@ -408,7 +408,7 @@ CVE 漏洞详情：CVSS 评分、受影响版本、补丁链接、是否已被�
 | `type` | **必填** | 查询意图：`cve`（CVE 编号）、`commit`（40 位十六进制提交哈希）、`package`（`生态:包名@版本`，生态名区分大小写）。标识符写在 `value` 里，`query` 也填同一个标识符 |
 | `value` | **必填** | 与 `type` 对应的标识符：CVE 编号、40 位十六进制哈希，或 `生态:包名@版本`。多个值用英文逗号分隔可批量查询，重复项自动去除。<br>生态名必须与注册表名称完全一致且区分大小写：`npm`、`PyPI`、`Maven`、`NuGet`、`RubyGems`、`crates.io`、`Go`、`Packagist`、`Hex`、`Pub`、`CRAN`。Maven 的写法是 `Maven:groupId:artifactId@version`；操作系统软件包通常要带发行版后缀，例如 `Debian:12`、`Alpine:v3.16`。<br>为保证每一项都被检查，单次最多传 5 个 CVE 编号或 1000 个软件包条目。<br>返回空列表也可能是名称或版本拼错了，下结论“没有漏洞”之前请先核对拼写。<br>示例：`{"type": "cve", "value": "CVE-2021-44228"}`、`{"type": "package", "value": "PyPI:jinja2@2.4.1"}`、`{"type": "commit", "value": "6879efc2c1596d11a6a6ad296f80063b558d5e0f"}` |
 
-## ip（专利） {#domain-ip}
+## ip<span class="ignore-header">（专利）</span> {#domain-ip}
 
 全球专利检索、同族追踪、法律状态，覆盖 100 多个国家和地区。
 
@@ -424,7 +424,7 @@ CVE 漏洞详情：CVSS 评分、受影响版本、补丁链接、是否已被�
 | `ipc` | 可选 | IPC/CPC 分类号过滤，例如 `H01L`、`G06N` |
 | `date_start` | 可选 | 公开日或申请日的起始日期，例如 `2020`、`20200101` |
 
-## code（代码） {#domain-code}
+## code<span class="ignore-header">（代码）</span> {#domain-code}
 
 开发文档检索、GitHub 代码片段搜索。
 
@@ -446,7 +446,7 @@ CVE 漏洞详情：CVSS 评分、受影响版本、补丁链接、是否已被�
 | `path` | 可选 | 按文件路径过滤，例如 `src/components/` |
 | `repo` | 可选 | 按 GitHub 仓库过滤，例如 `facebook/react` |
 
-## energy（能源） {#domain-energy}
+## energy<span class="ignore-header">（能源）</span> {#domain-energy}
 
 电力市场数据、能源生产与消费统计。
 
@@ -474,7 +474,7 @@ CVE 漏洞详情：CVSS 评分、受影响版本、补丁链接、是否已被�
 | `location` | 可选 | 地区名称，例如 `California`、`Texas`、`United States` |
 | `type` | 可选 | 数据类型：`USEnergyData`（美国能源数据） |
 
-## environment（环境） {#domain-environment}
+## environment<span class="ignore-header">（环境）</span> {#domain-environment}
 
 空气质量指数（AQI）与 PM2.5 数据。
 
@@ -487,7 +487,7 @@ CVE 漏洞详情：CVSS 评分、受影响版本、补丁链接、是否已被�
 | `type` | 可选 | 数据类型：`GlobalAirQuality`（全球空气质量） |
 | `location` | 可选 | 邮编、经纬度或城市名，例如 `20002`、`38.9,-77.0`、`Beijing` |
 
-## agriculture（农业） {#domain-agriculture}
+## agriculture<span class="ignore-header">（农业）</span> {#domain-agriculture}
 
 联合国粮农组织（FAO）全球农业统计。
 
@@ -503,7 +503,7 @@ FAO 全球农业统计，覆盖生产、贸易和食品价格。
 | `location` | 可选 | 地区名称，例如 `World`、`China` |
 | `type` | 可选 | 数据类型：`GlobalAgriculture`（全球农业数据） |
 
-## travel（出行） {#domain-travel}
+## travel<span class="ignore-header">（出行）</span> {#domain-travel}
 
 机票搜索、航班实时动态。
 
@@ -537,7 +537,7 @@ FAO 全球农业统计，覆盖生产、贸易和食品价格。
 | `date` | 可选 | 航班日期，格式 `YYYY-MM-DD`，默认当天 |
 | `departure` | **必填** | 出发机场的 IATA 代码，用于区分同号航班。官方定义的文字说明写的是“可选”，但字段标记为必填，实测不填会返回 400 |
 
-## film（影音） {#domain-film}
+## film<span class="ignore-header">（影音）</span> {#domain-film}
 
 影视与音乐种子搜索。
 
@@ -547,7 +547,7 @@ FAO 全球农业统计，覆盖生产、贸易和食品价格。
 
 这个 tag 没有额外参数，搜索时只填 `tag`，不用填 `params`。
 
-## gaming（游戏） {#domain-gaming}
+## gaming<span class="ignore-header">（游戏）</span> {#domain-gaming}
 
 Steam 游戏价格、电竞选手数据与排名。
 
