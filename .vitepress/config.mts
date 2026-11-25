@@ -1358,6 +1358,17 @@ export default defineConfig({
                 ],
               },
               { text: 'Tencent-Search 联网搜索', link: '/tencent-search-web-search' },
+              {
+                text: 'AnySearch',
+                collapsed: true,
+                items: [
+                  { text: '使用说明', link: '/anysearch' },
+                  { text: '搜索', link: '/anysearch-search' },
+                  { text: '能力发现', link: '/anysearch-sub-domains' },
+                  { text: '网页正文提取', link: '/anysearch-extract' },
+                  { text: '垂直搜索 tag 速查表', link: '/anysearch-tags' },
+                ],
+              },
             ],
           },
 
