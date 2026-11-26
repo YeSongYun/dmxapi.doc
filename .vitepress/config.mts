@@ -1325,6 +1325,7 @@ export default defineConfig({
               { text: 'bge-reranker-v2-m3-free', link: '/rerank-bge-reranker-v2-m3' },
               { text: 'doubao-embedding-large-text', link: '/emb-doubao-embedding-large-text' },
               { text: '阿里 text-embedding-v4', link: '/emb-text-embedding-v4' },
+              { text: '阿里 qwen3-vl-embedding', link: '/qwen3-vl-embedding' },
               { text: 'OpenAi 向量模型', link: '/embedding' },
               { text: 'doubao-embedding-vision-251215', link: '/doubao-embedding-vision-251215' },
               // { text: 'gemini-embedding-2-preview', link: '/gemini-embedding-2-preview' },
