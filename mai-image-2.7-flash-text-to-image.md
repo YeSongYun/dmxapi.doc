@@ -113,7 +113,7 @@ if __name__ == "__main__":
 
 ```text
 status: 200
-usage: {'num_input_text_tokens': 43, 'num_input_image_tokens': 0, 'num_output_tokens': 1024}
+usage: {'num_input_text_tokens': 43, 'num_input_image_tokens': 0, 'num_output_tokens': 1536}
 saved output/mai_generation_20261127_193921_1.png
 ```
 
@@ -131,7 +131,7 @@ saved output/mai_generation_20261127_193921_1.png
     "cost": "¥0.112678",
     "num_input_image_tokens": 0,
     "num_input_text_tokens": 43,
-    "num_output_tokens": 1024,
+    "num_output_tokens": 1536,
     "num_web_calls": 0
   }
 }
