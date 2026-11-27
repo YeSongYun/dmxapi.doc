@@ -1247,6 +1247,31 @@ export default defineConfig({
             collapsed: true,
             items: [
               {
+                text: '音潮',
+                collapsed: true,
+                items: [
+                  {
+                    text: 'yinchao-v4.5',
+                    collapsed: true,
+                    items: [
+                      { text: '提示词生成歌曲', link: '/yinchao-v4.5-prompt-to-song' },
+                      { text: '生成纯音乐', link: '/yinchao-v4.5-instrumental' },
+                      { text: '独立作词', link: '/yinchao-v4.5-generate-lyric' },
+                    ],
+                  },
+                  {
+                    text: 'yinchao-v3.5',
+                    collapsed: true,
+                    items: [
+                      { text: '提示词生成歌曲', link: '/yinchao-v3.5-prompt-to-song' },
+                      { text: '上传参考音频', link: '/yinchao-v3.5-reference-upload' },
+                      { text: '参考音频仿写', link: '/yinchao-v3.5-reference-to-song' },
+                      { text: '独立作词', link: '/yinchao-v3.5-generate-lyric' },
+                    ],
+                  },
+                ],
+              },
+              {
                 text: 'mureka',
                 collapsed: true,
                 items: [
