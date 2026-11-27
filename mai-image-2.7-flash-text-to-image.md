@@ -16,7 +16,7 @@
 
 | 模型 ID | 官方定位 |
 |------|------|
-| `MAI-Image-2.7-Flash` | 微软 Foundry 轻量版图像模型，速度与成本优先， |
+| `MAI-Image-2.7-Flash` | 微软 Foundry 轻量版图像模型，速度与成本优先 |
 
 
 ## 文生图示例代码
@@ -131,7 +131,7 @@ saved output/mai_generation_20261127_193921_1.png
     "cost": "¥0.112678",
     "num_input_image_tokens": 0,
     "num_input_text_tokens": 43,
-    "num_output_tokens": 1536,
+    "num_output_tokens": 1024,
     "num_web_calls": 0
   }
 }
