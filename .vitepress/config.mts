@@ -308,6 +308,28 @@ export default defineConfig({
                 ],
               },
               {
+                text: 'Microsoft绘图模型',
+                collapsed: true,
+                items: [
+                  {
+                    text: 'MAI-Image-2.7',
+                    collapsed: true,
+                    items: [
+                      { text: '文生图', link: '/mai-image-2.7-text-to-image' },
+                      { text: '图片编辑', link: '/mai-image-2.7-image-edit' }
+                    ],
+                  },
+                  {
+                    text: 'MAI-Image-2.7-Flash',
+                    collapsed: true,
+                    items: [
+                      { text: '文生图', link: '/mai-image-2.7-flash-text-to-image' },
+                      { text: '图片编辑', link: '/mai-image-2.7-flash-image-edit' }
+                    ],
+                  },
+                ],
+              },
+              {
                 text: 'Gemini绘图模型',
                 collapsed: true,
                 items: [
@@ -434,7 +456,7 @@ export default defineConfig({
                     ],
                   },
                   {
-                    text: 'doubao-seedream-4-0-250828',
+                    text: 'doubao-seedream-4-0-250828 / doubao-seedream-4-0-20260415',
                     collapsed: true,
                     items: [
                       { text: '文生图', link: '/img-seedream-40-t2i' },
